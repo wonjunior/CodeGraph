@@ -1,0 +1,95 @@
+body {
+  font-weight: 500;
+  font-family: Calibri;
+  background: url('https://image.ibb.co/cSVaUk/background.png');
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+body, svg {
+    margin: 0px;
+    padding: 0px;
+}
+.dock, .snapDock {
+  background-color: #c06;
+  height: 12px;
+  width: 12px;
+  -moz-border-radius: 75px;
+  -webkit-border-radius: 75px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  position: absolute;
+  top: 14px;
+  border: 0.1em solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  z-index:1;
+}
+.snapDock {
+    z-index:999;
+  width: 40px;
+  height: 40px;
+  top: 0px;
+  background-color: rgba(111, 111, 111, 0);
+  cursor: copy;
+  cursor: pointer;
+  border-color: rgba(111, 111, 111, 0);
+  
+}
+.parameter.right > .dock {
+  right: -6px;
+}
+.parameter.right > .snapDock {
+  right: -20px;
+}
+.parameter.left > .dock {
+  left: -10px;
+  background-color: green;
+}
+.parameter.left > .snapDock {
+  left: -24px;
+}
+.paramName {
+  display: inline-block;
+  vertical-align: middle;
+}
+.parameter.right {
+  text-align: right;
+}
+.parameter.right > .paramName {
+  margin-right: 5px;
+}
+
+.parameter {
+  padding-right: 0px;
+  height: 25px;
+  line-height: 25px;
+  margin: auto;
+  margin-left: 5px;
+  position: relative;
+  padding: 5px 10px;
+}
+.container {
+  width: 124px;
+  border-radius: 10px;
+  position: absolute;
+  left: 234px;
+  top: 122px;
+  border: 1px solid rgba(23, 22, 22, 0.4);
+}
+.header {
+  border-radius: 10px 10px 0px 0px;
+  background-color: rgba(78, 75, 80, 0.4);
+  position: relative;
+  cursor: move;
+}
+.headerTitle {
+  text-align: center;
+}
+.body {
+  background-color: rgba(111, 111, 111, 0.4);
+  border-radius: 0px 0px 10px 10px;
+}
