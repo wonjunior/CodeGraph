@@ -103,7 +103,6 @@ function updateInteraction() {
     $('.snapDock').mousedown(function() {
 
         state = $(this).attr('state');
-
         nodeId = getNodeId(this);
         dockId = getDockId(this);
 
@@ -149,12 +148,12 @@ function updateInteraction() {
         dockPressed = true;
         snapped = false;
 
-
         currentStartDock = this;
 
         if(!state) {
 
             $('.snapDock').mouseenter(function() {
+
 
                 currentSnapDock = this;
 
@@ -163,6 +162,8 @@ function updateInteraction() {
                 snapNodeId = getNodeId(this);
                 snapDockId = getDockId(this);
                 snapDockSide = getDockSide(this);
+                thereAnotherLink = $(this).attr('state') || false;
+
                 if((dockSide != snapDockSide) && (nodeId != snapNodeId)) {
 
                     // position of the dock to snap to
@@ -218,6 +219,10 @@ function updateInteraction() {
                     removeCurve(nodeId+'-'+dockId);
 
                 } else if(snapped) {
+
+                    if(thereAnotherLink) {
+                        $('path[class*="'+snapNodeId+'-'+snapDockId+'"]').remove();
+                    }
 
                     // link is snapped and mouse is up
                     var startId = nodeId + '-' + dockId;
