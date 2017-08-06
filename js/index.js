@@ -20,6 +20,10 @@ var initialNode;
 var initialDock;
 
 function updateInteraction() {
+
+    // initialize selection of nodes
+    mh.select()
+
     var startX;
     var startY;
     var diffX;
@@ -33,12 +37,17 @@ function updateInteraction() {
         // the following is to be avoided if no links are connected to this node.
         // $('path[class*='+nodeId+']').length gives the number of links connected to this node
         start: function() {
+            nodeId = $(this).attr('class').split(' ')[1];
+            nbDocks = $('path[class*='+nodeId+']').length
+
+            // correct way of accessing the data
+            node[nodeId].select();
+            //
+
             links = {};
             startX = $(this).offset().left;
             startY = $(this).offset().top;
 
-            nodeId = $(this).attr('class').split(' ')[1];
-            nbDocks = $('path[class*='+nodeId+']').length
 
             if(nbDocks) {
 
@@ -100,7 +109,7 @@ function updateInteraction() {
 
         if (state) {
             //change the state back to undefined
-            $$(this)
+
             $(this).attr('state','')
             state = '';
 
@@ -142,11 +151,11 @@ function updateInteraction() {
 
 
         currentStartDock = this;
-        $$('state?')
+
         if(!state) {
 
             $('.snapDock').mouseenter(function() {
-                $$('entering')
+
                 currentSnapDock = this;
 
                 $('body').unbind('mousemove');
@@ -215,13 +224,13 @@ function updateInteraction() {
                     var endId = snapNodeId + '-' + snapDockId;
                     var pathId = (dockSide == 'left')  ? endId + '-' + startId : startId + '-' + endId;
 
-                    if(inDOM('#'+pathId)) {
-                        // link already exists, remove current displayed curve (already registered in Nodes)
+                    if(exist('#'+pathId)) {
+                        // link already exists, remove current displayed curve (already registered in node)
 
                         removeCurve(startId);
 
                     } else {
-                        // link doesn't exist, so we can save it by changing the id name and sending the connection to Nodes
+                        // link doesn't exist, so we can save it by changing the id name and sending the connection to node
 
                         // change the id of this link since it has now a determined dock and node start and end point
 
@@ -236,8 +245,8 @@ function updateInteraction() {
 
                         $('#'+startId).attr('id',pathId).attr('class',pathClass)
 
-                        // register the connection in the Nodes object
-                        Nodes.connect(nodeId,dockId,snapNodeId,snapDockId,[dockX,dockY,snapDockX,snapDockY]);
+                        // register the connection in the node object
+                        //node.connect(nodeId,dockId,snapNodeId,snapDockId,[dockX,dockY,snapDockX,snapDockY]);
 
                     }
 
@@ -250,11 +259,7 @@ function updateInteraction() {
 
 }
 
-/*var snapLink = function(dockSide,nodeId,dockId,snapNodeId,snapDockId,positions) {
-    //$$('snapped');
-    drawCurve(dockSide,positions[0],positions[1],positions[2],positions[3]);
-    Nodes.connect(nodeId,dockId,snapNodeId,snapDockId,positions);
-}*/
+
 
 var getDockSide = function(element) {
     return $(element).parent().attr('class').split(' ')[2];
@@ -265,14 +270,4 @@ var getNodeId = function(element) {
 }
 var getDockId = function(element) {
     return $(element).parents('.parameter').attr('class').split(' ')[1]
-}
-
-var $$ = function(a) {
-    console.log(a);
-}
-
-var inDOM = function(id) {
-
-    return $(id).length;
-
 }

@@ -1,3 +1,8 @@
+class Curve {
+
+
+
+}
 var getPath = function(startX, startY, endX, endY) {
 
     // M
@@ -66,7 +71,7 @@ var drawCurve = function(pathId,side,startX,startY,endX,endY) {
 }
 
 var snapOffCurve = function() {
-    
+
 }
 
 var appendSVG = function(html) {
