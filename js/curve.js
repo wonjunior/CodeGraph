@@ -1,3 +1,4 @@
+// documention for the Class name Curve for github doc
 class Curve {
 
 
