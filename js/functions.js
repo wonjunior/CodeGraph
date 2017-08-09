@@ -32,3 +32,7 @@ var isset = function() {
   } return true;
 
 }
+
+var wait = function(fn) {
+    setTimeout(function() { fn() }, 0)
+}
