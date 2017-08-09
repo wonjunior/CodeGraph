@@ -2,7 +2,7 @@ body {
     font-weight: 500;
     font-family: Calibri;
     background: url('https://i.stack.imgur.com/GKpHa.png');
-    background: url('https://image.ibb.co/cSVaUk/background.png');
+    background: url('https://image.ibb.co/mZU0hF/background.png');
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -83,6 +83,7 @@ svg {
 }
 .container {
     width: 124px;
+    z-index: 1;
     border-radius: 12px;
     position: absolute;
     left: 234px;
