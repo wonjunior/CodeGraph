@@ -1,28 +1,4 @@
 /*
-** Queue class is an extension of Object
-** it adds some useful methods to manipulate objects
-** an Object type can become a Queue type with `new Queue(object)`
-** however Queue objects are usually empty on instantiation
-*/
-
-class Queue extends Object {
-
-
-    /*
-    ** self.add(other) takes an Object type as parameter
-    ** merges the two objects together and return an Object type
-    ** .add() is the same as .assign (from Object) with the exception that it affects the object
-    ** directly, no assignment needed. Therefore the syntax is more suitable
-    */
-    add(other) {
-
-        return Object.assign(this, other);
-
-    }
-
-}
-
-/*
 ** GraphInterpreter class (GI) class interprets and runs the code. It's a linear, direct interpreter
 ** it runs by steps: every step the GI processes an array, when the array is empty it stops
 ** more information can be found in interpreter.md and algorithm.md on how it runs
