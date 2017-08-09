@@ -1,5 +1,19 @@
+/*
+** Queue class is an extension of Object
+** it adds some useful methods to manipulate objects
+** an Object type can become a Queue type with `new Queue(object)`
+** however Queue objects are usually empty on instantiation
+*/
+
 class Queue extends Object {
 
+
+    /*
+    ** self.add(other) takes an Object type as parameter
+    ** merges the two objects together and return an Object type
+    ** .add() is the same as .assign (from Object) with the exception that it affects the object
+    ** directly, no assignment needed. Therefore the syntax is more suitable
+    */
     add(other) {
 
         return Object.assign(this, other);
@@ -8,8 +22,20 @@ class Queue extends Object {
 
 }
 
+/*
+** GraphInterpreter class (GI) class interprets and runs the code. It's a linear, direct interpreter
+** it runs by steps: every step the GI processes an array, when the array is empty it stops
+** more information can be found in interpreter.md and algorithm.md on how it runs
+** an instance is created when the interpreter is run
+*/
 class GraphInterpreter {
 
+    /*
+    ** takes a {} of nodes, loops through it and calculates only the calculable nodes
+    ** i.e. nodes that have found all their argument
+    ** it returns a Queue of the vertices that have been calculated and their values
+    ** exemple: {'node_1-dock_5': 52, 'node_3-dock_3': 100}
+    */
     calculate(nodes) {
 
         var verts = new Queue();
@@ -23,6 +49,11 @@ class GraphInterpreter {
 
     }
 
+    /*
+    ** takes a {} of vertices, usually returned from calculate(), finds out to which sockets
+    ** each vertex is connected and then save their values to those sockets
+    ** the method returns an array of affected nodes for the next interpretation step
+    */
     analyse(vertices) {
 
         let newVerts = new Queue();
@@ -37,7 +68,7 @@ class GraphInterpreter {
 
                     let value = vertices[id];
 
-                    let [nd,dk] = verts[i].split('-');
+                    let [nd, dk] = verts[i].split('-');
 
                     nd = this.saveParameter(nd, dk, value);
 
@@ -50,6 +81,10 @@ class GraphInterpreter {
 
     }
 
+    /*
+    ** takes a string corresponding to the id of a vertex
+    ** the method returns an array of dockIds to which the vertex is connected
+    */
     getTargets(vertex) {
 
         let paths = $('path[class*='+vertex+']');
@@ -63,6 +98,10 @@ class GraphInterpreter {
 
     }
 
+    /*
+    ** takes a nodeId, a dockId and a value
+    ** adds the value in the node object
+    */
     saveParameter(nd, dk, value) {
 
         let dockNb = dk.split('_')[1] - 1;
@@ -77,7 +116,7 @@ class GraphInterpreter {
 
 gi = new GraphInterpreter();
 
-
+// testing the interpreter
 let vertices = node;
 wait(function() {
 
