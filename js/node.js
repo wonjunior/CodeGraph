@@ -1,14 +1,25 @@
+class Path {
+
+    exist(vertex) {
+
+        return !!$('path[class*='+vertex+']').length;
+
+    }
+}
+
+var path = new Path();
+
 class Node {
 
-    select() {
+    static count() {
 
-        ui.select(this.$)
+        return Object.keys(node).length;
 
     }
 
     constructor(obj) {
 
-        nodeId = 'node_' + String(node.count()+1);
+        nodeId = 'node_' + String(Node.count()+1);
 
         this.id = nodeId;
         this.$ = $('.'+nodeId);
@@ -27,7 +38,19 @@ class Node {
     }
 
 
+    select() {
+
+        ui.select(this.$)
+
+    }
+
+    isCalculable() {
+
+        return this.totalNbEntries == this.nbEntries;
+
+    }
+
+
 }
 
 var node = {}
-node.count = function() { return Object.keys(node).length-2; }
