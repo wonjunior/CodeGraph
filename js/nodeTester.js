@@ -1,30 +1,18 @@
 new Node({
-  label: 'add',
-  position: [100,200],
+  label: 'node_1',
+  position: [300,350],
   input: ['first','second'],
   output: ['sum'],
   argument: [,],
   return: [],
   function: function() {
-      return new Obj(this.return).bind([this.argument[0]+this.argument[1]]);
+        return new Obj(this.return).bind([this.argument[0]+this.argument[1]]);
   }
 })
 
 new Node({
-  label: 'substract',
-  position: [100,200],
-  input: ['first','second'],
-  output: ['sum'],
-  argument: [,],
-  return: [],
-  function: function() {
-      return new Obj(this.return).bind([this.argument[0]+this.argument[1]]);
-  }
-})
-
-new Node({
-    label: 'round',
-    position: [35,80],
+    label: 'node_2',
+    position: [35,100],
     input: [],
     output: ['life','state'],
     argument: [100,22],
@@ -34,8 +22,8 @@ new Node({
     }
 });
 new Node({
-    label: 'Muliply',
-    position: [300,300],
+    label: 'node_3',
+    position: [600,300],
     input: ['int', 'int', 'int'],
     output: ['int'],
     argument: [,,],
@@ -46,20 +34,20 @@ new Node({
 })
 
 new Node({
-label: 'Substract',
+label: 'node_4',
 position: [250,150],
 input: ['int','int'],
 output: ['int'],
 argument: [,],
 return: [],
 function: function() {
-    return new Obj(this.return).bind([this.argument[0]-this.argument[1]]);
+    return new Obj(this.return).bind([this.argument[0]+this.argument[1]]);
 }
 });
 
 new Node({
-    label: 'Add',
-    position: [500, 200],
+    label: 'node_5',
+    position: [500, 400],
     input: ['int','int'],
     output: ['int'],
     argument: [,],
@@ -70,18 +58,13 @@ new Node({
 });
 
 new Node({
-    label: 'life',
-    position: [35,200],
-    input: [],
-    output: ['int'],
-    argument: [10],
+    label: 'node_6',
+    position: [475,150],
+    input: ['int'],
+    output: [],
+    argument: [],
     return: [],
     function: function() {
-        return new Obj(this.return).bind(this.argument);
+        console.log(this.argument[0])
     }
 });
-/*
-var vertices = node.getCalculable(node.all)
-
-node.findParameters(vertices)
-*/
