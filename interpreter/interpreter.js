@@ -1,5 +1,5 @@
 /*
-** GraphInterpreter class (GI) class interprets and runs the code. It's a linear, direct interpreter
+** GraphInterpreter class interprets and runs the code. It's a linear, direct interpreter
 ** it runs by steps: every step the GI processes an array, when the array is empty it stops
 ** more information can be found in interpreter.md and algorithm.md on how it runs
 ** an instance is created when the interpreter is run
