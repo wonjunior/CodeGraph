@@ -12,10 +12,10 @@ Node based programming tool that allows you to create code without actually writ
 - [x] Basic node UI
 - [x] Link handling (link, unlink)
 - [x] grab and move nodes around
-- [x] direct graph interpreter
 
 **WIP**
 - [ ] search bar to create new nodes
+- [ ] direct graph interpreter
 
 **PLANNED**
 - [ ] work frame: zoom and pan around view
