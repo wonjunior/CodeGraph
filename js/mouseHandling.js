@@ -24,6 +24,24 @@ class MouseHandling {
 
     }
 
+    stick(id) {
+
+        $(document).mousemove( () => $('.'+id).css('left',event.pageX-20).css('top',event.pageY-10) );
+        this.drop();
+
+    }
+
+    drop(id) {
+
+        $(document).mousedown(function() {
+            $(document).unbind('mousemove').unbind('mousedown');
+            wait( () => ui.update())
+        });
+
+
+
+    }
+
 }
 
 var mh = new MouseHandling();
