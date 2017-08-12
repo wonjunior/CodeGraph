@@ -1,10 +1,15 @@
 # CodeGraph
 Node based programming tool that allows you to create code without actually writing code.
 
-### UI preview:
+## UI preview:
 
+### Linking system
 ![alt text](https://image.ibb.co/kefs9v/preview_6_8_17.png)
 
+### The finder
+![alt text](https://image.ibb.co/nxb1Ra/finder_demo.gif)
+
+-----
 
 ### Roadmap
 
