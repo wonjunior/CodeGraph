@@ -1,5 +1,11 @@
 class UserInterface {
 
+    constructor() {
+
+        this.searching = false;
+
+    }
+
     deselect() {
 
         $('.container#selected').removeAttr('id');
@@ -19,6 +25,7 @@ class UserInterface {
 
     }
 
+    /** !!!!!!! this needs to go somewhere else !!!!!!!!!!! **/
     getNodeHTML(node) {
 
         var html;
@@ -79,6 +86,23 @@ class UserInterface {
         $('body').prepend(nodeHTML);
 
         ui.update();
+
+    }
+
+    showSearch() {
+
+        this.searching = true;
+        $('.search-modal').show();
+        wait(() => $('#search-input').focus());
+
+    }
+
+    hideSearch() {
+
+        this.searching = false;
+        $('#search-input').val('');
+        $('#search-wrap').hide();
+        $('.search-modal').hide();
 
     }
 
