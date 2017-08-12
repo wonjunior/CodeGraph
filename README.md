@@ -7,7 +7,7 @@ Node based programming tool that allows you to create code without actually writ
 ![alt text](https://image.ibb.co/kefs9v/preview_6_8_17.png)
 
 ### The finder
-![alt text](https://preview.ibb.co/eX75Kv/finder_demo_2.gif)
+![alt text](https://image.ibb.co/bSwzev/finder_demo_2.gif)
 
 -----
 
