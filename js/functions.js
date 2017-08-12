@@ -3,9 +3,11 @@ var _ = function(a) {
 }
 
 var exist = function(id) {
-
     return $(id).length;
+}
 
+var isEmpty = function(str) {
+    return !str.replace(/\s/g, '').length;
 }
 
 class Obj extends Array {
