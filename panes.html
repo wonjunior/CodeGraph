@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PANES!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="d">
+    <div id="seperation"></div>
+
+    <div id="top">
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+    </div>
+    <div id="bottom">
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+        <div class="content">Hello World!</div>
+    </div>
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+let _ = function(e) { console.log(e) }
+
+class Separator {
+
+    constructor() {
+        this.$ = $('#seperation')
+        this.top = $('#top')
+        this.bottom = $('#bottom')
+
+        this.total = $(window).height();
+        this.cfg(arguments)
+    }
+
+    cfg(args) {
+        // arguments are percentages, so multiply by total height
+        this.limit = (this.total * args[1] > 100) ? this.total * args[1] : 100
+        this.set( (this.total * args[0] > this.limit) ? this.total * args[0] : this.total * 0.5)
+    }
+
+    get() {
+        return this.$.offset().top / this.total
+    }
+
+    set(Y) {
+        this.$.css('top', Y+'px')
+        this.top.css('height', Y+'px')
+        this.bottom.css('top', Y+'px')
+    }
+
+    getLimit() {
+        return this.limit
+    }
+
+} let separator = new Separator(4/5,1/2)
+//                            (initial, limit)
+
+
+$(window).resize(function() {
+    separator = new Separator(separator.get(),1/2)
+});
+
+separator.$.mousedown(function() {
+
+    let limit = separator.getLimit();
+
+    $(document).mousemove(function() {
+
+        let mousePosY = event.pageY;
+        separator.set( (mousePosY > limit) ? mousePosY : limit )
+
+    });
+
+    $(document).mouseup(function() {
+
+        $(document).unbind('mousedown').unbind('mouseup').unbind('mousemove');
+
+    })
+
+});
+
+</script>
