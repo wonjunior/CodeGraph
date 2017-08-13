@@ -33,6 +33,3 @@ Node based programming tool that allows you to create code without actually writ
 - [ ] work frame: zoom and pan around view
 - [ ] implementation in electron
 - [ ] user interface
-
-http://img.badgesize.io/WonJunior/CodeGraph/master/index.html[.svg][&label="ee"]
-WonJunior/CodeGraph
