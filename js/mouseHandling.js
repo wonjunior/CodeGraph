@@ -27,6 +27,7 @@ class MouseHandling {
     stick(id) {
 
         $(document).mousemove( () => $('.'+id).css('left',event.pageX-20).css('top',event.pageY-10) );
+        ui.cursor.drop()
         this.drop();
 
     }
@@ -34,7 +35,9 @@ class MouseHandling {
     drop(id) {
 
         $(document).mousedown(function() {
+
             $(document).unbind('mousemove').unbind('mousedown');
+            ui.cursor.default()
             wait( () => ui.update())
         });
 
