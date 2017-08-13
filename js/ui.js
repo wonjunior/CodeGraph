@@ -106,6 +106,20 @@ class UserInterface {
 
     }
 
+
 }
 
 ui = new UserInterface()
+
+ui.cursor = {
+    drop: function() {
+        $('body').css('cursor', 'copy')
+        $('.header').css('cursor', 'copy')
+        $('.snapDock').css('cursor', 'copy')
+    },
+    default: function() {
+        $('body').css('cursor', 'default')
+        $('.header').css('cursor', 'move')
+        $('.snapDock').css('cursor', 'pointer')
+    }
+}
