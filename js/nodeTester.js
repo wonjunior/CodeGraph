@@ -1,4 +1,32 @@
 new Node({
+    name: 'nodeLabel',
+    position: [100, 100],
+    execution: true,
+    label: { input: ['int', 'int'], output: ['int'] },
+    arguments: [],
+    function: (a,b)  =>  { return a+b }
+})
+
+new Node({
+    name: 'nodeLabel',
+    position: [350, 100],
+    execution: true,
+    label: { input: ['int', 'int'], output: ['int'] },
+    arguments: [],
+    function: (a,b)  =>  { return a+b }
+})
+
+new Node({
+    name: 'nodeLabel',
+    position: [200, 300],
+    execution: true,
+    label: { input: ['int', 'int'], output: ['int'] },
+    arguments: [],
+    function: (a,b)  =>  { return a+b }
+})
+
+/*
+new Node({
   label: 'node_1',
   position: [300,350],
   input: ['first','second'],
@@ -68,3 +96,4 @@ new Node({
         console.log(this.argument[0])
     }
 });
+*/

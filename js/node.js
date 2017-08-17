@@ -1,14 +1,3 @@
-class Path {
-
-    exist(vertex) {
-
-        return !!$('path[class*='+vertex+']').length;
-
-    }
-}
-
-var path = new Path();
-
 class Node {
 
     static count() {
@@ -17,24 +6,31 @@ class Node {
 
     }
 
+    static get(el) {
+
+        const nodeId = $(el).attr('class').split(' ')[1];
+        return node[nodeId];
+
+    }
+
+    createId() {
+        return 'node_' + String(Node.count()+1);
+    }
+
     constructor(obj) {
 
-        nodeId = 'node_' + String(Node.count()+1);
 
-        this.id = nodeId;
-        this.$ = $('.'+nodeId);
-        this.label = obj.label;
+        this.id = this.createId();
+        this.name = obj.name;
         this.position = obj.position;
-        this.input = obj.input;
-        this.output = obj.output;
-        this.argument = obj.argument;
-        this.return = obj.return;
+        this.execution = obj.execution;
+        this.label = obj.label;
+        this.arguments = obj.arguments;
         this.function = obj.function;
 
-        node[nodeId] = this;
-
+        node[this.id] = this;
         ui.draw(this);
-        this.$ = $('.'+nodeId);
+        this.$ = $('.'+this.id);
     }
 
 
