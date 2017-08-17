@@ -58,10 +58,10 @@ svg {
     z-index: 1;
 }
 .snapDock {
-    z-index: 999;
-    width: 40px;
-    height: 40px;
-    top: 0px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    top: 4px;
     background-color: rgba(111, 111, 111, 0);
     cursor: copy;
     cursor: pointer;
@@ -73,27 +73,27 @@ svg {
     width: 50%;
     vertical-align: middle;
 }
-.parameter.right > .dock {
+.data.right > .dock {
     right: -6px;
 }
-.parameter.right > .snapDock {
-    right: -20px;
+.data.right > .snapDock {
+    right: -14.5px;
 }
-.parameter.left > .dock {
+.data.left > .dock {
     left: -5px;
     background-color: green;
 }
-.parameter.left > .snapDock {
-    left: -19px;
+.data.left > .snapDock {
+    left: -14px;
 }
 .paramName {
     display: inline-block;
     vertical-align: middle;
 }
-.parameter.right {
+.data.right {
     text-align: right;
 }
-.parameter {
+.data {
     padding-right: 0px;
     height: 25px;
     line-height: 25px;
@@ -101,9 +101,6 @@ svg {
     position: relative;
     padding: 7px 15px;
 }
-/*.paramSpace {
-    height: 28px;
-}*/
 .container#selected {
     border: 1px solid rgba(0, 128, 0, 0.68);
 }
@@ -112,8 +109,6 @@ svg {
     z-index: 1;
     border-radius: 12px;
     position: absolute;
-    left: 234px;
-    top: 122px;
     border: 1px solid rgba(23, 22, 22, 0.4);
 }
 .header {
@@ -130,4 +125,5 @@ svg {
 .body {
     background-color: rgba(111, 111, 111, 0.4);
     border-radius: 0px 0px 12px 12px;
+    padding-top: 10px;
 }
