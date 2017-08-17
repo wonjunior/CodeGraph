@@ -1,5 +1,39 @@
+.execute {
+    margin-right: 6px;
+    margin-left: -5px;
+}
+
+.exe.left {
+    float: left;
+}
+.exe.right {
+    float: right;
+}
+.exe.left > .snapDock {
+    left: -14px;
+    top: 7px;
+}
+.exe.right > .snapDock {
+    right: -15px;
+    top: 7px;
+}
+
+.pin {
+    position: absolute;
+    box-sizing: border-box;
+    z-index: 1;
+    transform: rotate(45deg);
+    height: 12px;
+    width: 12px;
+    top: 16px;
+    background-color: #0012cc;
+    border: 0.09em solid rgba(0, 0, 0, 0.5);
+}
+
+
 body {
     background-color: rgba(19, 21, 26, 0.83);
+    overflow: hidden;
 }
 .search-id {
     display: none;
