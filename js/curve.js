@@ -1,10 +1,6 @@
-// documention for the Class name Curve for github doc
-class Curve {
+let curveFactor = 0.4;
 
-
-
-}
-var getPath = function(startX, startY, endX, endY) {
+let getPath = function(startX, startY, endX, endY) {
 
     // M
     var AX = startX;
@@ -40,7 +36,10 @@ var addCurve = function(pathId,positions) {
 
     var path = getPath(positions[0],positions[1],positions[2],positions[3]);
 
-    var html = '<path id="'+pathId+'" d="'+path+'" stroke="blue" stroke-width="2" fill="none"></path>';
+    const color = (lk.type == 'data') ? 'blue' : 'white';
+    const weight = (lk.type == 'data') ? '2' : '3';
+
+    var html = '<path id="'+pathId+'" d="'+path+'" stroke="'+color+'" stroke-width="'+weight+'" fill="none"></path>';
 
     appendSVG(html);
 }
@@ -53,25 +52,21 @@ var updateCurve = function(pathId,positions) {
 
 }
 
-var drawCurve = function(pathId,side,startX,startY,endX,endY) {
+var drawCurve = function(id, side, a, b) {
 
-    var position = (side == 'right') ? [startX,startY,endX,endY] : [endX,endY,startX,startY]
+    let position = (side == 'right')
+        ? [a[0], a[1], b[0], b[1]]
+        : [b[0], b[1], a[0], a[1]];
 
-    if($('#'+pathId).length) {
+    if(path.exist(id)) {
 
-        // path already exists
-        updateCurve(pathId,position);
+        updateCurve(id, position);
 
     } else {
 
-        // path doesn't exist
-        addCurve(pathId,position);
+        addCurve(id, position);
+
     }
-
-
-}
-
-var snapOffCurve = function() {
 
 }
 
