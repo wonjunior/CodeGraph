@@ -32,7 +32,9 @@ function updateInteraction() {
     var linkId;
     var links = {};
 */
-    mh.draggable();
+    //mh.draggable();
+
+    draggableFix()
 
     mh.unbindAll();
 

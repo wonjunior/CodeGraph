@@ -63,7 +63,8 @@ class Linking {
     offset() {
 
         let pos = arguments[0] ? lk.target.$.offset() : lk.$.offset();
-        return [pos.left + 17, pos.top + 17]
+        pos = view.adjust(pos.left, pos.top, 15.5);
+        return [pos[0], pos[1]]
 
     }
 
@@ -163,7 +164,7 @@ class Linking {
 
     mouseMove() {
 
-        const mousePos = [event.pageX, event.pageY];
+        const mousePos = view.adjust(event.pageX, event.pageY)
         drawCurve(this.id, this.side, this.pos, mousePos);
 
     }
