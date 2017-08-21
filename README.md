@@ -3,7 +3,7 @@
 ![](https://reposs.herokuapp.com/?path=WonJunior/CodeGraph&color=ff69b4)
 [![GitHub issues open](https://img.shields.io/github/issues/WonJunior/CodeGraph.svg?colorB=0576b7)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Google](https://img.shields.io/badge/designed_for-Chrome-pink.svg?logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABX1BMVEX%2F%2F%2F%2BAgID%2F%2FwD%2FVVWAqlXVVVXfYGB3u0Tvz2DjalzZZlN2tD5zsEP2zGH7z2H0xmFzs0DgalrOeVV1sj%2Fha1lzskFzs0DUZVZ1s0D60GLXZldzs0DWZlX2zWHha1r4zmH802T3zWGdl0qtwk7TZFX1sGD2zGCIpkXzxr7q4M%2F2087baVjz8NH%2F8Mhzsz%2BDt0Xa68x0s0DLyVf2wIP20bfc7dHX6cl0tD%2BmzYL%2F7L3%2B02R3sUGmzoXqlYjywbr3zWHvsF7%2F6bN4tEH%2F3450s0DojH50sz%2F%2F3YXha1vVc1jealnx0GD1zGD2y2CjzH90s0DbaFf3zWH80mPebVnha1r2zGB0s0D802O02evG4fB0s0DU6vUplMoplMsplcxYqtNer9dfrdVgsNlkstpvuN10s0B2ut15vd%2Bl0eem0ui53O693u%2FI5PLbaFjealnha1r3zmH80mP90mP%2B02T%2F1GSxJi%2BdAAAAXHRSTlMAAgIDBgYIDxAkKCkqNzpHaH2BhYaSlJWXoqeorbGysri%2BwcPExMTFxcbGx8fIycnJzs7O0dLT1dbW19jZ29vb3uDh4eLk5ebn6enu7vLz9PX4%2BPn5%2Bvv7%2Ff3%2B%2FhCQg88AAADJSURBVHgBRc3VckJBEIThjru75MTd3d3dPdkEGRwW2fcvejlF8V1N%2FzcDq6rJubia7q6Gq7z1Rec89JaBShydlxgBNeuCeAdQsf3M63RiZXmUDhrQKENa730HA5%2BHxpj0GObk%2FnI3ppT6%2BThnucWZyPiUX5Fnk%2BERJyJfkz5Ff7MMr1gXkZ0o92%2FomOEGLUKrEe9%2FeIY71Ydase7WFjauGZJ1QJu4hu3XQQBFPWIdvRuT2S8Glba%2FMSwZ89RfCVdN5%2BL81kBXPSgLPQ5GJsMVSDcAAAAASUVORK5CYII%3D)
+![Chrome](https://goo.gl/zH6atr)
 
 Node based programming tool that allows you to create code without actually writing code.
 
@@ -24,12 +24,18 @@ Node based programming tool that allows you to create code without actually writ
 - [x] Link handling (link, unlink)
 - [x] grab and move nodes around
 - [x] search bar to create new nodes
+- [x] refactoring of the UI linking system with new dock type: 'exe'
+- [x] direct graph interpreter
+- [x] UI : panes implementation
+  - [x] three view available: fullscreen, left-right, top-bottom
+  - [x] separator allows to resize the windows
+  - [x] refresh sp.width and sp.height when resizing page to avoid displacement
+- [x] UI : pan & zoom system all scale fixes
 
 **WIP**
-- [ ] direct graph interpreter
-- [ ] UI: panes (for output console)
+- [ ] Linking system impementing execute links
+- [ ] UI : refactoring of the grab & move UI system
+- [ ] CORE : Node Graph Interpreter V2
 
 **PLANNED**
-- [ ] work frame: zoom and pan around view
-- [ ] implementation in electron
-- [ ] user interface
+- [ ] implementation in electron + user interface
