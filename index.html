@@ -1,29 +1,102 @@
 <!DOCTYPE html>
-<html >
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Node Styling</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>Node Styling</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style-other.css">
+    <link rel="stylesheet" href="css/separator.css">
 </head>
-
 <body>
-</body>
 
-<svg height="1000" width="1000">
-    <!---->
-</svg>
+<section class="window">
 
+  <div class="first">
+
+      <div class="objects" style="top:0;left:0;">
+          <div class="nodes">
+          </div>
+
+          <div class="links">
+              <svg height="10000" width="10000">
+                  <!---->
+              </svg>
+          </div>
+      </div>
+
+      <div class="finder">
+
+          <div class="search-container">
+              <input spellcheck="false" value="" type="text" id="search-input" onkeyup="finder.search(this.value)" placeholder="Search node...">
+              <div id="search-wrap">
+                  <table id="search-table">
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="add"><td>AAS</td></tr>
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="sub"><td>Sub</td></tr>
+                      <tr node-type="add"><td>AnAS</td></tr>
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="add"><td>Add</td></tr>
+                      <tr node-type="add"><td>AnAS</td></tr>
+                      <tr node-type="sub"><td>Sub</td></tr>
+                  </table>
+              </div>
+          </div>
+
+      </div>
+
+      <div class="footer">
+          <div class="signature s-left"># testfile.cg</div>
+          <div class="signature s-right">CodeGraph</div>
+      </div>
+
+      <div class="panes-btn expand" id="col-expand"><div></div></div>
+      <div class="panes-btn expand" id="row-expand"><div></div></div>
+
+  </div>
+  <div class="separator"></div>
+  <div class="last">
+      <div class="panes-btn" id="full-col"><div></div></div>
+      <div class="panes-btn" id="full-row"><div></div></div>
+  </div>
+</section>
+
+
+
+<js>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
 
     <script src="js/functions.js"></script>
+
+    <script src="js/finder.js"></script>
+
     <script src="js/index.js"></script>
     <script src="js/curve.js"></script>
     <script src="js/index.js"></script>
     <script src="js/MouseHandling.js"></script>
+
+    <script src="js/path.js"></script>
+    <script src="js/linking.js"></script>
+
     <script src="js/node.js"></script>
-    <script src="js/dock.js"></script>
     <script src="js/ui.js"></script>
-    <script src="interpreter/interpreter.js"></script>
+
+    <script src="js/library.js"></script>
+
     <script src="js/nodeTester.js"></script>
-</html>
+
+    <script src="interpreter/interpreter-v2.js"></script>
+    <script src="js/panes-v2.js"></script>
+
+</js>
+
+</body>
