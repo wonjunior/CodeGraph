@@ -54,7 +54,7 @@ var updateCurve = function(pathId,positions) {
 
 var drawCurve = function(id, side, a, b) {
 
-    let position = (side == 'right')
+    const position = (side == 'right')
         ? [a[0], a[1], b[0], b[1]]
         : [b[0], b[1], a[0], a[1]];
 
