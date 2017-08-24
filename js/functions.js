@@ -63,7 +63,3 @@ class Queue extends Object {
     }
 
 }
-
-function count(obj) {
-    return Object.keys(obj).length;
-}
