@@ -13,18 +13,18 @@ class Node {
 
     }
 
-    createId() {
-        return 'node_' + String(Node.count()+1);
-    }
-
     constructor(obj) {
 
-
         this.id = this.createId();
+        if (obj.initializer) {
+            new Stream(this.id);
+        } else if (obj.dock.input.length == 0) {
+            this.isConstant = true;
+        }
+
         this.name = obj.name;
         this.position = obj.position;
-        this.execution = obj.execution;
-        this.label = obj.label;
+        this.dock = obj.dock;
         this.arguments = obj.arguments;
         this.function = obj.function;
 
@@ -33,20 +33,18 @@ class Node {
         this.$ = $('.'+this.id);
     }
 
+    createId() {
+        return 'node_' + String(Node.count()+1);
+    }
 
     select() {
-
         ui.select(this.$)
-
     }
 
-    isCalculable() {
-
-        return this.totalNbEntries == this.nbEntries;
-
+    getDocksRef() {
+    	return this.$.find('.data.left').get()
+            .map((el) => this.id+'-'+$(el).attr('class').split(' ')[1]);
     }
 
 
-}
-
-var node = {}
+} var node = {};
