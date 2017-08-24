@@ -16,11 +16,22 @@ class Linking {
         lk.snapped = false;
         if (this.occupied) {
 
-            lk.unoccupy()
+            if (this.side == 'left') {
+                // RENAME THOSE METHODS FOR CLARITYs
 
-            lk.findOccupant()
+                lk.unoccupy();
+
+                lk.findOccupant();
+
+            } else if (this.type == 'exe') {
+
+                lk.updateExisting();
+
+            }
+
 
         }
+
 
         if (!this.occupied) {
 
@@ -35,18 +46,31 @@ class Linking {
         }
 
         $('.snapDock').mouseleave(function() {
+
             lk.mouseLeave();
+
         })
 
     }
 
+    updateExisting() {
+
+        this.occupied = false;
+        let oldTargetDock = path.chgAttr(this.id);
+
+        // TO BE REVIEWED
+        let a, b;
+        [a, b] = oldTargetDock.split('-');
+        $('.'+a).find('.'+b+' > .snapDock').attr('state', '');
+
+    }
+
     unoccupy() {
-        lk.$.attr('state', '');
         lk.occupied = false;
+        lk.$.attr('state', '');
     }
 
     findOccupant() {
-
         const pathId = path.linkedTo();
 
         const startDock = path.startDock(pathId)
@@ -57,6 +81,7 @@ class Linking {
         this.pos = this.offset();
 
         path.switchId(pathId, this.id);
+        if(this.type == 'exe') { this.occupied = false }
 
     }
 
@@ -89,22 +114,38 @@ class Linking {
 
     mouseUp() {
 
-        /**********/
+        /**************************/
         $('body').unbind('mousemove')
         $('body').unbind('mouseup')
         $('.snapDock').unbind('mouseenter')
         $('.snapDock').unbind('mouseleave')
-        /**********/
+        /**************************/
 
         if (!this.snapped) {
 
             this.remove();
 
+            if (this.type == 'exe') {
+
+                this.unoccupy();
+
+            }
+
         } else if(this.snapped) {
 
             if(this.target.occupied) {
 
-                path.removeOccupant();
+                // this variable is only used in the the below if stmt
+                let oldId = path.removeOccupant();
+
+                if (this.type == 'exe') {
+
+                    let freedDock = oldId[0] == this.target.id ? oldId[1] : oldId[0]
+                    let a, b;
+                    [a, b] = freedDock.split('-');
+                    $('.'+a).find('.'+b+' > .snapDock').attr('state', '')
+
+                }
 
             } this.save();
 
@@ -114,20 +155,28 @@ class Linking {
 
     save() {
 
+        // QUITE SHADDY TO BE HONEST...
         const attr = path.orientAttr()
 
-        lk.occupy(attr[0]);
-        path.setAttr(this.id, attr[1])
+        if (this.type == 'exe') {
+
+            lk.occupy(attr[0]);
+
+        } else {
+
+            lk.occupy([attr[0][0]]);
+
+        } path.setAttr(this.id, attr[1])
 
     }
 
-    orientPathName() {
+    occupy(a) {
 
-    }
+        for (let i in a) {
 
-    occupy(el) {
+            a[i].attr('state', true);
 
-        el.attr('state', true);
+        } a[0].attr(this.id+','+this.target.id);
 
     }
 

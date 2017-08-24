@@ -1,7 +1,14 @@
 class Path {
 
+    search(id) {
+        return $('.'+id);
+    }
+
     removeOccupant() {
-        $('path[class*="'+lk.target.id+'"]').remove();
+        let el = $('path[class*="'+lk.target.id+'"]');
+        let oldPath = el.attr('class').split(' ');
+        el.remove();
+        return oldPath;
     }
 
     switchId(id, newId) {
@@ -16,20 +23,27 @@ class Path {
     }
 
     orientAttr() {
-        let a, b, c;
+        let a, b, c, d;
 
         if (lk.side == 'right') {
-            a = lk.id; b = lk.target.id; c = lk.target.$;
+            a = lk.id; b = lk.target.id; c = lk.target.$; d = lk.$;
         } else {
-            a = lk.target.id; b = lk.id; c = lk.$;
+            a = lk.target.id; b = lk.id; c = lk.$; d = lk.target.$;
         }
 
-        return [c, [a+'-'+b, a+' '+b]]
+        return [[c, d], [a+'-'+b, a+' '+b]]
 
     }
 
     setAttr(current, attr) {
         $('#'+current).attr('id', attr[0]).attr('class', attr[1]);
+    }
+
+    chgAttr(dockId) {
+        let targetDock = $('.'+dockId).attr('class').split(' ')[1];
+        $('.'+dockId).attr('id', dockId).attr('class', '');
+        _($('.'+dockId).attr('id', dockId))
+        return targetDock;
     }
 
     linkedTo() {
