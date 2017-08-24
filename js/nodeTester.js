@@ -1,28 +1,45 @@
 new Node({
-    name: 'nodeLabel',
-    position: [100, 100],
-    execution: true,
-    label: { input: ['int', 'int'], output: ['int'] },
-    arguments: [],
-    function: (a,b)  =>  { return a+b }
+    initializer: true,
+    name: 'node_1',
+    position: [250, 200],
+    dock: { execution: 'right', input: [], output: [] },
 })
 
 new Node({
-    name: 'nodeLabel',
-    position: [350, 100],
-    execution: true,
-    label: { input: ['int', 'int'], output: ['int'] },
-    arguments: [],
-    function: (a,b)  =>  { return a+b }
+    initializer: true,
+    name: 'node_2',
+    position: [150, 100],
+    dock: { execution: 'right', input: [], output: [] },
 })
 
 new Node({
-    name: 'nodeLabel',
-    position: [200, 300],
-    execution: true,
-    label: { input: ['int', 'int'], output: ['int'] },
+    name: 'console.log()',
+    position: [690, 245],
+    dock: { execution: 'both', input: ['int'], output: [] },
     arguments: [],
-    function: (a,b)  =>  { return a+b }
+    function: (args)  => [`console.log(`+args[0]+`)`]
+})
+
+new Node({
+    name: 'add',
+    position: [500, 325],
+    dock: { execution: 'none', input: ['int', 'int'], output: ['int'] },
+    arguments: [],
+    function: (args)  =>  [String(args[0])+` + `+String(args[1])]
+})
+
+new Node({
+    name: 'node_5',
+    position: [300, 300],
+    dock: { execution: 'none', input: [], output: ['int'] },
+    function: ()  =>  [5]
+})
+
+new Node({
+    name: 'node_6',
+    position: [300, 400],
+    dock: { execution: 'none', input: [], output: ['int'] },
+    function: ()  =>  [2]
 })
 
 /*
