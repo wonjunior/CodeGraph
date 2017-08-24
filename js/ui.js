@@ -29,8 +29,14 @@ class UserInterface {
         return '<div class="data '+prefix+'dock_'+i+ ' ' +side+'"><div class="snapDock" state=""></div><div class="dock"></div><div class="paramName">'+label+'</div></div>';
     }
 
-    formatExeDock() {
-        return '<div class="execute"><div class="exe Edock_0 left"><div class="pin"></div><div class="snapDock" state=""></div></div><div class="exe Edock_1 right"><div class="pin"></div><div class="snapDock" state=""></div></div></div>';
+    formatExeDock(type) {
+        if (type == 'none') {
+            return '';
+        } else if (type == 'both') {
+            return '<div class="execute"><div class="exe Edock_0 left"><div class="pin"></div><div class="snapDock" state=""></div></div><div class="exe Edock_1 right"><div class="pin"></div><div class="snapDock" state=""></div></div></div>';
+        } else {
+            return '<div class="execute"><div class="exe Edock_1 right"><div class="pin"></div><div class="snapDock" state=""></div></div></div>';
+        }
     }
 
     formatHeader(pos, id, name) {
@@ -38,25 +44,21 @@ class UserInterface {
     }
 
     getNodeHTML(node) {
-
         var html = this.formatHeader(this.formatPos(node.position), node.id, node.name);
 
-        if (node.execution) {
+        html += this.formatExeDock(node.dock.execution);
 
-            html += this.formatExeDock();
+        html += '<div class="leftblock">'
 
-        } html += '<div class="leftblock">'
+        for (let i in node.dock.input) {
 
-
-        for (let i in node.label.input) {
-
-            html += this.formatDock('left', String(i), node.label.input[i]);
+            html += this.formatDock('left', String(i), node.dock.input[i]);
 
         } html += '</div><div class="rightblock">';
 
-        for (let i in node.label.output) {
+        for (let i in node.dock.output) {
 
-            html += this.formatDock('right', String(i), node.label.input[i]);
+            html += this.formatDock('right', String(i), node.dock.output[i]);
 
         } html += '</div></div></div>';
 
@@ -74,7 +76,7 @@ class UserInterface {
 
         var nodeHTML = this.getNodeHTML(node);
 
-        $('body').prepend(nodeHTML);
+        $('.nodes').prepend(nodeHTML);
 
         ui.update();
 
@@ -83,7 +85,7 @@ class UserInterface {
     showSearch() {
 
         this.searching = true;
-        $('.search-modal').show();
+        $('.finder').show();
         wait(() => $('#search-input').focus());
 
     }
@@ -93,7 +95,7 @@ class UserInterface {
         this.searching = false;
         $('#search-input').val('');
         $('#search-wrap').hide();
-        $('.search-modal').hide();
+        $('.finder').hide();
 
     }
 
