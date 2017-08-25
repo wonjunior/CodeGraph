@@ -17,7 +17,7 @@ class Linking {
         if (this.occupied) {
 
             if (this.side == 'left') {
-                // RENAME THOSE METHODS FOR CLARITYs
+                // RENAME THOSE METHODS FOR CLARITY
 
                 lk.unoccupy();
 

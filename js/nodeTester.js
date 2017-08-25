@@ -15,31 +15,29 @@ new Node({
 new Node({
     name: 'console.log()',
     position: [690, 245],
-    dock: { execution: 'both', input: ['int'], output: [] },
-    arguments: [],
+    dock: { execution: 'both', input: [``], output: [] },
     function: (args)  => [`console.log(`+args[0]+`)`]
 })
 
 new Node({
     name: 'add',
     position: [500, 325],
-    dock: { execution: 'none', input: ['int', 'int'], output: ['int'] },
-    arguments: [],
-    function: (args)  =>  [String(args[0])+` + `+String(args[1])]
+    dock: { execution: 'none', input: [``, ``], output: ['int'] },
+    function: (args)  =>  [args[0]+` + `+args[1]]
 })
 
 new Node({
-    name: 'node_5',
+    name: 'var1',
     position: [300, 300],
     dock: { execution: 'none', input: [], output: ['int'] },
-    function: ()  =>  [5]
+    function: ()  =>  [`var1`]
 })
 
 new Node({
-    name: 'node_6',
+    name: 'var2',
     position: [300, 400],
     dock: { execution: 'none', input: [], output: ['int'] },
-    function: ()  =>  [2]
+    function: ()  =>  [`var2`]
 })
 
 /*
