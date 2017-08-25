@@ -26,7 +26,15 @@ class UserInterface {
 
     formatDock(side, i, label) {
         let prefix = (side == 'right') ? 'O' : 'I';
-        return '<div class="data '+prefix+'dock_'+i+ ' ' +side+'"><div class="snapDock" state=""></div><div class="dock"></div><div class="paramName">'+label+'</div></div>';
+        return [
+            '<div class="data '+prefix+'dock_'+i+ ' ' +side+'">',
+                '<div class="snapDock" state=""></div>',
+                '<div class="dock"></div>',
+                '<div class="paramContainer">',
+                    (side == 'left') ? '<input required="required" type="text" value="'+label+'"></input>' : '<div class="paramName">'+label+'</div>',
+                '</div>',
+            '</div>'
+        ].join('');
     }
 
     formatExeDock(type) {
