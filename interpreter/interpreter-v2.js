@@ -58,12 +58,12 @@ class Stream {
             precedingNode = node[precedingNode];
 
             let inputDocks = precedingNode.getDocksRef()
-                .map((inputDock) => findArgument(inputDock));
+                .map((inputDock) => findConstant(inputDock) || findArgument(inputDock));
 
         	Promise.all(inputDocks).then((args) => {
 
                 let arr = [precedingNode.function(args)[i]]
-                _(node[this.current].function(arr)[i])
+                _(node[this.current].function(arr)[i])  // testing only
 
 			});
 
@@ -73,6 +73,10 @@ class Stream {
 
 } let stream = {}; let closed = {};
 
+let findConstant = function(dockRef) {
+    let nd, dk; [nd, dk] = dockRef.split('-');
+    return $('.'+nd).find('.'+dk).find('input').val();
+}
 
 let findArgument = function(dockId) {
 
@@ -88,7 +92,7 @@ let findArgument = function(dockId) {
  		} else {
 
 			let inputDocks = currentNode.getDocksRef()
-                .map((inputDock) => findArgument(inputDock)); // || inputDock.isConstant();
+                .map((inputDock) => findConstant(inputDock) || findArgument(inputDock)); // carefull here
 
 			Promise.all(inputDocks).then((args) => {
 
