@@ -14,43 +14,66 @@
 
 <section class="window">
 
-  <div class="first">
+    <div class="objects" style="top:0;left:0;">
 
-      <button class="compileButton" type="button" onclick="compile()">Interpret Graph</button>
+        <div class="nodes">
+            <!---->
+            <!--<template id="node">-->
+                <div class="container {node.id}" style="left:500px;top:725px">
 
-      <div class="objects" style="top:0;left:0;">
-          <div class="nodes">
-          </div>
+                    <div class="header">
+                        <div class="headerTitle">{node.label}</div>
+                        <div class="leftblock">
+                            <div class="exe {dock.id} left">
+                              <div class="pin"></div>
+                              <div class="snapDock"></div>
+                            </div>
+                        </div><!--
+                        --><div class="rightblock">
+                            <div class="exe {dock.id} right">
+                              <div class="pin"></div>
+                              <div class="snapDock"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="body">
+
+                        <div class="leftblock">
+                            <div class="data {dock.id} left">
+                                <div class="dock"></div>
+                                <div class="snapDock"></div>
+                                <div class="paramContainer">
+                                    <input required="required" type="text">
+                                </div>
+                            </div>
+                            <div class="data {node.id} left">
+                                <div class="dock"></div>
+                                <div class="snapDock"></div>
+                                <div class="paramContainer">
+                                    <input required="required" type="text">
+                                </div>
+                            </div>
+                        </div><!--
+                        --><div class="rightblock">
+                        <div class="data {node.id} right">
+                            <div class="dock"></div>
+                            <div class="snapDock"></div>
+                            <div class="paramContainer">
+                                <div class="paramName"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            <!--</template>-->
+        </div>
 
           <div class="links">
               <svg height="10000" width="10000">
                   <!---->
               </svg>
-          </div>
-      </div>
-
-      <div class="finder">
-
-          <div class="search-container">
-              <input spellcheck="false" value="" type="text" id="search-input" onkeyup="finder.search(this.value)" placeholder="Search node...">
-              <div id="search-wrap">
-                  <table id="search-table">
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="add"><td>AAS</td></tr>
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="sub"><td>Sub</td></tr>
-                      <tr node-type="add"><td>AnAS</td></tr>
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="add"><td>Add</td></tr>
-                      <tr node-type="add"><td>AnAS</td></tr>
-                      <tr node-type="sub"><td>Sub</td></tr>
-                  </table>
-              </div>
           </div>
 
       </div>
@@ -60,46 +83,64 @@
           <div class="signature s-right">CodeGraph</div>
       </div>
 
-      <div class="panes-btn expand" id="col-expand"><div></div></div>
-      <div class="panes-btn expand" id="row-expand"><div></div></div>
-
-  </div>
-  <div class="separator"></div>
-  <div class="last">
-      <div class="panes-btn" id="full-col"><div></div></div>
-      <div class="panes-btn" id="full-row"><div></div></div>
-  </div>
 </section>
+
+
+<template id="dock">
+    <div class="data {dock.id} left">
+      <div class="dock"></div>
+      <div class="paramContainer">
+        <input type="text">
+      </div>
+      <div class="snapDock"></div>
+    </div>
+</template>
 
 
 
 <js>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+    <script src="js/jquery-plugins.js"></script>
 
-    <script src="js/functions.js"></script>
-
-    <script src="js/finder.js"></script>
+<script src="js/finder.js"></script>
+    <!--<script src="js/finder.js"></script>
 
     <script src="js/index.js"></script>
-    <script src="js/curve.js"></script>
     <script src="js/index.js"></script>
     <script src="js/MouseHandling.js"></script>
 
-    <script src="js/path.js"></script>
-    <script src="js/linking.js"></script>
 
-    <script src="interpreter/interpreter-v2.js"></script>
-    <script src="js/node.js"></script>
-    <script src="js/dock.js"></script>
-    <script src="js/ui.js"></script>
+    <script src="interpreter/interpreter-v2.js"></script>-->
+
+    <!-- REFACTORED FILES START -->
+    <script src="js/functions.js"></script>
+    <script src="js/init.js"></script>
 
     <script src="js/library.js"></script>
+    <script src="js/node.js"></script>
+    <script src="js/dock.js"></script>
 
-    <script src="js/nodeTester.js"></script>
+    <!-- TO BE REFACTORED START -->
+    <script src="js/linking.js"></script>
+    <script src="js/curve.js"></script>
+    <script src="js/path.js"></script>
+    <!-- TO BE REFACTORED END -->
 
-    <script src="js/panes-v2.js"></script>
-    <script src="js/inputConstant.js"></script>
+        <!-- UI FILES START-->
+        <script src="js/pan.js"></script>
+        <script src="js/window.js"></script> <!-- NEED REFACTORING -->
+        <!-- UI FILES END -->
+
+    <script src="js/saved.js"></script>
+
+    <script type="text/javascript">
+        pan.handler();
+    </script>
+
+    <!-- REFACTORED FILES END -->
+
+    <script src="js/ui.js"></script>
 </js>
 
 </body>

@@ -9,6 +9,7 @@ class Stream {
     }
 
     next() {
+        
 
         let dockId = $('.'+'node_1').find('.exe').attr('class').split(' ')[1]; // <--- ???
         let pathId = this.current + '-' + dockId;

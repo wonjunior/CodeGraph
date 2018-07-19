@@ -1,0 +1,27 @@
+<style media="screen">
+    body {
+        margin: 10px;
+    }
+    .box {
+        width: 100px;
+        padding: 20px;
+        font-size: 15px;
+        text-align: center;
+        background-color: purple;
+        cursor: pointer;
+    }
+</style>
+
+<body oncontextmenu="return false;">
+<div class="box">
+    Hello World!
+</div>
+</body>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+<script type="text/javascript">
+
+$('.box').draggable();
+
+</script>

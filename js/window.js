@@ -1,5 +1,9 @@
 let clamp = (num, min, max) => num <= min ? min : num >= max ? max : num;
 
+let Window = {
+    objects: $('.objects')
+}
+
 class Separator {
 
     constructor() {
@@ -82,13 +86,13 @@ class View {
 
     }
 
-    __getMouse(mouse) {
+    /*__getMouse(mouse) {
         let x, y;
         x = $('.objects').css('left').split('p')[0];
         y = $('.objects').css('top').split('p')[0];
 
         return String(mouse[0] - x + 'px ') + String(mouse[1] - y + 'px');
-    }
+    }*/
 
     getMouse() {
         let midX = window.innerWidth / 2;

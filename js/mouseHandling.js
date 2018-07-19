@@ -105,7 +105,6 @@ class MouseHandling {
 
     dragStartFn(that) {
         let nd = Node.get(that);
-        _(nd)
         let linkCount = path.count(nd.id)
 
         //nd.select();

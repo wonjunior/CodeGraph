@@ -14,7 +14,6 @@ class Finder {
     }
 
     search() {
-
         let input = arguments[0].toLowerCase()
 
         // handle exceptions

@@ -45,7 +45,7 @@ class Separator {
     }
 
     cfg(args) {
-        // arguments are percentages, so multiply by total height
+        // arguments are percentages,  multiply by total height
         this.limit = (this.total * args[1] > 100) ? this.total * args[1] : 100
         this.set( (this.total * args[0] > this.limit) ? this.total * args[0] : this.total * 0.5)
     }

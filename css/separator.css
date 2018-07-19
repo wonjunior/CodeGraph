@@ -10,7 +10,6 @@ html, body, section {
     top: -23px;
     height: 64px;
     width: 66px;
-    /* background: red; */
     left: 50%;
     transform: translateX(-50%);
     transition: top 0.2s ease;
@@ -220,6 +219,7 @@ html, body, section {
     grid-area: last;
     position: relative;
     overflow: hidden;
+    overflow-y:  auto;
 }
 
 .separator {

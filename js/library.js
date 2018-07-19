@@ -1,21 +1,21 @@
 var lib = {
 
     add: {
-      label: 'add',
-      input: ['int','int'],
-      output: ['sum'],
-      argument: [,],
-      return: [,],
-      function: () => new Obj(this.return).bind([this.argument[0]+this.argument[1]])
+        label: 'add',
+        dock: { execution: 'none', input: [``, ``], output: [``] },
+        function: (args)  =>  [args[0]+` + `+args[1]]
     },
 
-    sub: {
-      label: 'substract',
-      input: ['int','int'],
-      output: ['sub'],
-      argument: [,],
-      return: [,],
-      function: () => new Obj(this.return).bind([this.argument[0]-this.argument[1]])
+    print: {
+        label: 'console.log()',
+        dock: { execution: 'both', input: [``], output: [] },
+        function: (args)  => [`console.log(`+args[0]+`)`]
+    },
+
+    init: {
+        initializer: true,
+        label: 'node_1',
+        dock: { execution: 'right', input: [], output: [] }
     }
 
 }

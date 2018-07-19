@@ -6,7 +6,14 @@
     margin-right: 6px;
     margin-left: -5px;
 }
-
+.exe {
+  padding-right: 0px;
+  height: 25px;
+  /* line-height: 25px; */
+  margin: auto;
+  /* position: relative; */
+  padding: 7px 15px;
+}
 .exe.left {
     float: left;
 }
@@ -27,8 +34,8 @@
     box-sizing: border-box;
     z-index: 1;
     transform: rotate(45deg);
-    height: 12px;
-    width: 12px;
+    height: 15px;
+    width: 15px;
     top: 16px;
     background-color: #0012cc;
     border: 0.09em solid rgba(0, 0, 0, 0.5);

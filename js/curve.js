@@ -1,43 +1,44 @@
 let curveFactor = 0.4;
 
-let getPath = function(startX, startY, endX, endY) {
+class Curve {
 
-    // M
-    var AX = startX;
-    var AY = startY;
+    getPath(leftPos, rightPos) {
 
-    // L
-    var BX = Math.abs(endX - startX) * 0.05 + startX;
-    var BY = startY;
+        const [startX, startY] = leftPos; const [endX, endY] = rightPos;
 
-    // C
-    var CX = startX + Math.abs(endX - startX) * curveFactor;
-    var CY = startY;
-    var DX = endX - Math.abs(endX - startX) * curveFactor;
-    var DY = endY;
-    var EX = - Math.abs(endX - startX) * 0.05 + endX;
-    var EY = endY;
+        const Xdiff = Math.abs(endX - startX);
 
-    // L
-    var FX = endX;
-    var FY = endY;
+        // M
+        const _M = 'M' + startX + ',' + startY;
 
-    // setting up the path string
-    var path  = 'M' + AX + ',' + AY;
-    path += ' L' + BX + ',' + BY;
-    path += ' C' + CX + ',' + CY + ' ' + DX + ',' + DY + ' ' + EX + ',' + EY;
-    path += ' L' + FX + ',' + FY;
+        // L
+        const l1 = Xdiff * 0.05 + startX;
+        const _L1 = 'L' + l1 + ',' + startY;
 
-    return path;
+        // C
+        const c1 = startX + Xdiff * curveFactor;
+        const c2 = endX - Xdiff * curveFactor;
+        const c3 = - Xdiff * 0.05 + endX;
+        const _C = 'C' + c1 + ',' + startY + ' ' + c2 + ',' + endY + ' ' + c3 + ',' + endY
 
-}
+        // L
+        const _L2 = 'L' + endX + ',' + endY;
 
-var addCurve = function(pathId,positions) {
+        // setting up the path string
+        const path = _M + ' ' + _L1 + ' ' + _C + ' ' + _L2  ;
+
+        return path;
+
+    }
+
+}; let curve = new Curve();
+
+/*var addCurve = function(pathId,positions) {
 
     var path = getPath(positions[0],positions[1],positions[2],positions[3]);
 
-    const color = (lk.type == 'data') ? 'blue' : 'white';
-    const weight = (lk.type == 'data') ? '2' : '3';
+    const color = (lk.origin.type == 'data') ? 'blue' : 'white';
+    const weight = (lk.origin.type == 'data') ? '2' : '3';
 
     var html = '<path id="'+pathId+'" d="'+path+'" stroke="'+color+'" stroke-width="'+weight+'" fill="none"></path>';
 
@@ -76,9 +77,4 @@ var appendSVG = function(html) {
     $("svg").html($("svg").html());
 
 }
-
-var removeCurve = function(id) {
-
-    $('#'+id).remove();
-
-}
+*/
