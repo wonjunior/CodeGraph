@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/style-other.css">
     <link rel="stylesheet" href="css/separator.css">
+    <link rel="stylesheet" href="css/node.css">
 </head>
 <body>
 
@@ -22,17 +23,19 @@
                 <div class="container {node.id}" style="left:500px;top:725px">
 
                     <div class="header">
-                        <div class="headerTitle">{node.label}</div>
-                        <div class="leftblock">
-                            <div class="exe {dock.id} left">
-                              <div class="pin"></div>
-                              <div class="snapDock"></div>
-                            </div>
-                        </div><!--
-                        --><div class="rightblock">
-                            <div class="exe {dock.id} right">
-                              <div class="pin"></div>
-                              <div class="snapDock"></div>
+                        <div class="headerTitle">{node.label}{node.label}</div>
+                        <div class="exeblock">
+                            <div class="leftblock">
+                                <div class="exe {dock.id} left">
+                                  <div class="pin"></div>
+                                  <div class="snapDock"></div>
+                                </div>
+                            </div><!--
+                            --><div class="rightblock">
+                                <div class="exe {dock.id} right">
+                                  <div class="pin"></div>
+                                  <div class="snapDock"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,10 +106,8 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
     <script src="js/jquery-plugins.js"></script>
 
-<script src="js/finder.js"></script>
     <!--<script src="js/finder.js"></script>
 
-    <script src="js/index.js"></script>
     <script src="js/index.js"></script>
     <script src="js/MouseHandling.js"></script>
 

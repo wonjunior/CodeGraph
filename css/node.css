@@ -1,0 +1,159 @@
+.header > .exeblock {
+    position: absolute;
+    width: 100%;
+    bottom: calc(50% - 14px);
+}
+
+.dock,
+.snapDock {
+    background-color: #c06;
+    height: 12px;
+    width: 12px;
+    -moz-border-radius: 75px;
+    -webkit-border-radius: 75px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    position: absolute;
+    top: 14px;
+    border: 0.05em solid rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    z-index: 1;
+}
+.snapDock {
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    top: 4px;
+    background-color: rgba(111, 111, 111, 0);
+    cursor: copy;
+    cursor: pointer;
+    border-color: rgba(111, 111, 111, 0);
+}
+.rightblock,
+.leftblock {
+    display: inline-block;
+    width: 50%;
+    vertical-align: middle;
+}
+.data.right > .dock {
+    right: -6px;
+}
+.data.right > .snapDock {
+    right: -14.5px;
+}
+.data.left > .dock {
+    left: -5px;
+    background-color: green;
+}
+.data.left > .snapDock {
+    left: -14px;
+}
+.paramName {
+    vertical-align: middle;
+    width: 41px;
+}
+.data.right {
+    text-align: right;
+}
+.data {
+    padding-right: 0px;
+    height: 25px;
+    line-height: 25px;
+    margin: auto;
+    position: relative;
+    padding: 7px 15px;
+}
+.container#selected {
+    border: 1px solid rgba(0, 128, 0, 0.68);
+}
+.container {
+    width: 128px;
+    z-index: 1;
+    border-radius: 12px;
+    position: absolute;
+    border: 1px solid rgba(23, 22, 22, 0.4);
+}
+.header {
+    border-radius: 12px 12px 0px 0px;
+    background-color: rgba(78, 75, 80, 0.4);
+    position: relative;
+    cursor: move;
+    z-index: 1;
+    height: 100%;
+    line-height: 23px;
+}
+.headerTitle {
+    text-align: center;
+    width: calc(100% - 14px);
+    margin:  auto;
+}
+.body {
+    background-color: rgba(111, 111, 111, 0.4);
+    border-radius: 0px 0px 12px 12px;
+    padding-top: 6px;
+    /* padding-bottom: 6px; */
+    position: relative;
+}
+
+.paramContainer {
+    text-align: center;
+    width: 31px;
+    margin: auto;
+}
+.paramContainer > input {
+    text-align: center;
+    padding: 0;
+    border-width: 0px;
+    line-height: 25px;
+    font-size: 15px;
+    font-family: Arial;
+    font-weight: 500;
+    border-radius: 0px;
+    background-color: rgba(111, 111, 111, 0.02);
+    width: 31px;
+    border: 2px solid transparent;
+}
+.paramContainer > input:valid {
+    border: 2px solid rgba(30, 29, 29, 0.52);
+}
+.nodes   {
+    position: relative;
+}
+
+.execute {
+    margin-right: 6px;
+    margin-left: -5px;
+}
+.exe {
+  padding-right: 0px;
+  height: 25px;
+  width: 7px;
+  margin-left: -7px;
+}
+.exe.left {
+    /* float: left; */
+}
+.exe.right {
+    float: right;
+}
+.exe.left > .snapDock {
+    /* left: 7px; */
+    /* top: 7px; */
+}
+.exe.right > .snapDock {
+    right: -15px;
+    top: 7px;
+}
+
+.pin {
+    box-sizing: border-box;
+    z-index: 1;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 15px;
+    position:  relative;
+    top: calc(50% - 7px);
+    background-color: #0012cc;
+    border: 0.09em solid rgba(0, 0, 0, 0.5);
+}
