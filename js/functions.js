@@ -1,6 +1,6 @@
-/*
-** Miscellaneous functions used throughout the code
-*/
+/**
+  * Miscellaneous functions used throughout the code
+  */
 
 // console.log() handy shortcut
 let _ = (a) => { console.log(a) }
@@ -10,10 +10,3 @@ let isEmpty = (str) => !str.replace(/\s/g, '').length;
 
 // adds the given function to the JS queue of execution
 let wait = (fn) => { setTimeout(() => fn(), 0) }
-
-// map an object with the given function
-let map = function(obj, fn) {
-
-	return Object.keys(obj).map((key, index) => fn(obj[key]));
-
-}

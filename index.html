@@ -13,88 +13,62 @@
 </head>
 <body>
 
-<section class="window">
+<div class="window">
 
     <div class="objects" style="top:0;left:0;">
 
         <div class="nodes">
             <!---->
-            <!--<template id="node">-->
-                <div class="container {node.id}" style="left:500px;top:725px">
-
-                    <div class="header">
-                        <div class="headerTitle">{node.label}{node.label}</div>
-                        <div class="exeblock">
-                            <div class="leftblock">
-                                <div class="exe {dock.id} left">
-                                  <div class="pin"></div>
-                                  <div class="snapDock"></div>
-                                </div>
-                            </div><!--
-                            --><div class="rightblock">
-                                <div class="exe {dock.id} right">
-                                  <div class="pin"></div>
-                                  <div class="snapDock"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="body">
-
-                        <div class="leftblock">
-                            <div class="data {dock.id} left">
-                                <div class="dock"></div>
-                                <div class="snapDock"></div>
-                                <div class="paramContainer">
-                                    <input required="required" type="text">
-                                </div>
-                            </div>
-                            <div class="data {node.id} left">
-                                <div class="dock"></div>
-                                <div class="snapDock"></div>
-                                <div class="paramContainer">
-                                    <input required="required" type="text">
-                                </div>
-                            </div>
-                        </div><!--
-                        --><div class="rightblock">
-                        <div class="data {node.id} right">
-                            <div class="dock"></div>
-                            <div class="snapDock"></div>
-                            <div class="paramContainer">
-                                <div class="paramName"></div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            <!--</template>-->
         </div>
 
-          <div class="links">
-              <svg height="10000" width="10000">
-                  <!---->
-              </svg>
-          </div>
+        <div class="links">
+            <svg height="10000" width="10000">
+                <!---->
+            </svg>
+        </div>
 
-      </div>
+    </div>
 
-      <div class="footer">
-          <div class="signature s-left"># testfile.cg</div>
-          <div class="signature s-right">CodeGraph</div>
-      </div>
+    <div class="footer">
+      <div class="signature s-left"># testfile.cg</div>
+      <div class="signature s-right">CodeGraph</div>
+    </div>
 
-</section>
+</div>
 
+<template id="node">
+    <div class="container" id="{node.id}">
 
-<template id="dock">
-    <div class="data {dock.id} left">
-      <div class="dock"></div>
-      <div class="paramContainer">
-        <input type="text">
-      </div>
+        <div class="header">
+            <div class="headerTitle">{node.label}</div>
+            <div class="exeblock">
+                <div class="leftblock"></div><!--
+                --><div class="rightblock"></div>
+            </div>
+        </div>
+
+        <div class="body">
+            <div class="leftblock"></div><!--
+            --><div class="rightblock"></div>
+        </div>
+
+    </div>
+</template>
+
+<template id="dataDock">
+    <div class="data" id="{dock.id}">
+        <div class="dock"></div>
+        <div class="snapDock"></div>
+        <div class="paramContainer">
+            <input required="required" type="text">
+            <div class="paramName"></div>
+        </div>
+    </div>
+</template>
+
+<template id="exeDock">
+    <div class="exe" id="{dock.id}">
+      <div class="pin"></div>
       <div class="snapDock"></div>
     </div>
 </template>
@@ -119,8 +93,8 @@
     <script src="js/init.js"></script>
 
     <script src="js/library.js"></script>
-    <script src="js/node.js"></script>
-    <script src="js/dock.js"></script>
+    <script src="refactoredJS/node.js"></script>
+    <script src="refactoredJS/dock.js"></script>
 
     <!-- TO BE REFACTORED START -->
     <script src="js/linking.js"></script>
