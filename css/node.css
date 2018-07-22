@@ -1,14 +1,15 @@
 .header > .exeblock {
-    position: absolute;
+    position: relative;
     width: 100%;
     bottom: calc(50% - 14px);
+    pointer-events: none;
 }
 
 .dock,
 .snapDock {
     background-color: #c06;
-    height: 12px;
-    width: 12px;
+    height: 14px;
+    width: 14px;
     -moz-border-radius: 75px;
     -webkit-border-radius: 75px;
     display: inline-block;
@@ -22,9 +23,9 @@
 }
 .snapDock {
     z-index: 2;
-    width: 30px;
-    height: 30px;
-    top: 4px;
+    width: 33px;
+    height: 33px;
+    top: 5px;
     background-color: rgba(111, 111, 111, 0);
     cursor: copy;
     cursor: pointer;
@@ -35,15 +36,16 @@
     display: inline-block;
     width: 50%;
     vertical-align: middle;
+    pointer-events: none;
 }
 .data.right > .dock {
-    right: -6px;
+    right: -7px;
 }
 .data.right > .snapDock {
     right: -14.5px;
 }
 .data.left > .dock {
-    left: -5px;
+    left: -6px;
     background-color: green;
 }
 .data.left > .snapDock {
@@ -51,7 +53,7 @@
 }
 .paramName {
     vertical-align: middle;
-    width: 41px;
+    /* width: 41px; */
 }
 .data.right {
     text-align: right;
@@ -73,6 +75,8 @@
     border-radius: 12px;
     position: absolute;
     border: 1px solid rgba(23, 22, 22, 0.4);
+    top: 100px;
+    left: 200px;
 }
 .header {
     border-radius: 12px 12px 0px 0px;
@@ -85,11 +89,17 @@
 }
 .headerTitle {
     text-align: center;
-    width: calc(100% - 14px);
+    width: 100%;
+    position:  absolute;
     margin:  auto;
+    vertical-align:  middle;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 8px;
 }
 .body {
-    background-color: rgba(111, 111, 111, 0.4);
+    background-color: rgba(111, 111, 111, 0.44);
     border-radius: 0px 0px 12px 12px;
     padding-top: 6px;
     /* padding-bottom: 6px; */
@@ -97,8 +107,8 @@
 }
 
 .paramContainer {
-    text-align: center;
-    width: 31px;
+    /* text-align: center; */
+    /* width: 31px; */
     margin: auto;
 }
 .paramContainer > input {
@@ -113,12 +123,15 @@
     background-color: rgba(111, 111, 111, 0.02);
     width: 31px;
     border: 2px solid transparent;
+    display:  none;
 }
 .paramContainer > input:valid {
     border: 2px solid rgba(30, 29, 29, 0.52);
 }
 .nodes   {
     position: relative;
+    top: 100px;
+    left: 100px;
 }
 
 .execute {
@@ -130,6 +143,7 @@
   height: 25px;
   width: 7px;
   margin-left: -7px;
+  pointer-events: visible;
 }
 .exe.left {
     /* float: left; */
@@ -138,21 +152,24 @@
     float: right;
 }
 .exe.left > .snapDock {
-    /* left: 7px; */
-    /* top: 7px; */
+    left: -16px;
+    /* background: #ff00008f; */
+    top: -1px;
 }
 .exe.right > .snapDock {
     right: -15px;
-    top: -1px;
+    top: -2px;
+    /* background: #ff00005c; */
 }
 
 .pin {
     box-sizing: border-box;
-    z-index: 1;
+    z-index: 3;
     transform: rotate(45deg);
     height: 15px;
     width: 15px;
     position:  relative;
+    cursor:  pointer;
     top: calc(50% - 7px);
     background-color: #0012cc;
     border: 0.09em solid rgba(0, 0, 0, 0.5);

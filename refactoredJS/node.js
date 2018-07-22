@@ -1,19 +1,23 @@
 /*new Node({
-    label: 'var1',
-    position: [300, 300],
-    dock: { execution: 'none', input: [], output: [``] },
-    function: ()  =>  [`var1`]
+    label: 'test1',
+    position: [300, 400],
+    dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'result'} ] },
+    exeDocks: { in: [ {label: 'in1'} ], out: [ {label: 'out'} ] },
+    func: (a,b)  =>  _(this)
 })*/
 
 /*
 Node {
   id: string,
-  element: HTMLElement,
-  set label: ƒ,
-  docks: { in: [ Dock ], out: [ Dock ] },
-  exe: { in: Dock, out: Dock },
   position: [ set x: ƒ, set y: ƒ ],
-  function: ƒ,
+  set label: ƒ,
+  func: ƒ,
+  dataDocks: { in: Array[ Dock ], out: Array[ Dock ] },
+  exeDocks: { in: Array[ Dock ], out: Array[ Dock ] },
+  nodeElement: HTMLElement,
+  dataElement: HTMLElement,
+  exeElement: HTMLElement,
+  labelElement: HTMLElement
 }
 */
 
@@ -32,20 +36,26 @@ class Node {
 
     };
 
+    set position([ x, y ]) {
+
+        this.nodeElement.style.left = x + 'px';
+        this.nodeElement.style.top = y + 'px';
+
+    };
+
     constructor({ label, position, exeDocks, dataDocks, func }) {
 
-        // _(dock)
         Object.assign(this, {
 
             id:  Node.createId(),
-            position,
-            func,
+            func
 
         });
 
         this.createNode();
 
         this.label = label;
+        this.position = position;
 
         this.createDocks(exeDocks, dataDocks);
 
@@ -129,12 +139,13 @@ class Node {
         });
 
         this.nodeElement.id = this.id;
+        this.labelElement.ref = this.id;
 
         Node.canvas.appendChild(this.nodeElement);
 
     }
 
-    select() { UI.select(this.$) }
+    /*select() { UI.select(this.$) }
 
     getDocksRef() {
         return map(this.docks.in, (dock) => dock.ref);
@@ -154,7 +165,7 @@ class Node {
 
         });
 
-    }
+    }*/
 
 
 } let node = {};

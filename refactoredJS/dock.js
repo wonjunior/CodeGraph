@@ -2,6 +2,7 @@ class Dock {
 
     set label(newLabel) {
 
+        // _(this.labelElement)
         if(this.labelElement) {
 
             this.labelElement.textContent = newLabel;
@@ -70,7 +71,7 @@ class Dock {
             pinElement: template.querySelector('.data > .dock'),
             snapeElement: template.querySelector('.data > .snapDock'),
             paramElement: template.querySelector('.data > .paramContainer'),
-            labelElement: template.querySelector('.data > .paramName')
+            labelElement: template.querySelector('.paramContainer > .paramName')
         });
 
         this.dockElement.classList.add(side);
