@@ -134,6 +134,10 @@
     left: 100px;
 }
 
+.links {
+    pointer-events:  none;
+}
+
 .execute {
     margin-right: 6px;
     margin-left: -5px;

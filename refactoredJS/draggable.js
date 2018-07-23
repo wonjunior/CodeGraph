@@ -1,5 +1,4 @@
-// const scale = 1.2;
-// document.querySelector('.frame').style.transform = `scale(${scale})`;
+'use strict'
 
 class Canvas {
 
@@ -68,16 +67,22 @@ class Draggable {
 
 document.addEventListener('mousedown', event => {
 
-    // event.button!
-
-    if(event.target.classList.contains('headerTitle')) {
+    if (event.target.classList.contains('headerTitle')) {
 
         const nodeElement = node[event.target.ref].nodeElement;
-        const drag = new Draggable(event, nodeElement);
+        new Draggable(event, nodeElement);
 
-    } else if(event.target.classList.contains('pin')) {
+    } else if (event.target.classList.contains('pin')) {
 
         _('pin');
+
+    } else if (event.target.classList.contains('objects') && event.button == 2) {
+
+        new Draggable(event, event.target);
+
+    } else {
+
+        _(event.target.classList)
 
     }
 
