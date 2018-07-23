@@ -1,7 +1,7 @@
 /*
 ** Class designed for DOM manipulation
 */
-class Element {
+/*class Element {
 
     constructor(array) {
         this.array = array;
@@ -35,4 +35,4 @@ class UI {
 
     }
 
-}
+}*/

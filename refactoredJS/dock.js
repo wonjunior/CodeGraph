@@ -46,7 +46,7 @@ class Dock {
 
         Object.assign(this, {
             dockElement: template.querySelector('.exe'),
-            pinElement: template.querySelector('.exe > .pin'),
+            pinElement: template.querySelector('.exe > .dock'),
             snapElement: template.querySelector('.exe > .snapDock')
         });
 
@@ -69,7 +69,7 @@ class Dock {
         Object.assign(this, {
             dockElement: template.querySelector('.data'),
             pinElement: template.querySelector('.data > .dock'),
-            snapeElement: template.querySelector('.data > .snapDock'),
+            snapElement: template.querySelector('.data > .snapDock'),
             paramElement: template.querySelector('.data > .paramContainer'),
             labelElement: template.querySelector('.paramContainer > .paramName')
         });

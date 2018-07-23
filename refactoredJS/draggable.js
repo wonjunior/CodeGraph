@@ -59,9 +59,6 @@ class Draggable {
 
     };
 
-    // this.element = null;
-    // this.offset = [];
-
 };
 
 
