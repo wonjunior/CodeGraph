@@ -67,7 +67,7 @@ class Draggable {
 
 document.addEventListener('mousedown', event => {
 
-    if (event.target.classList.contains('headerTitle')) {
+    if (event.target.classList.contains('header') && event.button == 0) {
 
         const nodeElement = node[event.target.ref].nodeElement;
         new Draggable(event, nodeElement);

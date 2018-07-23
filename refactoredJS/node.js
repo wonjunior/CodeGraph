@@ -138,8 +138,9 @@ class Node {
             }
         });
 
+        template.querySelector('.header').ref = this.id;
+
         this.nodeElement.id = this.id;
-        this.labelElement.ref = this.id;
 
         Node.canvas.appendChild(this.nodeElement);
 

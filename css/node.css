@@ -14,7 +14,7 @@
     border-radius: 75px;
     vertical-align: middle;
     position: absolute;
-    top: 14px;
+    /* top: 14px; */
     border: 0.05em solid rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     z-index: 1;
@@ -38,38 +38,30 @@
     /* pointer-events: none; */
 }
 
-.data > .snapDock {
-    background: #2e00ff57;
-    /* position: relative; */
-    /* top: -1px; */
-    /* left: 25px; */
-}
-
-
 .data.right > .dock, .exe.right > .dock {
-    /* right: -6px; */
-    px; */
+
 }
 .data.left > .dock {
-    /* left: -6px; */
     background-color: green;
 }
 
 .paramName {
-    vertical-align: middle;
-    /* width: 41px; */
 }
 .data.right {
     /* text-align: right; */
     /* float:  right; */
+    vertical-align:  middle;
 }
 .data, .exe {
-    /* padding-right: 0px; */
-    height: 25px;
+    height: 45px;
     line-height: 25px;
     margin: auto;
     position: relative;
-    padding: 7px 0px;
+    box-sizing:  border-box;
+    display: inl;
+    vertical-align:  middle;
+}
+.exe {
 }
 .container#selected {
     border: 1px solid rgba(0, 128, 0, 0.68);
@@ -91,6 +83,7 @@
     z-index: 1;
     height: 100%;
     line-height: 23px;
+    padding: 4px 0px;
 }
 .headerTitle {
     text-align: center;
@@ -100,8 +93,8 @@
     vertical-align:  middle;
     top: 50%;
     left: 50%;
+    pointer-events:  none;
     transform: translate(-50%, -50%);
-    padding: 8px;
 }
 .body {
     background-color: rgba(111, 111, 111, 0.44);
@@ -114,10 +107,8 @@
 
 .paramContainer {
     text-align: center;
-    /* width: 31px; */
-    margin: auto;
+    width:  100%;
     color: #030303;
-    /* display:  none; */
 }
 .paramContainer > input {
     text-align: center;
@@ -152,51 +143,50 @@
 }
 
 .exe.left > .dock {
-    /* right: 10px; */
 }
 .exe.right {
-    /* float: right; */
-    /* right: 0px; */
-    /* text-align:  right; */
-    /* position:  relative; */
-    /* padding: 7px 0px; */
 }
 
 .exe > .dock {
-    /* box-sizing: border-box; */
     /* z-index: 3; */
     transform: rotate(45deg);
-    height: 15px;
-    width: 15px;
-    /* position:  relative; */
-    top: calc(50% - 6px);
+    /* height: 15px; */
+    /* width: 15px; */
+    /* top: calc(50% - 6px); */
     background-color: #0012cc;
     border: 0.09em solid rgba(0, 0, 0, 0.5);
     border-radius:  0px;
 }
 
-.exe > .snapDock {
-    /* top: -24px; */
-    background: #ff00005c;
-    /* position:  relative; */
-    /* left: -7px; */
-}
-
 /* dock positioning */
 .left > .dock {
     left: -8px;
+    top: calc(50% - 7px);
 }
 
 .left > .snapDock {
-    left: -15px;
-    top: 7px;
+    top: calc(50% - 15px);
+    left: -17px;
 }
 
 .right > .dock {
-    right: -6px;
+    right: -9px;
+    top: calc(50% - 7px);
 }
 
 .right > .snapDock {
-    right: -14px;
-    top: 7px;
+    right: -17px;
+    top: calc(50% - 15px);
+}
+
+.data > .snapDock {
+    background: #2e00ff57;
+}
+
+.exe > .snapDock {
+    background: #ff00005c;
+}
+
+.data, .exe {
+    border: 1px solid grey;
 }
