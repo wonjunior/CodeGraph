@@ -72,9 +72,9 @@ document.addEventListener('mousedown', event => {
         const nodeElement = node[event.target.ref].nodeElement;
         new Draggable(event, nodeElement);
 
-    } else if (event.target.classList.contains('pin')) {
+    } else if (event.target.classList.contains('dock')) {
 
-        _('pin');
+        _('dock');
 
     } else if (event.target.classList.contains('objects') && event.button == 2) {
 

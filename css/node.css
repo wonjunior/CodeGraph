@@ -7,13 +7,11 @@
 
 .dock,
 .snapDock {
+    pointer-events: visible;
     background-color: #c06;
     height: 14px;
     width: 14px;
-    -moz-border-radius: 75px;
-    -webkit-border-radius: 75px;
-    display: inline-block;
-    position: relative;
+    border-radius: 75px;
     vertical-align: middle;
     position: absolute;
     top: 14px;
@@ -21,13 +19,14 @@
     box-sizing: border-box;
     z-index: 1;
 }
+.dock {
+    cursor: pointer;
+}
 .snapDock {
-    z-index: 2;
-    width: 33px;
-    height: 33px;
-    top: 5px;
+    z-index: 3;
+    width: 30px;
+    height: 30px;
     background-color: rgba(111, 111, 111, 0);
-    cursor: copy;
     cursor: pointer;
     border-color: rgba(111, 111, 111, 0);
 }
@@ -36,35 +35,41 @@
     display: inline-block;
     width: 50%;
     vertical-align: middle;
-    pointer-events: none;
+    /* pointer-events: none; */
 }
-.data.right > .dock {
-    right: -7px;
+
+.data > .snapDock {
+    background: #2e00ff57;
+    /* position: relative; */
+    /* top: -1px; */
+    /* left: 25px; */
 }
-.data.right > .snapDock {
-    right: -14.5px;
+
+
+.data.right > .dock, .exe.right > .dock {
+    /* right: -6px; */
+    px; */
 }
 .data.left > .dock {
-    left: -6px;
+    /* left: -6px; */
     background-color: green;
 }
-.data.left > .snapDock {
-    left: -14px;
-}
+
 .paramName {
     vertical-align: middle;
     /* width: 41px; */
 }
 .data.right {
-    text-align: right;
+    /* text-align: right; */
+    /* float:  right; */
 }
-.data {
-    padding-right: 0px;
+.data, .exe {
+    /* padding-right: 0px; */
     height: 25px;
     line-height: 25px;
     margin: auto;
     position: relative;
-    padding: 7px 15px;
+    padding: 7px 0px;
 }
 .container#selected {
     border: 1px solid rgba(0, 128, 0, 0.68);
@@ -103,13 +108,16 @@
     border-radius: 0px 0px 12px 12px;
     padding-top: 6px;
     /* padding-bottom: 6px; */
-    position: relative;
+    /* position: relative; */
+    pointer-events: none;
 }
 
 .paramContainer {
-    /* text-align: center; */
+    text-align: center;
     /* width: 31px; */
     margin: auto;
+    color: #030303;
+    /* display:  none; */
 }
 .paramContainer > input {
     text-align: center;
@@ -142,39 +150,53 @@
     margin-right: 6px;
     margin-left: -5px;
 }
-.exe {
-  padding-right: 0px;
-  height: 25px;
-  width: 7px;
-  margin-left: -7px;
-  pointer-events: visible;
-}
-.exe.left {
-    /* float: left; */
+
+.exe.left > .dock {
+    /* right: 10px; */
 }
 .exe.right {
-    float: right;
-}
-.exe.left > .snapDock {
-    left: -16px;
-    /* background: #ff00008f; */
-    top: -1px;
-}
-.exe.right > .snapDock {
-    right: -15px;
-    top: -2px;
-    /* background: #ff00005c; */
+    /* float: right; */
+    /* right: 0px; */
+    /* text-align:  right; */
+    /* position:  relative; */
+    /* padding: 7px 0px; */
 }
 
-.pin {
-    box-sizing: border-box;
-    z-index: 3;
+.exe > .dock {
+    /* box-sizing: border-box; */
+    /* z-index: 3; */
     transform: rotate(45deg);
     height: 15px;
     width: 15px;
-    position:  relative;
-    cursor:  pointer;
-    top: calc(50% - 7px);
+    /* position:  relative; */
+    top: calc(50% - 6px);
     background-color: #0012cc;
     border: 0.09em solid rgba(0, 0, 0, 0.5);
+    border-radius:  0px;
+}
+
+.exe > .snapDock {
+    /* top: -24px; */
+    background: #ff00005c;
+    /* position:  relative; */
+    /* left: -7px; */
+}
+
+/* dock positioning */
+.left > .dock {
+    left: -8px;
+}
+
+.left > .snapDock {
+    left: -15px;
+    top: 7px;
+}
+
+.right > .dock {
+    right: -6px;
+}
+
+.right > .snapDock {
+    right: -14px;
+    top: 7px;
 }
