@@ -42,9 +42,10 @@ svg {
     height: 100%;
     pointer-events: none;
 }
+.canvas {/* transform: scale(1.2); */width: 100%;/* border: 10Px solid red; */height: 100%;position:  absolute;box-sizing:  border-box;}
 
 .objects {
-    background: url('https://image.ibb.co/f1RAXF/background.png');
+    background: url(https://image.ibb.co/f1RAXF/background.png);
     font-weight: 500;
     font-family: Calibri;
     position: absolute;

@@ -16,7 +16,7 @@ class Canvas {
 
 };
 
-Canvas.element = document.querySelector('.objects');
+Canvas.element = document.querySelector('.canvas');
 
 
 class Draggable {
