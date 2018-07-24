@@ -29,7 +29,7 @@ class Canvas {
 
     };
 
-    static zoom(zoomIn, scale) {
+    /*static zoom(zoomIn, scale) {
 
         Canvas.updateOrigin();
         Canvas.zoomLevel = scale;
@@ -47,10 +47,9 @@ class Canvas {
 
         Canvas.zoomWrapper.style.transformOrigin = CSSProperty;
 
-    };
+    };*/
 
 };
 
 Canvas.zoomWrapper = document.querySelector('.canvas');
 Canvas.element = document.querySelector('.objects');
-Canvas.zoomFactor = -0.1;

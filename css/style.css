@@ -43,8 +43,8 @@ svg {
     pointer-events: none;
 }
 .canvas {
-    width: 500%;
-    height: 500%;
+    width: 5000px;
+    height: 5000px;
     position: absolute;
     box-sizing: border-box;
 }

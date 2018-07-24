@@ -1,27 +1,28 @@
 class View {
 
-    constructor() {
-        this.scale = 1;
-        this.offset = $('.objects').offset();
-        // this.width = $(window).width();
-        // this.height = $(window).height();
-    }
+    static zoom(scale) {
 
-    static zoom(zoomIn, scale) {
-
+        View.updateOrigin();
         Canvas.zoomLevel = scale;
 
-        $('.canvas').css('transformOrigin', zoomIn ? view.getMouse() : NaN)
-            .css('transform', 'scale('+scale+')');
+    };
 
-        this.scale = scale;
-    	this.offset = $('.objects').offset();
+    static updateOrigin() {
 
-    }
+        const screenCenter = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2
+        };
 
+        const CSSProperty = `${String(screenCenter.x)}px ${String(screenCenter.y)}px`;
+
+        Canvas.zoomWrapper.style.transformOrigin = CSSProperty;
+
+    };
 
 };
 
+View.zoomFactor = -0.1;
 
 Canvas.zoomWrapper.addEventListener('wheel', event => {
 
@@ -29,11 +30,11 @@ Canvas.zoomWrapper.addEventListener('wheel', event => {
         event.deltaY
     );
 
-    const newScale = Math.round((Canvas.zoomLevel + Canvas.zoomFactor * sign)*100)/100;
+    const newScale = Canvas.zoomLevel + View.zoomFactor * sign;
 
     if (0.5 <= newScale && newScale <= 2) {
 
-        Canvas.zoom((sign == -1),newScale);
+        View.zoom(newScale);
 
     }
 
