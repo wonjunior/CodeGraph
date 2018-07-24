@@ -187,10 +187,10 @@ html, body, section {
 }
 
 .window {
-    display: grid;
-    grid-template-rows: 100%;
-    grid-template-columns: 100%;
-    grid-template-areas: "first";
+    /* display: grid; */
+    /* grid-template-rows: 100%; */
+    /* grid-template-columns: 100%; */
+    /* grid-template-areas: "first"; */
 }
 
 .top-bottom {

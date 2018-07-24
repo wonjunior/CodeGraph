@@ -48,7 +48,7 @@ class Node {
         this.nodeElement.style.left = x + 'px';
         this.nodeElement.style.top = y + 'px';
 
-    };    
+    };
 
     constructor({ label, position, exeDocks, dataDocks, func }) {
 
@@ -68,7 +68,6 @@ class Node {
 
         node[this.id] = this;
 
-        // this.handler();
     }
 
     createDocks(exeDocks, dataDocks) {

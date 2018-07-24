@@ -30,7 +30,6 @@ class Draggable {
 
     dragging(e) {
 
-        _(this.object.position);
         this.object.position = [
             (e.clientX - this.offset.x) / this.zoomLevel,
             (e.clientY - this.offset.y) / this.zoomLevel

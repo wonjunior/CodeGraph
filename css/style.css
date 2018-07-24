@@ -42,7 +42,12 @@ svg {
     height: 100%;
     pointer-events: none;
 }
-.canvas {/* transform: scale(1.2); */width: 100%;/* border: 10Px solid red; */height: 100%;position:  absolute;box-sizing:  border-box;}
+.canvas {
+    width: 500%;
+    height: 500%;
+    position: absolute;
+    box-sizing: border-box;
+}
 
 .objects {
     background: url(https://image.ibb.co/f1RAXF/background.png);

@@ -4,7 +4,8 @@ class Canvas {
 
     static get zoomLevel() {
 
-        return Canvas.zoomWrapper.style.transform.replace(/[^\d.]/g, '') || 1;
+        const scaleFromStyle = Canvas.zoomWrapper.style.transform.replace(/[^\d.]/g, '');
+        return  (1*scaleFromStyle) || 1;
 
     };
 
@@ -28,7 +29,28 @@ class Canvas {
 
     };
 
+    static zoom(zoomIn, scale) {
+
+        Canvas.updateOrigin();
+        Canvas.zoomLevel = scale;
+
+    };
+
+    static updateOrigin() {
+
+        const screenCenter = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2
+        };
+
+        const CSSProperty = `${String(screenCenter.x)}px ${String(screenCenter.y)}px`;
+
+        Canvas.zoomWrapper.style.transformOrigin = CSSProperty;
+
+    };
+
 };
 
 Canvas.zoomWrapper = document.querySelector('.canvas');
 Canvas.element = document.querySelector('.objects');
+Canvas.zoomFactor = -0.1;
