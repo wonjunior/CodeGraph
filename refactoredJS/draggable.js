@@ -1,29 +1,11 @@
 'use strict'
 
-class Canvas {
-
-    static get zoomLevel() {
-
-        return Canvas.element.style.transform.replace(/[^\d.]/g, '') || 1;
-
-    };
-
-    static set zoomLevel(scale) {
-
-        Canvas.element.style.transform = `scale(${scale})`;
-
-    };
-
-};
-
-Canvas.element = document.querySelector('.canvas');
-
-
 class Draggable {
 
-    constructor(event, element) {
+    constructor(event, element, object) {
 
         this.element = element;
+        this.object = object;
 
         this.startDrag(event);
 
@@ -48,8 +30,11 @@ class Draggable {
 
     dragging(e) {
 
-        this.element.style.left = `${ (e.clientX - this.offset.x) / this.zoomLevel }px`;
-        this.element.style.top = `${ (e.clientY - this.offset.y) / this.zoomLevel }px`;
+        _(this.object.position);
+        this.object.position = [
+            (e.clientX - this.offset.x) / this.zoomLevel,
+            (e.clientY - this.offset.y) / this.zoomLevel
+        ];
 
     };
 
@@ -66,8 +51,8 @@ document.addEventListener('mousedown', event => {
 
     if (event.target.classList.contains('header') && event.button == 0) {
 
-        const nodeElement = node[event.target.ref].nodeElement;
-        new Draggable(event, nodeElement);
+        const nodeObject = node[event.target.ref];
+        new Draggable(event, nodeObject.nodeElement, nodeObject);
 
     } else if (event.target.classList.contains('dock')) {
 
@@ -75,7 +60,7 @@ document.addEventListener('mousedown', event => {
 
     } else if (event.target.classList.contains('objects') && event.button == 2) {
 
-        new Draggable(event, event.target);
+        new Draggable(event, event.target, Canvas);
 
     } else {
 

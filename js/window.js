@@ -59,7 +59,7 @@ document.addEventListener('wheel', event => {
 
     const newScale = Math.round((view.scale + scrollFactor * sign)*100)/100;
 
-    if (1 <= newScale && newScale <= 2) {
+    if (0.5 <= newScale && newScale <= 2) {
         view.zoom((sign == -1), newScale, [event.pageX, event.pageY]);
     }
 

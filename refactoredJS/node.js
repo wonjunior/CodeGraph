@@ -36,12 +36,19 @@ class Node {
 
     };
 
+    get position() {
+
+        return [this.nodeElement.style.left, this.nodeElement.style.top]
+            .map(posString => parseInt(posString));
+
+    };
+
     set position([ x, y ]) {
 
         this.nodeElement.style.left = x + 'px';
         this.nodeElement.style.top = y + 'px';
 
-    };
+    };    
 
     constructor({ label, position, exeDocks, dataDocks, func }) {
 
