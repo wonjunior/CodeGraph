@@ -2,12 +2,20 @@ class Dock {
 
     set label(newLabel) {
 
-        // _(this.labelElement)
         if(this.labelElement) {
 
             this.labelElement.textContent = newLabel;
 
         }
+
+    }
+
+    get position() {
+
+        const [ nodePosX, nodePosY ] = this.node.position;
+        const [ offsetX, offsetY ] = this.offset;
+
+        return [ nodePosX + offsetX, nodePosY + offsetY ];
 
     }
 
@@ -33,7 +41,21 @@ class Dock {
 
         this.label = label || '';
 
+        this.offset = this.calculateRelativePos();
+
         // this.listen(); return this;
+
+    }
+
+    calculateRelativePos() {
+
+        const nodePos = this.node.nodeElement.getBoundingClientRect();
+        const dockPos = this.pinElement.getBoundingClientRect();
+
+        return [
+            (dockPos.x - nodePos.x) / Canvas.zoomLevel,
+            (dockPos.y - nodePos.y) / Canvas.zoomLevel
+        ];
 
     }
 
