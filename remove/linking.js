@@ -4,6 +4,7 @@ class Linking {
 
         this.origin = dockData;
         this.path = undefined;
+        
         this.mouseDown();
 
     }
