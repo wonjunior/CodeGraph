@@ -22,7 +22,7 @@ class Draggable {
             y: e.clientY - rect.y + rectP.y
         };
 
-        Draggable.event = event => { this.dragging(event) };
+        Draggable.event = event => this.dragging(event);
         document.addEventListener('mousemove', Draggable.event);
         document.addEventListener('mouseup', this.endDrag, { once: true });
 
@@ -46,6 +46,8 @@ class Draggable {
 };
 
 
+/* new file for key behavior handling */
+
 document.addEventListener('mousedown', event => {
 
     if (event.target.classList.contains('header') && event.button == 0) {
@@ -55,7 +57,8 @@ document.addEventListener('mousedown', event => {
 
     } else if (event.target.classList.contains('dock')) {
 
-        _('dock');
+        const dockObject = dock[event.target.ref];
+        new Linkable(event, dockObject);
 
     } else if (event.target.classList.contains('objects') && event.button == 2) {
 

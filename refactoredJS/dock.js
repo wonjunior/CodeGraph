@@ -75,6 +75,8 @@ class Dock {
         this.dockElement.classList.add(side);
         this.dockElement.id = this.id;
 
+        this.pinElement.ref = this.id;
+
         this.blockElement.appendChild(this.dockElement);
 
         return this;
@@ -98,6 +100,8 @@ class Dock {
 
         this.dockElement.classList.add(side);
         this.dockElement.id = this.id;
+
+        this.pinElement.ref = this.id;
 
         this.blockElement.appendChild(this.dockElement);
 
