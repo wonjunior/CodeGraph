@@ -24,8 +24,10 @@
             </div>
 
             <div class="links">
-                <!--<div class="tester" style="border-radius:10px; width:5px; height:5px; position:absolute; background:black; z-index:99"></div>
-                <svg height="10000" width="10000">-->
+                <!--<div class="tester" style="border-radius:10px; width:5px; height:5px; position:absolute; background:black; z-index:99"></div>-->
+                <svg height="10000" width="10000">
+                    <path id="tester" d="M1,2 L4.951,2 C40.6,2 60.4,80 95.05,80 L100,80" fill="none" stroke="red" stroke-width="3"></path>
+                    <path id="tester2" d="M1,2 L4.951,2 C40.6,2 60.4,80 95.05,80 L100,80" fill="none" stroke="red" stroke-width="3"></path>
                     <!---->
                 </svg>
             </div>
@@ -77,6 +79,9 @@
     </div>
 </template>
 
+<template id="link">
+    <path fill="none"></path>
+</template>
 
 
 <js>
@@ -103,17 +108,19 @@
     <script src="refactoredJS/canvas.js"></script>
     <script src="refactoredJS/draggable.js"></script>
 
+
+    <script src="refactoredJS/linkable.js"></script>
+    <script src="refactoredJS/curve.js"></script>
+
     <!-- TO BE REFACTORED START -->
-    <script src="js/linking.js"></script>
-    <script src="js/curve.js"></script>
     <script src="js/path.js"></script>
     <!-- TO BE REFACTORED END -->
 
         <!-- UI FILES START-->
         <script src="js/pan.js"></script>
-        <script src="js/window.js"></script>
         <!-- UI FILES END -->
 
+    <script src="refactoredJS/window.js"></script>
     <script src="refactoredJS/saved.js"></script>
 
     <!--<script type="text/javascript">
