@@ -127,7 +127,7 @@ class Node {
 
     createNode(exeDocks, dataDocks) {
 
-        let template = document.querySelector('template#node')
+        let template = document.querySelector('template#node');
         template = document.importNode(template.content, true);
 
         // ?! write how the logic sees the structure, here .container > .body > blocks..
@@ -148,7 +148,7 @@ class Node {
 
         this.nodeElement.id = this.id;
 
-        Node.canvas.appendChild(this.nodeElement);
+        Canvas.nodeArea.appendChild(this.nodeElement);
 
     }
 
@@ -175,9 +175,6 @@ class Node {
     }*/
 
 
-} let node = {};
+}; let node = {};
 
-Object.assign(Node, {
-    canvas: document.querySelector('.nodes'),
-    idPrefix: 'n'
-});
+Node.idPrefix = 'n';

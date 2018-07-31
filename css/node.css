@@ -21,7 +21,6 @@
 .dock {
     cursor: pointer;
     top: calc(50% - 6px);
-    z-index: 4;
 }
 .snapDock {
     z-index: 3;

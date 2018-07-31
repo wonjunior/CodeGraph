@@ -1,14 +1,76 @@
-/*
-** Path class handles all the paths, it manages the creation/selection/removal
-** of path in all data objects and in the DOM. All paths are stored in `paths`
-** Contains: `ref`, `$`, `leftDock`, `leftPos`, `rightDock` and `rightPos`
-*/
-class Path {
+'use strict'
+
+class Link {
+
+    get id() {
+
+        return (this.linkElement) ? this.linkElement.id : undefined;
+
+    };
+
+    set id(newId) {
+
+        // catch?
+
+        this.linkElement.id = newId;
+
+    };
+
+    get path() {
+
+        return this.linkElement.getAttribute('d');
+
+    };
+
+    set path(newPath) {
+
+        this.linkElement.setAttribute('d', newPath);
+
+    }
+
+    constructor(startDock) {
+
+        this.startDock = startDock;
+        this.type = startDock.type;
+
+        this.createLink();
+
+        this.id = startDock.id;
+
+    };
+
+    createLink() {
+
+        let template = document.querySelector('template#link');
+        template = document.importNode(template.content, true);
+
+        this.linkElement = template.querySelector('path');
+
+        Canvas.linkArea.appendChild(this.linkElement);
+
+    };
+
+    edit() {
+
+        delete link[ this.id ];
+
+        delete this.endDock; // and remove the endDock's lin[0]
+
+        return this;
+
+    };
+
+    update(endPoint) {
+
+        this.path = Curve.get(this.startDock.position, endPoint);
+
+    };
 
     /*
     ** first method called to draw a path betwen obj1 (Dock) and obj2 (Dock
     ** or mouse coordinates). Define if the path needs to be updated of created
     */
+    /*
     static draw(obj1, obj2) {
 
         const path = paths[obj1.ref];
@@ -19,28 +81,12 @@ class Path {
             path.update(obj1, obj2);
         }
 
-    }
-
-    /*
-    ** instanciate the path's data model and saves it in the origin dock, the
-    ** `lk` Linking process instance and the array of paths
-    */
-    constructor(obj1, obj2) {
-
-        Object.assign(this, {
-            ref: obj1.ref,
-            leftPos: obj1.isRight ? obj1.pos : obj2,
-            rightPos: obj1.isRight ? obj2 : obj1.pos,
-            leftDock: obj1.isRight ? obj1 : undefined,
-            rightDock: obj1.isRight ? undefined : obj1
-        }).create(obj1.type);
-
-        paths[obj1.ref] = obj1.path[obj1.path.length] = lk.path = this;
-    }
+    }*/
 
     /*
     ** appends a new SVG <path> to the document with correct styling
     */
+    /*
     create(type) {
 
         const [color, weight] = (type == 'data') ? ['white', '2'] : ['blue', '3'];
@@ -48,12 +94,13 @@ class Path {
 
         element('<path id="'+this.ref+'" d="'+path+'" stroke="'+color+'" stroke-width="'+weight+'" fill="none"></path>').drawSVG();
 
-    }
+    }*/
 
     /*
     ** updates the coordinates of the point that has changed and recalculates
     ** the curve to join the two points, updates SVG element
     */
+    /*
     update(obj1, obj2) {
 
         if (obj2 instanceof Dock) { obj2 = obj2.pos; }
@@ -62,24 +109,25 @@ class Path {
 
         this.$.attr('d', curve.getPath(this.leftPos, this.rightPos))
 
-    }
+    }*/
 
     /*
     ** removes path in DOM, in `paths` array and in the origin dock
     */
+    /*
     remove(origin) {
 
         this.$.remove();
         delete paths[this.ref];
         origin.path.pop();
 
-    }
+    }*/
 
     /*
     ** saves the target dock in path object, and vise versa. Also sets the
     ** correct occupied state for all docks involved, updates ref to unique id.
     */
-    save(type, target) {
+    /*save(type, target) {
 
         this[(this.leftDock == undefined) ? 'leftDock' : 'rightDock'] = target;
 
@@ -97,12 +145,12 @@ class Path {
         if (paths[this.ref]) { this.$.remove() };
         paths[this.ref] = this;
 
-    }
+    }*/
 
     /*
     ** edit the path by unsnapping its right side dock and returning the origin
     */
-    edit() {
+    /*edit() {
 
         this.leftDock.occupied = this.rightDock.occupied = false;
         this.rightDock.path.pop();
@@ -113,7 +161,7 @@ class Path {
 
         return [this.leftDock, this]
 
-    }
+    }*/
 
     /*
     ** define the get method for path.$ (the SVG DOM element of the path) each
@@ -122,8 +170,8 @@ class Path {
     ** to appear on screen. This refresh breaks the link between the actual DOM
     ** element and the jQuery element making path.$ unusable.
     */
-    get $() {
+    /*get $() {
         return $('#'+this.ref)
-    }
+    }*/
 
-} let paths = {};
+}; let link = {};

@@ -1,4 +1,8 @@
-
+path {
+    fill: none;
+    stroke: red;
+    stroke-width: 3;
+}
 
 body {
     user-select: none;
@@ -40,7 +44,6 @@ svg {
 svg {
     width: 100%;
     height: 100%;
-    pointer-events: none;
 }
 .canvas {
     width: 5000px;

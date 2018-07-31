@@ -33,3 +33,5 @@ class Canvas {
 
 Canvas.zoomWrapper = document.querySelector('.canvas');
 Canvas.element = document.querySelector('.objects');
+Canvas.nodeArea = document.querySelector('.nodes');
+Canvas.linkArea = document.querySelector('.links > svg');
