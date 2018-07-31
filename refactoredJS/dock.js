@@ -1,3 +1,5 @@
+'use strict'
+
 class Dock {
 
     set label(newLabel) {
@@ -8,7 +10,7 @@ class Dock {
 
         }
 
-    }
+    };
 
     get position() {
 
@@ -17,7 +19,7 @@ class Dock {
 
         return [ nodePosX + offsetX, nodePosY + offsetY ];
 
-    }
+    };
 
     constructor({ id, label, isRight, type, node, blockElement }) {
 
@@ -32,7 +34,7 @@ class Dock {
             type,
             blockElement,
             occupied: false,
-            path: []
+            link: []
         });
 
         dock[ this.id ] = (this.type == 'exe')
@@ -41,11 +43,13 @@ class Dock {
 
         this.label = label || '';
 
-        this.offset = this.calculateRelativePos();
+        setTimeout(() => {
+            this.offset = this.calculateRelativePos();
+        }, 0);
 
         // this.listen(); return this;
 
-    }
+    };
 
     calculateRelativePos() {
 
@@ -53,11 +57,11 @@ class Dock {
         const dockPos = this.pinElement.getBoundingClientRect();
 
         return [
-            (dockPos.x - nodePos.x) / Canvas.zoomLevel,
-            (dockPos.y - nodePos.y) / Canvas.zoomLevel
+            (dockPos.x - nodePos.x) / Canvas.zoomLevel + Dock.offset,
+            (dockPos.y - nodePos.y) / Canvas.zoomLevel + Dock.offset
         ];
 
-    }
+    };
 
     createExeDock(parent) {
 
@@ -75,13 +79,13 @@ class Dock {
         this.dockElement.classList.add(side);
         this.dockElement.id = this.id;
 
-        this.pinElement.ref = this.id;
+        this.snapElement.ref = this.id;
 
         this.blockElement.appendChild(this.dockElement);
 
         return this;
 
-    }
+    };
 
     createDataDock(parent) {
 
@@ -101,18 +105,28 @@ class Dock {
         this.dockElement.classList.add(side);
         this.dockElement.id = this.id;
 
-        this.pinElement.ref = this.id;
+        this.snapElement.ref = this.id;
 
         this.blockElement.appendChild(this.dockElement);
 
         return this;
 
-    }
+    };
+
+    isCompatible(target) {
+
+        const notEqual = (this.node != target.node);
+        const opposite = (this.side != target.side);
+        const sameType = (this.type == target.type);
+        return notEqual && opposite && sameType;
+
+    };
 
 
 } let dock = {};
 
 
+Dock.offset = 7;
 Dock.exeIdPrefix = 'e';
 Dock.dataIdPrefix = 'd';
 Dock.attributes = [
