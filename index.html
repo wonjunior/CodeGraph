@@ -20,14 +20,12 @@
         <div class="objects" style="top:0;left:0;">
 
             <div class="nodes">
+                <div class="tester" style="border-radius:10px; width:5px; height:5px; position:absolute; background:black; z-index:99"></div>
                 <!---->
             </div>
 
             <div class="links">
-                <!--<div class="tester" style="border-radius:10px; width:5px; height:5px; position:absolute; background:black; z-index:99"></div>-->
                 <svg height="10000" width="10000">
-                    <path id="tester" d="M1,2 L4.951,2 C40.6,2 60.4,80 95.05,80 L100,80" fill="none" stroke="red" stroke-width="3"></path>
-                    <path id="tester2" d="M1,2 L4.951,2 C40.6,2 60.4,80 95.05,80 L100,80" fill="none" stroke="red" stroke-width="3"></path>
                     <!---->
                 </svg>
             </div>
@@ -80,7 +78,9 @@
 </template>
 
 <template id="link">
-    <path fill="none"></path>
+    <svg>
+        <path></path>
+    </svg>
 </template>
 
 
@@ -113,7 +113,7 @@
     <script src="refactoredJS/curve.js"></script>
 
     <!-- TO BE REFACTORED START -->
-    <script src="js/path.js"></script>
+    <script src="refactoredJS/link.js"></script>
     <!-- TO BE REFACTORED END -->
 
         <!-- UI FILES START-->
