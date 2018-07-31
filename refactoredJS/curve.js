@@ -4,6 +4,7 @@ class Curve {
 
     static get([ startX, startY ], [ endX, endY ]) {
 
+
         // horizontal distance
         const Xdiff = Math.abs(endX - startX);
 
@@ -11,7 +12,7 @@ class Curve {
         const M = 'M' + startX + ',' + startY;
 
         // L
-        const L1 = 'L' + Xdiff * Curve.warp + startX + ',' + startY;
+        const L1 = 'L' + (Xdiff * Curve.warp + startX) + ',' + startY;
 
         // C
         const c1 = startX + Xdiff * Curve.factor;
