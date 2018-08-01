@@ -116,7 +116,7 @@ class Dock {
     isCompatible(target) {
 
         const notEqual = (this.node != target.node);
-        const opposite = (this.side != target.side);
+        const opposite = (this.isRight != target.isRight);
         const sameType = (this.type == target.type);
         return notEqual && opposite && sameType;
 

@@ -1,25 +1,4 @@
-/*new Node({
-    label: 'test1',
-    position: [300, 400],
-    dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'result'} ] },
-    exeDocks: { in: [ {label: 'in1'} ], out: [ {label: 'out'} ] },
-    func: (a,b)  =>  _(this)
-})*/
-
-/*
-Node {
-  id: string,
-  position: [ set x: ƒ, set y: ƒ ],
-  set label: ƒ,
-  func: ƒ,
-  dataDocks: { in: Array[ Dock ], out: Array[ Dock ] },
-  exeDocks: { in: Array[ Dock ], out: Array[ Dock ] },
-  nodeElement: HTMLElement,
-  dataElement: HTMLElement,
-  exeElement: HTMLElement,
-  labelElement: HTMLElement
-}
-*/
+'use strict'
 
 class Node {
 
@@ -88,7 +67,7 @@ class Node {
                         isRight,
                         type: 'exe',
                         node: this,
-                        blockElement: this.exeElement[side]
+                        blockElement: this.exeElement[side],
                     })
 
                 );
@@ -114,7 +93,7 @@ class Node {
                         isRight,
                         type: 'data',
                         node: this,
-                        blockElement: this.dataElement[side]
+                        blockElement: this.dataElement[side],
                     })
 
                 );

@@ -54,7 +54,9 @@ class Link {
 
         delete link[ this.id ];
 
-        delete this.endDock; // and remove the endDock's lin[0]
+        this.snapDock.link = []; // old snap dock
+
+        delete this.snapDock;
 
         return this;
 
@@ -65,6 +67,27 @@ class Link {
         this.path = Curve.get(this.startDock.position, endPoint);
 
     };
+
+    remove() {
+
+        this.linkElement.remove();
+
+        const linkIndex = this.startDock.link.findIndex(link => link.id == this.id);
+
+        this.startDock.link.splice(linkIndex, 1);
+
+    }
+
+    save() {
+
+        this.snapDock.link.push(this); // <- add to snapDock
+        this.snapDock.occupied = true;
+
+        const linkId = this.startDock.id + '-' + this.snapDock.id;
+        this.id = linkId;
+        link[ linkId ] = this;
+
+    }
 
     /*
     ** first method called to draw a path betwen obj1 (Dock) and obj2 (Dock

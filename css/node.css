@@ -63,9 +63,11 @@
 }
 .exe {
 }
-.container#selected {
-    border: 1px solid rgba(0, 128, 0, 0.68);
+.container:hover { /* ?! or selected  */
+    /* border: 1px solid rgba(0, 128, 0, 0.68); */
+    box-shadow: 0px 0px 2px green;
 }
+
 .container {
     width: 128px;
     z-index: 1;
