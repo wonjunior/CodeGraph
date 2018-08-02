@@ -9,6 +9,12 @@ class Node {
 
     };
 
+    get label() {
+
+        return this.labelElement.textContent;
+
+    };
+
     set label(newLabel) {
 
         this.labelElement.textContent = newLabel;
@@ -109,7 +115,7 @@ class Node {
         let template = document.querySelector('template#node');
         template = document.importNode(template.content, true);
 
-        // ?! write how the logic sees the structure, here .container > .body > blocks..
+        // <? write how the logic sees the structure, here .container > .body > blocks..
         Object.assign(this, {
             nodeElement: template.querySelector('.container'),
             labelElement: template.querySelector('.headerTitle'),
@@ -130,28 +136,6 @@ class Node {
         Canvas.nodeArea.appendChild(this.nodeElement);
 
     }
-
-    /*select() { UI.select(this.$) }
-
-    getDocksRef() {
-        return map(this.docks.in, (dock) => dock.ref);
-    }
-
-    handler() {
-
-        let pointer;
-
-        this.$.draggable({
-
-            handle: this.header,
-
-            start: (e) => pointer = drag.eventStart(e),
-
-            drag: (e,ui) => [ui.position.left, ui.position.top] = drag.eventDrag(e, pointer),
-
-        });
-
-    }*/
 
 
 }; let node = {};

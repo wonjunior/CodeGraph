@@ -2,9 +2,15 @@
 
 class Dock {
 
+    get label() {
+
+        return (this.labelElement) ? this.labelElement.textContent : "";
+
+    };
+
     set label(newLabel) {
 
-        if(this.labelElement) {
+        if (this.labelElement) {
 
             this.labelElement.textContent = newLabel;
 
