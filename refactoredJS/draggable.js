@@ -2,16 +2,16 @@
 
 class Draggable {
 
-    constructor(event, element, object) {
+    constructor(event, element, object, callback) {
 
         this.element = element;
         this.object = object;
 
-        this.startDrag(event);
+        this.startDrag(event, callback);
 
     };
 
-    startDrag(e) {
+    startDrag(e, callback) {
 
         this.zoomLevel = Canvas.zoomLevel;
 
@@ -22,7 +22,15 @@ class Draggable {
             y: e.clientY - rect.y + rectP.y
         };
 
-        Draggable.event = event => this.dragging(event);
+        Draggable.event = event => {
+
+            this.dragging(event);
+
+            if (callback) {
+                callback();
+            }
+
+        };
         document.addEventListener('mousemove', Draggable.event);
         document.addEventListener('mouseup', this.endDrag, { once: true });
 
