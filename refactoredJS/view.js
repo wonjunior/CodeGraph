@@ -23,6 +23,17 @@ class View {
 
     };
 
+    static mousePosition(event) {
+
+        const [ x, y ] = [ event.clientX, event.clientY ];
+
+        const canvas = Canvas.element.getBoundingClientRect();
+        const [ offsetX, offsetY ] = [ canvas.left, canvas.top];
+
+        return [ (x - offsetX) / Canvas.zoomLevel, (y - offsetY) / Canvas.zoomLevel ];
+
+    };
+
 };
 
 View.zoomFactor = -0.1;

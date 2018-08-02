@@ -5,10 +5,6 @@ path {
     pointer-events: visible;
 }
 
-path:hover {
-    stroke: green;
-}
-
 body {
     user-select: none;
     cursor: default;

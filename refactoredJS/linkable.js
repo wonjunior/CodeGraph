@@ -58,7 +58,7 @@ class Linkable {
                 // snapping cannot occur
                 } else {
 
-                    this.link.update([ e.clientX, e.clientY ]);
+                    this.link.update(View.mousePosition(e));
 
                 }
 
@@ -79,7 +79,7 @@ class Linkable {
 
             }
 
-            this.link.update([ e.clientX, e.clientY ]);
+            this.link.update(View.mousePosition(e));
 
         }
 
