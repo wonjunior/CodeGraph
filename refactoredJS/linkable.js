@@ -5,7 +5,7 @@ class Linkable {
     constructor(event, startDock) {
 
         // determine if a link needs to be updated or a new one has to be created
-        if (startDock.occupied && ( !startDock.isRight || startDock.isRight && startDock.type == 'exe') ) {
+        if (startDock.occupied && ( !startDock.isRight || (startDock.isRight && startDock.type == 'exe')) ) {
 
             this.link = startDock.link[0].edit();
 
@@ -96,6 +96,17 @@ class Linkable {
     endLink() {
 
         if (this.snapped) { // <? make sure snapDock.link.length == 0 otherwise pop the other one
+
+            const snapDock = this.link.snapDock;
+
+            if (snapDock.occupied && !(snapDock.type == 'data' && snapDock.isRight)) {
+
+                const linkToPop = snapDock.link[0];
+                linkToPop.remove();
+                
+                delete link [ linkToPop.id ]
+
+            }
 
             this.link.save();
 

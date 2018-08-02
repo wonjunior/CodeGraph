@@ -89,16 +89,25 @@ class Link {
 
         this.linkElement.remove();
 
-        const linkIndex = this.startDock.link.findIndex(link => link.id == this.id);
-        this.startDock.link.splice(linkIndex, 1);
+        // make it a Dock method <Dock>.unpin(this) where this is <Link>
+        const linkIndexStartDock = this.startDock.link.findIndex(link => link.id == this.id);
+        this.startDock.link.splice(linkIndexStartDock, 1);
 
         this.startDock.occupied = false;
+
+        if (this.snapDock) {
+
+            const linkIndexSnapDock = this.snapDock.link.findIndex(link => link.id == this.id);
+            this.snapDock.link.splice(linkIndexSnapDock, 1);
+
+            this.snapDock.occupied = false;
+
+        }
 
     }
 
     save() {
 
-        _(this)
         this.snapDock.link.push(this); // <- add to snapDock
         this.snapDock.occupied = true;
 
