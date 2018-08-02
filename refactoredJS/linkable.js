@@ -11,10 +11,16 @@ class Linkable {
 
         } else {
 
-            this.link = new Link(startDock);
+            this.link = new Link({
+                startDock,
+                type: startDock.type,
+                id: startDock.id
+            });
 
             startDock.link.push(this.link); // <- add to startDock
-            startDock.occupied = true; // only if?
+
+            // right-sided data docks are never occupied
+            startDock.occupied = !(startDock.isRight && startDock.type == 'data');
 
         }
 
@@ -89,7 +95,7 @@ class Linkable {
 
     endLink() {
 
-        if (this.snapped) { // make sure snapDock.link.lenght == 0 otherwise pop the other one
+        if (this.snapped) { // <? make sure snapDock.link.length == 0 otherwise pop the other one
 
             this.link.save();
 
