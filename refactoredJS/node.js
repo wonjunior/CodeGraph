@@ -39,8 +39,9 @@ class Node {
 
         Object.assign(this, {
 
-            id:  Node.createId(),
-            func
+            func,
+            dock: [],
+            id:  Node.createId()
 
         });
 
@@ -53,7 +54,7 @@ class Node {
 
         node[this.id] = this;
 
-    }
+    };
 
     createDocks(exeDocks, dataDocks) {
 
@@ -65,18 +66,17 @@ class Node {
 
             exeDocks[direction].forEach( ({ label }, i) => {
 
-                this.exeDocks[direction].push(
+                const dockObject = new Dock({
+                    id: this.id + Dock.exeIdPrefix + sidePrefix + i,
+                    label,
+                    isRight,
+                    type: 'exe',
+                    node: this,
+                    blockElement: this.exeElement[side],
+                });
 
-                    new Dock({
-                        id: this.id + Dock.exeIdPrefix + sidePrefix + i,
-                        label,
-                        isRight,
-                        type: 'exe',
-                        node: this,
-                        blockElement: this.exeElement[side],
-                    })
-
-                );
+                this.exeDocks[direction].push(dockObject);
+                this.dock.push(dockObject);
 
             });
 
@@ -91,24 +91,23 @@ class Node {
 
             dataDocks[direction].forEach( ({ label }, i) => {
 
-                this.dataDocks[direction].push(
+                const dockObject = new Dock({
+                    id: this.id + Dock.dataIdPrefix + sidePrefix + i,
+                    label,
+                    isRight,
+                    type: 'data',
+                    node: this,
+                    blockElement: this.dataElement[side],
+                });
 
-                    new Dock({
-                        id: this.id + Dock.dataIdPrefix + sidePrefix + i,
-                        label,
-                        isRight,
-                        type: 'data',
-                        node: this,
-                        blockElement: this.dataElement[side],
-                    })
-
-                );
+                this.dataDocks[direction].push(dockObject);
+                this.dock.push(dockObject);
 
             });
 
         });
 
-    }
+    };
 
     createNode(exeDocks, dataDocks) {
 
@@ -135,7 +134,21 @@ class Node {
 
         Canvas.nodeArea.appendChild(this.nodeElement);
 
-    }
+    };
+
+    updateLink() {
+
+        this.dock.forEach(dock => {
+
+            dock.link.forEach(link => {
+
+                link.path = Curve.get(link.startDock.position, link.snapDock.position);
+
+            });
+
+        });
+
+    };
 
 
 }; let node = {};
