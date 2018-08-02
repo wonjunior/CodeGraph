@@ -1,4 +1,4 @@
-/* new file for key behavior handling */
+'use strict'
 
 document.addEventListener('mousedown', event => {
 

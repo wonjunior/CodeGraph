@@ -28,14 +28,22 @@ class Link {
 
     }
 
-    constructor(startDock) {
+    constructor({ startDock, snapDock = undefined, type, id }) {
 
         this.startDock = startDock;
-        this.type = startDock.type;
+        this.type = type;
 
         this.createLink();
 
-        this.id = startDock.id;
+        this.id = id;
+
+        if (snapDock) {
+
+            this.snapDock = snapDock;
+            this.update(snapDock.position);
+            this.save(snapDock);
+
+        }
 
     };
 
@@ -54,7 +62,8 @@ class Link {
 
         delete link[ this.id ];
 
-        this.snapDock.link = []; // old snap dock
+        this.snapDock.link = []; // reset the old snapDock
+        this.snapDock.occupied = false;
 
         delete this.snapDock;
 
@@ -64,7 +73,15 @@ class Link {
 
     update(endPoint) {
 
-        this.path = Curve.get(this.startDock.position, endPoint);
+        if (this.startDock.isRight) {
+
+            this.path = Curve.get(this.startDock.position, endPoint);
+
+        } else {
+
+            this.path = Curve.get(endPoint, this.startDock.position);
+
+        }
 
     };
 
@@ -73,19 +90,39 @@ class Link {
         this.linkElement.remove();
 
         const linkIndex = this.startDock.link.findIndex(link => link.id == this.id);
-
         this.startDock.link.splice(linkIndex, 1);
+
+        this.startDock.occupied = false;
 
     }
 
     save() {
 
+        _(this)
         this.snapDock.link.push(this); // <- add to snapDock
         this.snapDock.occupied = true;
 
-        const linkId = this.startDock.id + '-' + this.snapDock.id;
+        // swap startDock and snapDock if necessary
+        if (this.snapDock.isRight) {
+
+            [ this.startDock, this.snapDock ] = [ this.snapDock, this.startDock ];
+
+        }
+
+        const linkId = this.startDock.id + Link.separator + this.snapDock.id;
         this.id = linkId;
-        link[ linkId ] = this;
+
+        // this link already exists
+        if (link[ linkId ]) {
+
+            this.remove();
+
+        // link doesn't yet exist
+        } else {
+
+            link[ linkId ] = this;
+
+        }
 
     }
 
@@ -198,3 +235,5 @@ class Link {
     }*/
 
 }; let link = {};
+
+Link.separator = '-';
