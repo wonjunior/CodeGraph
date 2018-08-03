@@ -5,7 +5,7 @@ document.addEventListener('mousedown', event => {
     if (event.target.classList.contains('header') && event.button == 0) {
 
         const nodeObject = node[ event.target.ref ];
-        new Draggable(event, nodeObject.nodeElement, nodeObject, () => { nodeObject.updateLink() });
+        new Draggable(event, nodeObject.nodeElement, nodeObject, () => { nodeObject.update() });
 
     } else if (event.target.classList.contains('snapDock')) {
 

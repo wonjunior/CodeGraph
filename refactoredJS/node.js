@@ -136,7 +136,7 @@ class Node {
 
     };
 
-    updateLink() {
+    update() {
 
         this.dock.forEach(dock => {
 
@@ -145,6 +145,16 @@ class Node {
                 link.path = Curve.get(link.startDock.position, link.snapDock.position);
 
             });
+
+        });
+
+    };
+
+    static updateAll() {
+
+        Object.entries(node).forEach(([ nodeId, node ]) => {
+
+            node.update();
 
         });
 
