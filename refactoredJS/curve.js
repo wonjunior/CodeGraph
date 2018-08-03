@@ -26,9 +26,37 @@ class Curve {
         // setting up the path string
         return M + ' ' + L1 + ' ' + C + ' ' + L2;
 
-    }
+    };
+
+    static get factor() {
+
+        return Curve.properties.factor;
+
+    };
+
+    static set factor(newFactor) {
+
+        Curve.properties.factor = newFactor;
+        Node.updateAll();
+
+    };
+
+    static get warp() {
+
+        return Curve.properties.warp;
+
+    };
+
+    static set warp(newWarp) {
+
+        Curve.properties.warp = newWarp;
+        Node.updateAll();
+
+    };
 
 }
 
-Curve.factor = 0.4;
-Curve.warp = 0.05;
+Curve.properties = {
+    factor: 0.4,
+    warp: 0.05
+};
