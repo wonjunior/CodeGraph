@@ -63,8 +63,8 @@ class Dock {
         const dockPos = this.pinElement.getBoundingClientRect();
 
         return [
-            (dockPos.x - nodePos.x) / Canvas.zoomLevel + Dock.offset,
-            (dockPos.y - nodePos.y) / Canvas.zoomLevel + Dock.offset
+            (dockPos.x - nodePos.x) / Canvas.zoomLevel + Dock.offset[ this.type ],
+            (dockPos.y - nodePos.y) / Canvas.zoomLevel + Dock.offset[ this.type ]
         ];
 
     };
@@ -132,10 +132,13 @@ class Dock {
 } let dock = {};
 
 
-Dock.offset = 7;
 Dock.exeIdPrefix = 'e';
 Dock.dataIdPrefix = 'd';
 Dock.attributes = [
     {direction: 'in', side: 'left', isRight: false, sidePrefix: 'L'},
     {direction: 'out', side: 'right', isRight: true, sidePrefix: 'R'}
 ];
+Dock.offset = {
+    data: 7,
+    exe: 10
+};

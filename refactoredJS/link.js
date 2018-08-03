@@ -53,6 +53,8 @@ class Link {
         template = document.importNode(template.content, true);
 
         this.linkElement = template.querySelector('path');
+        this.linkElement.style.stroke = Link.color[ this.type ];
+        this.linkElement.style.strokeWidth = Link.width[ this.type ];
 
         Canvas.linkArea.appendChild(this.linkElement);
 
@@ -246,3 +248,11 @@ class Link {
 }; let link = {};
 
 Link.separator = '-';
+Link.color = {
+    data: 'green',
+    exe: 'blue'
+}
+Link.width = {
+    data: 3,
+    exe: 4
+}
