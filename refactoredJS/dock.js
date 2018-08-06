@@ -128,6 +128,14 @@ class Dock {
 
     };
 
+    static destruct(docks) {
+
+        return {
+            in: docks.in.map(({ label }) => { return {label} }),
+            out: docks.out.map(({ label }) => { return {label} })
+        }
+
+    };
 
 } let dock = {};
 
