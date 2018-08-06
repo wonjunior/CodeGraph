@@ -27,3 +27,14 @@ document.addEventListener('mousedown', event => {
     }
 
 });
+
+document.addEventListener('keydown', event => {
+
+    // spacebar is clicked
+    if (event.keyCode == 32) {
+
+
+
+    }
+
+});

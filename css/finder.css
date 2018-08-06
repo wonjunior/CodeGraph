@@ -1,10 +1,8 @@
-
-
 .search-id {
     display: none;
 }
 .finder {
-    display: none;
+    /* display: none; */
     z-index: 3;
     padding-top: 100px;
     position: fixed;
@@ -26,7 +24,7 @@
     margin: 20px auto;
 }
 
-#search-input {
+.search-input {
     background-image: url('');
     background-position: 10px 10px;
     background-repeat: no-repeat;
@@ -40,12 +38,12 @@
     background-color: #1b1d23;
     border: 2px solid #282c34;
 }
-#search-input:focus {
+.search-input:focus {
     border: 2px solid rgba(8, 157, 10, 0.86);
     outline: 0 none;
 }
 
-#search-wrap {
+.search-wrap {
     display: none;
     max-height: 229px;
     overflow-y: auto;
@@ -58,21 +56,21 @@
 }
 /**************************/
 
-#search-wrap::-webkit-scrollbar {
+.search-wrap::-webkit-scrollbar {
     width: 9px;
 }
 
 
-#search-wrap::-webkit-scrollbar-track {
+.search-wrap::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
 
-#search-wrap::-webkit-scrollbar-thumb {
+.search-wrap::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
     margin: 1px;
 }
-#search-wrap::-webkit-scrollbar-thumb:hover {
+.search-wrap::-webkit-scrollbar-thumb:hover {
     box-shadow: inset 0px 0px 13px 2px rgba(0,0,0,0.5);
     border-radius: 0px;
 }
@@ -82,7 +80,7 @@
 }
 
 /******************/
-#search-table {
+.search-table {
     width: calc(100% + 0px);
     font-size: 18px;
     padding: 0px;
@@ -93,7 +91,7 @@
     overflow-x: hidden;
 }
 
-#search-table tr {
+.search-table tr {
     border-top: 1px solid rgba(0, 0, 0, 0.49);
     border-right: rgb(44, 49, 58);
     border-left: rgb(44, 49, 58);
@@ -113,7 +111,7 @@ tr.hovered {
 tr.not-hovered {
     background-color: rgb(44, 49, 58);
 }
-#search-table th, #search-table td {
+.search-table th, .search-table td {
     text-align: left;
     padding: 12px;
 }

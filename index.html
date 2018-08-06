@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/style-other.css">
+    <link rel="stylesheet" href="css/finder.css">
     <link rel="stylesheet" href="css/separator.css">
     <link rel="stylesheet" href="css/node.css">
 </head>
@@ -31,6 +31,32 @@
             </div>
 
         </div>
+    </div>
+
+    <div class="finder">
+
+        <div class="search-container">
+            <input spellcheck="false" value="" type="text" class="search-input" onkeyup="finder.search(this.value)" placeholder="Search node...">
+            <div class="search-wrap">
+                <table class="search-table">
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="add"><td>AAS</td></tr>
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="sub"><td>Sub</td></tr>
+                    <tr node-type="add"><td>AnAS</td></tr>
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="add"><td>Add</td></tr>
+                    <tr node-type="add"><td>AnAS</td></tr>
+                    <tr node-type="sub"><td>Sub</td></tr>
+                </table>
+            </div>
+        </div>
+
     </div>
 
     <div class="footer">
@@ -83,13 +109,26 @@
     </svg>
 </template>
 
+<template id="finder">
+    <div class="finder">
+
+        <div class="search-container">
+            <input spellcheck="false" value="" type="text" class="<search-input>" onkeyup="finder.search(this.value)" placeholder="<Search node...>">
+            <div class="search-wrap">
+                <table class="search-table"></table>
+            </div>
+        </div>
+
+    </div>
+</template>
+
 
 <js>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
     <script src="js/jquery-plugins.js"></script>
 
-    <!--<script src="js/finder.js"></script>
+    <!--
 
     <script src="js/index.js"></script>
     <script src="js/MouseHandling.js"></script>
@@ -131,7 +170,10 @@
 
     <!-- REFACTORED FILES END -->
 
-    <!--<script src="js/ui.js"></script>-->
+    <!--<script src="refactoredJS/finder.js"></script>
+
+    <!--<script src="js/finder.js"></script>
+    <script src="js/ui.js"></script>-->
 </js>
 
 </body>
