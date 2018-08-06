@@ -7,7 +7,7 @@ document.addEventListener('mousedown', event => {
         const nodeObject = node[ event.target.ref ];
         new Draggable(event, nodeObject.nodeElement, nodeObject, () => { nodeObject.update() });
 
-    } else if (event.target.classList.contains('snapDock')) {
+    } else if (event.target.classList.contains('snapDock') && event.button == 0) {
 
         const dockObject = dock[ event.target.ref ];
         new Linkable(event, dockObject);
