@@ -4,10 +4,17 @@ class Node {
 
     static createId() {
 
-        let currentCount = Object.keys(node).length;
-        return Node.idPrefix + String(currentCount+1);
+        return Node.idPrefix + String(Node.length + 1);
 
     };
+
+    static get length() {
+
+        return Object.keys(node).length;
+
+    };
+
+    static set length(a) {};
 
     get label() {
 
@@ -160,6 +167,15 @@ class Node {
 
     };
 
+    static destruct({ label, position, func, exeDocks, dataDocks }) {
+
+    	exeDocks = Dock.destruct(exeDocks);
+
+    	dataDocks = Dock.destruct(dataDocks);
+
+    	return { label, position, func, exeDocks, dataDocks };
+
+    };
 
 }; let node = {};
 
