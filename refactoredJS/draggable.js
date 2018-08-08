@@ -26,9 +26,7 @@ class Draggable {
 
             this.dragging(event);
 
-            if (callback) {
-                callback();
-            }
+            if (callback) callback();
 
         };
         document.addEventListener('mousemove', Draggable.event);
@@ -38,10 +36,30 @@ class Draggable {
 
     dragging(e) {
 
-        this.object.position = [
+        let newPos = [
             (e.clientX - this.offset.x) / this.zoomLevel,
             (e.clientY - this.offset.y) / this.zoomLevel
         ];
+
+        this.object.position = newPos;
+
+        /*const pageSize = [ window.innerWidth, window.innerHeight ];
+
+        this.object.position = newPos.map((value, i) => {
+
+            if (value > 0) {
+
+                return 0;
+
+            } else if (value < pageSize[i] - 5000) { // Canvas.size[i]
+
+                return pageSize[i] - 5000; // Canvas.size[i]
+
+            }
+
+            return value;
+
+        });*/
 
     };
 
