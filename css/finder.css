@@ -1,8 +1,8 @@
+
 .search-id {
     display: none;
 }
 .finder {
-    /* display: none; */
     z-index: 3;
     padding-top: 100px;
     position: fixed;
@@ -25,11 +25,10 @@
 }
 
 .search-input {
-    background-image: url('');
     background-position: 10px 10px;
     background-repeat: no-repeat;
     width: 100%;
-    padding: 1px 20px 1px 20px;
+    padding: 1px 20px 1px 10px;
     box-sizing: border-box;
     font-size: 1.15em;
     line-height: 33px;
@@ -44,7 +43,6 @@
 }
 
 .search-wrap {
-    display: none;
     max-height: 229px;
     overflow-y: auto;
     padding: 0px;
@@ -109,6 +107,9 @@ tr.hovered {
 }
 
 tr.not-hovered {
+    background-color: rgb(44, 49, 58);
+}
+tr:hover {
     background-color: rgb(44, 49, 58);
 }
 .search-table th, .search-table td {

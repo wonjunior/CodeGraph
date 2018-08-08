@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <div class="finder">
+    <!--<div class="finder">
 
         <div class="search-container">
             <input spellcheck="false" value="" type="text" class="search-input" onkeyup="finder.search(this.value)" placeholder="Search node...">
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-    </div>
+    </div>-->
 
     <div class="footer">
       <div class="signature s-left"># testfile.cg</div>
@@ -78,6 +78,7 @@
         </div>
 
         <div class="body">
+            <div class="bodybefore"></div>
             <div class="leftblock"></div><!--
             --><div class="rightblock"></div>
         </div>
@@ -110,16 +111,20 @@
 </template>
 
 <template id="finder">
-    <div class="finder">
+    <div class="finder" style="display:none">
 
         <div class="search-container">
-            <input spellcheck="false" value="" type="text" class="<search-input>" onkeyup="finder.search(this.value)" placeholder="<Search node...>">
-            <div class="search-wrap">
+            <input spellcheck="false" value="" type="text" class="search-input">
+            <div class="search-wrap hidden">
                 <table class="search-table"></table>
             </div>
         </div>
 
     </div>
+</template>
+
+<template id="finderResult">
+    <tr class="hidden"><td></td></tr>
 </template>
 
 
@@ -161,7 +166,6 @@
         <!-- UI FILES END -->
 
     <script src="refactoredJS/view.js"></script>
-    <script src="refactoredJS/saved.js"></script>
     <script src="refactoredJS/editor.js"></script>
 
     <!--<script type="text/javascript">
@@ -170,7 +174,9 @@
 
     <!-- REFACTORED FILES END -->
 
-    <!--<script src="refactoredJS/finder.js"></script>
+    <script src="refactoredJS/library.js"></script>
+    <script src="refactoredJS/finder.js"></script>
+    <script src="refactoredJS/tester.js"></script>
 
     <!--<script src="js/finder.js"></script>
     <script src="js/ui.js"></script>-->

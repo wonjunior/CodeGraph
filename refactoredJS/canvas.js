@@ -31,6 +31,7 @@ class Canvas {
 
 };
 
+Canvas.window = document.querySelector('.window');
 Canvas.zoomWrapper = document.querySelector('.canvas');
 Canvas.element = document.querySelector('.objects');
 Canvas.nodeArea = document.querySelector('.nodes');
