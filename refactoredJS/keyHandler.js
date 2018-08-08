@@ -20,21 +20,51 @@ document.addEventListener('mousedown', event => {
 
         _(event.target.id);
 
+    } else if (event.target.classList.contains('finder') && nodeFinder.visible) {
+
+        nodeFinder.hide(); // not only nodeFinder...
+
     } else {
 
-        _(event.target)
+        _(event.target);
 
     }
 
 });
 
-document.addEventListener('keydown', event => {
-
-    // spacebar is clicked
-    if (event.keyCode == 32) {
 
 
+document.addEventListener('keyup', event => {
 
-    }
+    // _(event.keyCode)
+
+    // finder is hidden and [Spacebar] is clicked
+    if (!nodeFinder.visible && event.keyCode == 32) {
+
+        nodeFinder.show();
+        event.preventDefault();
+
+    } else if (nodeFinder.visible) {
+
+        switch(event.keyCode) {
+
+            case 27: // [Escape]
+                nodeFinder.hide();
+                break;
+
+            case 40: // [▼]
+                nodeFinder.down();
+                break;
+
+            case 38: // [▲]
+                nodeFinder.up();
+                break;
+
+            default:
+                nodeFinder.search(event.target.value);
+
+        }
+
+    };
 
 });
