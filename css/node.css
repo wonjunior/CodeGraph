@@ -46,8 +46,6 @@
     background-color: green;
 }
 
-.paramName {
-}
 .data.right {
     /* text-align: right; */
     /* float:  right; */
@@ -69,7 +67,7 @@
 }
 
 .container {
-    width: 128px;
+    width: 130px;
     z-index: 1;
     border-radius: 12px;
     position: absolute;
@@ -79,12 +77,12 @@
 }
 .header {
     border-radius: 12px 12px 0px 0px;
-    background-color: rgba(78, 75, 80, 0.4);
+    background-color: rgb(56, 55, 56);
     position: relative;
     cursor: move;
     z-index: 1;
     height: 100%;
-    line-height: 23px;
+    line-height: 25px;
     /* padding: 4px 0px; */
 }
 .headerTitle {
@@ -97,23 +95,39 @@
     left: 50%;
     pointer-events:  none;
     transform: translate(-50%, -50%);
+    font-size: 17px;
 }
 .body {
-    background-color: rgba(111, 111, 111, 0.44);
+    background-color: rgb(81, 81, 81);
     border-radius: 0px 0px 12px 12px;
     padding-top: 6px;
     padding-bottom: 6px;
-    /* position: relative; */
+    position: relative;
     pointer-events: none;
 }
 
 .paramContainer {
-    text-align: center;
     width:  100%;
     color: #030303;
     top: 50%;
     position:  absolute;
     transform: translateY(-50%);
+    font-size: 16px;
+    font-weight: 500;
+    /* padding: 0px 18px; */
+    /* box-sizing:  border-box; */
+}
+
+.paramName {
+    box-sizing:  border-box;
+}
+.left > .paramContainer > .paramName {
+    text-align: left;
+    padding-left: 11px;
+}
+.right > .paramContainer > .paramName {
+    text-align: right;
+    padding-right: 11px;
 }
 .paramContainer > input {
     text-align: center;
@@ -173,7 +187,7 @@
 }
 
 .right > .dock {
-    right: -9px;
+    right: -8px;
 }
 
 .right > .snapDock {
@@ -181,6 +195,7 @@
 }
 
 /* debug styles */
+/*
 .data > .snapDock {
     background: #2e00ff57;
 }
@@ -192,3 +207,4 @@
 .data, .exe {
     border: 1px solid grey;
 }
+*/
