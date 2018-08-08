@@ -1,3 +1,11 @@
+/* generic */
+
+.hidden {
+    display: none;
+}
+
+/* */
+
 path {
     fill: none;
     pointer-events: visible;
@@ -8,6 +16,18 @@ body {
     cursor: default;
     overflow: hidden;
 }
+
+.body > .bodybefore { /* not using ::before with content, we need to access it's value with JS */
+  content: "+";
+  position:  absolute;
+  font-size: 6em;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 50%;
+  height: 61px;
+  color: #00000042;
+}
+
 .compileButton {
     z-index: 2;
     position: absolute;

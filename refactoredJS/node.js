@@ -42,18 +42,32 @@ class Node {
 
     };
 
-    constructor({ label, position, exeDocks, dataDocks, func }) {
+    get headerColor() {
+
+        return this.headerElement.style.background;
+
+    };
+
+    set headerColor(newColor) {
+
+        this.headerElement.style.background = newColor;
+
+    };
+
+    constructor({ label, position, exeDocks, dataDocks, func, background, headerColor }) {
 
         Object.assign(this, {
 
             func,
             dock: [],
+            background: background || '',
             id:  Node.createId()
 
         });
 
         this.createNode();
 
+        if (headerColor) this.headerColor = headerColor;
         this.label = label;
         this.position = position;
 
@@ -116,7 +130,7 @@ class Node {
 
     };
 
-    createNode(exeDocks, dataDocks) {
+    createNode() {
 
         let template = document.querySelector('template#node');
         template = document.importNode(template.content, true);
@@ -124,6 +138,7 @@ class Node {
         // <? write how the logic sees the structure, here .container > .body > blocks..
         Object.assign(this, {
             nodeElement: template.querySelector('.container'),
+            headerElement: template.querySelector('.header'),
             labelElement: template.querySelector('.headerTitle'),
             exeElement: {
                 left: template.querySelector('.exeblock > .leftblock'),
@@ -134,6 +149,8 @@ class Node {
                 right: template.querySelector('.body > .rightblock')
             }
         });
+
+        template.querySelector('.body > .bodybefore').textContent = this.background;
 
         template.querySelector('.header').ref = this.id;
 
@@ -167,13 +184,15 @@ class Node {
 
     };
 
-    static destruct({ label, position, func, exeDocks, dataDocks }) {
+    // change this by using the rest of the properties we don't want, i.e. ...rest
+    static destruct({ label, position, func, exeDocks, dataDocks, headerColor, background }) {
 
     	exeDocks = Dock.destruct(exeDocks);
 
     	dataDocks = Dock.destruct(dataDocks);
 
-    	return { label, position, func, exeDocks, dataDocks };
+    	return { label, position, func, exeDocks, dataDocks, headerColor, background };
+        // could change this to ((nope1, nope2, ...rest) => rest)();
 
     };
 
