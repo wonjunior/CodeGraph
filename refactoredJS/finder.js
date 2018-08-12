@@ -10,6 +10,8 @@ class Finder {
 
     set visible(state) {
 
+        if (state) this.hideResultBox();
+
         const style = !!state ? 'block' : 'none';
         this.finderElement.style.display = style;
 
@@ -29,7 +31,7 @@ class Finder {
         this.create();
 
         this.data = Object.entries(data).map(([ ref, obj ]) => ({ ref, obj })); // comes from the library
-        this.resultElement = {};  // { ref: HTMLElement, ref: HTMLElement }
+        this.results = {};
         this.populate();
 
     };
@@ -58,12 +60,13 @@ class Finder {
             template = document.importNode(template.content, true);
 
             template.querySelector('td').textContent = obj.label;
+            template.querySelector('td').id = ref;
 
-            this.element = template.querySelector('tr');
+            const element = template.querySelector('tr');
 
-            this.tableElement.appendChild(this.element);
+            this.tableElement.appendChild(element);
 
-            this.resultElement[ ref ] = this.element;
+            this.results[ ref ] = { element: element, obj } ;
 
         });
 
@@ -126,13 +129,13 @@ class Finder {
 
     displayResult(ref) {
 
-        this.resultElement[ ref ].classList.remove('hidden');
+        this.results[ ref ].element.classList.remove('hidden');
 
     };
 
     hideResult(ref) {
 
-        this.resultElement[ ref ].classList.add('hidden');
+        this.results[ ref ].element.classList.add('hidden');
 
     };
 
@@ -149,6 +152,14 @@ class Finder {
         this.visible = false;
 
         this.inputElement.value = "";
+
+    };
+
+    select(ref) {
+
+        return new Node(
+            this.results[ ref ].obj
+        );
 
     };
 
