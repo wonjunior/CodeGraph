@@ -29,7 +29,7 @@ class Canvas {
 
     };
 
-    static get positionFromOrigin()  {
+    static positionFromOrigin()  {
 
         const properties = this.element.getBoundingClientRect();
         return [ properties.x, properties.y ];
@@ -58,7 +58,7 @@ class Canvas {
 
         return position.map(( value, i ) => {
 
-            const minLimit = - Canvas.positionFromOrigin[i] / Canvas.zoomLevel + Canvas.position[i] ; // -1
+            const minLimit = - Canvas.positionFromOrigin()[i] / Canvas.zoomLevel + Canvas.position[i] ; // -1
             const maxLimit = minLimit - (Canvas.size[i] - View.screenSize[i]) / Canvas.zoomLevel;
 
             if (value >= minLimit) {
