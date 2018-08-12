@@ -2,6 +2,12 @@
 
 class View {
 
+    static get screenSize() {
+
+        return [ window.innerWidth, window.innerHeight ];
+
+    };
+
     static zoom(scale) {
 
         View.updateOrigin();
@@ -26,9 +32,7 @@ class View {
     static mousePosition(event) {
 
         const [ x, y ] = [ event.clientX, event.clientY ];
-
-        const canvas = Canvas.element.getBoundingClientRect();
-        const [ offsetX, offsetY ] = [ canvas.left, canvas.top];
+        const [ offsetX, offsetY ] = Canvas.positionFromOrigin();
 
         return [ (x - offsetX) / Canvas.zoomLevel, (y - offsetY) / Canvas.zoomLevel ];
 
@@ -46,7 +50,7 @@ Canvas.zoomWrapper.addEventListener('wheel', event => {
 
     const newScale = Canvas.zoomLevel + View.zoomFactor * sign;
 
-    if (0.5 <= newScale && newScale <= 2) {
+    if (0.5 <= newScale && newScale <= 2) { // <? min scale is fct(Canvas.size, View.screenSize)
 
         View.zoom(newScale);
 
