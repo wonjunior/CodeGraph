@@ -175,9 +175,39 @@ class Node {
 
                 link.path = Curve.get(link.startDock.position, link.snapDock.position);
 
-            });
+            }); 
 
         });
+
+    };
+
+    draggableBoundaryClamp(position) {
+
+        // filter the position of the node, it can only be inside the canvas
+        return position.map(( value, i ) => {
+
+            const minLimit = 0;
+            const maxLimit = (Canvas.size[i] - this.size[i]) / Canvas.zoomLevel;
+
+            if (value <= minLimit) {
+
+                return minLimit;
+
+            } else if (value >= maxLimit) {
+
+                return Math.round(maxLimit);
+
+            }
+
+            return value;
+
+        });
+
+    };
+
+    draggableCallback() {
+
+        this.update();
 
     };
 

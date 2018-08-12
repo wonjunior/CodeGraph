@@ -5,7 +5,14 @@ document.addEventListener('mousedown', event => {
     if (event.target.classList.contains('header') && event.button == 0) {
 
         const nodeObject = node[ event.target.ref ];
-        new Draggable(event, nodeObject.nodeElement, nodeObject, () => { nodeObject.update() });
+        new Draggable({
+            event,
+            type: 'drag',
+            element: nodeObject.nodeElement,
+            object: nodeObject,
+            bounderyClamp: nodeObject.draggableBoundaryClamp.bind(nodeObject),
+            callback:  nodeObject.draggableCallback.bind(nodeObject)
+        });
 
     } else if (event.target.classList.contains('snapDock') && event.button == 0) {
 
@@ -14,7 +21,13 @@ document.addEventListener('mousedown', event => {
 
     } else if (event.target.classList.contains('objects') && event.button == 2) {
 
-        new Draggable(event, event.target, Canvas);
+        new Draggable({
+            event,
+            type: 'drag',
+            element: event.target,
+            object: Canvas,
+            bounderyClamp: Canvas.draggableBoundaryClamp,
+        });
 
     } else if (event.target.tagName == 'path') {
 
@@ -23,6 +36,11 @@ document.addEventListener('mousedown', event => {
     } else if (event.target.classList.contains('finder') && nodeFinder.visible) {
 
         nodeFinder.hide(); // not only nodeFinder...
+
+    } else if (event.target.tagName == 'TD') {
+
+        const nodeObject = nodeFinder.select(event.target.id);
+        //new Draggable(event, nodeObject.nodeElement, nodeObject); // no need to update links
 
     } else {
 

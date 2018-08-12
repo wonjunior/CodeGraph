@@ -29,7 +29,7 @@ class Canvas {
 
     };
 
-    static get screenPosition()  {
+    static get positionFromOrigin()  {
 
         const properties = this.element.getBoundingClientRect();
         return [ properties.x, properties.y ];
@@ -52,6 +52,30 @@ class Canvas {
         Canvas.element.style.top = y + 'px';
 
     };*/
+
+    static draggableBoundaryClamp(position) {
+
+
+        return position.map(( value, i ) => {
+
+            const minLimit = - Canvas.positionFromOrigin[i] / Canvas.zoomLevel + Canvas.position[i] ; // -1
+            const maxLimit = minLimit - (Canvas.size[i] - View.screenSize[i]) / Canvas.zoomLevel;
+
+            if (value >= minLimit) {
+
+                return Math.round(minLimit);
+
+            } else if (value <= maxLimit) {
+
+                return Math.round(maxLimit);
+
+            }
+
+            return value;
+
+        });
+
+    }
 
 };
 
