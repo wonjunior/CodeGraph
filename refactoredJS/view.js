@@ -14,6 +14,8 @@ class View {
 
         Canvas.zoomLevel = scale;
 
+        Canvas.position = Canvas.draggableBoundaryClamp(Canvas.position);
+
     };
 
     static updateOrigin() {
@@ -23,7 +25,7 @@ class View {
             y: window.innerHeight / 2
         };
 
-        const CSSProperty = `${String(screenCenter.x)}px ${String(screenCenter.y)}px`;
+        const CSSProperty = `${String(screenCenter.x)}px ${String(screenCenter.y)}px`; // <? use View.screenSize()
 
         Canvas.zoomWrapper.style.transformOrigin = CSSProperty;
 
@@ -32,9 +34,9 @@ class View {
     static mousePosition(event) {
 
         const [ x, y ] = [ event.clientX, event.clientY ];
-        const [ offsetX, offsetY ] = Canvas.positionFromOrigin();
+        const [ offsetX, offsetY ] = Canvas.position;
 
-        return [ (x - offsetX) / Canvas.zoomLevel, (y - offsetY) / Canvas.zoomLevel ];
+        return [ x / Canvas.zoomLevel - offsetX, y / Canvas.zoomLevel - offsetY ];
 
     };
 
