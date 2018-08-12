@@ -3,6 +3,7 @@
 class Draggable {
 
     constructor(event, element, object, callback) {
+    //                        <? or simply position (setter)
 
         this.element = element;
         this.object = object;
@@ -36,30 +37,34 @@ class Draggable {
 
     dragging(e) {
 
+        // <? View<mousePosition> is doing the exact same thing
         let newPos = [
             (e.clientX - this.offset.x) / this.zoomLevel,
             (e.clientY - this.offset.y) / this.zoomLevel
         ];
 
-        this.object.position = newPos;
+        // this.object.position = newPos; return;
 
-        /*const pageSize = [ window.innerWidth, window.innerHeight ];
 
-        this.object.position = newPos.map((value, i) => {
+        let properties = Canvas.element.getBoundingClientRect();
+        const calculated = - properties.x / Canvas.zoomLevel + Canvas.position[0];
 
-            if (value > 0) {
+        // calculated < newPos[0] 0 position is lower than current position
+        // posX > 0 || posX >= 0 canvas is outside the boundary
 
-                return 0;
+        _('condition: ', calculated <= newPos[0])
+        if (calculated <= newPos[0]) {
 
-            } else if (value < pageSize[i] - 5000) { // Canvas.size[i]
+            newPos[0] = (function({ x, y }, [ absX , absY ]) {
 
-                return pageSize[i] - 5000; // Canvas.size[i]
+                return Math.round(- x / Canvas.zoomLevel + absX - 1); // <? careful w/ 1
 
-            }
+            })(properties, Canvas.position);
 
-            return value;
 
-        });*/
+        }
+
+        Canvas.position = newPos;
 
     };
 
