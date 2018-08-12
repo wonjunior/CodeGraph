@@ -38,19 +38,36 @@ class Draggable {
     dragging(e) {
 
         // <? View<mousePosition> is doing the exact same thing
-        let newPos = [
+        let targetPos = [
             (e.clientX - this.offset.x) / this.zoomLevel,
             (e.clientY - this.offset.y) / this.zoomLevel
         ];
 
-        // this.object.position = newPos; return;
+        const properties = Canvas.element.getBoundingClientRect();
+        const truePos = [ properties.x, properties.y ];
+        Canvas.position = targetPos.map((value, i) => {
+
+            const minLimit = - truePos[i] / Canvas.zoomLevel + Canvas.position[i] /*- 1*/;
+            const maxLimit = minLimit - Canvas.size[i] + View.screenSize[i] / Canvas.zoomLevel;
+
+            if (targetPos[i] >= minLimit) {
+
+                return Math.round(minLimit);
+
+            } else if (targetPos[i] <= maxLimit) {
+
+                return Math.round(maxLimit);
+
+            }
+
+            return value;
+
+        });
 
 
-        let properties = Canvas.element.getBoundingClientRect();
-        const calculated = - properties.x / Canvas.zoomLevel + Canvas.position[0];
+        /*const calculated = - properties.x / Canvas.zoomLevel + Canvas.position[0];
 
         // calculated < newPos[0] 0 position is lower than current position
-        // posX > 0 || posX >= 0 canvas is outside the boundary
 
         _('condition: ', calculated <= newPos[0])
         if (calculated <= newPos[0]) {
@@ -64,7 +81,7 @@ class Draggable {
 
         }
 
-        Canvas.position = newPos;
+        Canvas.position = newPos;*/
 
     };
 
