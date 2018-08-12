@@ -4,7 +4,7 @@ class Canvas {
 
     static get zoomLevel() {
 
-        const scaleFromStyle = Canvas.zoomWrapper.style.transform.replace(/[^\d.]/g, '');
+        const scaleFromStyle = Canvas.zoomWrapper.style.transform.replace(/[^\d.]/g, ''); // <? make class to handle it
         return  (1*scaleFromStyle) || 1;
 
     };
@@ -28,6 +28,30 @@ class Canvas {
         Canvas.element.style.top = y + 'px';
 
     };
+
+    static get screenPosition()  {
+
+        const properties = this.element.getBoundingClientRect();
+        return [ properties.x, properties.y ];
+
+    };
+
+    static get size() {
+
+        const properties = this.element.getBoundingClientRect();
+        return [ properties.width, properties.height ];
+
+    };
+
+    /*static set size([ x, y ]) {
+
+        // more complex than that: need to check
+        //  a) not too small
+        //  b) displace all the Canvas' content i.e. re-center the canvas
+        Canvas.element.style.left = x + 'px';
+        Canvas.element.style.top = y + 'px';
+
+    };*/
 
 };
 

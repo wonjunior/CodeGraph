@@ -54,6 +54,13 @@ class Node {
 
     };
 
+    get size() {
+
+        const properties = this.nodeElement.getBoundingClientRect();
+        return [ properties.width, properties.height ];
+
+    };
+
     constructor({ label, position, exeDocks, dataDocks, func, background, headerColor }) {
 
         Object.assign(this, {
@@ -176,6 +183,7 @@ class Node {
 
     static updateAll() {
 
+        // <? this is updating each link twice (because one link is refenreced to two different docks)
         Object.entries(node).forEach(([ nodeId, node ]) => {
 
             node.update();

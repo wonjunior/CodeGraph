@@ -27,7 +27,7 @@ class Draggable {
 
             this.dragging(event);
 
-            if (callback) callback();
+            if (callback) callback(); // this must be "inside dragging()"
 
         };
         document.addEventListener('mousemove', Draggable.event);
@@ -43,18 +43,46 @@ class Draggable {
             (e.clientY - this.offset.y) / this.zoomLevel
         ];
 
-        const properties = Canvas.element.getBoundingClientRect();
-        const truePos = [ properties.x, properties.y ];
-        Canvas.position = targetPos.map((value, i) => {
+        this.object.position = targetPos.map((value, i) => {
 
-            const minLimit = - truePos[i] / Canvas.zoomLevel + Canvas.position[i] /*- 1*/;
-            const maxLimit = minLimit - Canvas.size[i] + View.screenSize[i] / Canvas.zoomLevel;
+            const minLimit = 0;
+            const maxLimit = (Canvas.size[i] - this.object.size[i]) / Canvas.zoomLevel;
 
-            if (targetPos[i] >= minLimit) {
+            _(value, [minLimit, maxLimit])
+
+            if (value <= minLimit) {
+
+                return minLimit;
+
+            } else if (value >= maxLimit) {
+
+                return Math.round(maxLimit);
+
+            }
+
+            return value
+
+        });
+
+        return;
+
+        //
+
+        const properties = this.element.getBoundingClientRect();
+        // following two lines might as well be in a method of this.object
+        const truePosition = [ properties.x, properties.y ];
+
+        this.object.position = targetPos.map((value, i) => {
+
+            const minLimit = - truePosition[i] / Canvas.zoomLevel + Canvas.position[i] /*- 1*/;
+            const maxLimit = minLimit - (this.object.size[i] - View.screenSize[i]) / Canvas.zoomLevel;
+
+
+            if (value >= minLimit) {
 
                 return Math.round(minLimit);
 
-            } else if (targetPos[i] <= maxLimit) {
+            } else if (value <= maxLimit) {
 
                 return Math.round(maxLimit);
 
