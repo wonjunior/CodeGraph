@@ -11,7 +11,7 @@ document.addEventListener('mousedown', event => {
             type: 'drag',
             element: nodeObject.nodeElement,
             object: nodeObject,
-            bounderyClamp: nodeObject.draggableBoundaryClamp.bind(nodeObject),
+            // bounderyClamp: nodeObject.draggableBoundaryClamp.bind(nodeObject),
             callback:  nodeObject.draggableCallback.bind(nodeObject)
         });
 
@@ -20,14 +20,14 @@ document.addEventListener('mousedown', event => {
         const dockObject = dock[ event.target.ref ];
         new Linkable(event, dockObject);
 
-    } else if (event.target.classList.contains('objects') && event.button == 2) {
+    } else if (event.target.classList.contains('window') && event.button == 2) {
 
         new Draggable({
             event,
             type: 'drag',
-            element: event.target,
+            element: Canvas.element,
             object: Canvas,
-            bounderyClamp: Canvas.draggableBoundaryClamp,
+            // bounderyClamp: Canvas.draggableBoundaryClamp,
         });
 
     } else if (event.target.tagName == 'path') {

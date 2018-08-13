@@ -150,6 +150,7 @@
     /* position: relative; */
     /* top: 100px; */
     /* left: 100px; */
+    pointer-events:  visible;
 }
 
 .links {
@@ -206,5 +207,11 @@
 
 .data, .exe {
     border: 1px solid grey;
+}
+.canvas {
+    background: red;
+}
+.objects {
+    background: blue;
 }
 */

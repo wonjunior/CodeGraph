@@ -186,12 +186,7 @@ html, body, section {
     color: rgba(193, 193, 193, 0.2);
 }
 
-.window {
-    /* display: grid; */
-    /* grid-template-rows: 100%; */
-    /* grid-template-columns: 100%; */
-    /* grid-template-areas: "first"; */
-}
+.window {background: url(https://image.ibb.co/f1RAXF/background.png);height: 100%;}
 
 .top-bottom {
     /*grid-template-rows: 50% 10px auto;*/
