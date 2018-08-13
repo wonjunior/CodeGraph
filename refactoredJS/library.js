@@ -4,7 +4,7 @@ const Library  = {
     node: {
         sum: {
             label: 'Sum',
-            meta: 'sum add',
+            meta: 'sum add +',
             description: 'This node adds the input values together',
             position: [0, 0],
             dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'a+b'} ] },
@@ -14,7 +14,7 @@ const Library  = {
         },
         sub: {
             label: 'Substract',
-            meta: 'deduct substract',
+            meta: 'deduct substract -',
             description: 'This node substract the second input value from the first',
             position: [0, 0],
             dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'a-b'} ] },
@@ -24,7 +24,7 @@ const Library  = {
         },
         abs: {
             label: 'Absolute',
-            meta: 'absolute',
+            meta: 'absolute |',
             description: 'This node takes the absolute value of the input value',
             position: [0, 0],
             dataDocks: { in: [ {label: 'a'} ], out: [ {label: '|a|'} ] },
@@ -33,7 +33,7 @@ const Library  = {
         },
         product: {
             label: 'Multiply',
-            meta: 'product multiply multiplication',
+            meta: 'product multiply multiplication * x',
             description: 'This node multiplies the input values together',
             position: [0, 0],
             dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'a×b'} ] },
@@ -43,7 +43,7 @@ const Library  = {
         },
         divide: {
             label: 'Divide',
-            meta: 'divide division',
+            meta: 'divide division /',
             description: 'This node multiplies the input values together',
             position: [0, 0],
             dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'a÷b'} ] },

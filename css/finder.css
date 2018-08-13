@@ -30,7 +30,7 @@
     width: 100%;
     padding: 1px 20px 1px 10px;
     box-sizing: border-box;
-    font-size: 1.15em;
+    font-size: 1.1em;
     line-height: 33px;
     border-radius: 6px;
     color: #d7dae0;
@@ -112,6 +112,7 @@ tr.not-hovered {
 tr:hover {
     background-color: rgb(44, 49, 58);
 }
+
 .search-table th, .search-table td {
     text-align: left;
     padding: 12px;
