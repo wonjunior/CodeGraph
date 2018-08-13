@@ -8,54 +8,73 @@ class View {
 
     };
 
-    static zoom(scale) {
+    static zoom(scale, position) {
 
-        View.updateOrigin();
+        View.updateOrigin(position);
 
         Canvas.zoomLevel = scale;
 
-        Canvas.position = Canvas.draggableBoundaryClamp(Canvas.position);
+        // Canvas.position = Canvas.draggableBoundaryClamp(Canvas.position);
 
     };
 
-    static updateOrigin() {
+    static updateOrigin(position) {
 
-        const screenCenter = {
+        position = position ? position : View.screenSize.map(e => e / 2);
+
+        const CSSProperty = position.map(e => e + 'px').join(' ');
+
+        Canvas.zoomWrapper.style.transformOrigin = CSSProperty;
+
+        /*const screenCenter = {
             x: window.innerWidth / 2,
             y: window.innerHeight / 2
         };
 
         const CSSProperty = `${String(screenCenter.x)}px ${String(screenCenter.y)}px`; // <? use View.screenSize()
 
-        Canvas.zoomWrapper.style.transformOrigin = CSSProperty;
+        Canvas.zoomWrapper.style.transformOrigin = CSSProperty;*/
 
     };
 
     static mousePosition(event) {
 
         const [ x, y ] = [ event.clientX, event.clientY ];
-        const [ offsetX, offsetY ] = Canvas.position;
+        const [ offsetX, offsetY ] = Canvas.positionFromOrigin();
 
-        return [ x / Canvas.zoomLevel - offsetX, y / Canvas.zoomLevel - offsetY ];
+        return [ (x - offsetX) / Canvas.zoomLevel, (y - offsetY) / Canvas.zoomLevel ];
 
     };
 
 };
 
-View.zoomFactor = -0.1;
+View.zoomFactor = -0.05;
 
-Canvas.zoomWrapper.addEventListener('wheel', event => {
+Canvas.window.addEventListener('wheel', event => {
 
     const sign = Math.sign(
         event.deltaY
     );
 
-    const newScale = Canvas.zoomLevel + View.zoomFactor * sign;
+    let newScale;
+    if (Canvas.zoomLevel < 1) {
 
-    if (0.5 <= newScale && newScale <= 2) { // <? min scale is fct(Canvas.size, View.screenSize)
+        newScale = 1 / (1 / Canvas.zoomLevel - 2 * View.zoomFactor * sign);
+
+    } else {
+
+        newScale = Canvas.zoomLevel + View.zoomFactor * sign;
+
+    }
+
+    View.zoom(newScale, /*[event.clientX, event.clientY]*/);
+
+
+    /*const newScale = Canvas.zoomLevel + View.zoomFactor * sign;
+    if (newScale > 0) {
 
         View.zoom(newScale);
 
-    }
+    }*/
 
 });

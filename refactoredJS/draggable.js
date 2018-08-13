@@ -2,7 +2,7 @@
 
 class Draggable {
 
-    constructor({ type, event, element, object, bounderyClamp, callback }) {
+    constructor({ type, event, element, object, /*bounderyClamp,*/ callback }) {
         //                            <? just setter position
 
         this.element = element;
@@ -10,17 +10,17 @@ class Draggable {
 
         if (type == 'drag') {
 
-            this.startDrag(event, bounderyClamp, callback);
+            this.startDrag(event, /*bounderyClamp,*/ callback);
 
         } else if (type == 'stick') {
 
-            this.startStick(event, bounderyClamp, callback);
+            this.startStick(event, /*bounderyClamp,*/ callback);
 
         }
 
     };
 
-    startDrag(e, bounderyClamp, callback) {
+    startDrag(e, /*bounderyClamp,*/ callback) {
 
         this.zoomLevel = Canvas.zoomLevel;
 
@@ -33,7 +33,7 @@ class Draggable {
 
         Draggable.event = event => {
 
-            this.dragging(event, bounderyClamp);
+            this.dragging(event/*, bounderyClamp*/);
 
             if (callback) callback();
 
@@ -52,7 +52,8 @@ class Draggable {
             (e.clientY - this.offset.y) / this.zoomLevel
         ];
 
-        this.object.position = bounderyClamp(targetPosition);
+        // this.object.position = bounderyClamp(targetPosition);
+        this.object.position = targetPosition;
 
     };
 
