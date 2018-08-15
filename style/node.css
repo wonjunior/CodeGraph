@@ -72,8 +72,8 @@
     border-radius: 12px;
     position: absolute;
     border: 1px solid rgba(23, 22, 22, 0.4);
-    top: 100px;
-    left: 200px;
+    /* top: 100px; */
+    /* left: 200px; */
 }
 .header {
     border-radius: 12px 12px 0px 0px;
