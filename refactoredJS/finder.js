@@ -160,10 +160,12 @@ class Finder {
 
     };
 
-    select(ref) {
+    select(event) {
+
+        this.hide();
 
         return new Node(
-            this.results[ ref ].obj
+            this.results[ event.target.id ].obj
         );
 
     };
@@ -182,21 +184,14 @@ class Finder {
 
 };
 
-Finder.properties = {
 
-    nodeFinder: {
-        // name: 'nodeFinder',
-        data: Library.node,
-        container: Canvas.window,
-        placeholder: 'search node...',
-        // key: spacebar
-    }
-
-};
-
-const nodeFinder = new Finder(
-    Finder.properties['nodeFinder']
-);
+const nodeFinder = new Finder({
+    // name: 'nodeFinder',
+    data: Library.node,
+    container: Canvas.window,
+    placeholder: 'search node...',
+    // key: spacebar
+});
 
 
 new State({
@@ -205,17 +200,9 @@ new State({
 
     keybinds: {
 
-        escape: () => {
+        escape: () => nodeFinder.hide(),
 
-            nodeFinder.hide();
-
-        },
-
-        other: (event) => {
-
-            nodeFinder.search(event.target.value);
-
-        }
+        other: event => nodeFinder.search(event.target.value)
 
     }
 
