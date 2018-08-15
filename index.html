@@ -36,74 +36,78 @@
 
     <div class="footer">
       <div class="signature s-left"># testfile.cg</div>
-      <div class="signature s-right">CodeGraph</div>
+      <div class="signature s-right">CodeGraph v0.5</div>
     </div>
 
 </div>
 
-<template id="node">
-    <div class="container" id="{node.id}">
+<templates>
 
-        <div class="header">
-            <div class="headerTitle">{node.label}</div>
-            <div class="exeblock">
+    <template id="node">
+        <div class="container" id="{node.id}">
+
+            <div class="header">
+                <div class="headerTitle">{node.label}</div>
+                <div class="exeblock">
+                    <div class="leftblock"></div><!--
+                    --><div class="rightblock"></div>
+                </div>
+            </div>
+
+            <div class="body">
+                <div class="bodybefore"></div>
                 <div class="leftblock"></div><!--
                 --><div class="rightblock"></div>
             </div>
+
         </div>
+    </template>
 
-        <div class="body">
-            <div class="bodybefore"></div>
-            <div class="leftblock"></div><!--
-            --><div class="rightblock"></div>
-        </div>
-
-    </div>
-</template>
-
-<template id="dataDock">
-    <div class="data" id="{dock.id}">
-        <div class="dock"></div>
-        <div class="snapDock"></div>
-        <div class="paramContainer">
-            <input spellcheck="false" required="required" type="text">
-            <div class="paramName"></div>
-        </div>
-    </div>
-</template>
-
-<template id="exeDock">
-    <div class="exe" id="{dock.id}">
-      <div class="dock"></div>
-      <div class="snapDock"></div>
-    </div>
-</template>
-
-<template id="link">
-    <svg>
-        <path></path>
-    </svg>
-</template>
-
-<template id="finder">
-    <div class="finder" style="display:none">
-
-        <div class="search-container">
-            <input spellcheck="false" value="" type="text" class="search-input">
-            <div class="search-wrap hidden">
-                <table class="search-table"></table>
+    <template id="dataDock">
+        <div class="data" id="{dock.id}">
+            <div class="dock"></div>
+            <div class="snapDock"></div>
+            <div class="paramContainer">
+                <input spellcheck="false" required="required" type="text">
+                <div class="paramName"></div>
             </div>
         </div>
+    </template>
 
-    </div>
-</template>
+    <template id="exeDock">
+        <div class="exe" id="{dock.id}">
+          <div class="dock"></div>
+          <div class="snapDock"></div>
+        </div>
+    </template>
 
-<template id="finderResult">
-    <tr class="hidden"><td></td></tr>
-</template>
+    <template id="link">
+        <svg>
+            <path></path>
+        </svg>
+    </template>
+
+    <template id="finder">
+        <div class="finder" style="display:none">
+
+            <div class="search-container">
+                <input spellcheck="false" value="" type="text" class="search-input">
+                <div class="search-wrap hidden">
+                    <table class="search-table"></table>
+                </div>
+            </div>
+
+        </div>
+    </template>
+
+    <template id="finderResult">
+        <tr class="hidden"><td></td></tr>
+    </template>
+
+</templates>
 
 
-<js>
+<javascript>
     <!--<script src="compiler/core.js"></script>-->
 
     <script src="editor/functions.js"></script>
@@ -133,6 +137,6 @@
 
     <script src="editor/input.js"></script>
 
-</js>
+</javascript>
 
 </body>
