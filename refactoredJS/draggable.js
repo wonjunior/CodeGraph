@@ -10,28 +10,25 @@ class Draggable {
 
         if (type == 'drag') {
 
-            this.startDrag(event, /*bounderyClamp,*/ callback);
+            this.startDrag(event, /*bounderyClamp, */ callback);
 
         } else if (type == 'stick') {
 
-            this.startStick(event, /*bounderyClamp,*/ callback);
+            this.startStick(event, /*bounderyClamp, */ callback);
 
         }
 
     };
 
-    startDrag(e, /*bounderyClamp,*/ callback) {
+    startStick(e, /*bounderyClamp, */ callback) {
 
-        this.zoomLevel = Canvas.zoomLevel;
+        const parentProp = this.element.parentElement.getBoundingClientRect();
+        this.offset = [
+            parentProp.x + 50,
+            parentProp.y + 10
+        ];
 
-        const rect = this.element.getBoundingClientRect();
-        const rectP = this.element.parentElement.getBoundingClientRect();
-        this.offset = {
-            x: e.clientX - rect.x + rectP.x,
-            y: e.clientY - rect.y + rectP.y
-        };
-
-        Draggable.event = event => {
+        const eventHandler = event => {
 
             this.dragging(event/*, bounderyClamp*/);
 
@@ -39,17 +36,43 @@ class Draggable {
 
         };
 
-        document.addEventListener('mousemove', Draggable.event);
-        document.addEventListener('mouseup', this.endDrag, { once: true });
+        this.dragging(e);
+
+        document.addEventListener('mousemove', eventHandler);
+        document.addEventListener('mousedown', () => this.endDrag(eventHandler), { once: true });
+
+    };
+
+    startDrag(e, /*bounderyClamp, */ callback) {
+
+        const selfProp = this.element.getBoundingClientRect();
+        const parentProp = this.element.parentElement.getBoundingClientRect();
+        this.offset = [
+            e.clientX - selfProp.x + parentProp.x,
+            e.clientY - selfProp.y + parentProp.y
+        ];
+
+        const eventHandler = event => {
+
+            this.dragging(event/*, bounderyClamp*/);
+
+            if (callback) callback();
+
+        };
+
+        document.addEventListener('mousemove', eventHandler);
+        document.addEventListener('mouseup', () => this.endDrag(eventHandler), { once: true });
 
     };
 
     dragging(e, bounderyClamp) {
 
+        const [ offsetX, offsetY ] = this.offset;
+
         // <? View<mousePosition> is doing the exact same thing
         let targetPosition = [
-            (e.clientX - this.offset.x) / this.zoomLevel,
-            (e.clientY - this.offset.y) / this.zoomLevel
+            (e.clientX - offsetX) / Canvas.zoomLevel,
+            (e.clientY - offsetY) / Canvas.zoomLevel
         ];
 
         // this.object.position = bounderyClamp(targetPosition);
@@ -57,9 +80,9 @@ class Draggable {
 
     };
 
-    endDrag() {
+    endDrag(fct) {
 
-        document.removeEventListener('mousemove', Draggable.event);
+        document.removeEventListener('mousemove', fct);
 
     };
 
