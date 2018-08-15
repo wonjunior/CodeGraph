@@ -209,6 +209,12 @@ new State({
 
             nodeFinder.hide();
 
+        },
+
+        other: (event) => {
+
+            nodeFinder.search(event.target.value);
+
         }
 
     }

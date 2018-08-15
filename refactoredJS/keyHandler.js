@@ -104,12 +104,14 @@ class Key {
 Key.keyCodes = {
     32: 'spacebar',
     27: 'escape',
+    40: 'arrowdown',
+    38: 'arrowup'
 }
 
 
 document.addEventListener('keyup', event => {
 
-    const keyName = Key.getName(event.keyCode);
+    const keyName = Key.getName(event.keyCode) || 'other';
 
     if (State.current[ keyName ]) {
 
@@ -117,40 +119,4 @@ document.addEventListener('keyup', event => {
 
     }
 
-})
-
-
-/*document.addEventListener('keyup', event => {
-
-    // _(event.keyCode)
-
-    // [Spacebar] is clicked, finder is unlocked and hidden
-    if (event.keyCode == 32 && !nodeFinder.visible && !nodeFinder.isLocked) {
-
-        nodeFinder.show();
-        event.preventDefault();
-
-    } else if (nodeFinder.visible) {
-
-        switch(event.keyCode) {
-
-            case 27: // [Escape]
-                nodeFinder.hide();
-                break;
-
-            case 40: // [▼]
-                nodeFinder.down();
-                break;
-
-            case 38: // [▲]
-                nodeFinder.up();
-                break;
-
-            default:
-                nodeFinder.search(event.target.value);
-
-        }
-
-    };
-
-});*/
+});
