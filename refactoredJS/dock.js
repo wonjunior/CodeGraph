@@ -105,13 +105,15 @@ class Dock {
             pinElement: template.querySelector('.data > .dock'),
             snapElement: template.querySelector('.data > .snapDock'),
             paramElement: template.querySelector('.data > .paramContainer'),
-            labelElement: template.querySelector('.paramContainer > .paramName')
+            labelElement: template.querySelector('.paramContainer > .paramName'),
+            inputElement: template.querySelector('.paramContainer > input')
         });
 
         this.dockElement.classList.add(side);
         this.dockElement.id = this.id;
 
         this.snapElement.ref = this.id;
+        this.labelElement.ref = this.id;
 
         this.blockElement.appendChild(this.dockElement);
 
@@ -125,6 +127,40 @@ class Dock {
         const opposite = (this.isRight != target.isRight);
         const sameType = (this.type == target.type);
         return notEqual && opposite && sameType;
+
+    };
+
+    edit(callback) {
+
+        this.inputElement.style.display = 'block';
+        this.labelElement.style.display = 'none';
+
+        setTimeout(() => this.inputElement.focus(), 0);
+
+        const endInput = () => {
+
+            if (event.target != this.inputElement) {
+
+                _('not input')
+
+                this.inputElement.style.display = 'none';
+                this.labelElement.style.display = 'block';
+
+                this.label = this.inputElement.value;
+
+                callback();
+
+                document.removeEventListener('mousedown', endInput);
+
+            } else {
+
+                _('input')
+
+            }
+
+        }
+
+        document.addEventListener('mousedown', endInput);
 
     };
 

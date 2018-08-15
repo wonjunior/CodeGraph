@@ -6,6 +6,13 @@
 
 /* */
 
+/*input:focus {
+  outline: none;
+}*/
+input:focus, textarea:focus, select:focus {
+  outline-offset: 0px;
+}
+
 path {
     fill: none;
     pointer-events: visible;
