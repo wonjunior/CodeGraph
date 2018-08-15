@@ -24,6 +24,7 @@ class Finder {
             // name,
             container,
             placeholder,
+            isLocked: false,
             // hovering: false
 
         });
@@ -145,6 +146,8 @@ class Finder {
 
         this.inputElement.focus();
 
+        State.change('finder');
+
     };
 
     hide() {
@@ -152,6 +155,8 @@ class Finder {
         this.visible = false;
 
         this.inputElement.value = "";
+
+        State.change('editor');
 
     };
 
@@ -165,35 +170,7 @@ class Finder {
 
     down() {
 
-        if(this.hovering) {
 
-            _('already hovering')
-            /*let index = finder.hovered.index('tr[node-type]:visible');
-
-            if(index != finder.last) {
-
-                $('tr[class=hovered]').attr('class', 'not-hovered');
-                finder.hovered = finder.hovered.nextAll(':visible').eq(0);
-
-                if(index > 3) {
-                    $('#search-wrap').animate({
-                        scrollTop: 45.6 * (index-1)
-                    }, 100);
-                } else {
-                    $('#search-wrap').animate({
-                        scrollTop: 0
-                    }, 100);
-                }
-
-            }*/
-
-        } else {
-
-            /*finder.hovered = $('tr[node-type]:visible:first');*/
-
-        }
-
-        /*finder.hovered.attr('class', 'hovered');*/
 
     };
 
@@ -211,7 +188,8 @@ Finder.properties = {
         // name: 'nodeFinder',
         data: Library.node,
         container: Canvas.window,
-        placeholder: 'search node...'
+        placeholder: 'search node...',
+        // key: spacebar
     }
 
 };
@@ -219,3 +197,20 @@ Finder.properties = {
 const nodeFinder = new Finder(
     Finder.properties['nodeFinder']
 );
+
+
+new State({
+
+    name: 'finder',
+
+    keybinds: {
+
+        escape: () => {
+
+            nodeFinder.hide();
+
+        }
+
+    }
+
+});

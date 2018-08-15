@@ -34,7 +34,16 @@ document.addEventListener('mousedown', event => {
 
         _(event.target.id);
 
-    } else if (event.target.classList.contains('finder') && nodeFinder.visible) {
+    } else if (event.target.classList.contains('paramName') && event.button == 0)  {
+
+        nodeFinder.isLocked = true;
+
+        const dockObject = dock[ event.target.ref ];
+        dockObject.edit(() => {
+            nodeFinder.isLocked = false;
+        });
+
+    } else if (event.target.classList.contains('finder') && nodeFinder.visible && !nodeFinder.isLocked) {
 
         nodeFinder.hide(); // not only nodeFinder...
 
@@ -52,13 +61,71 @@ document.addEventListener('mousedown', event => {
 });
 
 
+class State {
+
+    constructor({ defaultState, name, keybinds }) {
+
+        Object.assign(this, keybinds);
+
+        State.all[ name ] = this;
+
+        if (defaultState) {
+
+            State.current = this;
+
+        }
+
+    }
+
+    static change(newState) {
+
+        State.current = State.all[ newState ];
+
+    };
+
+};
+
+State.all = {};
+
+// State.current: e.g. {name, spacebar, ...}
+// State.all: {state1: {}, state2: {}, ...}
+
+
+class Key {
+
+    static getName(keyCode) {
+
+        return Key.keyCodes[ keyCode ];
+
+    };
+
+}
+
+Key.keyCodes = {
+    32: 'spacebar',
+    27: 'escape',
+}
+
 
 document.addEventListener('keyup', event => {
 
+    const keyName = Key.getName(event.keyCode);
+
+    if (State.current[ keyName ]) {
+
+        const newState = State.current[ keyName ](event);
+
+    }
+
+})
+
+
+/*document.addEventListener('keyup', event => {
+
     // _(event.keyCode)
 
-    // finder is hidden and [Spacebar] is clicked
-    if (!nodeFinder.visible && event.keyCode == 32) {
+    // [Spacebar] is clicked, finder is unlocked and hidden
+    if (event.keyCode == 32 && !nodeFinder.visible && !nodeFinder.isLocked) {
 
         nodeFinder.show();
         event.preventDefault();
@@ -86,4 +153,4 @@ document.addEventListener('keyup', event => {
 
     };
 
-});
+});*/

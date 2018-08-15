@@ -51,3 +51,22 @@ class Editor {
 
 
 }
+
+
+new State({
+
+    defaultState: true,
+
+    name: 'editor',
+
+    keybinds: {
+
+        spacebar: () => {
+
+            nodeFinder.show();
+
+        }
+
+    }
+
+});
