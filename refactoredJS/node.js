@@ -175,7 +175,7 @@ class Node {
 
                 link.path = Curve.get(link.startDock.position, link.snapDock.position);
 
-            }); 
+            });
 
         });
 
@@ -202,12 +202,6 @@ class Node {
             return value;
 
         });
-
-    };
-
-    draggableCallback() {
-
-        this.update();
 
     };
 

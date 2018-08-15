@@ -12,7 +12,7 @@ document.addEventListener('mousedown', event => {
             element: nodeObject.nodeElement,
             object: nodeObject,
             // bounderyClamp: nodeObject.draggableBoundaryClamp.bind(nodeObject),
-            callback:  nodeObject.draggableCallback.bind(nodeObject)
+            callback:  nodeObject.update.bind(nodeObject)
         });
 
     } else if (event.target.classList.contains('snapDock') && event.button == 0) {
@@ -50,7 +50,11 @@ document.addEventListener('mousedown', event => {
     } else if (event.target.tagName == 'TD') {
 
         const nodeObject = nodeFinder.select(event.target.id);
-        //new Draggable(event, nodeObject.nodeElement, nodeObject); // no need to update links
+        new Draggable({
+
+        });
+
+        //event, nodeObject.nodeElement, nodeObject)
 
     } else {
 
@@ -86,10 +90,6 @@ class State {
 };
 
 State.all = {};
-
-// State.current: e.g. {name, spacebar, ...}
-// State.all: {state1: {}, state2: {}, ...}
-
 
 class Key {
 
