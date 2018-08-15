@@ -49,9 +49,12 @@ document.addEventListener('mousedown', event => {
 
     } else if (event.target.tagName == 'TD') {
 
-        const nodeObject = nodeFinder.select(event.target.id);
+        const nodeObject = nodeFinder.select(event);
         new Draggable({
-
+            event,
+            type: 'stick',
+            element: nodeObject.nodeElement,
+            object: nodeObject
         });
 
         //event, nodeObject.nodeElement, nodeObject)
