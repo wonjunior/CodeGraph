@@ -3,24 +3,7 @@
 // <? keyHandler.js is getting crowded make mouseHandler.js
 document.addEventListener('mousedown', event => {
 
-    if (event.target.classList.contains('header') && event.button == 0) {
-
-        const nodeObject = node[ event.target.ref ];
-        new Draggable({
-            event,
-            type: 'drag',
-            element: nodeObject.nodeElement,
-            object: nodeObject,
-            // bounderyClamp: nodeObject.draggableBoundaryClamp.bind(nodeObject),
-            callback:  nodeObject.update.bind(nodeObject)
-        });
-
-    } else if (event.target.classList.contains('snapDock') && event.button == 0) {
-
-        const dockObject = dock[ event.target.ref ];
-        new Linkable(event, dockObject);
-
-    } else if (event.target.classList.contains('window') && event.button == 2) {
+    if (event.target.classList.contains('window') && event.button == 2) {
 
         new Draggable({
             event,
@@ -34,19 +17,6 @@ document.addEventListener('mousedown', event => {
 
         _(event.target.id);
 
-    } else if (event.target.classList.contains('paramName') && event.button == 0)  {
-
-        nodeFinder.isLocked = true;
-
-        const dockObject = dock[ event.target.ref ];
-        dockObject.edit(() => {
-            nodeFinder.isLocked = false;
-        });
-
-    } else if (event.target.classList.contains('finder') && nodeFinder.visible && !nodeFinder.isLocked) {
-
-        nodeFinder.hide(); // not only nodeFinder...
-
     } else if (event.target.tagName == 'TD') {
 
         const nodeObject = nodeFinder.select(event);
@@ -56,8 +26,6 @@ document.addEventListener('mousedown', event => {
             element: nodeObject.nodeElement,
             object: nodeObject
         });
-
-        //event, nodeObject.nodeElement, nodeObject)
 
     } else {
 
@@ -70,9 +38,10 @@ document.addEventListener('mousedown', event => {
 
 class State {
 
-    constructor({ defaultState, name, keybinds }) {
+    constructor({ defaultState, name, keybinds, mousebinds }) {
 
-        Object.assign(this, keybinds);
+        this.keybinds = keybinds;
+        this.mousebinds = mousebinds;
 
         State.all[ name ] = this;
 
@@ -98,27 +67,72 @@ class Key {
 
     static getName(keyCode) {
 
-        return Key.keyCodes[ keyCode ];
+        return Key.codes[ keyCode ];
 
     };
 
 }
 
-Key.keyCodes = {
+Key.codes = {
     32: 'spacebar',
     27: 'escape',
     40: 'arrowdown',
     38: 'arrowup'
 }
 
+class Mouse {
+
+    static getName(mouseCode) {
+
+        return Mouse.codes[ mouseCode ];
+
+    };
+
+}
+
+Mouse.codes = {
+    0: 'left',
+    1: 'middle',
+    2: 'right'
+}
+
 
 document.addEventListener('keyup', event => {
 
     const keyName = Key.getName(event.keyCode) || 'other';
+    const eventCallback = State.current.keybinds[ keyName ];
 
-    if (State.current[ keyName ]) {
+    if (eventCallback) {
 
-        const newState = State.current[ keyName ](event);
+        eventCallback(event);
+
+    }
+
+});
+
+document.addEventListener('mousedown', event => {
+
+    const buttonName = Mouse.getName(event.button) || 'other';
+    const eventCallbacks = State.current.mousebinds[ buttonName ];
+
+    if (eventCallbacks) {
+
+        [
+            ...event.target.classList,
+            ...event.target.tagName.toLowerCase(),
+            'document'
+
+        ].forEach(selector => {
+
+            const eventCallback = State.current.mousebinds[ buttonName ][ selector ];
+
+            if (eventCallback) {
+
+                eventCallback(event);
+
+            }
+
+        });
 
     }
 

@@ -204,6 +204,16 @@ new State({
 
         other: event => nodeFinder.search(event.target.value)
 
+    },
+
+    mousebinds: {
+
+        left: {
+
+            finder: () => nodeFinder.hide()
+
+        }
+
     }
 
 });
