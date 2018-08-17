@@ -24,7 +24,6 @@ class Finder {
             // name,
             container,
             placeholder,
-            isLocked: false,
             // hovering: false
 
         });

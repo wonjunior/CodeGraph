@@ -29,7 +29,7 @@ document.addEventListener('mousedown', event => {
 
     } else {
 
-        _(event.target);
+        // _(event.target);
 
     }
 
@@ -40,14 +40,22 @@ class State {
 
     constructor({ defaultState, name, keybinds, mousebinds }) {
 
-        this.keybinds = keybinds;
-        this.mousebinds = mousebinds;
-
-        State.all[ name ] = this;
+        this.keybinds = keybinds || {};
+        this.mousebinds = mousebinds || {};
 
         if (defaultState) {
 
-            State.current = this;
+            State.default = this;
+
+        } else {
+
+            if (name == 'editor') {
+
+                State.current = this;
+
+            }
+
+            State.all[ name ] = this;
 
         }
 
@@ -58,6 +66,66 @@ class State {
         State.current = State.all[ newState ];
 
     };
+
+    watchElements(event) {
+
+        const buttonName = Mouse.getName(event.button);
+
+        const [ elementsOnClick, elementsOffClick ] = (({ not, ...on }) => {
+
+            return [ on || {}, not || {} ];
+
+        })({                                            // state   button
+            ...State.default.mousebinds.left,           // default  LMB
+            ...State.current.mousebinds.all,            // current  ALL
+            ...State.current.mousebinds[ buttonName ]   // current  button
+        });
+
+        State.checkSelectorsOn(event, elementsOnClick);
+        State.checkSelectorsOff(event, elementsOffClick);
+
+    };
+
+    static checkSelectorsOn(event, watchedElements) {
+
+        State.targetIdentifiers(event.target).forEach(selector => {
+
+            const eventCallback = watchedElements[ selector ];
+
+            if (eventCallback) {
+
+                eventCallback(event);
+
+            }
+
+        });
+
+    };
+
+    static checkSelectorsOff(event, watchedElements) {
+
+
+        Object.entries(watchedElements).forEach(([watchedElementSelector, eventCallback]) => {
+
+            if (!~State.targetIdentifiers(event.target).indexOf(watchedElementSelector)) {
+
+                eventCallback(event);
+
+            }
+
+        });
+
+    };
+
+    static targetIdentifiers(element) {
+
+        return [
+            ...event.target.classList,
+            event.target.tagName.toLowerCase(),
+            'document'
+        ];
+
+    }
 
 };
 
@@ -74,10 +142,11 @@ class Key {
 }
 
 Key.codes = {
-    32: 'spacebar',
+    9: 'tab',
     27: 'escape',
+    32: 'spacebar',
+    38: 'arrowup',
     40: 'arrowdown',
-    38: 'arrowup'
 }
 
 class Mouse {
@@ -100,11 +169,18 @@ Mouse.codes = {
 document.addEventListener('keyup', event => {
 
     const keyName = Key.getName(event.keyCode) || 'other';
-    const eventCallback = State.current.keybinds[ keyName ];
+
+    let eventCallback = State.current.keybinds[ keyName ];
 
     if (eventCallback) {
 
         eventCallback(event);
+
+    } else {
+
+        eventCallback = State.default.keybinds[ keyName ];
+
+        if (eventCallback) eventCallback(event);
 
     }
 
@@ -112,28 +188,6 @@ document.addEventListener('keyup', event => {
 
 document.addEventListener('mousedown', event => {
 
-    const buttonName = Mouse.getName(event.button) || 'other';
-    const eventCallbacks = State.current.mousebinds[ buttonName ];
-
-    if (eventCallbacks) {
-
-        [
-            ...event.target.classList,
-            ...event.target.tagName.toLowerCase(),
-            'document'
-
-        ].forEach(selector => {
-
-            const eventCallback = State.current.mousebinds[ buttonName ][ selector ];
-
-            if (eventCallback) {
-
-                eventCallback(event);
-
-            }
-
-        });
-
-    }
+    State.current.watchElements(event);
 
 });
