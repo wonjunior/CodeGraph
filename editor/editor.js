@@ -59,6 +59,8 @@ new State({
 
         spacebar: () => nodeFinder.show(),
 
+        ctrl_shift_spacebar: (event) => _('nope')
+
     }
 
 });

@@ -74,15 +74,17 @@ State.all = {};
 
 class Key {
 
-    static getName(keyCode) {
+    static getName({ keyCode, ctrlKey, shiftKey, altKey }) {
 
-        return Key.codes[ keyCode ];
+        const modKey = (ctrlKey ? 'ctrl_' : '') + (shiftKey ? 'shift_' : '') /*+ (altKey ? 'alt_' : '')*/;
+
+        return  modKey + Key.names[ keyCode ];
 
     };
 
 }
 
-Key.codes = {
+Key.names = {
     9: 'tab',
     27: 'escape',
     32: 'spacebar',
@@ -96,7 +98,7 @@ class keyEvent {
 
         this.state = state;
 
-        const keyName = Key.getName(event.keyCode) || 'other';
+        const keyName = Key.getName(event) || 'other';
 
         this.checkKeybinds(keyName);
 
@@ -121,13 +123,13 @@ class Mouse {
 
     static getName(mouseCode) {
 
-        return Mouse.codes[ mouseCode ];
+        return Mouse.names[ mouseCode ];
 
     };
 
 }
 
-Mouse.codes = {
+Mouse.names = {
     0: 'left',
     1: 'middle',
     2: 'right'
