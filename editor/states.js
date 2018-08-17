@@ -44,7 +44,6 @@ new State({
 
             varInput: () => {
 
-                _('entering state: inputConstant...', dock[ event.target.ref ]);
                 State.change('inputConstant');
 
             }

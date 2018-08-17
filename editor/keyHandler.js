@@ -67,66 +67,6 @@ class State {
 
     };
 
-    watchElements(event) {
-
-        const buttonName = Mouse.getName(event.button);
-
-        const [ elementsOnClick, elementsOffClick ] = (({ not, ...on }) => {
-
-            return [ on || {}, not || {} ];
-
-        })({                                            // state   button
-            ...State.default.mousebinds.left,           // default  LMB
-            ...State.current.mousebinds.all,            // current  ALL
-            ...State.current.mousebinds[ buttonName ]   // current  button
-        });
-
-        State.checkSelectorsOn(event, elementsOnClick);
-        State.checkSelectorsOff(event, elementsOffClick);
-
-    };
-
-    static checkSelectorsOn(event, watchedElements) {
-
-        State.targetIdentifiers(event.target).forEach(selector => {
-
-            const eventCallback = watchedElements[ selector ];
-
-            if (eventCallback) {
-
-                eventCallback(event);
-
-            }
-
-        });
-
-    };
-
-    static checkSelectorsOff(event, watchedElements) {
-
-
-        Object.entries(watchedElements).forEach(([watchedElementSelector, eventCallback]) => {
-
-            if (!~State.targetIdentifiers(event.target).indexOf(watchedElementSelector)) {
-
-                eventCallback(event);
-
-            }
-
-        });
-
-    };
-
-    static targetIdentifiers(element) {
-
-        return [
-            ...event.target.classList,
-            event.target.tagName.toLowerCase(),
-            'document'
-        ];
-
-    }
-
 };
 
 State.all = {};
@@ -149,6 +89,33 @@ Key.codes = {
     40: 'arrowdown',
 }
 
+class keyEvent {
+
+    constructor(event, state) {
+
+        this.state = state;
+
+        const keyName = Key.getName(event.keyCode) || 'other';
+
+        this.checkKeybinds(keyName);
+
+    };
+
+    checkKeybinds(keyName) {
+
+        const keybinds = {
+            ...State.default.keybinds,
+            ...this.state.keybinds,
+        };
+
+        const eventCallback = keybinds[ keyName ];
+
+        if (eventCallback) eventCallback(event);
+
+    };
+
+};
+
 class Mouse {
 
     static getName(mouseCode) {
@@ -165,29 +132,86 @@ Mouse.codes = {
     2: 'right'
 }
 
+class mouseEvent {
+
+    constructor(event, state) {
+
+        this.state = state;
+
+        this.watchElements(event);
+
+    }
+
+    watchElements(event) {
+
+        const buttonName = Mouse.getName(event.button);
+
+        const [ elementsOnClick, elementsOffClick ] = (({ not, ...on }) => {
+
+            return [ on || {}, not || {} ];
+
+        })({                                         // state    button
+            ...State.default.mousebinds.left,        // default  LMB
+            ...this.state.mousebinds.all,            // current  ALL
+            ...this.state.mousebinds[ buttonName ]   // current  button
+        });
+
+        this.checkSelectorsOn(event, elementsOnClick);
+        this.checkSelectorsOff(event, elementsOffClick);
+
+    };
+
+    checkSelectorsOn(event, watchedElements) {
+
+        this.targetIdentifiers(event.target).forEach(selector => {
+
+            const eventCallback = watchedElements[ selector ];
+
+            if (eventCallback) {
+
+                eventCallback(event);
+
+            }
+
+        });
+
+    };
+
+    checkSelectorsOff(event, watchedElements) {
+
+        Object.entries(watchedElements).forEach(([watchedElementSelector, eventCallback]) => {
+
+            if (!~this.targetIdentifiers(event.target).indexOf(watchedElementSelector)) {
+
+                eventCallback(event);
+
+            }
+
+        });
+
+    };
+
+    targetIdentifiers(element) {
+
+        return [
+            ...event.target.classList,
+            event.target.tagName.toLowerCase(),
+            'document'
+        ];
+
+    };
+
+};
+
 
 document.addEventListener('keyup', event => {
 
-    const keyName = Key.getName(event.keyCode) || 'other';
-
-    let eventCallback = State.current.keybinds[ keyName ];
-
-    if (eventCallback) {
-
-        eventCallback(event);
-
-    } else {
-
-        eventCallback = State.default.keybinds[ keyName ];
-
-        if (eventCallback) eventCallback(event);
-
-    }
+    new keyEvent(event, State.current);
 
 });
 
 document.addEventListener('mousedown', event => {
 
-    State.current.watchElements(event);
+    new mouseEvent(event, State.current);
 
 });
