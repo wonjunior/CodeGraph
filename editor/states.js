@@ -60,11 +60,16 @@ new State({
 
     keybinds: {
 
-        other: ({target}) => {
+        escape: function() {
 
-            const dockObject = dock[ event.target.ref ];
-            _(dockObject.inputElement.value)
-            // dockObject.inputConstant();
+            if (this.dock) _(this.dock)
+
+        },
+
+        other: function({target}) {
+
+            this.dock = dock[ event.target.ref ];
+            this.dock.inputConstant(event.target.value);
 
         }
 
@@ -78,7 +83,6 @@ new State({
 
                 varInput: () => {
 
-                    _('leaving state');
                     State.change('editor');
 
                 }

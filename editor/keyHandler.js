@@ -64,6 +64,7 @@ class State {
     static change(newState) {
 
         State.current = State.all[ newState ];
+        State.current.data = {};
 
     };
 
@@ -110,7 +111,7 @@ class keyEvent {
 
         const eventCallback = keybinds[ keyName ];
 
-        if (eventCallback) eventCallback(event);
+        if (eventCallback) eventCallback.bind(State.current.data)(event);
 
     };
 
