@@ -2,6 +2,18 @@
 
 class Dock {
 
+    /*get occupied() {
+
+        return this.pinElement.classList.contains('occupied');
+
+    }
+
+    set occupied(bool) {
+
+        this.pinElement.classList[ bool ? 'add' : 'remove' ]('occupied');
+
+    }*/
+
     get label() {
 
         return (this.labelElement) ? this.labelElement.textContent : "";
@@ -27,7 +39,7 @@ class Dock {
 
     };
 
-    constructor({ id, label, isRight, type, node, blockElement }) {
+    constructor({ id, label, editable, isRight, type, node, blockElement }) {
 
         // this.id = data.prefix+'dock_'+data.index;
         // this.node = data.nodeId;
@@ -39,21 +51,21 @@ class Dock {
             node,
             type,
             blockElement,
-            occupied: false,
             link: []
         });
 
         dock[ this.id ] = (this.type == 'exe')
             ? this.createExeDock()
-            : this.createDataDock();
+            : this.createDataDock(editable);
 
+        this.occupied = false;
         this.label = label || '';
 
         setTimeout(() => {
-            this.offset = this.calculateRelativePos();
-        }, 0);
 
-        // this.listen(); return this;
+            this.offset = this.calculateRelativePos();
+
+        }, 0);
 
     };
 
@@ -69,7 +81,7 @@ class Dock {
 
     };
 
-    createExeDock(parent) {
+    createExeDock() {
 
         let template = document.querySelector('template#exeDock');
         template = document.importNode(template.content, true);
@@ -93,7 +105,7 @@ class Dock {
 
     };
 
-    createDataDock(parent) {
+    createDataDock(editable) {
 
         let template = document.querySelector('template#dataDock');
         template = document.importNode(template.content, true);
@@ -106,14 +118,20 @@ class Dock {
             snapElement: template.querySelector('.data > .snapDock'),
             paramElement: template.querySelector('.data > .paramContainer'),
             labelElement: template.querySelector('.paramContainer > .paramName'),
-            inputElement: template.querySelector('.paramContainer > input')
         });
+
+        if (editable) {
+
+            this.inputElement = template.querySelector('.paramContainer > input')
+            this.inputElement.style.display = 'inline-block';
+            this.inputElement.ref = this.id;
+
+        }
 
         this.dockElement.classList.add(side);
         this.dockElement.id = this.id;
 
         this.snapElement.ref = this.id;
-        this.labelElement.ref = this.id;
 
         this.blockElement.appendChild(this.dockElement);
 
@@ -126,41 +144,14 @@ class Dock {
         const notEqual = (this.node != target.node);
         const opposite = (this.isRight != target.isRight);
         const sameType = (this.type == target.type);
+
         return notEqual && opposite && sameType;
 
     };
 
-    edit(callback) {
+    inputConstant(callback) {
 
-        this.inputElement.style.display = 'block';
-        this.labelElement.style.display = 'none';
-
-        setTimeout(() => this.inputElement.focus(), 0);
-
-        const endInput = () => {
-
-            if (event.target != this.inputElement) {
-
-                _('not input')
-
-                this.inputElement.style.display = 'none';
-                this.labelElement.style.display = 'block';
-
-                this.label = this.inputElement.value;
-
-                callback();
-
-                document.removeEventListener('mousedown', endInput);
-
-            } else {
-
-                _('input')
-
-            }
-
-        }
-
-        document.addEventListener('mousedown', endInput);
+        _(this.inputElement.value)
 
     };
 
@@ -176,13 +167,20 @@ class Dock {
 } let dock = {};
 
 
-Dock.exeIdPrefix = 'e';
-Dock.dataIdPrefix = 'd';
-Dock.attributes = [
-    {direction: 'in', side: 'left', isRight: false, sidePrefix: 'L'},
-    {direction: 'out', side: 'right', isRight: true, sidePrefix: 'R'}
-];
-Dock.offset = {
-    data: 7,
-    exe: 10
-};
+Object.assign(Dock, {
+
+    exeIdPrefix: 'e',
+
+    dataIdPrefix: 'd',
+
+    attributes: [
+        { direction: 'in', side: 'left', isRight: false, sidePrefix: 'L' },
+        { direction: 'out', side: 'right', isRight: true, sidePrefix: 'R' }
+    ],
+
+    offset: {
+        data: 7,
+        exe: 10
+    }
+
+});

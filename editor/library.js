@@ -2,12 +2,22 @@
 
 const Library  = {
     node: {
+        ifelse: {
+            label: 'If...Else',
+            meta: 'if...else if condition branch',
+            description: 'If input value is true then executes the if block, else it executes the other one',
+            position: [0, 0],
+            dataDocks: { in: [ {label: 'condition', editable: true} ], out: [ ] },
+            exeDocks: { in: [ {label: 'in'} ], out: [ {label: 'if'}, {label: 'else'} ] },
+            func: ()  =>  null,
+            background: ''
+        },
         sum: {
             label: 'Sum',
             meta: 'sum add +',
             description: 'This node adds the input values together',
             position: [0, 0],
-            dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'a+b'} ] },
+            dataDocks: { in: [ {/*label: 'a',*/ editable: true}, {/*label: 'b',*/ editable: true} ], out: [ {/*label: 'a+b'*/} ] },
             exeDocks: { in: [], out: [] },
             func: (a,b)  =>  a+b,
             background: '+'

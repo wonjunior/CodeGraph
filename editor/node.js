@@ -117,10 +117,11 @@ class Node {
         //                           'in'    'left'   false     'L'
         //                           'out'   'right'  true      'R'
 
-            dataDocks[direction].forEach( ({ label }, i) => {
+            dataDocks[direction].forEach( ({ label, editable }, i) => {
 
                 const dockObject = new Dock({
                     id: this.id + Dock.dataIdPrefix + sidePrefix + i,
+                    editable,
                     label,
                     isRight,
                     type: 'data',
