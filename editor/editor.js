@@ -51,55 +51,13 @@ class Editor {
 
 }
 
-
 new State({
-
-    defaultState: true,
 
     name: 'editor',
 
     keybinds: {
 
-        spacebar: () => nodeFinder.show()
-
-    },
-
-    mousebinds: {
-
-        left: {
-
-            header: () => {
-
-                const nodeObject = node[ event.target.ref ];
-                new Draggable({
-                    event,
-                    type: 'drag',
-                    element: nodeObject.nodeElement,
-                    object: nodeObject,
-                    callback:  nodeObject.update.bind(nodeObject)
-                });
-
-            },
-
-            snapDock: () => {
-
-                const dockObject = dock[ event.target.ref ];
-                new Linkable(event, dockObject);
-
-            },
-
-            paramName: () => {
-
-                nodeFinder.isLocked = true;
-
-                const dockObject = dock[ event.target.ref ];
-                dockObject.edit(() => {
-                    nodeFinder.isLocked = false;
-                });
-
-            }
-
-        }
+        spacebar: () => nodeFinder.show(),
 
     }
 
