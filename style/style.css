@@ -25,14 +25,15 @@ body {
 }
 
 .body > .bodybefore { /* not using ::before with content, we need to access it's value with JS */
-  content: "+";
   position:  absolute;
   font-size: 6em;
   left: 50%;
   transform: translate(-50%);
   bottom: 50%;
   height: 61px;
+  width: 100%;
   color: #00000042;
+  text-align: center;
 }
 
 .compileButton {

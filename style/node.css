@@ -11,7 +11,7 @@
     background-color: #c06;
     height: 14px;
     width: 14px;
-    border-radius: 75px;
+    border-radius: 8px;
     vertical-align: middle;
     position: absolute;
     border: 0.05em solid rgba(0, 0, 0, 0.5);
@@ -22,6 +22,21 @@
     cursor: pointer;
     top: calc(50% - 6px);
 }
+/*.data > .dock {
+    transition: 0.5s linear all;
+}
+.exe > .dock {
+    transition: 0.08s linear all;
+}
+.exe > .occupied {
+    transform: rotate(0deg) !important;
+}*/
+
+/*.input {
+    border-radius: 0px;
+    transform: rotate(90deg);
+}*/
+
 .snapDock {
     z-index: 3;
     width: 30px;
@@ -115,28 +130,34 @@
     font-size: 16px;
     font-weight: 500;
     /* padding: 0px 18px; */
-    /* box-sizing:  border-box; */
+    box-sizing:  border-box;
     pointer-events:  visible;
 }
 
 .paramName {
     box-sizing:  border-box;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    display: inline-block;
 }
 .left > .paramContainer > .paramName {
-    text-align: left;
-    padding-left: 13px;
+    text-align: center;
+    margin-left: 9px;
+    margin-right: 4px;
+    width: initial;
+    max-width: calc(50% - 13px);
 }
 .right > .paramContainer > .paramName {
     text-align: right;
     padding-right: 11px;
 }
+
 .left > .paramContainer > input {
-    text-align: left;
     margin-left: 8px;
-    width: calc(100% - 8px);
+    width: 50%;
     box-sizing: border-box;
+    border: none;
+    margin: 0;
 }
 .right > .paramContainer > input {
     margin-right: 8px;
@@ -146,21 +167,29 @@
 }
 .paramContainer > input {
     text-align: center;
-    padding: 0;
-    border-width: 0px;
     line-height: 25px;
-    font-size: 15px;
-    font-family: Arial;
+    font-size: 14px;
+    font-family: Calibri;
     font-weight: 500;
     border-radius: 0px;
     background-color: rgba(111, 111, 111, 0.02);
-    width: 31px;
-    border: 2px solid transparent;
-    display:  none;
+    display: none;
 }
-.paramContainer > input:valid {
+.paramContainer > input {
+    outline: 2px auto rgba(30, 29, 29, 0.52);
+}
+.paramContainer > input:hover {
+    outline: #4f70a7 auto 5px
+}
+.paramContainer > input:focus {
+    outline: #3d5e96 auto 5px;
+}
+.paramContainer > input::selection {
+    background-color: darkgrey;
+}
+/* .paramContainer > input:valid {
     border: 2px solid rgba(30, 29, 29, 0.52);
-}
+} */
 .nodes   {
     /* position: relative; */
     /* top: 100px; */
@@ -195,11 +224,11 @@
 
 /* dock positioning */
 .left > .dock {
-    left: -8px;
+    left: -7px;
 }
 
 .left > .snapDock {
-    left: -16px;
+    left: -15px;
 }
 
 .right > .dock {
@@ -224,9 +253,12 @@
     border: 1px solid grey;
 }
 .canvas {
-    background: red;
+    background: #537e4370;
 }
 .objects {
-    background: blue;
+    background: #0000ff57;
+}
+.left > .paramContainer > .paramName, .left > .paramContainer > input {
+    border: 1px solid red;
 }
 */
