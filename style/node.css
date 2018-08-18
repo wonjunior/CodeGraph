@@ -22,19 +22,20 @@
     cursor: pointer;
     top: calc(50% - 6px);
 }
-/*.data > .dock {
+
+.data > .dock {
     transition: 0.5s linear all;
 }
+.data > .constant {
+    border-radius: 0px;
+    transform: rotate(90deg);
+}
+/*
 .exe > .dock {
     transition: 0.08s linear all;
 }
 .exe > .occupied {
     transform: rotate(0deg) !important;
-}*/
-
-/*.input {
-    border-radius: 0px;
-    transform: rotate(90deg);
 }*/
 
 .snapDock {
@@ -236,7 +237,7 @@
 }
 
 .right > .snapDock {
-    right: -17px;
+    right: -16px;
 }
 
 /* debug styles */
