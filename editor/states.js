@@ -42,7 +42,7 @@ new State({
 
             },
 
-            varInput: () => {
+            varInput: function({ target }) {
 
                 State.change('inputConstant');
 
@@ -62,12 +62,15 @@ new State({
 
         escape: function() {
 
-            if (this.dock) _(this.dock)
+            _(this)
+            this.input.blur();
 
         },
 
         other: function({target}) {
 
+            this.input = target;
+            
             this.dock = dock[ event.target.ref ];
             this.dock.inputConstant(event.target.value);
 
