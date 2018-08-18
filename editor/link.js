@@ -76,9 +76,23 @@ class Link {
 
     };
 
+    static updateAll() {
+
+        Object.entries(link).forEach(([ id, link ]) => {
+
+            link.update();
+
+        });
+
+    };
+
     update(endPoint) {
 
-        if (this.startDock.isRight) {
+        if (!endPoint) {
+
+            this.path = Curve.get(this.startDock.position, this.snapDock.position);
+
+        } else if (this.startDock.isRight) {
 
             this.path = Curve.get(this.startDock.position, endPoint);
 
@@ -148,12 +162,18 @@ class Link {
 
 }; let link = {};
 
-Link.separator = '-';
-Link.color = {
-    data: 'green',
-    exe: 'blue'
-}
-Link.width = {
-    data: 3,
-    exe: 4
-}
+Object.assign(Link, {
+
+    separator: '-',
+
+    color: {
+        data: 'green',
+        exe: 'blue'
+    },
+
+    width: {
+        data: 3,
+        exe: 4
+    }
+
+});

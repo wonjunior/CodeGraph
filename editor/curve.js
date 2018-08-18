@@ -37,7 +37,7 @@ class Curve {
     static set factor(newFactor) {
 
         Curve.properties.factor = newFactor;
-        Node.updateAll();
+        Link.updateAll();
 
     };
 
@@ -50,7 +50,7 @@ class Curve {
     static set warp(newWarp) {
 
         Curve.properties.warp = newWarp;
-        Node.updateAll();
+        Link.updateAll();
 
     };
 
