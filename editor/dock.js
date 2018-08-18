@@ -6,13 +6,13 @@ class Dock {
 
         return this.pinElement.classList.contains('occupied');
 
-    }
-
-    set occupied(bool) {
-
-        this.pinElement.classList[ bool ? 'add' : 'remove' ]('occupied');
-
     }*/
+
+    set constant(bool) {
+
+        this.pinElement.classList[ bool ? 'add' : 'remove' ]('constant');
+
+    }
 
     get label() {
 
@@ -39,7 +39,7 @@ class Dock {
 
     };
 
-    constructor({ id, label, editable, isRight, type, node, blockElement }) {
+    constructor({ id, label, editable, isRight, type, node, blockElement, switchSection }) {
 
         // this.id = data.prefix+'dock_'+data.index;
         // this.node = data.nodeId;
@@ -51,7 +51,9 @@ class Dock {
             node,
             type,
             blockElement,
-            link: []
+            editable,
+            link: [],
+            switchSection,
         });
 
         dock[ this.id ] = (this.type == 'exe')
@@ -149,17 +151,24 @@ class Dock {
 
     };
 
-    inputConstant(callback) {
+    inputConstant(constant) {
 
-        _(this.inputElement.value)
+        // check constant's type
+
+        this.constant = true;
+        if (this.occupied) {
+
+            this.link[0].remove();
+
+        }
 
     };
 
     static destruct(docks) {
 
         return {
-            in: docks.in.map(({ label }) => { return {label} }),
-            out: docks.out.map(({ label }) => { return {label} })
+            in: docks.in.map(({ label, editable, switchSection }) => { return { label, editable, switchSection } }),
+            out: docks.out.map(({ label, editable, switchSection }) => { return { label, editable, switchSection } })
         }
 
     };
@@ -169,13 +178,14 @@ class Dock {
 
 Object.assign(Dock, {
 
-    exeIdPrefix: 'e',
-
-    dataIdPrefix: 'd',
-
-    attributes: [
+    sideAttributes: [
         { direction: 'in', side: 'left', isRight: false, sidePrefix: 'L' },
         { direction: 'out', side: 'right', isRight: true, sidePrefix: 'R' }
+    ],
+
+    typeAttributes: [
+        { type: 'exe', propertyName: 'exeDocks', typePrefix: 'e', blockName: 'head', otherBlockName: 'body' },
+        { type: 'data', propertyName: 'dataDocks', typePrefix: 'd', blockName: 'body', otherBlockName: 'head' }
     ],
 
     offset: {
