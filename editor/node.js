@@ -2,58 +2,100 @@
 
 class Node {
 
+    /**
+     * Depending on the number of nodes already created, the function will create
+     * a new node identifier. This id includes the idPrefix specific to Node.
+     * @returns {String} a unique node identifier
+     * @static
+     */
     static createId() {
 
         return Node.idPrefix + String(Node.length + 1);
 
     };
 
+    /**
+     * Property of Node: counts the number of instanciated nodes
+     * @returns {Number} the number of instanciated nodes
+     */
     static get length() {
 
         return Object.keys(node).length;
 
     };
 
-    static set length(a) {};
-
+    /**
+     * Getter for Node#label which gets the node's displayed label
+     * @returns {String} the node's label
+     */
     get label() {
 
+        // gets the string label directly from the DOM element
         return this.labelElement.textContent;
 
     };
 
+    /**
+     * Setter for Node#label which sets the node's displayed label
+     * @param {String} newLabel - the new label to set
+     */
     set label(newLabel) {
 
         this.labelElement.textContent = newLabel;
 
     };
 
+    /**
+     * Getter for Node#position which gets the position of the node in the Canvas
+     * @returns {Number[2]} - the x and y coordinates of the node's current position
+     */
     get position() {
 
+        // gets the position directly from inline-style as an array
+        // of Strings and maps it into an array of Numbers
         return [this.nodeElement.style.left, this.nodeElement.style.top]
             .map(posString => parseInt(posString));
 
     };
 
+    /**
+     * Setter for Node#position which sets the position of the node in the Canvas
+     * @param {Number[2]} [ x, y ] - the x and y coordinates to which it is moved
+     */
     set position([ x, y ]) {
 
+        // coerces the two coordinates into string applied to the node's style
         this.nodeElement.style.left = x + 'px';
         this.nodeElement.style.top = y + 'px';
 
     };
 
+    /**
+     * Getter for Node#headerColor to get the color of the node's header
+     * this getter is needed when saving the nodes into a string format
+     * @returns {String} - the CSS color of the node's header
+     */
     get headerColor() {
 
         return this.headerElement.style.background;
 
     };
 
+    /**
+     * Setter for Node#headerColor to change the color of the node's header
+     * @param {String} newColor - the color to change the node's header to
+     */
     set headerColor(newColor) {
 
         this.headerElement.style.background = newColor;
 
     };
 
+    /**
+     * Getter for Node#size to get the size of the node container element
+     * Might as well be a method because it is not explicit enough
+     * @returns {Number[2]} - the width and height of the container element
+     */
     get size() {
 
         const properties = this.nodeElement.getBoundingClientRect();
@@ -61,84 +103,105 @@ class Node {
 
     };
 
+    /**
+     * Node instance constructor which takes in an node object and does:
+     * 1) adds the properties to the Node's instance
+     * 2) creates and renders the node's element on the canvas
+     * 3) appends the instance to the node object
+     * @param {Node | Object} - takes in an actual instance of Node OR an object
+     * containing all the necessary properties to construct a node, i.e.: label
+     * (String), position (Number[2]), exeDocks (Object), dataDocks (Object) and func
+     * (function). Optional parameters are background (String) and headerColor (String)
+     */
     constructor({ label, position, exeDocks, dataDocks, func, background, headerColor }) {
 
+        // the following property assignments are happening first because the method
+        // Node#createNode() needs these to create the HTML elements properly
         Object.assign(this, {
-
-            func,
+            id: Node.createId(),
+            background,
             dock: [],
-            background: background || '',
-            id:  Node.createId()
+            func,
+        })
 
-        });
-
+        // creating the actual HTML node element
         this.createNode();
 
-        if (headerColor) this.headerColor = headerColor;
-        this.label = label;
-        this.position = position;
+        // This second set of property assignments (styling) needs the HTML
+        // elements to be created because they directly take effect on them
+        Object.assign(this, {
+            headerColor,
+            label,
+            position,
+        });
 
-        this.createDocks(exeDocks, dataDocks);
+        // create and render all of the node's docks with their HTML elements
+        this.createDocks({ exeDocks, dataDocks });
 
-        node[this.id] = this;
+        // adds this Node instance to the object of instances, it can be
+        // accessed with the unique node identifier provided previously
+        node[ this.id ] = this;
 
     };
 
-    createDocks(exeDocks, dataDocks) {
+    /**
+     * With all the docks properties, the method instanciates all the Dock objects
+     * The method is instanciating them by side and by type by accessing the Dock's
+     * attributes object. Then for each element in the provided dockDef it calls the
+     * Dock constructor and adds the dock to the node's properties.
+     * @param {Object} { exeDocks, dataDocks } - the dock properties provided by Node's constructor
+     */
+    createDocks(dockDef) {
 
+        // the four arrays that will be filled with instances of Dock
         this.exeDocks = { in: [], out: [] };
-
-        Dock.attributes.forEach(({ direction, side, isRight, sidePrefix }) => {
-        //                           'in'    'left'   false     'L'
-        //                           'out'   'right'  true      'R'
-
-            exeDocks[direction].forEach( ({ label }, i) => {
-
-                const dockObject = new Dock({
-                    id: this.id + Dock.exeIdPrefix + sidePrefix + i,
-                    label,
-                    isRight,
-                    type: 'exe',
-                    node: this,
-                    blockElement: this.exeElement[side],
-                });
-
-                this.exeDocks[direction].push(dockObject);
-                this.dock.push(dockObject);
-
-            });
-
-        });
-
-
         this.dataDocks = { in: [], out: [] };
 
-        Dock.attributes.forEach(({ direction, side, isRight, sidePrefix }) => {
-        //                           'in'    'left'   false     'L'
-        //                           'out'   'right'  true      'R'
+        Dock.sideAttributes.forEach(({ direction, side, isRight, sidePrefix }) => {
+        //                            'in'/'out', 'left'/'right', F/T, 'L'/'R'
 
-            dataDocks[direction].forEach( ({ label, editable }, i) => {
+            Dock.typeAttributes.forEach(({ type, propertyName, typePrefix, blockName, otherBlockName }) => {
+            //                           'exe'/'data', 'exeDocks'/'dataDocks', 'e'/'d', 'head'/'body'
 
-                const dockObject = new Dock({
-                    id: this.id + Dock.dataIdPrefix + sidePrefix + i,
-                    editable,
-                    label,
-                    isRight,
-                    type: 'data',
-                    node: this,
-                    blockElement: this.dataElement[side],
+                dockDef[ propertyName ][ direction ].forEach(({ label, editable, switchSection }, i) => {
+
+                    // default position for the dock is determined by is type but the position
+                    // can be switched by setting switchSection to true. In this case the dock
+                    // will take the other position. Available positions are in body and head
+                    const sectionName = (switchSection ? otherBlockName : blockName) + 'Section';
+
+                    //
+                    const newDock = new Dock({
+                        id: this.id + typePrefix + sidePrefix + i,
+                        label,
+                        isRight,
+                        type,
+                        editable,
+                        node: this,                                  // @this is an instance of Node
+                        switchSection,
+                        blockElement: this[ sectionName ][ side ],   // the element where the dock will be appended
+                    });
+
+                    this[ propertyName ][ direction ].push(newDock); // append the dock to the side-type specific array
+                    this.dock.push(newDock);                         // append the dock to the array containing all node's docks
+
                 });
-
-                this.dataDocks[direction].push(dockObject);
-                this.dock.push(dockObject);
 
             });
 
         });
 
-    };
+    }
 
-    createNode() {
+    /**
+     * Creates the node's HTML element and renders it on the canvas. Most HTMLElement
+     * objects are saved as the node's properties: nodeElement, headerElement, labelElement,
+     * headerSection.left, headerSection.right, bodySection.left and bodySection.right
+     *
+     * <? we might call in a class to deal with importing the html
+     *    should we use templates, as they are visible in the DOM
+     */
+    createNode() { //
 
         let template = document.querySelector('template#node');
         template = document.importNode(template.content, true);
@@ -148,11 +211,11 @@ class Node {
             nodeElement: template.querySelector('.container'),
             headerElement: template.querySelector('.header'),
             labelElement: template.querySelector('.headerTitle'),
-            exeElement: {
+            headSection: {
                 left: template.querySelector('.exeblock > .leftblock'),
                 right: template.querySelector('.exeblock > .rightblock')
             },
-            dataElement: {
+            bodySection: {
                 left: template.querySelector('.body > .leftblock'),
                 right: template.querySelector('.body > .rightblock')
             }
@@ -168,12 +231,18 @@ class Node {
 
     };
 
+    /**
+     * This method updates all links connected to all docks of the node
+     */
     update() {
 
         this.dock.forEach(dock => {
 
             dock.link.forEach(link => {
 
+                // get the path expression from the static Curve.get and
+                // change the link's path directly by utilising the Link#path
+                // setter which updates the SVG element in the DOM
                 link.path = Curve.get(link.startDock.position, link.snapDock.position);
 
             });
@@ -182,53 +251,33 @@ class Node {
 
     };
 
-    draggableBoundaryClamp(position) {
+    /**
+     * This static method destructs the given node object into a non circular object.
+     * Because node's have a property Node#dock which contains references to itself this
+     * circular structure cannot be stringified by the saving mechanism. Thefore this method
+     * has to modify the object by destructuring the node's dock instances into dock objects.
+     * @param {Node} { exeDocks, dataDocks, dock, ...rest } - exeDocks, dataDocks and dock
+     * are have circular structures. rest contains all other properties (non circular).
+     * @returns {object} { exeDocks, dataDocks, ...rest } - the returned object doesn't contain
+     * dock: the array of Dock instances, as it is not needed in the saved node object
+     *
+     * <? this static method could be a Node.destruct method instead
+     */
+    static destruct({ exeDocks, dataDocks, dock, headerColor, label, position, ...rest }) {
 
-        // filter the position of the node, it can only be inside the canvas
-        return position.map(( value, i ) => {
-
-            const minLimit = 0;
-            const maxLimit = (Canvas.size[i] - this.size[i]) / Canvas.zoomLevel;
-
-            if (value <= minLimit) {
-
-                return minLimit;
-
-            } else if (value >= maxLimit) {
-
-                return Math.round(maxLimit);
-
-            }
-
-            return value;
-
-        });
-
-    };
-
-    static updateAll() {
-
-        // <? this is updating each link twice (because one link is refenreced to two different docks)
-        Object.entries(node).forEach(([ nodeId, node ]) => {
-
-            node.update();
-
-        });
-
-    };
-
-    // change this by using the rest of the properties we don't want, i.e. ...rest
-    static destruct({ label, position, func, exeDocks, dataDocks, headerColor, background }) {
-
+        // exeDocks and dataDocks are modified by Dock's own destruct method
+        // to convert the Docks objects into non circular dock objects
     	exeDocks = Dock.destruct(exeDocks);
-
     	dataDocks = Dock.destruct(dataDocks);
 
-    	return { label, position, func, exeDocks, dataDocks, headerColor, background };
-        // could change this to ((nope1, nope2, ...rest) => rest)();
+    	return { exeDocks, dataDocks, headerColor, label, position, ...rest };
 
     };
 
 }; let node = {};
 
-Node.idPrefix = 'n';
+Object.assign(Node, {
+
+    idPrefix: 'n',
+
+});
