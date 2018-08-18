@@ -13,7 +13,7 @@ document.addEventListener('mousedown', event => {
             // bounderyClamp: Canvas.draggableBoundaryClamp,
         });
 
-    } else if (event.target.tagName == 'path') {
+    } else if (event.target.tagName == 'PATH') {
 
         _(event.target.id);
 
@@ -78,7 +78,7 @@ class Key {
 
         const modKey = (ctrlKey ? 'ctrl_' : '') + (shiftKey ? 'shift_' : '') /*+ (altKey ? 'alt_' : '')*/;
 
-        return  modKey + Key.names[ keyCode ];
+        return  Key.names[ keyCode ] ? (modKey + Key.names[ keyCode ]) : undefined;
 
     };
 
