@@ -256,10 +256,12 @@ class Node {
      * Because node's have a property Node#dock which contains references to itself this
      * circular structure cannot be stringified by the saving mechanism. Thefore this method
      * has to modify the object by destructuring the node's dock instances into dock objects.
-     * @param {Node} { exeDocks, dataDocks, dock, ...rest } - exeDocks, dataDocks and dock
-     * are have circular structures. rest contains all other properties (non circular).
-     * @returns {object} { exeDocks, dataDocks, ...rest } - the returned object doesn't contain
-     * dock: the array of Dock instances, as it is not needed in the saved node object
+     * @param {Node} { exeDocks, dataDocks, dock, headerColor, label, position, ...rest } -
+     * exeDocks, dataDocks and dock have circular structures. headerColor, label and position
+     * are  getters (they are not iterable i.e not in rest which contains all other properties.
+     * @returns {object} { exeDocks, dataDocks, headerColor, label and position, ...rest } -
+     * the returned object doesn't contain dock: the array of Dock instances, as it is not
+     * needed in the saved node object
      *
      * <? this static method could be a Node.destruct method instead
      */
