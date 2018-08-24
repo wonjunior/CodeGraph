@@ -10,7 +10,7 @@ new State({
 
             if (target.classList.contains('varInput')) {
 
-                State.change('inputConstant');
+                State.change('inputConstant'); // <? problem here
 
             }
 
@@ -42,9 +42,14 @@ new State({
 
             },
 
-            varInput: function({ target }) {
+            varInput: function(event) {
 
-                State.change('inputConstant');
+                this.input = event.target;
+                this.dock = dock[ this.input.ref ];
+
+                this.dock.inputConstant(this.input.value);
+
+                State.change('inputConstant', this);
 
             }
 
@@ -62,17 +67,15 @@ new State({
 
         escape: function() {
 
-            _(this)
+            // _(this)
             this.input.blur();
 
         },
 
-        other: function({target}) {
+        other: function() {
 
-            this.input = target;
-            
-            this.dock = dock[ event.target.ref ];
-            this.dock.inputConstant(event.target.value);
+            _('this from <other>: ', this)
+            this.dock.inputConstant(this.input.value);
 
         }
 

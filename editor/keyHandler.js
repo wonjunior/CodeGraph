@@ -61,10 +61,10 @@ class State {
 
     }
 
-    static change(newState) {
+    static change(newState, passedData) {
 
         State.current = State.all[ newState ];
-        State.current.data = {};
+        State.current.data = passedData || {};
 
     };
 
@@ -113,7 +113,12 @@ class keyEvent {
 
         const eventCallback = keybinds[ keyName ];
 
-        if (eventCallback) eventCallback.bind(State.current.data)(event);
+        if (eventCallback) {
+
+            _('inner: ', State.current)
+            eventCallback.bind(this.state.data)(event);
+
+        }
 
     };
 
@@ -172,7 +177,7 @@ class mouseEvent {
 
             if (eventCallback) {
 
-                eventCallback(event);
+                eventCallback.bind(this.state.data)(event);
 
             }
 
@@ -186,7 +191,7 @@ class mouseEvent {
 
             if (!~this.targetIdentifiers(event.target).indexOf(watchedElementSelector)) {
 
-                eventCallback(event);
+                eventCallback.bind(this.state.data)(event);
 
             }
 
