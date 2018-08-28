@@ -17,9 +17,10 @@ const Library  = {
             meta: 'sum add +',
             description: 'This node adds the input values together',
             position: [0, 0],
-            dataDocks: { in: [ {/*label: 'a',*/ editable: true}, {/*label: 'b',*/ editable: true} ], out: [ {/*label: 'a+b'*/} ] },
+            dataDocks: { in: [ {label: 'int', editable: 'number' }, {label: 'int', editable: 'number' } ], out: [ {} ] },
             exeDocks: { in: [], out: [] },
-            func: (a,b)  =>  a+b,
+            func: (a,b)  =>  Number(a)+Number(b),
+            stringFunc: (a, b) => `${a}+${b}`,
             background: '+'
         },
         sub: {
@@ -29,7 +30,8 @@ const Library  = {
             position: [0, 0],
             dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'a-b'} ] },
             exeDocks: { in: [], out: [] },
-            func: (a,b)  =>  a-b,
+            func: (a,b)  =>  Number(a)-Number(b),
+            stringFunc: (a, b) => `${a}-${b}`,
             background: '−'
         },
         abs: {
