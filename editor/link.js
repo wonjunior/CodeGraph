@@ -106,6 +106,9 @@ class Link {
 
     remove() {
 
+        // make sure the link is deleted in links! <? link with an "s"!!
+        delete link [ this.id ];
+
         this.linkElement.remove();
 
         // make it a Dock method <Dock>.unpin(this) where this is <Link>
@@ -150,6 +153,8 @@ class Link {
 
             link[ linkId ] = this;
 
+            this.snapDock.node.solveDependency();
+
         }
 
     };
@@ -161,6 +166,7 @@ class Link {
     };
 
 }; let link = {};
+
 
 Object.assign(Link, {
 
