@@ -51,6 +51,7 @@ class State {
 
             if (name == 'editor') {
 
+                this.data = {};
                 State.current = this;
 
             }
@@ -115,7 +116,7 @@ class keyEvent {
 
         if (eventCallback) {
 
-            _('inner: ', State.current)
+            // _('inner: ', State.current)
             eventCallback.bind(this.state.data)(event);
 
         }
