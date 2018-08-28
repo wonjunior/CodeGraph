@@ -6,13 +6,14 @@ new State({
 
     keybinds: {
 
-        tab: ({ target }) => {
+        tab: function(event) {
 
+            /*_('tab change: ', this)
             if (target.classList.contains('varInput')) {
 
                 State.change('inputConstant'); // <? problem here
 
-            }
+            }*/
 
         }
 
@@ -47,11 +48,11 @@ new State({
                 this.input = event.target;
                 this.dock = dock[ this.input.ref ];
 
-                this.dock.inputConstant(this.input.value);
+                // this.dock.inputConstant(this.input.value);
 
                 State.change('inputConstant', this);
 
-            }
+            },
 
         }
 
@@ -67,17 +68,15 @@ new State({
 
         escape: function() {
 
-            // _(this)
             this.input.blur();
 
         },
 
         other: function() {
 
-            _('this from <other>: ', this)
             this.dock.inputConstant(this.input.value);
 
-        }
+        },
 
     },
 
