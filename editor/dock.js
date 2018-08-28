@@ -8,11 +8,31 @@ class Dock {
 
     }*/
 
+    get value() {
+
+        if (this.editable && this.inputElement.value) {
+
+            return this.inputElement.value;
+
+        } else if (this.occupied) {
+
+            return this.findValue();
+
+        }
+
+    };
+
+    findValue() {
+
+        return this.link[0].startDock.node.solveDependency();
+
+    };
+
     set constant(bool) {
 
-        this.pinElement.classList[ bool ? 'add' : 'remove' ]('constant');
+        this.dockElement.classList[ bool ? 'add' : 'remove' ]('constant');
 
-    }
+    };
 
     get label() {
 
@@ -41,10 +61,6 @@ class Dock {
 
     constructor({ id, label, editable, isRight, type, node, blockElement, switchSection }) {
 
-        // this.id = data.prefix+'dock_'+data.index;
-        // this.node = data.nodeId;
-        // this.ref = this.node+'-'+this.id;
-
         Object.assign(this, {
             id,
             isRight,
@@ -57,11 +73,10 @@ class Dock {
         });
 
         dock[ this.id ] = (this.type == 'exe')
-            ? this.createExeDock()
-            : this.createDataDock(editable);
+            ? this.createExeDock(label)
+            : this.createDataDock(editable, label);
 
         this.occupied = false;
-        this.label = label || '';
 
         setTimeout(() => {
 
@@ -83,10 +98,10 @@ class Dock {
 
     };
 
-    createExeDock() {
+    createExeDock(label) {
 
-        let template = document.querySelector('template#exeDock');
-        template = document.importNode(template.content, true);
+            let template = document.querySelector('template#exeDock');
+            template = document.importNode(template.content, true);
 
         const side = this.isRight ? 'right' : 'left';
 
@@ -103,11 +118,13 @@ class Dock {
 
         this.blockElement.appendChild(this.dockElement);
 
+        this.label = label || '';
+
         return this;
 
     };
 
-    createDataDock(editable) {
+    createDataDock(editable, label) {
 
         let template = document.querySelector('template#dataDock');
         template = document.importNode(template.content, true);
@@ -127,6 +144,10 @@ class Dock {
             this.inputElement = template.querySelector('.paramContainer > input')
             this.inputElement.style.display = 'inline-block';
             this.inputElement.ref = this.id;
+
+            this.inputElement.type = (this.editable == 'number') ? 'number': 'text' // for now
+
+            this.inputElement.placeholder = label || '';
 
         }
 
@@ -153,16 +174,28 @@ class Dock {
 
     inputConstant(constant) {
 
-        // check constant's type
+        this.constant = Boolean(constant);
 
-        this.constant = true;
         if (this.occupied) {
 
             this.link[0].remove();
 
         }
 
+        this.node.solveDependency();
+
     };
+
+    /*inputConstantEnd(constant) {
+
+        _('inputConstantEnd')
+        if (!constant.length) {
+
+            this.constant = false;
+
+        }
+
+    };*/
 
     static destruct(docks) {
 

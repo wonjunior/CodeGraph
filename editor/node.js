@@ -113,7 +113,7 @@ class Node {
      * (String), position (Number[2]), exeDocks (Object), dataDocks (Object) and func
      * (function). Optional parameters are background (String) and headerColor (String)
      */
-    constructor({ label, position, exeDocks, dataDocks, func, background, headerColor }) {
+    constructor({ label, position, exeDocks, dataDocks, func, stringFunc, background, headerColor }) {
 
         // the following property assignments are happening first because the method
         // Node#createNode() needs these to create the HTML elements properly
@@ -122,6 +122,7 @@ class Node {
             background,
             dock: [],
             func,
+            stringFunc,
         })
 
         // creating the actual HTML node element
@@ -141,6 +142,9 @@ class Node {
         // adds this Node instance to the object of instances, it can be
         // accessed with the unique node identifier provided previously
         node[ this.id ] = this;
+
+        const interpreter = new Interpreter(this);
+        this.solveDependency = interpreter.solveDependency.bind(interpreter);
 
     };
 
@@ -200,13 +204,13 @@ class Node {
      *
      * <? we might call in a class to deal with importing the html
      *    should we use templates, as they are visible in the DOM
+     *    this method needs to know the structure: .container > .body > .block
      */
     createNode() { //
 
         let template = document.querySelector('template#node');
         template = document.importNode(template.content, true);
 
-        // <? write how the logic sees the structure, here .container > .body > blocks..
         Object.assign(this, {
             nodeElement: template.querySelector('.container'),
             headerElement: template.querySelector('.header'),
