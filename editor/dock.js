@@ -2,31 +2,56 @@
 
 class Dock {
 
-    /*get occupied() {
-
-        return this.pinElement.classList.contains('occupied');
-
-    }*/
-
     get value() {
 
-        if (this.editable && this.inputElement.value) {
+        if (this.type == 'data') {
 
-            return this.inputElement.value;
+            if (this.isRight) {
 
-        } else if (this.occupied) {
+                if (this.node.result) {
 
-            return this.findValue();
+                    // _('result in', this.node.id, 'exists: ', this.node.result);
+                    return this.node.result;
+
+                } /*else {
+
+                    const result = this.node.calculate(false);
+
+                    _('result in', this.node.id, 'does not exist, calculating result...');
+                    _('result is: ', result);
+                    return result;
+
+                }*/
+
+                // return this.node.result ? this.node.result : this.node.calculate(false);
+
+            } else {
+
+                if (this.editable && this.inputElement.value) {
+
+                    return this.inputElement.value;
+
+                } else if (this.occupied) {
+
+                    return this.link[0].startDock.value;
+
+                }
+
+            }
 
         }
 
     };
 
-    findValue() {
+    set value(newValue) {
 
-        return this.link[0].startDock.node.solveDependency();
+        if (this.type == 'data') {
 
-    };
+            this.node.result = newValue;
+
+        }
+
+    }
 
     set constant(bool) {
 
@@ -182,7 +207,7 @@ class Dock {
 
         }
 
-        this.node.solveDependency();
+        this.node.calculate();
 
     };
 

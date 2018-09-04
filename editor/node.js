@@ -144,7 +144,8 @@ class Node {
         node[ this.id ] = this;
 
         const interpreter = new Interpreter(this);
-        this.solveDependency = interpreter.solveDependency.bind(interpreter);
+        // this.solveDependency = interpreter.solveDependency.bind(interpreter);
+        this.calculate = interpreter.calculate.bind(interpreter);
 
     };
 

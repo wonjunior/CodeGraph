@@ -153,7 +153,7 @@ class Link {
 
             link[ linkId ] = this;
 
-            this.snapDock.node.solveDependency();
+            this.snapDock.node.calculate();
 
         }
 
