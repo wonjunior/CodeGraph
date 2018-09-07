@@ -160,6 +160,7 @@ class Link {
 
             links[ linkId ] = this;
 
+            this.endDock.constant = false;
             this.endDock.node.calculate();
 
         }
