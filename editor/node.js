@@ -103,12 +103,20 @@ class Node {
 
     };
 
+    /**
+     * Setter to add/remove a CSS class to node's container element
+     * @param {Boolean} bool - determines whether to add or remove the class
+     */
     set highlight(bool) {
 
         this.nodeElement.classList[ bool ? 'add' : 'remove' ]('selected');
 
     };
 
+    /**
+     * Toggles the class on the node's container element
+     * @returns {Boolean} - whether the class has been added or removed
+     */
     toggleHighlight() {
 
         return this.nodeElement.classList.toggle('selected');
