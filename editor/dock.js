@@ -2,56 +2,6 @@
 
 class Dock {
 
-    get value() {
-
-        if (this.isData) {
-
-            if (this.isRight) {
-
-                if (this.node.result) {
-
-                    return this.node.result;
-
-                } else {
-
-                    // const result = this.node.calculate(false);
-
-                    // return [];
-
-                }
-
-                // return this.node.result ? this.node.result : this.node.calculate(false);
-
-            } else {
-
-                if (this.editable && this.inputElement.value) {
-
-                    return { value: this.inputElement.value };
-
-                } else if (this.occupied) {
-
-                    return this.links[0].startDock.value;
-
-                }
-
-            }
-
-        }
-
-    };
-
-    set value(newValue) {
-
-        if (this.isData) {
-
-            this.node.result = {value: newValue};
-
-            this.label = newValue;
-
-        }
-
-    }
-
     set constant(bool) {
 
         this.dockElement.classList[ bool ? 'add' : 'remove' ]('constant');
@@ -83,7 +33,62 @@ class Dock {
 
     };
 
+    getSetValue() {
+
+        var _value;
+        Object.defineProperties(this, {
+            "value": {
+
+                get: () => {
+
+                    if (this.isData) {
+
+                        if (this.isRight) {
+
+                            return _value;
+
+                        } else {
+
+                            if (this.occupied) {
+
+                                return this.links[0].startDock.value;
+
+                            } else {
+
+                                return _value;
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                set: (newValue) => {
+
+                    if (this.isData) {
+
+                        _value = {value: newValue};
+
+                        if (this.isRight) {
+
+                            this.label = newValue;
+
+                        }
+
+                    }
+
+                }
+
+            }
+        });
+
+    };
+
     constructor({ id, label, isRight, isData, editable, type, node, blockElement, switchSection }) {
+
+        this.getSetValue();
 
         Object.assign(this, {
             id,
@@ -212,7 +217,24 @@ class Dock {
 
         }
 
+        this.value = this.adjustInput(constant);
         this.node.calculate();
+
+    };
+
+    adjustInput(input) {
+
+        const possibleNumber = Number(input);
+
+        if (input && typeof possibleNumber == 'number' && !Number.isNaN(possibleNumber)) {
+
+            return possibleNumber;
+
+        } else {
+
+            return input;
+
+        }
 
     };
 
