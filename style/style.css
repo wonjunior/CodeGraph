@@ -9,6 +9,13 @@
 /*input:focus {
   outline: none;
 }*/
+html, body, section {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    /* user-select: none; */
+}
+
 input:focus, textarea:focus, select:focus {
   outline-offset: 0px;
 }
@@ -72,6 +79,7 @@ svg {
     width: 100px;
     height: 100px;
     overflow:  visible;
+    border: 1px transparent
 }
 .canvas {
     position: absolute;
@@ -120,4 +128,47 @@ svg {
     padding: 17px 30px;
     width: 50%;
     text-align: left;
+}
+
+.window {background: url(https://image.ibb.co/f1RAXF/background.png);height: 100%;}
+
+.top-bottom {
+    /*grid-template-rows: 50% 10px auto;*/
+    grid-template-areas: "first" "seperator" "last";
+}
+
+.left-right {
+    /*grid-template-columns: 50% 10px auto;*/
+    grid-template-areas: "first seperator last";
+}
+
+.first {
+    grid-area: first;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    font-family: Calibri;
+    background: url('https://i.stack.imgur.com/GKpHa.png');
+    background: url('https://image.ibb.co/f1RAXF/background.png');
+}
+.last {
+    background-color: rgb(57, 57, 57);
+}
+.last {
+    grid-area: last;
+    position: relative;
+    overflow: hidden;
+    overflow-y:  auto;
+}
+
+.separator {
+    background: white;
+}
+
+.top-bottom > .separator {
+    cursor: row-resize;
+}
+.left-right > .separator {
+    cursor: col-resize;
+    z-index: 2;
 }
