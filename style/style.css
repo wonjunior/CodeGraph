@@ -149,7 +149,8 @@ svg {
 }
 
 .window {
-    background: url(background.png); /* https://image.ibb.co/f1RAXF/background.png */
+    /* background: url('background.png'); */
+    background-image: url('background.png'), url('https://image.ibb.co/f1RAXF/background.png');
     height: 100%;
 }
 
