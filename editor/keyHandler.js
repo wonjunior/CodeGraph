@@ -42,6 +42,7 @@ class State {
 
         this.keybinds = keybinds || {};
         this.mousebinds = mousebinds || {};
+        this.name = name;
 
         if (defaultState) {
 
@@ -222,5 +223,15 @@ document.addEventListener('keyup', event => {
 document.addEventListener('mousedown', event => {
 
     new mouseEvent(event, State.current);
+
+});
+
+document.addEventListener('keydown', event => {
+
+    if (event.keyCode == 9) {
+
+        event.preventDefault();
+
+    }
 
 });
