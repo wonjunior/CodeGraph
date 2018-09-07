@@ -24,6 +24,7 @@ class Linkable {
     startLinking(event) {
 
         Linkable.mousemove = event => this.linking(event);
+        Linkable.mousemove(event);
         document.addEventListener('mousemove', Linkable.mousemove);
 
         Linkable.mouseup = event => this.endLink(event);
