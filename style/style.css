@@ -148,7 +148,10 @@ svg {
     text-align: left;
 }
 
-.window {background: url(https://image.ibb.co/f1RAXF/background.png);height: 100%;}
+.window {
+    background: url(background.png); /* https://image.ibb.co/f1RAXF/background.png */
+    height: 100%;
+}
 
 .top-bottom {
     /*grid-template-rows: 50% 10px auto;*/
