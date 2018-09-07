@@ -103,6 +103,18 @@ class Node {
 
     };
 
+    set highlight(bool) {
+
+        this.nodeElement.classList[ bool ? 'add' : 'remove' ]('selected');
+
+    };
+
+    toggleHighlight() {
+
+        return this.nodeElement.classList.toggle('selected');
+
+    }
+
     /**
      * Node instance constructor which takes in an node object and does:
      * 1) adds the properties to the Node's instance
@@ -268,7 +280,7 @@ class Node {
      * the returned object doesn't contain dock: the array of Dock instances, as it is not
      * needed in the saved node object
      *
-     * <? this static method could be a Node.destruct method instead
+     * <? this static method could be a Node#destruct method instead
      */
     static destruct({ exeDocks, dataDocks, docks, headerColor, label, position, ...rest }) {
 

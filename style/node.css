@@ -31,7 +31,7 @@
     transform: rotate(90deg);
 }
 
-/*.constant > .paramContainer > input {
+.notConstant > .paramContainer > input {
     background-color: rgb(81, 81, 81) !important;
     background: linear-gradient(to top left,
         rgba(0,0,0,0) 0%,
@@ -39,7 +39,7 @@
         rgba(0,0,0,1) 50%,
         rgba(0,0,0,0) calc(50% + 0.8px),
         rgba(0,0,0,0) 100%);
-}*/
+}
 /*
 .exe > .dock {
     transition: 0.08s linear all;
@@ -87,11 +87,14 @@
 }
 .exe {
 }
-.container:hover { /* ?! or selected  */
-    /* border: 1px solid rgba(0, 128, 0, 0.68); */
-    box-shadow: 0px 0px 2px green;
-}
 
+.container.selected {
+    box-shadow: 0px 0px 2px green;
+    border: 1px solid rgba(0, 128, 0, 0.68);
+}
+.container:hover {
+    /* border: 1px solid rgba(0, 128, 0, 0.68); */
+}
 .container {
     width: 130px;
     z-index: 1;
@@ -142,7 +145,7 @@
     font-weight: 500;
     /* padding: 0px 18px; */
     box-sizing:  border-box;
-    pointer-events:  visible;
+    /* pointer-events: visible; */
 }
 
 .paramName {
@@ -182,6 +185,7 @@ input.varInput::placeholder {
     margin: 0;
     background-color: rgb(73, 70, 70);
     /* background-color: rgb(81, 81, 81); */
+    pointer-events: visible;
 }
 .right > .paramContainer > input {
     margin-right: 8px;
@@ -197,7 +201,6 @@ input.varInput::placeholder {
     font-weight: 500;
     border-radius: 0px;
     background-color: rgba(111, 111, 111, 0.02);
-    display: none;
 }
 .paramContainer > input {
     outline: 2px auto rgba(30, 29, 29, 0.52);

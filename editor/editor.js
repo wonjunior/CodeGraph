@@ -61,6 +61,20 @@ new State({
 
         ctrl_shift_spacebar: (event) => _('nope')
 
+    },
+
+    mousebinds: {
+
+        left: {
+
+            container: (event) => {
+
+                new Selection(nodes[ event.target.id ]);
+
+            }
+
+        }
+
     }
 
 });
