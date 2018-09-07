@@ -4,24 +4,21 @@ class Dock {
 
     get value() {
 
-        if (this.type == 'data') {
+        if (this.isData) {
 
             if (this.isRight) {
 
                 if (this.node.result) {
 
-                    // _('result in', this.node.id, 'exists: ', this.node.result);
                     return this.node.result;
 
-                } /*else {
+                } else {
 
-                    const result = this.node.calculate(false);
+                    // const result = this.node.calculate(false);
 
-                    _('result in', this.node.id, 'does not exist, calculating result...');
-                    _('result is: ', result);
-                    return result;
+                    // return [];
 
-                }*/
+                }
 
                 // return this.node.result ? this.node.result : this.node.calculate(false);
 
@@ -29,11 +26,11 @@ class Dock {
 
                 if (this.editable && this.inputElement.value) {
 
-                    return this.inputElement.value;
+                    return { value: this.inputElement.value };
 
                 } else if (this.occupied) {
 
-                    return this.link[0].startDock.value;
+                    return this.links[0].startDock.value;
 
                 }
 
@@ -45,9 +42,11 @@ class Dock {
 
     set value(newValue) {
 
-        if (this.type == 'data') {
+        if (this.isData) {
 
-            this.node.result = newValue;
+            this.node.result = {value: newValue};
+
+            this.label = newValue;
 
         }
 
@@ -84,22 +83,22 @@ class Dock {
 
     };
 
-    constructor({ id, label, editable, isRight, type, node, blockElement, switchSection }) {
+    constructor({ id, label, isRight, isData, editable, type, node, blockElement, switchSection }) {
 
         Object.assign(this, {
             id,
             isRight,
             node,
-            type,
+            isData,
             blockElement,
             editable,
-            link: [],
+            links: [],
             switchSection,
         });
 
-        dock[ this.id ] = (this.type == 'exe')
-            ? this.createExeDock(label)
-            : this.createDataDock(editable, label);
+        docks[ this.id ] = this.isData
+            ? this.createDataDock(editable, type, label)
+            : this.createExeDock(label);
 
         this.occupied = false;
 
@@ -116,17 +115,18 @@ class Dock {
         const nodePos = this.node.nodeElement.getBoundingClientRect();
         const dockPos = this.pinElement.getBoundingClientRect();
 
+        const dataName = this.isData ? 'data' : 'exe';
         return [
-            (dockPos.x - nodePos.x) / Canvas.zoomLevel + Dock.offset[ this.type ],
-            (dockPos.y - nodePos.y) / Canvas.zoomLevel + Dock.offset[ this.type ]
+            (dockPos.x - nodePos.x) / Canvas.zoomLevel + Dock.offset[ dataName ],
+            (dockPos.y - nodePos.y) / Canvas.zoomLevel + Dock.offset[ dataName ]
         ];
 
     };
 
     createExeDock(label) {
 
-            let template = document.querySelector('template#exeDock');
-            template = document.importNode(template.content, true);
+        let template = document.querySelector('template#exeDock');
+        template = document.importNode(template.content, true);
 
         const side = this.isRight ? 'right' : 'left';
 
@@ -149,7 +149,9 @@ class Dock {
 
     };
 
-    createDataDock(editable, label) {
+    createDataDock(editable, type, label) {
+
+        this.type = type;
 
         let template = document.querySelector('template#dataDock');
         template = document.importNode(template.content, true);
@@ -166,13 +168,16 @@ class Dock {
 
         if (editable) {
 
-            this.inputElement = template.querySelector('.paramContainer > input')
-            this.inputElement.style.display = 'inline-block';
+            this.inputElement = template.querySelector('.paramContainer > input');
             this.inputElement.ref = this.id;
 
-            this.inputElement.type = (this.editable == 'number') ? 'number': 'text' // for now
+            this.inputElement.type = this.editable == 'number' ? 'number' : 'text';
 
             this.inputElement.placeholder = label || '';
+
+        } else {
+
+            template.querySelector('.paramContainer > input').remove();
 
         }
 
@@ -191,7 +196,7 @@ class Dock {
 
         const notEqual = (this.node != target.node);
         const opposite = (this.isRight != target.isRight);
-        const sameType = (this.type == target.type);
+        const sameType = (this.isData == target.isData) && (this.type == target.type);
 
         return notEqual && opposite && sameType;
 
@@ -203,7 +208,7 @@ class Dock {
 
         if (this.occupied) {
 
-            this.link[0].remove();
+            this.links[0].remove();
 
         }
 
@@ -231,7 +236,7 @@ class Dock {
 
     };
 
-} let dock = {};
+} let docks = {};
 
 
 Object.assign(Dock, {
@@ -242,8 +247,8 @@ Object.assign(Dock, {
     ],
 
     typeAttributes: [
-        { type: 'exe', propertyName: 'exeDocks', typePrefix: 'e', blockName: 'head', otherBlockName: 'body' },
-        { type: 'data', propertyName: 'dataDocks', typePrefix: 'd', blockName: 'body', otherBlockName: 'head' }
+        { isData: false, propertyName: 'exeDocks', typePrefix: 'e', blockName: 'head', otherBlockName: 'body' },
+        { isData: true, propertyName: 'dataDocks', typePrefix: 'd', blockName: 'body', otherBlockName: 'head' }
     ],
 
     offset: {

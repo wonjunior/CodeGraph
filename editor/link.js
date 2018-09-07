@@ -26,27 +26,28 @@ class Link {
 
     }
 
-    constructor(startDock, snapDock = undefined) {
+    constructor(startDock, endDock = undefined) {
 
         this.startDock = startDock;
-        this.type = startDock.type;
+        this.isData = startDock.isData;
+        // this.type = startDock.type;
 
         this.createLink();
 
         this.id = startDock.id;
 
-        if (snapDock) {
+        if (endDock) {
 
-            this.snapDock = snapDock;
-            this.update(snapDock.position);
+            this.endDock = endDock;
+            this.update(endDock.position);
             this.set();
 
         }
 
-        this.startDock.link.push(this);
+        this.startDock.links.push(this);
 
         // right-sided data docks are never occupied
-        startDock.occupied = !(startDock.isRight && startDock.type == 'data');
+        startDock.occupied = !(startDock.isRight && startDock.isData);
 
     };
 
@@ -56,8 +57,10 @@ class Link {
         template = document.importNode(template.content, true);
 
         this.linkElement = template.querySelector('path');
-        this.linkElement.style.stroke = Link.color[ this.type ];
-        this.linkElement.style.strokeWidth = Link.width[ this.type ];
+
+        const dataName = this.isData ? 'data' : 'exe';
+        this.linkElement.style.stroke = Link.color[ dataName ];
+        this.linkElement.style.strokeWidth = Link.width[ dataName ];
 
         Canvas.linkArea.appendChild(this.linkElement);
 
@@ -65,12 +68,12 @@ class Link {
 
     edit() {
 
-        delete link[ this.id ];
+        delete links[ this.id ];
 
-        this.snapDock.link = []; // reset the old snapDock
-        this.snapDock.occupied = false;
+        this.endDock.links = []; // reset the old endDock
+        this.endDock.occupied = false;
 
-        delete this.snapDock;
+        delete this.endDock;
 
         return this;
 
@@ -78,7 +81,7 @@ class Link {
 
     static updateAll() {
 
-        Object.entries(link).forEach(([ id, link ]) => {
+        Object.entries(links).forEach(([ id, link ]) => {
 
             link.update();
 
@@ -90,7 +93,7 @@ class Link {
 
         if (!endPoint) {
 
-            this.path = Curve.get(this.startDock.position, this.snapDock.position);
+            this.path = Curve.get(this.startDock.position, this.endDock.position);
 
         } else if (this.startDock.isRight) {
 
@@ -104,25 +107,28 @@ class Link {
 
     };
 
+    // <? is there any refactoring possible here?
     remove() {
 
-        // make sure the link is deleted in links! <? link with an "s"!!
-        delete link [ this.id ];
+        // make sure the link is removed from links
+        delete links[ this.id ];
 
         this.linkElement.remove();
 
         // make it a Dock method <Dock>.unpin(this) where this is <Link>
-        const linkIndexStartDock = this.startDock.link.findIndex(link => link.id == this.id);
-        this.startDock.link.splice(linkIndexStartDock, 1);
+        const linkIndexStartDock = this.startDock.links.findIndex(link => link.id == this.id);
+        this.startDock.links.splice(linkIndexStartDock, 1);
 
         this.startDock.occupied = false;
 
-        if (this.snapDock) {
+        if (this.endDock) {
 
-            const linkIndexSnapDock = this.snapDock.link.findIndex(link => link.id == this.id);
-            this.snapDock.link.splice(linkIndexSnapDock, 1);
+            const linkIndexSnapDock = this.endDock.links.findIndex(link => link.id == this.id);
+            this.endDock.links.splice(linkIndexSnapDock, 1);
 
-            this.snapDock.occupied = false;
+            this.endDock.occupied = false;
+
+            this.endDock.node.calculate();
 
         }
 
@@ -130,30 +136,31 @@ class Link {
 
     set() {
 
-        this.snapDock.link.push(this); // <- add to snapDock
-        this.snapDock.occupied = true;
+        // add to endDock
+        this.endDock.links.push(this);
+        this.endDock.occupied = true;
 
-        // swap startDock and snapDock if necessary
-        if (this.snapDock.isRight) {
+        // swap startDock and endDock if necessary
+        if (this.endDock.isRight) {
 
-            [ this.startDock, this.snapDock ] = [ this.snapDock, this.startDock ];
+            [ this.startDock, this.endDock ] = [ this.endDock, this.startDock ];
 
         }
 
-        const linkId = this.startDock.id + Link.separator + this.snapDock.id;
+        const linkId = this.startDock.id + Link.separator + this.endDock.id;
         this.id = linkId;
 
         // this link already exists
-        if (link[ linkId ]) {
+        if (links[ linkId ]) {
 
             this.remove();
 
         // link doesn't yet exist
         } else {
 
-            link[ linkId ] = this;
+            links[ linkId ] = this;
 
-            this.snapDock.node.calculate();
+            this.endDock.node.calculate();
 
         }
 
@@ -161,11 +168,11 @@ class Link {
 
     static destruct(link) {
 
-        return [ link.startDock.id, link.snapDock.id ];
+        return [ link.startDock.id, link.endDock.id ];
 
     };
 
-}; let link = {};
+}; let links = {};
 
 
 Object.assign(Link, {

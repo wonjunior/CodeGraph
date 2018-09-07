@@ -6,15 +6,15 @@ class Editor {
 
         const saved = {};
 
-        saved.node = Object.entries(node).map(([ nodeId, node ]) => {
+        saved.nodes = Object.entries(nodes).map(([ nodeId, node ]) => {
 
             return Node.destruct(node);
 
         });
 
-        saved.link = Object.entries(link).map(([ linkId, _link ]) => {
+        saved.links = Object.entries(links).map(([ linkId, link ]) => {
 
-            return Link.destruct(_link);
+            return Link.destruct(link);
 
         });
 
@@ -32,13 +32,13 @@ class Editor {
 
         const data = JSON.parse(dataString);
 
-        data.node.forEach(nodeObject => {
+        data.nodes.forEach(nodeObject => {
 
             new Node(nodeObject);
 
         });
 
-        data.link.forEach(linkObject => {
+        data.links.forEach(linkObject => {
 
             new Link();
 

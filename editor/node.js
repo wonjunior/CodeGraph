@@ -20,7 +20,7 @@ class Node {
      */
     static get length() {
 
-        return Object.keys(node).length;
+        return Object.keys(nodes).length;
 
     };
 
@@ -120,7 +120,7 @@ class Node {
         Object.assign(this, {
             id: Node.createId(),
             background,
-            dock: [],
+            docks: [],
             func,
             stringFunc,
         })
@@ -141,7 +141,7 @@ class Node {
 
         // adds this Node instance to the object of instances, it can be
         // accessed with the unique node identifier provided previously
-        node[ this.id ] = this;
+        nodes[ this.id ] = this;
 
         const interpreter = new Interpreter(this);
         // this.solveDependency = interpreter.solveDependency.bind(interpreter);
@@ -165,30 +165,30 @@ class Node {
         Dock.sideAttributes.forEach(({ direction, side, isRight, sidePrefix }) => {
         //                            'in'/'out', 'left'/'right', F/T, 'L'/'R'
 
-            Dock.typeAttributes.forEach(({ type, propertyName, typePrefix, blockName, otherBlockName }) => {
-            //                           'exe'/'data', 'exeDocks'/'dataDocks', 'e'/'d', 'head'/'body'
+            Dock.typeAttributes.forEach(({ isData, propertyName, typePrefix, blockName, otherBlockName }) => {
+            //                            true/false, 'exeDocks'/'dataDocks', 'e'/'d', 'head'/'body'
 
-                dockDef[ propertyName ][ direction ].forEach(({ label, editable, switchSection }, i) => {
+                dockDef[ propertyName ][ direction ].forEach(({ label, editable, type, switchSection }, i) => {
 
                     // default position for the dock is determined by is type but the position
                     // can be switched by setting switchSection to true. In this case the dock
                     // will take the other position. Available positions are in body and head
                     const sectionName = (switchSection ? otherBlockName : blockName) + 'Section';
 
-                    //
                     const newDock = new Dock({
                         id: this.id + typePrefix + sidePrefix + i,
                         label,
                         isRight,
-                        type,
+                        isData,
                         editable,
+                        type,
                         node: this,                                  // @this is an instance of Node
                         switchSection,
                         blockElement: this[ sectionName ][ side ],   // the element where the dock will be appended
                     });
 
                     this[ propertyName ][ direction ].push(newDock); // append the dock to the side-type specific array
-                    this.dock.push(newDock);                         // append the dock to the array containing all node's docks
+                    this.docks.push(newDock);                        // append the dock to the array containing all node's docks
 
                 });
 
@@ -241,14 +241,14 @@ class Node {
      */
     update() {
 
-        this.dock.forEach(dock => {
+        this.docks.forEach(dock => {
 
-            dock.link.forEach(link => {
+            dock.links.forEach(link => {
 
                 // get the path expression from the static Curve.get and
                 // change the link's path directly by utilising the Link#path
                 // setter which updates the SVG element in the DOM
-                link.path = Curve.get(link.startDock.position, link.snapDock.position);
+                link.path = Curve.get(link.startDock.position, link.endDock.position);
 
             });
 
@@ -258,11 +258,11 @@ class Node {
 
     /**
      * This static method destructs the given node object into a non circular object.
-     * Because node's have a property Node#dock which contains references to itself this
+     * Because node's have a property Node#docks which contains references to itself this
      * circular structure cannot be stringified by the saving mechanism. Thefore this method
      * has to modify the object by destructuring the node's dock instances into dock objects.
-     * @param {Node} { exeDocks, dataDocks, dock, headerColor, label, position, ...rest } -
-     * exeDocks, dataDocks and dock have circular structures. headerColor, label and position
+     * @param {Node} { exeDocks, dataDocks, docks, headerColor, label, position, ...rest } -
+     * exeDocks, dataDocks and docks have circular structures. headerColor, label and position
      * are  getters (they are not iterable i.e not in rest which contains all other properties.
      * @returns {object} { exeDocks, dataDocks, headerColor, label and position, ...rest } -
      * the returned object doesn't contain dock: the array of Dock instances, as it is not
@@ -270,7 +270,7 @@ class Node {
      *
      * <? this static method could be a Node.destruct method instead
      */
-    static destruct({ exeDocks, dataDocks, dock, headerColor, label, position, ...rest }) {
+    static destruct({ exeDocks, dataDocks, docks, headerColor, label, position, ...rest }) {
 
         // exeDocks and dataDocks are modified by Dock's own destruct method
         // to convert the Docks objects into non circular dock objects
@@ -281,7 +281,7 @@ class Node {
 
     };
 
-}; let node = {};
+}; let nodes = {};
 
 Object.assign(Node, {
 

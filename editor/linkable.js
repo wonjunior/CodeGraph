@@ -5,9 +5,9 @@ class Linkable {
     constructor(event, startDock) {
 
         // determine if a link needs to be updated or a new one has to be created
-        if (startDock.occupied && ( !startDock.isRight || (startDock.isRight && startDock.type == 'exe')) ) {
+        if (startDock.occupied && ( !startDock.isRight || (startDock.isRight && !startDock.isData)) ) {
 
-            this.link = startDock.link[0].edit();
+            this.link = startDock.links[0].edit();
 
         } else {
 
@@ -33,18 +33,18 @@ class Linkable {
 
     linking(e) {
 
-        // mousemove on .snapDock
+        // mousemove on .endDock
         if (e.target.classList.contains('snapDock')) {
 
-            // mouseenter .snapDock
+            // mouseenter .endDock
             if (!this.snapped) {
 
-                const snapDock = dock[ e.target.ref ];
+                const endDock = docks[ e.target.ref ];
 
                 // snapping can occur
-                if (this.link.startDock.isCompatible(snapDock)) {
+                if (this.link.startDock.isCompatible(endDock)) {
 
-                    this.snap(snapDock);
+                    this.snap(endDock);
 
                 // snapping cannot occur
                 } else {
@@ -56,14 +56,14 @@ class Linkable {
             // already snapped
             } else {
 
-                // this.link.update(this.snapDock.position);
+                // this.link.update(this.endDock.position);
 
             }
 
-        // mousemove out of .snapDock
+        // mousemove out of .endDock
         } else {
 
-            // mouseleave .snapDock
+            // mouseleave .endDock
             if (this.snapped) {
 
                 this.snapped = false;
@@ -76,26 +76,26 @@ class Linkable {
 
     };
 
-    snap(snapDock) {
+    snap(endDock) {
 
         this.snapped = true;
-        this.link.snapDock = snapDock;
-        this.link.update(snapDock.position);
+        this.link.endDock = endDock;
+        this.link.update(endDock.position);
 
     };
 
     endLink() {
 
-        if (this.snapped) { // <? make sure snapDock.link.length == 0 otherwise pop the other one
+        if (this.snapped) { // <? make sure endDock.link.length == 0 otherwise pop the other one
 
-            const snapDock = this.link.snapDock;
+            const endDock = this.link.endDock;
 
-            if (snapDock.occupied && !(snapDock.type == 'data' && snapDock.isRight)) {
+            if (endDock.occupied && !(endDock.isData && endDock.isRight)) {
 
-                const linkToPop = snapDock.link[0];
+                const linkToPop = endDock.links[0];
                 linkToPop.remove();
 
-                delete link [ linkToPop.id ]
+                delete links[ linkToPop.id ]
 
             }
 

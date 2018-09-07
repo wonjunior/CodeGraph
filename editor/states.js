@@ -25,7 +25,7 @@ new State({
 
             header: () => {
 
-                const nodeObject = node[ event.target.ref ];
+                const nodeObject = nodes[ event.target.ref ]; // $nodes
                 new Draggable({
                     event,
                     type: 'drag',
@@ -38,7 +38,7 @@ new State({
 
             snapDock: () => {
 
-                const dockObject = dock[ event.target.ref ];
+                const dockObject = docks[ event.target.ref ];
                 new Linkable(event, dockObject);
 
             },
@@ -46,7 +46,7 @@ new State({
             varInput: function(event) {
 
                 this.input = event.target;
-                this.dock = dock[ this.input.ref ];
+                this.dock = docks[ this.input.ref ];
 
                 // this.dock.inputConstant(this.input.value);
 
