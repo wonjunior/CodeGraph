@@ -16,40 +16,65 @@ class Interpreter { // <? change name
 
     };
 
-    calculate(tree = []) {
+    wrapper(value) {
 
-        // _('called by ', this.node.id)
-        const args = this.dataIn.map(dock => dock.value);
+        if (typeof value == "string") {
 
-        if (args.every(argument => argument)) { // <? doesn't allow falsy values!!
+            return `"${value}"`;
 
-            const result = this.func(...args);
-            this.dataOut[0].label = result
-            this.dataOut[0].value = result;
+        } else {
 
-            tree.push(this.node.id);
-            this.propagate(tree);
-
-            // return result
+            return value;
 
         }
 
     };
 
+    calculate(tree = []) {
+
+        let args = this.dataIn.map(dock => dock.value);
+
+        if (args.every(arg => arg)) {
+
+            args = args.map(arg => arg.value);
+
+            const result = this.func(...args);
+            // const stringResult = this.stringFunc(...args.map(value => this.wrapper(value)));
+            this.dataOut[0].value = result;
+
+            // visual cues
+            // this.dataOut[0].label = result;
+            // this.dataOut[0].labelElement.title = stringResult;
+
+        } else {
+
+            // this.dataOut[0].value = undefined;
+
+            // visual cues
+            this.dataOut[0].label = '';
+            this.dataOut[0].labelElement.title = '';
+
+        }
+
+        tree.push(this.node.id);
+        this.propagate(tree);
+
+    };
+
     propagate(tree) {
 
-        this.dataOut[0].link.forEach(link => {
+        this.dataOut[0].links.forEach(link => {
 
-            _('tree', tree, 'propagation from :', this.node.id, 'to', link.snapDock.node.id);
+            // _('tree', tree, 'propagation from :', this.node.id, 'to', link.endDock.node.id);
 
-            const cycleDetected = ~tree.indexOf(link.snapDock.node.id);
+            const cycleDetected = ~tree.indexOf(link.endDock.node.id);
             if (!cycleDetected) {
 
-                link.snapDock.node.calculate(tree);
+                link.endDock.node.calculate(tree);
 
             } else {
 
-                _('rejected')
+                _('rejected');
 
             }
 
