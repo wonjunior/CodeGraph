@@ -2,6 +2,20 @@
 
 const Library  = {
     node: {
+
+        // only one to be done
+        sum: {
+            label: 'Sum',
+            meta: 'sum add +',
+            description: 'This node adds the input values together',
+            position: [0, 0],
+            dataDocks: { in: [ {label: 'int', editable: true}, {label: 'int', editable: true} ], out: [ {} ] },
+            exeDocks: { in: [], out: [] },
+            func: (a,b)  =>  a+b,
+            stringFunc: (a, b) => `${a}+${b}`,
+            background: '+'
+        },
+
         ifelse: {
             label: 'If...Else',
             meta: 'if...else if condition branch',
@@ -11,17 +25,6 @@ const Library  = {
             exeDocks: { in: [ {label: 'condition', switchSection: true} ], out: [ {label: 'if', switchSection: true}, {label: 'else', switchSection: true} ] },
             func: ()  =>  null,
             background: '?'
-        },
-        sum: {
-            label: 'Sum',
-            meta: 'sum add +',
-            description: 'This node adds the input values together',
-            position: [0, 0],
-            dataDocks: { in: [ {label: 'int', editable: 'number' }, {label: 'int', editable: 'number' } ], out: [ {} ] },
-            exeDocks: { in: [], out: [] },
-            func: (a,b)  =>  Number(a)+Number(b),
-            stringFunc: (a, b) => `${a}+${b}`,
-            background: '+'
         },
         sub: {
             label: 'Substract',
