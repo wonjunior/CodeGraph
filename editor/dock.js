@@ -224,11 +224,11 @@ class Dock {
 
     adjustInput(input) {
 
-        const possibleNumber = Number(input);
+        const coercedInput = Number(input);
 
-        if (input && typeof possibleNumber == 'number' && !Number.isNaN(possibleNumber)) {
+        if (input && typeof coercedInput == 'number' && !Number.isNaN(coercedInput)) {
 
-            return possibleNumber;
+            return coercedInput;
 
         } else {
 
