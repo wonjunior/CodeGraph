@@ -26,6 +26,13 @@ class Selection {
 
     };
 
+    static delete() {
+
+        Selection.objects.forEach(object => object.remove()); // nodes only!
+        Selection.objects = [];
+
+    }
+
 };
 
 Object.assign(Selection, {

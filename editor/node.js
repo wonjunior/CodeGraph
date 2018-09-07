@@ -277,6 +277,26 @@ class Node {
     };
 
     /**
+     * This method removes the node and all its attached links
+     */
+    remove() {
+
+        this.docks.forEach(dock => {
+
+            dock.links.forEach(link => {
+
+                link.remove()
+
+            });
+
+        });
+
+        delete nodes[ this.id ];
+        this.nodeElement.remove();
+
+    }
+
+    /**
      * This static method destructs the given node object into a non circular object.
      * Because node's have a property Node#docks which contains references to itself this
      * circular structure cannot be stringified by the saving mechanism. Thefore this method

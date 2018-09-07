@@ -59,7 +59,9 @@ new State({
 
         spacebar: () => nodeFinder.show(),
 
-        ctrl_shift_spacebar: (event) => _('nope')
+        ctrl_shift_spacebar: (event) => _('nope'),
+
+        delete: () => Selection.delete(), 
 
     }
 

@@ -92,6 +92,7 @@ Key.names = {
     32: 'spacebar',
     38: 'arrowup',
     40: 'arrowdown',
+    46: 'delete',
 }
 
 class keyEvent {
