@@ -8,12 +8,7 @@ new State({
 
         tab: function(event) {
 
-            /*_('tab change: ', this)
-            if (target.classList.contains('varInput')) {
 
-                State.change('inputConstant'); // <? problem here
-
-            }*/
 
         }
 
@@ -68,6 +63,8 @@ new State({
 
         escape: function() {
 
+            State.change('editor');
+            
             this.input.blur();
 
         },
