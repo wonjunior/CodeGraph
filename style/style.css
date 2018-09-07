@@ -6,6 +6,25 @@
 
 /* */
 
+/*@font-face {
+  font-family: Montserrat;
+  src: url('Montserrat.otf') format('otf');
+}*/
+
+/* fonts */
+
+/* Montserrat */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('Montserrat.woff2') format('woff2');
+}
+
+/* Saira */
+@font-face {
+  font-family: 'Saira Semi Condensed';
+  src: url('Saira.woff2') format('woff2');
+}
+
 /*input:focus {
   outline: none;
 }*/
@@ -109,12 +128,12 @@ svg {
     position: fixed;
     bottom: 0;
     text-align: center;
+    font-weight: 900;
     font-family: 'Montserrat', sans-serif;
     border: thick dotted transparent;
 }
 .signature.s-right {
     right: 0;
-    font-weight: 900;
     font-size: 57px;
     color: rgba(0, 0, 0, 0.37);
     width: 50%;
@@ -122,7 +141,6 @@ svg {
     text-align: right;
 }
 .signature.s-left {
-    font-weight: 900;
     font-size: 44px;
     color: rgba(0, 0, 0, 0.37);
     padding: 17px 30px;
