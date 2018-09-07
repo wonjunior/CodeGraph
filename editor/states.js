@@ -16,7 +16,14 @@ new State({
 
     mousebinds: {
 
+
         left: {
+
+            container: (event) => {
+
+                new Selection(nodes[ event.target.id ]);
+
+            },
 
             header: () => {
 
@@ -64,7 +71,7 @@ new State({
         escape: function() {
 
             State.change('editor');
-            
+
             this.input.blur();
 
         },
