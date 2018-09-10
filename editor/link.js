@@ -107,7 +107,7 @@ class Link {
 
     };
 
-    // <? is there any refactoring possible here?
+    // <? is there any refactoring possible here? use linkIndexStartDock = this.startDock.links.indexOf(link);
     remove() {
 
         // make sure the link is removed from links
@@ -128,7 +128,15 @@ class Link {
 
             this.endDock.occupied = false;
 
-            this.endDock.node.calculate();
+            if (this.endDock.node.executable) {
+
+                Engine.compile();
+
+            } else {
+
+                this.endDock.node.calculate();
+
+            }
 
         }
 
@@ -160,8 +168,16 @@ class Link {
 
             links[ linkId ] = this;
 
-            this.endDock.constant = false;
-            this.endDock.node.calculate();
+            if (this.endDock.node.executable) {
+
+                Engine.compile();
+
+            } else {
+
+                this.endDock.constant = false;
+                this.endDock.node.calculate();
+
+            }
 
         }
 
