@@ -4,6 +4,8 @@ class Dock {
 
     set constant(bool) {
 
+        // this.inputElement.classList[ this.inputElement.value != '' && this.occupied ? 'add' : 'remove' ]('occupied');
+
         this.dockElement.classList[ bool ? 'add' : 'remove' ]('constant');
 
     };
@@ -33,11 +35,11 @@ class Dock {
 
     };
 
-    getSetValue() {
+    getSetArgument() {
 
-        var _value;
+        var _argument;
         Object.defineProperties(this, {
-            "value": {
+            "argument": {
 
                 get: () => {
 
@@ -45,17 +47,25 @@ class Dock {
 
                         if (this.isRight) {
 
-                            return _value;
+                            if (_argument) {
+
+                                return _argument;
+
+                            } else {
+
+                                return this.node.func();
+
+                            }
 
                         } else {
 
                             if (this.occupied) {
 
-                                return this.links[0].startDock.value;
+                                return this.links[0].startDock.argument;
 
                             } else {
 
-                                return _value;
+                                return _argument;
 
                             }
 
@@ -65,17 +75,23 @@ class Dock {
 
                 },
 
-                set: (newValue) => {
+                set: (argument) => {
 
-                    if (this.isData) {
+                    if (!argument) {
 
-                        _value = {value: newValue};
+                        _argument = argument;
 
+                    } else if (argument && this.isData) {
+
+                        const [ value, string ] = argument;
                         if (this.isRight) {
 
-                            this.label = newValue;
+                            this.label = value;
+                            this.labelElement.title = string;
 
                         }
+
+                        _argument = { value, string };
 
                     }
 
@@ -88,7 +104,7 @@ class Dock {
 
     constructor({ id, label, isRight, isData, editable, type, node, blockElement, switchSection }) {
 
-        this.getSetValue();
+        this.getSetArgument();
 
         Object.assign(this, {
             id,
@@ -217,7 +233,7 @@ class Dock {
 
         }
 
-        this.value = this.adjustInput(constant);
+        this.argument = this.adjustInput(constant);
         this.node.calculate();
 
     };
@@ -228,13 +244,19 @@ class Dock {
 
         if (input && typeof coercedInput == 'number' && !Number.isNaN(coercedInput)) {
 
-            return coercedInput;
+            return [ coercedInput, coercedInput ];
 
-        } else {
+        } else if (input) {
 
-            return input;
+            return [ input, (typeof input == 'string') ? `"${input}"` : input ];
 
         }
+
+    };
+
+    inputVariable(variable) {
+
+        _(variable);
 
     };
 
