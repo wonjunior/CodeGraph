@@ -31,14 +31,15 @@
     transform: rotate(90deg);
 }
 
-.notConstant > .paramContainer > input {
-    background-color: rgb(81, 81, 81) !important;
+input.occupied {
+    /*background-color: rgb(81, 81, 81) !important;
     background: linear-gradient(to top left,
         rgba(0,0,0,0) 0%,
         rgba(0,0,0,0) calc(50% - 0.8px),
         rgba(0,0,0,1) 50%,
         rgba(0,0,0,0) calc(50% + 0.8px),
-        rgba(0,0,0,0) 100%);
+        rgba(0,0,0,0) 100%); */
+    color: transparent;
 }
 /*
 .exe > .dock {
@@ -104,6 +105,13 @@
     /* top: 100px; */
     /* left: 200px; */
 }
+.container.hideBody > .header {
+    border-radius: 12px;
+}
+.container.hideBody > .body {
+    display: none;
+}
+
 .header {
     border-radius: 12px 12px 0px 0px;
     background-color: rgb(56, 55, 56);
@@ -147,7 +155,6 @@
     box-sizing:  border-box;
     /* pointer-events: visible; */
 }
-
 .paramName {
     box-sizing:  border-box;
     width: 100%;
