@@ -10,7 +10,7 @@ class Node {
      */
     static createId() {
 
-        return Node.idPrefix + String(Node.length + 1);
+        return Node.idPrefix + (Node.idOfLast = Node.idOfLast ? Node.idOfLast + 1 : 1);
 
     };
 
@@ -133,7 +133,7 @@ class Node {
      * (String), position (Number[2]), exeDocks (Object), dataDocks (Object) and func
      * (function). Optional parameters are background (String) and headerColor (String)
      */
-    constructor({ label, position, exeDocks, dataDocks, func, stringFunc, background, headerColor }) {
+    constructor({ label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor }) {
 
         // the following property assignments are happening first because the method
         // Node#createNode() needs these to create the HTML elements properly
@@ -141,6 +141,7 @@ class Node {
             id: Node.createId(),
             background,
             docks: [],
+            hideBody: !!hideBody,
             func,
             stringFunc,
         })
@@ -153,7 +154,7 @@ class Node {
         Object.assign(this, {
             headerColor,
             label,
-            position,
+            position: position ? position : [0, 0],
         });
 
         // create and render all of the node's docks with their HTML elements
@@ -163,9 +164,12 @@ class Node {
         // accessed with the unique node identifier provided previously
         nodes[ this.id ] = this;
 
+        // attach the interpreter system to the node's instance
         const interpreter = new Interpreter(this);
-        // this.solveDependency = interpreter.solveDependency.bind(interpreter);
+        this.executable = !![...exeDocks.in, ...exeDocks.out].length;
         this.calculate = interpreter.calculate.bind(interpreter);
+        // <? could have a executor interpreter too for executable nodes, or
+        // just have the interpreter logic in executable (=> true by nature)
 
     };
 
@@ -200,7 +204,7 @@ class Node {
                         label,
                         isRight,
                         isData,
-                        editable,
+                        editable: editable ? editable : false,
                         type,
                         node: this,                                  // @this is an instance of Node
                         switchSection,
@@ -246,7 +250,15 @@ class Node {
             }
         });
 
-        template.querySelector('.body > .bodybefore').textContent = this.background;
+        if (this.hideBody) {
+
+            this.nodeElement.classList.add('hideBody');
+
+        } else {
+
+            template.querySelector('.body > .bodybefore').textContent = this.background;
+
+        }
 
         template.querySelector('.header').ref = this.id;
 
@@ -295,6 +307,18 @@ class Node {
         this.nodeElement.remove();
 
     }
+
+    hasNoAscendantCommand() {
+
+        return this.exeDocks.in.some(exeDock => !exeDock.links.length);
+
+    };
+
+    hasDescendantCommand() {
+
+        return this.exeDocks.out.some(exeDock => exeDock.links.length);
+
+    };
 
     /**
      * This static method destructs the given node object into a non circular object.
