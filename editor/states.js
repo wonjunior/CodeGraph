@@ -78,7 +78,11 @@ new State({
 
         other: function() {
 
-            this.dock.inputConstant(this.input.value);
+            // if (this.input.value) {
+
+                this.dock.inputConstant(this.input.value);
+
+            // }
 
         },
 
