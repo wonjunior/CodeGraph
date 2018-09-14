@@ -1,41 +1,43 @@
-# CodeGraph
-[![GitHub version](https://img.shields.io/badge/version-v0.1-brightgreen.svg)](https://badge.fury.io/gh/WonJunior%2FCodeGraph)
-![](https://reposs.herokuapp.com/?path=WonJunior/CodeGraph&color=ff69b4)
-[![GitHub issues open](https://img.shields.io/github/issues/WonJunior/CodeGraph.svg?colorB=0576b7)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Chrome](https://goo.gl/zH6atr)
 
-Node based programming tool that allows you to create code without actually writing code.
+# CodeGraph [![GitHub version](https://img.shields.io/badge/version-early_v0.5-brightgreen.svg)](https://badge.fury.io/gh/WonJunior%2FCodeGraph)[](https://reposs.herokuapp.com/?path=WonJunior/CodeGraph&color=ff69b4) [![GitHub issues open](https://img.shields.io/github/issues/WonJunior/CodeGraph.svg?colorB=0576b7)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## UI preview:
 
-### Linking system
-![alt text](https://image.ibb.co/kefs9v/preview_6_8_17.png)
+Node based programming editor that allows you to create code without actually writing code.
 
-### The finder
-![alt text](https://image.ibb.co/bSwzev/finder_demo_2.gif)
+## Preview:
+
+### Linking system![alt text](https://image.ibb.co/iswbep/first.png)
+
+### Node finder![alt text](https://image.ibb.co/bZtyc9/finder.png)
+
+### Live feedback
+![alt text](https://image.ibb.co/ezvpjp/action.png)
 
 -----
 
-### Roadmap
+### Version state v0.5
 
-**DONE**
-- [x] Basic node UI
-- [x] Link handling (link, unlink)
-- [x] grab and move nodes around
-- [x] search bar to create new nodes
-- [x] refactoring of the UI linking system with new dock type: 'exe'
-- [x] direct graph interpreter
-- [x] UI : panes implementation
-  - [x] three view available: fullscreen, left-right, top-bottom
-  - [x] separator allows to resize the windows
-  - [x] refresh sp.width and sp.height when resizing page to avoid displacement
-- [x] UI : pan & zoom system all scale fixes
+**UI and behavior**
+- [x] Basic styling (nodes, docks and links)
+- [x] Editor navigation system ($\infty$ pan, drag and zoom)
+- [x] Link handling (linking, snapping, unlinking)
+- [x] Finder bar to add new nodes to the workplace
+- [x] Event handler taking care of key and mouse input
 
-**WIP**
-- [ ] Linking system impementing execute links
-- [ ] UI : refactoring of the grab & move UI system
-- [ ] CORE : Node Graph Interpreter V2
+**Engine**
+- [x] Live direct graph interpreter (updates on edit)
+- [ ] Variable accessible and editable, with scope
+- [ ] Advanced structures : loops and conditions
 
-**PLANNED**
-- [ ] implementation in electron + user interface
+
+---
+
+### Ahead of time
+
+- [ ] Implementation of a 3rd party multi-window layout manager
+- [ ] Editor user interface : console, variable viewer, file manager, text editor
+- [ ] Jumping from text editor to node editor when updating
+- [ ] Efficient and reliable error logging and cues
+- [ ] Whole project covered with test cases
+- [ ] Graph structure and interpretation API
+- [ ] Desktop integration with Electron
