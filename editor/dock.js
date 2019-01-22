@@ -38,6 +38,8 @@ class Dock {
     getSetArgument() {
 
         var _argument;
+        var _dependencies = this.node.getter && { [this.node.getter.variableName]: [this.node] };
+
         Object.defineProperties(this, {
             "argument": {
 
@@ -51,9 +53,12 @@ class Dock {
 
                                 return _argument;
 
-                            } else {
+                            } else if(this.node.getter) {
 
-                                return this.node.func();
+                                return {
+                                    ... this.node.func.bind(this.node.getter)(),
+                                    dependencies: _dependencies,
+                                };
 
                             }
 
@@ -61,7 +66,7 @@ class Dock {
 
                             if (this.occupied) {
 
-                                return this.links[0].startDock.argument;
+                                return this.links[0].startDock.argument; // <? make a Dock method
 
                             } else {
 
@@ -83,7 +88,7 @@ class Dock {
 
                     } else if (argument && this.isData) {
 
-                        const [ value, string ] = argument;
+                        const [ value, string, dependencies ] = argument;
                         if (this.isRight) {
 
                             this.label = value;
@@ -91,7 +96,7 @@ class Dock {
 
                         }
 
-                        _argument = { value, string };
+                        _argument = { value, string, dependencies };
 
                     }
 
@@ -104,8 +109,6 @@ class Dock {
 
     constructor({ id, label, isRight, isData, editable, type, node, blockElement, switchSection }) {
 
-        this.getSetArgument();
-
         Object.assign(this, {
             id,
             isRight,
@@ -116,6 +119,8 @@ class Dock {
             links: [],
             switchSection,
         });
+
+        this.getSetArgument();
 
         docks[ this.id ] = this.isData
             ? this.createDataDock(editable, type, label)
@@ -170,7 +175,7 @@ class Dock {
 
     };
 
-    createDataDock(editable, type, label) {
+    createDataDock(editable, type, label) { // <? do we need .exeblock and .datablock
 
         this.type = type;
 
@@ -198,6 +203,7 @@ class Dock {
 
         } else {
 
+            this.label = label
             template.querySelector('.paramContainer > input').remove();
 
         }
@@ -248,7 +254,7 @@ class Dock {
 
         } else if (input) {
 
-            return [ input, (typeof input == 'string') ? `"${input}"` : input ];
+            return [ input, (typeof input == 'string') ? `"${input}"` : input ]; // <? "" isn't necessary
 
         }
 

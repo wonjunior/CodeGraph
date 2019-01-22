@@ -14,29 +14,82 @@ class Interpreter {
 
     };
 
-    calculate(tree = []) {
+    mergeDependencies(arraysOfDependencies) {
 
-        _('[INTERPRETER] calculating', this.node.id)
+        // _('init: ', arraysOfDependencies)
+
+        // get an array of arrays of keys
+        const arraysOfKeys = arraysOfDependencies
+        	.map(dependencies => Object.keys(dependencies || []));
+
+        // _('arraysOfkeys: ', arraysOfKeys)
+
+        // flatten the arrays of keys into a set of unique keys
+        const keys = new Set([].concat.apply([], arraysOfKeys));
+
+        // fill the merged object before returning
+        const merged = {};
+
+        keys.forEach(key => {
+
+        	// add a new entry
+            merged[ key ] = [];
+
+            arraysOfDependencies.forEach(dependencies => {
+
+        		// if the entry in the array of dependency exists, add it to the merged object
+                if (dependencies && dependencies[ key ]) {
+
+        			merged[ key ].push(...dependencies[ key ]);
+
+                }
+
+            });
+
+        });
+
+        return merged;
+
+    };
+
+    getArgumentData(arrayOfArguments) {
+
+        return arrayOfArguments.reduce(([ values, strings, dependencies ], arg) => {
+
+            return [
+                [ ...values, arg.value ],
+                [ ...strings, arg.string ],
+                [ ...dependencies, arg.dependencies ],
+            ];
+
+        }, [ [], [], [] ]);
+
+    };
+
+    calculate(data = {}) { // <? refactor this part
+                           // a) check arguments
+                           // b) update the Dock#argument
+                           // c) propagate
+
+        //_('[INTERPRETER] calculating', this.node.id, data);
+
         let args = this.dataIn.map(dock => dock.argument);
 
         if (args.every(arg => arg)) {
 
-            const [ values, strings ] = args.reduce(([ values, strings ], arg) => {
+            const [ values, strings, dependencies ] = this.getArgumentData(args);
 
-                return [ [...values, arg.value], [...strings, arg.string] ];
-
-            }, [ [], [] ]);
-
-            // _(this.node.id, values, strings)
+            // _('dependencies', dependencies)
 
             const result = this.func(...values);
             const stringResult = this.stringFunc(...strings);
+            const mergedDependencies = this.mergeDependencies(dependencies);
 
-            // _(this.node.id, result, stringResult)
+            // _('->', this.node.id, result, stringResult);
 
             if (this.dataOut.length) {
 
-                this.dataOut[0].argument = [ result, stringResult ];
+                this.dataOut[0].argument = [ result, stringResult, mergedDependencies ];
 
             }
 
@@ -45,6 +98,7 @@ class Interpreter {
             // _('some arguments are missing on block:', this.id)
             if (this.dataOut.length) {
 
+                // <? refactor this mess
                 this.dataOut[0].argument = undefined;
                 this.dataOut[0].label = '';
                 this.dataOut[0].labelElement.title = '';
@@ -55,29 +109,32 @@ class Interpreter {
 
         if (this.dataOut.length) {
 
-            tree.push(this.node.id);
-            this.propagate(tree);
+            // update the propagation tree
+            data.propagationTree = data.propagationTree || [];
+            data.propagationTree.push(this.node);
+
+            // propagate to the next node
+            this.propagate(data);
 
         }
 
     };
 
-    propagate(tree) {
+    propagate(data) {
 
         this.dataOut[0].links.forEach(link => {
 
             const targetNode = link.endDock.node;
-            const cycleDetected = ~tree.indexOf(targetNode.id);
+            const cycleDetected = ~data.propagationTree.indexOf(targetNode);
 
-            if (targetNode.executable) {
+            if (targetNode.isExecutable) {
 
-                // <? can we not start reading from this node and not start from the start?
-                _('[PROPAGATE] this is an executable')
-                Engine.compile();
+                _('[PROPAGATE] this is an executable', data.propagationTree)
+                Engine.compile(targetNode);
 
             } else if (!cycleDetected) {
 
-                targetNode.calculate(tree);
+                targetNode.calculate(data);
 
             }
 
@@ -89,76 +146,5 @@ class Interpreter {
 
 let variables = {
     a: { value: 1, string: 'a' },
-}
-
-class Engine {
-
-    static compile() {
-
-        // initialize the compilation, starting at the node roots
-        const streams = Engine.getStreams();
-        _(streams)
-        streams.forEach(stream => {
-
-            do {
-
-                stream.calculate();
-
-            } while (stream.next())
-
-        });
-
-    };
-
-    static getStreams() {
-
-        return Object.values(nodes)
-            .filter(node => node.hasNoAscendantCommand() && node.hasDescendantCommand())
-            .map(rootNode => new Stream(rootNode));
-
-    };
-
-}
-
-class Stream {
-
-    constructor(rootNode) {
-
-        Object.assign(this, {
-            root: rootNode,
-            stream: [],
-            current: rootNode,
-        });
-
-    }
-
-    get current() {
-
-        return this.stream[ this.stream.length-1 ];
-
-    }
-
-    set current(nextNode) {
-
-        this.stream.push(nextNode);
-
-    };
-
-    calculate() {
-
-        this.current.calculate(); // no propagation right?
-
-    };
-
-    next() {
-
-        const exeDocks = this.current.exeDocks.out;
-        if (exeDocks.length && exeDocks[0].links.length) {
-
-            return this.current = exeDocks[0].links[0].endDock.node;
-
-        }
-
-    }
-
+    b: { value: 'hello', string: 'b' }
 }
