@@ -7,11 +7,19 @@ new Node({ ...Library.node.sum, position: [ 200, 100 ] });
 new Node({ ...Library.node.sum, position: [ 350, 266 ] });
 
 
-new Node({ ...Library.node.product, position: [ 200, 450 ] });
+new Node({ ...Library.node.sum, position: [ 200, 450 ] });
 
-new Node({ ...Library.node.get, position: [ 180, 400 ] });
+new Node({
+    ...Library.node.get,
+    position: [ 180, 400 ],
+    getter: { variableName: 'a', scope: '' }
+});
 
-
+new Node({
+    ...Library.node.get,
+    position: [ 150, 250 ],
+    getter: { variableName: 'b', scope: '' }
+});
 
 new Node({ ...Library.node.set, position: [620, 320] });
 
@@ -32,4 +40,11 @@ new Node({
     func: (a,b)  =>  undefined,
     background: '{}',
     headerColor: 'orange'
+});
+
+
+wait(() => {
+    new Link(docks.n6dR0, docks.n4dL1);
+    new Link(docks.n7dR0, docks.n4dL0);
+    new Link(docks.n4dR0, docks.n1dL0);
 });
