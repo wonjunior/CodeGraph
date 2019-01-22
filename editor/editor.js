@@ -6,6 +6,7 @@ class Editor {
 
         const saved = {};
 
+        // <? use Object.values instead, keys are not needed
         saved.nodes = Object.entries(nodes).map(([ nodeId, node ]) => {
 
             return Node.destruct(node);
@@ -61,7 +62,7 @@ new State({
 
         ctrl_shift_spacebar: (event) => _('nope'),
 
-        delete: () => Selection.delete(), 
+        delete: () => Selection.delete(),
 
     }
 
