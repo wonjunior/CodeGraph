@@ -14,6 +14,16 @@ const Library  = {
             background: '+'
         },
 
+        log: {
+            label: 'Log',
+            meta: 'log print console.log',
+            description: 'Will log the input in the console',
+            dataDocks: { in: [ { label: 'input' } ], out: [] },
+            exeDocks: { in: [{}], out: [{}] },
+            func: (a) => console.log('[LOGGER]', a),
+            stringFunc: (a) => `console.log(${a})`
+        },
+
         ifelse: {
             label: 'If...Else',
             meta: 'if...else if condition branch',
@@ -65,9 +75,9 @@ const Library  = {
             hideBody: true,
             meta: 'retrieve get variable',
             description: 'This node gets the value of the specified variable',
-            dataDocks: { in: [], out: [ { label: 'variable', switchSection: true } ] },
+            dataDocks: { in: [], out: [ { label: '', switchSection: true } ] },
             exeDocks: { in: [], out: [] },
-            func: ()  =>  variables.a, // <? scope
+            func: function() { return variables[ this.variableName ] }, // this refers to getter <? scope
         },
         set: {
             label: 'Set',
