@@ -128,15 +128,7 @@ class Link {
 
             this.endDock.occupied = false;
 
-            if (this.endDock.node.executable) {
-
-                Engine.compile();
-
-            } else {
-
-                this.endDock.node.calculate();
-
-            }
+            Engine.update(this.endDock.node);
 
         }
 
@@ -168,16 +160,7 @@ class Link {
 
             links[ linkId ] = this;
 
-            if (this.endDock.node.executable) {
-
-                Engine.compile();
-
-            } else {
-
-                this.endDock.constant = false;
-                this.endDock.node.calculate();
-
-            }
+            Engine.update(this.endDock.node);
 
         }
 
