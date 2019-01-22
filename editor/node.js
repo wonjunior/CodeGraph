@@ -2,11 +2,12 @@
 
 class Node {
 
+    // <? can have a static property defined here ! static idOfLast
+
     /**
-     * Depending on the number of nodes already created, the function will create
-     * a new node identifier. This id includes the idPrefix specific to Node.
+     * Depending on the number of nodes already created, the function will crea-
+     * -te a new node identifier. This id includes the idPrefix specific to Node.
      * @returns {String} a unique node identifier
-     * @static
      */
     static createId() {
 
@@ -124,7 +125,7 @@ class Node {
     }
 
     /**
-     * Node instance constructor which takes in an node object and does:
+     * Node instance constructor which takes in an node object and:
      * 1) adds the properties to the Node's instance
      * 2) creates and renders the node's element on the canvas
      * 3) appends the instance to the node object
@@ -133,7 +134,7 @@ class Node {
      * (String), position (Number[2]), exeDocks (Object), dataDocks (Object) and func
      * (function). Optional parameters are background (String) and headerColor (String)
      */
-    constructor({ label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor }) {
+    constructor({ label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor, getter }) {
 
         // the following property assignments are happening first because the method
         // Node#createNode() needs these to create the HTML elements properly
@@ -147,6 +148,7 @@ class Node {
         })
 
         // creating the actual HTML node element
+        if (getter) this.getter = getter;
         this.createNode();
 
         // This second set of property assignments (styling) needs the HTML
@@ -166,7 +168,7 @@ class Node {
 
         // attach the interpreter system to the node's instance
         const interpreter = new Interpreter(this);
-        this.executable = !![...exeDocks.in, ...exeDocks.out].length;
+        this.isExecutable = !![...exeDocks.in, ...exeDocks.out].length;
         this.calculate = interpreter.calculate.bind(interpreter);
         // <? could have a executor interpreter too for executable nodes, or
         // just have the interpreter logic in executable (=> true by nature)
@@ -194,7 +196,7 @@ class Node {
 
                 dockDef[ propertyName ][ direction ].forEach(({ label, editable, type, switchSection }, i) => {
 
-                    // default position for the dock is determined by is type but the position
+                    // default position of the dock is determined by its type but the position
                     // can be switched by setting switchSection to true. In this case the dock
                     // will take the other position. Available positions are in body and head
                     const sectionName = (switchSection ? otherBlockName : blockName) + 'Section';
@@ -293,30 +295,22 @@ class Node {
      */
     remove() {
 
+        // remove all the attached links
         this.docks.forEach(dock => {
 
             dock.links.forEach(link => {
 
-                link.remove()
+                link.remove();
 
             });
 
         });
 
+        // removes the node instance from the nodes object
         delete nodes[ this.id ];
+
+        // remove the HTML element from the DOM
         this.nodeElement.remove();
-
-    }
-
-    hasNoAscendantCommand() {
-
-        return this.exeDocks.in.some(exeDock => !exeDock.links.length);
-
-    };
-
-    hasDescendantCommand() {
-
-        return this.exeDocks.out.some(exeDock => exeDock.links.length);
 
     };
 
