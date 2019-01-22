@@ -1,7 +1,11 @@
+/* <? not needed ? */
 .header > .exeblock {
     position: relative;
     width: 100%;
     bottom: calc(50% - 14px);
+}
+
+.header > .exeblock {
     pointer-events: none;
 }
 
