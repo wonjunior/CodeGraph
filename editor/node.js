@@ -2,7 +2,8 @@
 
 class Node {
 
-    // <? can have a static property defined here ! static idOfLast
+    static idOfLast = 1;
+    static idPrefix = 'n';
 
     /**
      * Depending on the number of nodes already created, the function will crea-
@@ -11,7 +12,7 @@ class Node {
      */
     static createId() {
 
-        return Node.idPrefix + (Node.idOfLast = Node.idOfLast ? Node.idOfLast + 1 : 1);
+        return Node.idPrefix + Node.idOfLast++;
 
     };
 
@@ -136,8 +137,8 @@ class Node {
      */
     constructor({ label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor, getter }) {
 
-        // the following property assignments are happening first because the method
-        // Node#createNode() needs these to create the HTML elements properly
+        // the following property assignments are happening first because
+        // Node#createNode needs them to create the HTML elements properly
         Object.assign(this, {
             id: Node.createId(),
             background,
@@ -145,7 +146,7 @@ class Node {
             hideBody: !!hideBody,
             func,
             stringFunc,
-        })
+        });
 
         // creating the actual HTML node element
         if (getter) this.getter = getter;
@@ -339,10 +340,10 @@ class Node {
 
     };
 
-}; let nodes = {};
+}; const nodes = {};
 
-Object.assign(Node, {
+/*Object.assign(Node, {
 
     idPrefix: 'n',
 
-});
+});*/
