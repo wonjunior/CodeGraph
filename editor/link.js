@@ -73,6 +73,7 @@ class Link {
         this.endDock.links = []; // reset the old endDock
         this.endDock.occupied = false;
 
+        Engine.update(this.endDock.node);
         delete this.endDock;
 
         return this;
@@ -128,8 +129,6 @@ class Link {
 
             this.endDock.occupied = false;
 
-            Engine.update(this.endDock.node);
-
         }
 
     };
@@ -160,6 +159,7 @@ class Link {
 
             links[ linkId ] = this;
 
+            _('pin')
             Engine.update(this.endDock.node);
 
         }
