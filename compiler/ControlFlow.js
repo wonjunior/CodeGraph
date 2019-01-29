@@ -2,23 +2,22 @@
 
 class ControlFlow {
 
-    static update(endNode) {
+    static update(node) {
 
-        if (endNode instanceof Executable) {
-
-            ControlFlow.compile(endNode);
-
-        } else {
-
-            endNode.calculate();
-
-        }
+        node instanceof Executable ? node.execute() : node.calculate();
 
     };
 
-    static compile(node) {
+    constructor(node) {
 
-        const stream = new Stream(node);
+        this.node = node;
+        this.exeOut = node.exeDocks.out;
+
+    };
+
+    execute() {
+
+        const stream = new Stream(this.node.root);
 
         do {
 
@@ -32,9 +31,9 @@ class ControlFlow {
 
 class Stream {
 
-    constructor(currentNode) {
+    constructor(root) {
 
-        this.nodes = [ currentNode.root ];
+        this.nodes = [ root ];
 
     }
 
@@ -52,7 +51,7 @@ class Stream {
 
     calculate() {
 
-        this.current.calculate(); // no propagation, right?
+        this.current.calculate();
 
     };
 
