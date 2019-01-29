@@ -135,7 +135,13 @@ class Node {
      * (String), position (Number[2]), exeDocks (Object), dataDocks (Object) and func
      * (function). Optional parameters are background (String) and headerColor (String)
      */
-    constructor({ label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor, getter }) {
+    constructor(parameters) {
+
+        // destructure the parameters into seperate variable
+        const { label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor, getter } = parameters;
+
+        // if it's an Node of type executable but not yet an instance of Executable
+        if (!(this instanceof Executable) && [...exeDocks.in, ...exeDocks.out].length) return new Executable(parameters);
 
         // the following property assignments are happening first because
         // Node#createNode needs them to create the HTML elements properly
@@ -149,7 +155,7 @@ class Node {
         });
 
         // creating the actual HTML node element
-        if (getter) this.getter = getter;
+        if (getter) this.getter = getter;                                       // <? getter
         this.createNode();
 
         // This second set of property assignments (styling) needs the HTML
@@ -169,7 +175,6 @@ class Node {
 
         // attach the interpreter system to the node's instance
         const interpreter = new Interpreter(this);
-        this.isExecutable = !![...exeDocks.in, ...exeDocks.out].length;
         this.calculate = interpreter.calculate.bind(interpreter);
         // <? could have a executor interpreter too for executable nodes, or
         // just have the interpreter logic in executable (=> true by nature)
