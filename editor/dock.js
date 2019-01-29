@@ -240,7 +240,7 @@ class Dock {
         }
 
         this.argument = this.adjustInput(constant);
-        this.node.calculate();
+        ControlFlow.update(this.node);
 
     };
 
