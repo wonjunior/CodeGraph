@@ -173,11 +173,9 @@ class Node {
         // accessed with the unique node identifier provided previously
         nodes[ this.id ] = this;
 
-        // attach the interpreter system to the node's instance
+        // attach the process component to the node's instance
         const interpreter = new Process(this);
         this.calculate = interpreter.calculate.bind(interpreter);
-        // <? could have a executor interpreter too for executable nodes, or
-        // just have the interpreter logic in executable (=> true by nature)
 
     };
 
@@ -346,9 +344,3 @@ class Node {
     };
 
 }; const nodes = {};
-
-/*Object.assign(Node, {
-
-    idPrefix: 'n',
-
-});*/
