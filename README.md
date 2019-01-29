@@ -1,8 +1,8 @@
 
-# CodeGraph [![GitHub version](https://img.shields.io/badge/version-early_v0.5-brightgreen.svg)](https://badge.fury.io/gh/WonJunior%2FCodeGraph)[](https://reposs.herokuapp.com/?path=WonJunior/CodeGraph&color=ff69b4) [![GitHub issues open](https://img.shields.io/github/issues/WonJunior/CodeGraph.svg?colorB=0576b7)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# CodeGraph [![GitHub version](https://img.shields.io/badge/version-early_v0.5-brightgreen.svg)](https://badge.fury.io/gh/WonJunior%2FCodeGraph)[](https://reposs.herokuapp.com/?path=WonJunior/CodeGraph&color=ff69b4) [![GitHub issues open](https://img.shields.io/github/issues/WonJunior/CodeGraph.svg?colorB=0576b7)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) (updated on Jan. 29th)
 
 
-Node based programming editor that allows you to create code without actually writing code.
+Node based programming editor that allows you to create code with a visual interface.
 
 ## Preview:
 
@@ -10,8 +10,7 @@ Node based programming editor that allows you to create code without actually wr
 
 ### Node finder![alt text](https://image.ibb.co/bZtyc9/finder.png)
 
-### Live feedback
-![alt text](https://image.ibb.co/ezvpjp/action.png)
+### Live feedback![alt text](https://image.ibb.co/ezvpjp/action.png)
 
 -----
 
@@ -19,15 +18,15 @@ Node based programming editor that allows you to create code without actually wr
 
 **UI and behavior**
 - [x] Basic styling (nodes, docks and links)
-- [x] Editor navigation system ($\infty$ pan, drag and zoom)
 - [x] Link handling (linking, snapping, unlinking)
 - [x] Finder bar to add new nodes to the workplace
 - [x] Event handler taking care of key and mouse input
+- [ ] Editor navigation system (finite pan, drag and zoom)
 
-**Engine**
+**Interpreter**
 - [x] Live direct graph interpreter (updates on edit)
-- [ ] Variable accessible and editable, with scope
-- [ ] Advanced structures : loops and conditions
+- [ ] Variable GET and SET behavior with lexical scope support
+- [ ] Advanced control flow structures : loops and conditions
 
 
 ---
@@ -38,6 +37,6 @@ Node based programming editor that allows you to create code without actually wr
 - [ ] Editor user interface : console, variable viewer, file manager, text editor
 - [ ] Jumping from text editor to node editor when updating
 - [ ] Efficient and reliable error logging and cues
-- [ ] Whole project covered with test cases
+- [ ] Implementation of unit tests
 - [ ] Graph structure and interpretation API
-- [ ] Desktop integration with Electron
+- [ ] Integration in existing code editor (VSC or Atom) as plugin
