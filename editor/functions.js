@@ -3,10 +3,10 @@
   */
 
 // console.log() handy shortcut
-let _ = (...a) => console.log(...a);
+const _ = (...a) => console.log(...a);
 
 // determine if a string contains either no characters or only spaces
-let isEmpty = str => !str.replace(/\s/g, '').length;
+const isEmpty = str => !str.replace(/\s/g, '').length;
 
 // adds the given function to the JS queue of execution
-let wait = fn => setTimeout(() => fn(), 0);
+const wait = fn => setTimeout(() => fn(), 0);
