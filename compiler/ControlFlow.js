@@ -1,10 +1,12 @@
-class Engine {
+'use strict'
+
+class ControlFlow {
 
     static update(endNode) {
 
         if (endNode instanceof Executable) {
 
-            Engine.compile(endNode);
+            ControlFlow.compile(endNode);
 
         } else {
 

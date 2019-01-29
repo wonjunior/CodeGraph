@@ -174,7 +174,7 @@ class Node {
         nodes[ this.id ] = this;
 
         // attach the interpreter system to the node's instance
-        const interpreter = new Interpreter(this);
+        const interpreter = new Process(this);
         this.calculate = interpreter.calculate.bind(interpreter);
         // <? could have a executor interpreter too for executable nodes, or
         // just have the interpreter logic in executable (=> true by nature)

@@ -1,6 +1,6 @@
 'use strict'
 
-class Interpreter {
+class Process {
 
     constructor({ dataDocks, exeDocks, func, stringFunc }) {
 
@@ -130,7 +130,7 @@ class Interpreter {
             if (targetNode instanceof Executable) {
 
                 _('[PROPAGATE] this is an executable', targetNode, data.propagationTree)
-                Engine.compile(targetNode);
+                ControlFlow.compile(targetNode);
 
             } else if (!cycleDetected) {
 
