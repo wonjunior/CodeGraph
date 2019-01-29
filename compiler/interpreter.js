@@ -127,9 +127,9 @@ class Interpreter {
             const targetNode = link.endDock.node;
             const cycleDetected = ~data.propagationTree.indexOf(targetNode);
 
-            if (targetNode.isExecutable) {
+            if (targetNode instanceof Executable) {
 
-                _('[PROPAGATE] this is an executable', data.propagationTree)
+                _('[PROPAGATE] this is an executable', targetNode, data.propagationTree)
                 Engine.compile(targetNode);
 
             } else if (!cycleDetected) {
