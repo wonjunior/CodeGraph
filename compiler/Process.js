@@ -2,14 +2,15 @@
 
 class Process {
 
-    constructor({ dataDocks, exeDocks, func, stringFunc }) {
+    constructor(node) {
 
+        const { dataDocks, exeDocks, func, stringFunc } = node;
         Object.assign(this, {
-            node: arguments[0],
-            dataIn: dataDocks.in,
-            dataOut: dataDocks.out,
+            node,
             func,
             stringFunc,
+            dataIn: dataDocks.in,
+            dataOut: dataDocks.out,
         });
 
     };
@@ -81,8 +82,8 @@ class Process {
 
             // _('dependencies', dependencies)
 
-            const result = this.func(...values);
-            const stringResult = this.stringFunc(...strings);
+            const result = this.func.bind(this.node)(...values);
+            const stringResult = this.stringFunc.bind(this.node)(...strings);
             const mergedDependencies = this.mergeDependencies(dependencies);
 
             // _('->', this.node.id, result, stringResult);
@@ -111,7 +112,8 @@ class Process {
 
             // update the propagation tree
             data.propagationTree = data.propagationTree || [];
-            data.propagationTree.push(this.node);
+            data.propagationTree.push(this.node); //Node.all[this.id]
+            // <? because we removed Process#node
 
             // propagate to the next node
             this.propagate(data);
@@ -127,10 +129,11 @@ class Process {
             const targetNode = link.endDock.node;
             const cycleDetected = ~data.propagationTree.indexOf(targetNode);
 
+            // same code as ControlFlow.update ! (check for cycle though)
             if (targetNode instanceof Executable) {
 
                 _('[PROPAGATE] this is an executable', targetNode, data.propagationTree)
-                ControlFlow.compile(targetNode);
+                targetNode.execute();
 
             } else if (!cycleDetected) {
 
