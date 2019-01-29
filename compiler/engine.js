@@ -2,7 +2,7 @@ class Engine {
 
     static update(endNode) {
 
-        if (endNode.isExecutable) {
+        if (endNode instanceof Executable) {
 
             Engine.compile(endNode);
 
@@ -15,10 +15,6 @@ class Engine {
     };
 
     static compile(node) {
-
-        // initialize the compilation, starting at the node root
-        // if in a loop it will be the first of the propagation tree
-        // else it is `node`
 
         const stream = new Stream(node);
 
@@ -34,25 +30,21 @@ class Engine {
 
 class Stream {
 
-    constructor(rootNode) {
+    constructor(currentNode) {
 
-        Object.assign(this, {
-            root: rootNode,
-            stream: [],
-            current: rootNode,
-        });
+        this.nodes = [ currentNode.root ];
 
     }
 
     get current() {
 
-        return this.stream[ this.stream.length-1 ];
+        return this.nodes[ this.nodes.length - 1 ];
 
     }
 
     set current(nextNode) {
 
-        this.stream.push(nextNode);
+        this.nodes.push(nextNode);
 
     };
 
@@ -71,6 +63,6 @@ class Stream {
 
         }
 
-    }
+    };
 
 }
