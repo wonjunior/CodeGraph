@@ -138,7 +138,7 @@ class Node {
     constructor(parameters) {
 
         // destructure the parameters into seperate variable
-        const { label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor, getter } = parameters;
+        const { label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor, getter, setter } = parameters;
 
         // if it's an Node of type executable but not yet an instance of Executable
         if (!(this instanceof Executable) && [...exeDocks.in, ...exeDocks.out].length) return new Executable(parameters);
@@ -154,8 +154,13 @@ class Node {
             stringFunc,
         });
 
+        // <? getter is relative to a dock, NOT a node,
+        // e.g. node `for` is not a getter but has a getter dock `i`
+        if (getter) this.getter = getter;
+        if (setter) this.setter = setter;
+
+
         // creating the actual HTML node element
-        if (getter) this.getter = getter;                                       // <? getter
         this.createNode();
 
         // This second set of property assignments (styling) needs the HTML
@@ -217,7 +222,9 @@ class Node {
                         blockElement: this[ sectionName ][ side ],   // the element where the dock will be appended
                     });
 
+                    // <? is this really necessary, can we not save exeDocks et dataDocks in ControlFlow# and Process#
                     this[ propertyName ][ direction ].push(newDock); // append the dock to the side-type specific array
+
                     this.docks.push(newDock);                        // append the dock to the array containing all node's docks
 
                 });
