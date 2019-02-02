@@ -17,39 +17,24 @@ class Process {
 
     mergeDependencies(arraysOfDependencies) {
 
-        // _('init: ', arraysOfDependencies)
+        // loop through each object of dependencies and return the merged object
+    	return arraysOfDependencies.reduce((merged, dependencies) => {
 
-        // get an array of arrays of keys
-        const arraysOfKeys = arraysOfDependencies
-        	.map(dependencies => Object.keys(dependencies || []));
+            // for each variable, add its dependencies to the set of dependencies
+    		Object.entries(dependencies).forEach(([variableName, nodes]) => {
 
-        // _('arraysOfkeys: ', arraysOfKeys)
+                // merge the set of dependencies with the array of dependencies
+    			const set = new Set([...(merged[ variableName ] || []), ...nodes]);
 
-        // flatten the arrays of keys into a set of unique keys
-        const keys = new Set([].concat.apply([], arraysOfKeys));
+                // if the temporary merged set it not empty add it to the merged object
+    			if (set.size) merged[ variableName ] = set;
 
-        // fill the merged object before returning
-        const merged = {};
+    		});
 
-        keys.forEach(key => {
+            // return the merged object as accumulator
+            return merged;
 
-        	// add a new entry
-            merged[ key ] = [];
-
-            arraysOfDependencies.forEach(dependencies => {
-
-        		// if the entry in the array of dependency exists, add it to the merged object
-                if (dependencies && dependencies[ key ]) {
-
-        			merged[ key ].push(...dependencies[ key ]);
-
-                }
-
-            });
-
-        });
-
-        return merged;
+    	}, {});
 
     };
 
@@ -133,28 +118,13 @@ class Process {
 
         }
 
+        return {}
+
     };
 
     propagate(data) {
 
-        this.dataOut[0].links.forEach(link => {
-
-            const targetNode = link.endDock.node;
-            const cycleDetected = ~data.propagationTree.indexOf(targetNode);
-
-            // same code as ControlFlow.update ! (check for cycle though)
-            if (targetNode instanceof Executable) {
-
-                _('[PROPAGATE] this is an executable', targetNode, data.propagationTree)
-                targetNode.execute();
-
-            } else if (!cycleDetected) {
-
-                targetNode.calculate(data);
-
-            }
-
-        });
+        this.dataOut[0].links.forEach(link => ControlFlow.update(link.endDock.node));
 
     };
 
