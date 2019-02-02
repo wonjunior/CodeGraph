@@ -2,6 +2,10 @@
 
 class Link {
 
+    static separator = '-';
+    static color = { data: 'green', exe: 'blue' };
+    static width = { data: 3, exe: 4 };
+
     get id() {
 
         return (this.linkElement) ? this.linkElement.id : undefined;
@@ -160,7 +164,7 @@ class Link {
 
             links[ linkId ] = this;
 
-            ControlFlow.update(this.endDock.node);
+            wait(() => ControlFlow.update(this.endDock.node));
 
         }
 
@@ -172,21 +176,4 @@ class Link {
 
     };
 
-}; let links = {};
-
-
-Object.assign(Link, {
-
-    separator: '-',
-
-    color: {
-        data: 'green',
-        exe: 'blue'
-    },
-
-    width: {
-        data: 3,
-        exe: 4
-    }
-
-});
+}; const links = {};
