@@ -86,13 +86,26 @@ class Process {
             const stringResult = this.stringFunc.bind(this.node)(...strings);
             const mergedDependencies = this.mergeDependencies(dependencies);
 
+            if (this.node instanceof Executable) {
+
+                _(`setting dependencies for ${this.node.id}`);
+                this.node.dependencies = mergedDependencies;
+
+            }
+
             // _('->', this.node.id, result, stringResult);
 
             if (this.dataOut.length) {
 
                 this.dataOut[0].argument = [ result, stringResult, mergedDependencies ];
 
+                // quick fix, added:
+                data.propagationTree = data.propagationTree || [];
+                data.propagationTree.push(this.node);
+                this.propagate(data);
+
             }
+            return {result, stringResult, dependencies:mergedDependencies};
 
         } else {
 
