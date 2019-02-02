@@ -2,6 +2,9 @@
 
 class Executable extends Node {
 
+    // scope = {};
+    dependencies = {};
+
     constructor(parameters) {
 
         super(parameters);
@@ -18,8 +21,8 @@ class Executable extends Node {
 
         return this.exeDocks.in[0].links[0].startDock.node.root; // <? check if it exists ! two checks!
 
-    }
+    };
 
-    set root(newRoot) {};
+    set root(e) {};
 
 }
