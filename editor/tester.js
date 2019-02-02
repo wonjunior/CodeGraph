@@ -12,18 +12,22 @@ new Node({ ...Library.node.sum, position: [ 200, 450 ] });
 new Node({
     ...Library.node.get,
     position: [ 180, 400 ],
-    getter: { variableName: 'a', scope: '' }
+    getter: { variableName: 'a' }
 });
 
 new Node({
     ...Library.node.get,
     position: [ 150, 250 ],
-    getter: { variableName: 'b', scope: '' }
+    getter: { variableName: 'b' }
 });
 
-new Node({ ...Library.node.set, position: [620, 320] });
+new Node({
+    ...Library.node.set,
+    position: [700, 320],
+    setter: { variableName: 'a' }
+});
 
-new Node({ ...Library.node.sub, position: [830, 300] });
+new Node({ ...Library.node.sub, position: [950, 300] });
 
 new Node({ ...Library.node.abs, position: [780, 500] });
 
@@ -43,8 +47,48 @@ new Node({
 });
 
 
-wait(() => {
-    new Link(docks.n6dR0, docks.n4dL1);
-    new Link(docks.n7dR0, docks.n4dL0);
-    new Link(docks.n4dR0, docks.n1dL0);
-});
+(function() {
+
+    const events = [
+        [ docks.n6dR0, docks.n4dL1 ],
+        [ docks.n7dR0, docks.n4dL0 ],
+        [ docks.n4dR0, docks.n1dL0 ],
+        [ docks.n1eR0, docks.n8eL0 ],
+        [ docks.n4dR0, docks.n8dL0 ],
+        [ docks.n6dR0, docks.n2dL0 ],
+    ];
+    let i = 0;
+
+    const removeAll = () => {
+        document.querySelector('#step').remove();
+        document.querySelector('#all').remove();
+    }
+
+    document.querySelector('#step').addEventListener('mousedown', function() {
+
+        if (i >= events.length) {
+            removeAll();
+            return;
+        }
+
+        new Link(events[i][0], events[i][1]);
+
+        i++;
+
+        _('--------------------------')
+
+    });
+
+    document.querySelector('#all').addEventListener('mousedown', function() {
+
+        removeAll();
+
+        new Link(docks.n6dR0, docks.n4dL1);
+        new Link(docks.n7dR0, docks.n4dL0);
+        new Link(docks.n4dR0, docks.n1dL0);
+        new Link(docks.n1eR0, docks.n8eL0);
+        new Link(docks.n4dR0, docks.n8dL0);
+
+    });
+
+})()
