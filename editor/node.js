@@ -141,7 +141,11 @@ class Node {
         const { label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor, getter, setter } = parameters;
 
         // if it's an Node of type executable but not yet an instance of Executable
-        if (!(this instanceof Executable) && [...exeDocks.in, ...exeDocks.out].length) return new Executable(parameters);
+        if (!(this instanceof Executable) && [...exeDocks.in, ...exeDocks.out].length) {
+
+            return new Executable(parameters);
+
+        }
 
         // the following property assignments are happening first because
         // Node#createNode needs them to create the HTML elements properly
@@ -167,7 +171,7 @@ class Node {
         // elements to be created because they directly take effect on them
         Object.assign(this, {
             headerColor,
-            label,
+            label: this.id,                                 // <? debugg
             position: position ? position : [0, 0],
         });
 
@@ -200,8 +204,8 @@ class Node {
         Dock.sideAttributes.forEach(({ direction, side, isRight, sidePrefix }) => {
         //                            'in'/'out', 'left'/'right', F/T, 'L'/'R'
 
-            Dock.typeAttributes.forEach(({ isData, propertyName, typePrefix, blockName, otherBlockName }) => {
-            //                            true/false, 'exeDocks'/'dataDocks', 'e'/'d', 'head'/'body'
+            [ DataDock.typeAttributes, ExeDock.typeAttributes ].forEach(({ isData, propertyName, typePrefix, blockName, otherBlockName }) => {
+            //                                                             true/false, 'exeDocks'/'dataDocks', 'e'/'d', 'head'/'body'
 
                 dockDef[ propertyName ][ direction ].forEach(({ label, editable, type, switchSection }, i) => {
 
@@ -210,7 +214,7 @@ class Node {
                     // will take the other position. Available positions are in body and head
                     const sectionName = (switchSection ? otherBlockName : blockName) + 'Section';
 
-                    const newDock = new Dock({
+                    const newDock = Dock.instanciate({
                         id: this.id + typePrefix + sidePrefix + i,
                         label,
                         isRight,
