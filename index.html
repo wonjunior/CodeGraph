@@ -65,7 +65,17 @@
         </div>
     </template>
 
-    <template id="dataDock">
+    <template id="dock">
+        <div class="dock-container" id="{dock.id}">
+            <div class="dock"></div>
+            <div class="snap-dock"></div>
+            <div class="param-container">
+                <div class="param-label"></div>
+            </div>
+        </div>
+    </template>
+
+    <!--<template id="dataDock">
         <div class="data" id="{dock.id}">
             <div class="dock"></div>
             <div class="snapDock"></div>
@@ -79,8 +89,11 @@
         <div class="exe" id="{dock.id}">
           <div class="dock"></div>
           <div class="snapDock"></div>
+          <div class="paramContainer">
+              <div class="paramName"></div>
+          </div>
         </div>
-    </template>
+    </template>-->
 
     <template id="link">
         <svg>
@@ -120,7 +133,14 @@
     <script src="compiler/ControlFlow.js"></script>
     <script src="compiler/Stream.js"></script>
 
-    <script src="editor/dock.js"></script>
+    <script src="editor/Dock.js"></script>
+    <script src="editor/DataDock.js"></script>
+    <script src="editor/Getter.js"></script>
+    <script src="editor/Editable.js"></script>
+
+    <script src="editor/ExeDock.js"></script>
+
+
     <script src="editor/canvas.js"></script>
     <script src="editor/draggable.js"></script>
 
