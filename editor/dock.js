@@ -35,10 +35,36 @@ class Dock {
 
     };
 
-    getSetArgument() {
+    prepareElement(id, isRight) {
+
+        let template = document.querySelector('template#dock');
+        template = document.importNode(template.content, true);
+
+        const element = {
+            dock: template.querySelector('.dock-container'),
+            pin: template.querySelector('.dock'),
+            snap: template.querySelector('.snap-dock'),
+            param: template.querySelector('.param-container'),
+            label: template.querySelector('.param-label'),
+        }
+
+        // add the dock's type and side to the list of classes
+        element.dock.classList.add(
+            this instanceof DataDock ? 'data' : 'exe',
+            isRight ? 'right' : 'left'
+        );
+
+        element.dock.id = id;
+        element.snap.ref = id;
+
+        return element;
+
+    }
+
+    defineArgumentGetSet() {
 
         var _argument;
-        var _dependencies = this.node.getter && { [this.node.getter.variableName]: [this.node] };
+        var _dependencies = this.node.getter && { [this.node.getter.variableName]: [[this.node]] };
 
         Object.defineProperties(this, {
             "argument": {
