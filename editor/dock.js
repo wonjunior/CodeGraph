@@ -2,27 +2,62 @@
 
 class Dock {
 
+    static sideAttributes = [
+        { direction: 'in', side: 'left', isRight: false, sidePrefix: 'L' },
+        { direction: 'out', side: 'right', isRight: true, sidePrefix: 'R' }
+    ];
+
+    static instanciate(parameters) {
+
+        if (!parameters.isData) return new ExeDock(parameters);
+
+        if (parameters.getter) return new Getter(parameters);
+
+        if (parameters.editable) return new Editable(parameters);
+
+        return new DataDock(parameters);
+
+    }
+
+    constructor({ id, label, isRight, isData, editable, type, node, blockElement, switchSection, getter }) {
+
+        Object.assign(this, {
+            id,
+            isRight,
+            node,
+            isData,
+            switchSection,
+            element: Object.assign(
+                {block:blockElement},
+                this.prepareElement(id, isRight)
+            ),
+            links: [],
+            occupied: false,
+        });
+
+        this.defineArgumentGetSet();
+
+    };
+
     set constant(bool) {
 
         // this.inputElement.classList[ this.inputElement.value != '' && this.occupied ? 'add' : 'remove' ]('occupied');
 
-        this.dockElement.classList[ bool ? 'add' : 'remove' ]('constant');
+        this.element.dock.classList[ bool ? 'add' : 'remove' ]('constant');
 
     };
 
     get label() {
 
-        return (this.labelElement) ? this.labelElement.textContent : "";
+        return (this.element.label) ? this.element.label.textContent : "";
 
     };
 
     set label(newLabel) {
 
-        if (this.labelElement) {
+        if (!this.element || !this.element.label) return;
 
-            this.labelElement.textContent = newLabel;
-
-        }
+        this.element.label.textContent = newLabel;
 
     };
 
@@ -118,7 +153,7 @@ class Dock {
                         if (this.isRight) {
 
                             this.label = value;
-                            this.labelElement.title = string;
+                            this.element.label.title = string;
 
                         }
 
@@ -133,115 +168,16 @@ class Dock {
 
     };
 
-    constructor({ id, label, isRight, isData, editable, type, node, blockElement, switchSection }) {
-
-        Object.assign(this, {
-            id,
-            isRight,
-            node,
-            isData,
-            blockElement,
-            editable,
-            links: [],
-            switchSection,
-        });
-
-        this.getSetArgument();
-
-        docks[ this.id ] = this.isData
-            ? this.createDataDock(editable, type, label)
-            : this.createExeDock(label);
-
-        this.occupied = false;
-
-        setTimeout(() => {
-
-            this.offset = this.calculateRelativePos();
-
-        }, 0);
-
-    };
-
     calculateRelativePos() {
 
         const nodePos = this.node.nodeElement.getBoundingClientRect();
-        const dockPos = this.pinElement.getBoundingClientRect();
+        const dockPos = this.element.pin.getBoundingClientRect();
 
-        const dataName = this.isData ? 'data' : 'exe';
+        const offset = this.isData ? DataDock.offset : ExeDock.offset;
         return [
-            (dockPos.x - nodePos.x) / Canvas.zoomLevel + Dock.offset[ dataName ],
-            (dockPos.y - nodePos.y) / Canvas.zoomLevel + Dock.offset[ dataName ]
+            (dockPos.x - nodePos.x) / Canvas.zoomLevel + offset,
+            (dockPos.y - nodePos.y) / Canvas.zoomLevel + offset
         ];
-
-    };
-
-    createExeDock(label) {
-
-        let template = document.querySelector('template#exeDock');
-        template = document.importNode(template.content, true);
-
-        const side = this.isRight ? 'right' : 'left';
-
-        Object.assign(this, {
-            dockElement: template.querySelector('.exe'),
-            pinElement: template.querySelector('.exe > .dock'),
-            snapElement: template.querySelector('.exe > .snapDock')
-        });
-
-        this.dockElement.classList.add(side);
-        this.dockElement.id = this.id;
-
-        this.snapElement.ref = this.id;
-
-        this.blockElement.appendChild(this.dockElement);
-
-        this.label = label || '';
-
-        return this;
-
-    };
-
-    createDataDock(editable, type, label) { // <? do we need .exeblock and .datablock
-
-        this.type = type;
-
-        let template = document.querySelector('template#dataDock');
-        template = document.importNode(template.content, true);
-
-        const side = this.isRight ? 'right' : 'left';
-
-        Object.assign(this, {
-            dockElement: template.querySelector('.data'),
-            pinElement: template.querySelector('.data > .dock'),
-            snapElement: template.querySelector('.data > .snapDock'),
-            paramElement: template.querySelector('.data > .paramContainer'),
-            labelElement: template.querySelector('.paramContainer > .paramName'),
-        });
-
-        if (editable) {
-
-            this.inputElement = template.querySelector('.paramContainer > input');
-            this.inputElement.ref = this.id;
-
-            this.inputElement.type = this.editable == 'number' ? 'number' : 'text';
-
-            this.inputElement.placeholder = label || '';
-
-        } else {
-
-            this.label = label
-            template.querySelector('.paramContainer > input').remove();
-
-        }
-
-        this.dockElement.classList.add(side);
-        this.dockElement.id = this.id;
-
-        this.snapElement.ref = this.id;
-
-        this.blockElement.appendChild(this.dockElement);
-
-        return this;
 
     };
 
@@ -292,17 +228,6 @@ class Dock {
 
     };
 
-    /*inputConstantEnd(constant) {
-
-        _('inputConstantEnd')
-        if (!constant.length) {
-
-            this.constant = false;
-
-        }
-
-    };*/
-
     static destruct(docks) {
 
         return {
@@ -312,24 +237,4 @@ class Dock {
 
     };
 
-} let docks = {};
-
-
-Object.assign(Dock, {
-
-    sideAttributes: [
-        { direction: 'in', side: 'left', isRight: false, sidePrefix: 'L' },
-        { direction: 'out', side: 'right', isRight: true, sidePrefix: 'R' }
-    ],
-
-    typeAttributes: [
-        { isData: false, propertyName: 'exeDocks', typePrefix: 'e', blockName: 'head', otherBlockName: 'body' },
-        { isData: true, propertyName: 'dataDocks', typePrefix: 'd', blockName: 'body', otherBlockName: 'head' }
-    ],
-
-    offset: {
-        data: 7,
-        exe: 10
-    }
-
-});
+} const docks = {};
