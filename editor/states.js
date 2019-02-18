@@ -38,7 +38,7 @@ new State({
 
             },
 
-            snapDock: () => {
+            'snap-dock': () => {
 
                 const dockObject = docks[ event.target.ref ];
                 new Linkable(event, dockObject);
