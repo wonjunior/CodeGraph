@@ -35,7 +35,7 @@ class Linkable {
     linking(e) {
 
         // mousemove on .endDock
-        if (e.target.classList.contains('snapDock')) {
+        if (e.target.classList.contains('snap-dock')) {
 
             // mouseenter .endDock
             if (!this.snapped) {

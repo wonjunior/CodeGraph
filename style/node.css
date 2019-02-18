@@ -10,7 +10,7 @@
 }
 
 .dock,
-.snapDock {
+.snap-dock {
     pointer-events: visible;
     background-color: #c06;
     height: 14px;
@@ -53,7 +53,7 @@ input.occupied {
     transform: rotate(0deg) !important;
 }*/
 
-.snapDock {
+.snap-dock {
     z-index: 3;
     width: 30px;
     height: 30px;
@@ -147,7 +147,7 @@ input.occupied {
     pointer-events: none;
 }
 
-.paramContainer {
+.param-container {
     width:  100%;
     color: #030303;
     top: 50%;
@@ -159,20 +159,20 @@ input.occupied {
     box-sizing:  border-box;
     /* pointer-events: visible; */
 }
-.paramName {
+.param-label {
     box-sizing:  border-box;
     width: 100%;
     /* height: 100%; */
     display: inline-block;
 }
-.left > .paramContainer > .paramName {
+.left > .param-container > .param-label {
     text-align: center;
     margin-left: 9px;
     margin-right: 4px;
     width: initial;
     max-width: calc(50% - 13px);
 }
-.right > .paramContainer > .paramName {
+.right > .param-container > .param-label {
     text-align: right;
     padding-right: 11px;
 }
@@ -188,7 +188,7 @@ input.varInput::placeholder {
     font-style: italic;
 }
 
-.left > .paramContainer > input {
+.left > .param-container > input {
     margin-left: 8px;
     width: 50%;
     box-sizing: border-box;
@@ -198,13 +198,13 @@ input.varInput::placeholder {
     /* background-color: rgb(81, 81, 81); */
     pointer-events: visible;
 }
-.right > .paramContainer > input {
+.right > .param-container > input {
     margin-right: 8px;
     width: calc(100% - 8px);
     box-sizing: border-box;
     text-align: left;
 }
-.paramContainer > input {
+.param-container > input {
     text-align: center;
     line-height: 25px;
     font-size: 14px;
@@ -213,19 +213,19 @@ input.varInput::placeholder {
     border-radius: 0px;
     background-color: rgba(111, 111, 111, 0.02);
 }
-.paramContainer > input {
+.param-container > input {
     outline: 2px auto rgba(30, 29, 29, 0.52);
 }
-.paramContainer > input:hover {
+.param-container > input:hover {
     outline: #4f70a7 auto 5px;
 }
-.paramContainer > input:focus {
+.param-container > input:focus {
     outline: #3d5e96 auto 5px;
 }
-.paramContainer > input::selection {
+.param-container > input::selection {
     background-color: darkgrey;
 }
-/* .paramContainer > input:valid {
+/* .param-container > input:valid {
     border: 2px solid rgba(30, 29, 29, 0.52);
 } */
 .nodes   {
@@ -265,7 +265,7 @@ input.varInput::placeholder {
     left: -7px;
 }
 
-.left > .snapDock {
+.left > .snap-dock {
     left: -15px;
 }
 
@@ -273,17 +273,17 @@ input.varInput::placeholder {
     right: -8px;
 }
 
-.right > .snapDock {
+.right > .snap-dock {
     right: -16px;
 }
 
 /* debug styles */
 /*
-.data > .snapDock {
+.data > .snap-dock {
     background: #2e00ff57;
 }
 
-.exe > .snapDock {
+.exe > .snap-dock {
     background: #ff00005c;
 }
 
@@ -296,7 +296,7 @@ input.varInput::placeholder {
 .objects {
     background: #0000ff57;
 }
-.left > .paramContainer > .paramName, .left > .paramContainer > input {
+.left > .param-container > .param-label, .left > .param-container > input {
     border: 1px solid red;
 }
 */
