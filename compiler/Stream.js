@@ -8,6 +8,8 @@ class Stream {
 
         this.nodes = [ root ];
 
+        this.walk();
+
     }
 
     get current() {
@@ -22,29 +24,50 @@ class Stream {
 
     };
 
+    walk() {
+
+        do {
+
+            const resultObj = this.current.calculate();
+
+            if (!this.current.setter || !resultObj) continue;
+
+            this.scope[ this.current.setter.variableName ] = resultObj.result;
+
+            this.updateGetters(resultObj.dependencies);
+
+        } while (this.next());
+
+    };
+
+    updateGetters(dependencies) {
+
+        _(dependencies)
+        Object.entries(dependencies).forEach(([variableName, branches]) => {
+
+            if (!this.scope[variableName]) return;
+
+            branches.forEach(branch => {
+
+                branch.forEach(node => {
+
+                    _(`updating... ${node.id}`);
+                    node.calculate(false);
+
+                });
+
+            });
+
+        });
+
+    }
+
     next() {
 
         const exeDocks = this.current.exeDocks.out;
         if (exeDocks[0].links.length) {
 
             return this.current = exeDocks[0].links[0].endDock.node;
-
-        }
-
-    };
-
-    calculate() {
-
-        _(`[Stream ${this.current.id}]`, this)
-
-        const { result, stringResult, dependencies } = this.current.calculate();
-
-        // _('scope', this.scope);
-        // _('dependencies', dependencies);
-
-        if (this.current.setter && result) { // <? wrap value : result CAN be undefined
-
-            this.scope[ this.current.setter.variableName ] = result;
 
         }
 
