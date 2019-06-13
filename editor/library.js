@@ -20,7 +20,9 @@ const Library  = {
             description: 'Will log the input in the console',
             dataDocks: { in: [ { label: 'input' } ], out: [] },
             exeDocks: { in: [{}], out: [{}] },
-            func: (a) => console.log('[LOGGER]', a),
+            func: function(a) {
+                console.log(`      [${this.id}]`, a); // this refers to a Node instance
+            },
             stringFunc: (a) => `console.log(${a})`
         },
 
@@ -31,6 +33,7 @@ const Library  = {
             dataDocks: { in: [ ], out: [ ] },
             exeDocks: { in: [ {label: 'condition', switchSection: true} ], out: [ {label: 'if', switchSection: true}, {label: 'else', switchSection: true} ] },
             func: ()  =>  null,
+            stringFunc: ()  =>  null,
             background: '?'
         },
         sub: {
@@ -78,6 +81,7 @@ const Library  = {
             dataDocks: { in: [], out: [ { label: '', switchSection: true } ] },
             exeDocks: { in: [], out: [] },
             func: function() { return variables[ this.variableName ] }, // this refers to getter <? scope
+            stringFunc: (value) => null,
         },
         set: {
             label: 'Set',
@@ -85,9 +89,8 @@ const Library  = {
             description: 'This node sets the value of the specified variable',
             dataDocks: { in: [ {label: 'variable'} ], out: [] },
             exeDocks: { in: [{}], out: [{}] },
-            func: (value)  =>  { variables.a = {value, string: value} },
+            func: (value)  =>  { return value }, // variables.a = {value, string: value}
             stringFunc: (value) => `a = ${value}`,
-
         },
     },
 

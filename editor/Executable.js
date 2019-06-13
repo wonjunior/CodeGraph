@@ -3,7 +3,7 @@
 class Executable extends Node {
 
     // scope = {};
-    dependencies = {};
+    dependencies = {}; // updated by Process#calculate
 
     constructor(parameters) {
 

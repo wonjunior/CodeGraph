@@ -21,13 +21,15 @@ class Process {
     	return arraysOfDependencies.reduce((merged, dependencies) => {
 
             // for each variable, add its dependencies to the set of dependencies
-    		Object.entries(dependencies).forEach(([variableName, nodes]) => {
+    		Object.entries(dependencies).forEach(([variableName, branches]) => {
 
-                // merge the set of dependencies with the array of dependencies
-    			const set = new Set([...(merged[ variableName ] || []), ...nodes]);
+                // already registered paths for this variableName
+                const existingBranches =  merged[ variableName ] || [];
 
-                // if the temporary merged set it not empty add it to the merged object
-    			if (set.size) merged[ variableName ] = set;
+                // the current node is pushed to all not yet registered branches
+                const currentBranches = branches.map(branch => branch.concat(this.node))
+
+                merged[ variableName ] = [ ...existingBranches, ...currentBranches ];
 
     		});
 
@@ -67,20 +69,21 @@ class Process {
 
             // _('dependencies', dependencies)
 
+            // _('[Process]', this)
             const result = this.func.bind(this.node)(...values);
             const stringResult = this.stringFunc.bind(this.node)(...strings);
             const mergedDependencies = this.mergeDependencies(dependencies);
 
             if (this.node instanceof Executable) {
 
-                _(`setting dependencies for ${this.node.id}`);
+                // _(`setting dependencies for ${this.node.id}`);
                 this.node.dependencies = mergedDependencies;
 
             }
 
             // _('->', this.node.id, result, stringResult);
 
-            if (this.dataOut.length) {
+            if (this.dataOut.length && data) {
 
                 this.dataOut[0].argument = [ result, stringResult, mergedDependencies ];
 
@@ -90,7 +93,7 @@ class Process {
                 this.propagate(data);
 
             }
-            return {result, stringResult, dependencies:mergedDependencies};
+            return {result, string:stringResult, dependencies:mergedDependencies};
 
         } else {
 
@@ -100,13 +103,13 @@ class Process {
                 // <? refactor this mess
                 this.dataOut[0].argument = undefined;
                 this.dataOut[0].label = '';
-                this.dataOut[0].labelElement.title = '';
+                this.dataOut[0].element.label.title = '';
 
             }
 
         }
 
-        if (this.dataOut.length) {
+        if (this.dataOut.length && data) {
 
             // update the propagation tree
             data.propagationTree = data.propagationTree || [];
@@ -118,7 +121,7 @@ class Process {
 
         }
 
-        return {}
+        return null;
 
     };
 
@@ -130,6 +133,7 @@ class Process {
 
 }
 
+// <? what to do with the initial values?
 let variables = {
     a: { value: 1, string: 'a' },
     b: { value: 'hello', string: 'b' }
