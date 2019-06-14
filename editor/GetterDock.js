@@ -1,6 +1,6 @@
 'use strict'
 
-class Editable extends DataDock {
+class GetterDock extends DataDock {
 
     constructor(parameters) {
 
