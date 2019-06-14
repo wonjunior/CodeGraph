@@ -10,8 +10,8 @@ class Executable extends Node {
         super(parameters);
 
         // attach the execution component to the node's instance
-        const controlFlow = new ControlFlow(this);
-        this.execute = controlFlow.execute.bind(controlFlow);
+        // const controlFlow = new ControlFlow(this);
+        // this.execute = controlFlow.execute.bind(controlFlow);
 
     };
 

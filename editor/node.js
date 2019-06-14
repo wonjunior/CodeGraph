@@ -1,97 +1,109 @@
 'use strict'
 
+/**
+ * dd
+ */
 class Node {
 
     static idOfLast = 1;
-    static idPrefix = 'n';
-
+	static idPrefix = 'n';
+	
     /**
-     * Depending on the number of nodes already created, the function will crea-
-     * -te a new node identifier. This id includes the idPrefix specific to Node.
-     * @returns {String} a unique node identifier
+     * Depending on the number of nodes already created, the function will create a new node identifier. This id
+     * includes the idPrefix specific to Node.
      */
     static createId() {
 
         return Node.idPrefix + Node.idOfLast++;
 
-    };
+    }
 
     /**
-     * Property of Node: counts the number of instanciated nodes
-     * @returns {Number} the number of instanciated nodes
+     * Property of Node: counts the number of instantiated nodes
      */
     static get length() {
 
         return Object.keys(nodes).length;
 
-    };
+    }
 
     /**
      * Getter for Node#label which gets the node's displayed label
-     * @returns {String} the node's label
      */
     get label() {
 
         // gets the string label directly from the DOM element
-        return this.labelElement.textContent;
+        return this.element.label.textContent;
 
-    };
+    }
 
     /**
      * Setter for Node#label which sets the node's displayed label
-     * @param {String} newLabel - the new label to set
      */
     set label(newLabel) {
 
-        this.labelElement.textContent = newLabel;
+        this.element.label.textContent = newLabel;
 
-    };
+    }
 
     /**
-     * Getter for Node#position which gets the position of the node in the Canvas
-     * @returns {Number[2]} - the x and y coordinates of the node's current position
+     * Getter for Node#position which returns the x and y coordinates of the node's position on the Canvas
      */
     get position() {
 
-        // gets the position directly from inline-style as an array
-        // of Strings and maps it into an array of Numbers
-        return [this.nodeElement.style.left, this.nodeElement.style.top]
-            .map(posString => parseInt(posString));
+		// gets the position directly from inline-style and converts it into an array of numbers
+		// <! try refactoring the map callback, just try. See ?
+        return [ this.element.node.style.left, this.element.node.style.top ].map(e => parseInt(e));
 
-    };
+    }
 
     /**
      * Setter for Node#position which sets the position of the node in the Canvas
-     * @param {Number[2]} [ x, y ] - the x and y coordinates to which it is moved
      */
     set position([ x, y ]) {
 
         // coerces the two coordinates into string applied to the node's style
-        this.nodeElement.style.left = x + 'px';
-        this.nodeElement.style.top = y + 'px';
+        this.element.node.style.left = x + 'px';
+        this.element.node.style.top = y + 'px';
 
-    };
+    }
 
     /**
      * Getter for Node#headerColor to get the color of the node's header
      * this getter is needed when saving the nodes into a string format
-     * @returns {String} - the CSS color of the node's header
      */
     get headerColor() {
 
-        return this.headerElement.style.background;
+        return this.element.header.style.background;
 
-    };
+    }
 
     /**
      * Setter for Node#headerColor to change the color of the node's header
-     * @param {String} newColor - the color to change the node's header to
      */
     set headerColor(newColor) {
 
-        this.headerElement.style.background = newColor;
+        this.element.header.style.background = newColor;
 
-    };
+    }
+
+	/**
+	 * Getter for Node#background which returns the text displayed in the node's background
+	 */
+	get background() {
+
+		return this.element.background.textContent;
+
+	}
+
+	/**
+	 * Getter for Node#background to change the text displayed as the node's background
+	 */
+	set background(newBackground) {
+
+		this.element.background.textContent = newBackground;
+
+	}
 
     /**
      * Getter for Node#size to get the size of the node container element
@@ -100,20 +112,26 @@ class Node {
      */
     get size() {
 
-        const properties = this.nodeElement.getBoundingClientRect();
+		const properties = this.element.node.getBoundingClientRect();
+		
         return [ properties.width, properties.height ];
 
-    };
+    }
 
     /**
-     * Setter to add/remove a CSS class to node's container element
-     * @param {Boolean} bool - determines whether to add or remove the class
+     * Setter which updates the node's class depending on the provided boolean
      */
     set highlight(bool) {
 
-        this.nodeElement.classList[ bool ? 'add' : 'remove' ]('selected');
+        this.element.node.classList[ bool ? 'add' : 'remove' ]('selected');
 
-    };
+    }
+
+	hide(part) {
+
+		this.element.node.classList.add(`hide-${part}`);
+
+	}
 
     /**
      * Toggles the class on the node's container element
@@ -121,169 +139,193 @@ class Node {
      */
     toggleHighlight() {
 
-        return this.nodeElement.classList.toggle('selected');
+        return this.element.node.classList.toggle('selected');
 
     }
 
     /**
      * Node instance constructor which takes in an node object and:
-     * 1) adds the properties to the Node's instance
-     * 2) creates and renders the node's element on the canvas
-     * 3) appends the instance to the node object
-     * @param {Node | Object} - takes in an actual instance of Node OR an object
-     * containing all the necessary properties to construct a node, i.e.: label
-     * (String), position (Number[2]), exeDocks (Object), dataDocks (Object) and func
-     * (function). Optional parameters are background (String) and headerColor (String)
+     * (1) adds the properties to the Node's instance
+     * (2) creates and renders the node's element on the canvas
+     * (3) appends the instance to the node object
+     * @param {Object | Node} parameters - an object containing all the necessary properties
+	 * to define a node or an actual instance of `Node`.
      */
     constructor(parameters) {
 
-        // destructure the parameters into seperate variable
-        const { label, position, exeDocks, dataDocks, hideBody, func, stringFunc, background, headerColor, getter, setter } = parameters;
+		// call the Executable's constructor if this is not an instance of Executable but is supposed to be
+		if (!(this instanceof Executable) && parameters.executable) return new Executable(parameters);
 
-        // if it's an Node of type executable but not yet an instance of Executable
-        if (!(this instanceof Executable) && [...exeDocks.in, ...exeDocks.out].length) {
+        // destructure the parameters into distinct variables
+		const { name, header, hideHeader, hideBody, background, position, process, getters, exeDocks } = parameters;
 
-            return new Executable(parameters);
-
-        }
-
-        // the following property assignments are happening first because
-        // Node#createNode needs them to create the HTML elements properly
+        // first set of properties assigned to the instance
         Object.assign(this, {
             id: Node.createId(),
-            background,
-            docks: [],
-            hideBody: !!hideBody,
-            func,
-            stringFunc,
+			element: {},
+			docks: [],
+			getters: {},
+			process: { 
+				function: process.function,
+				string: process.string,
+				params: []
+			},
+			exeDocks: { in: [], out: [] },
+			dataDocks: { in: [], out: [] },
+			hideHeader: !!hideHeader,
+			hideBody: !!hideBody,
         });
-
-        // <? getter is relative to a dock, NOT a node,
-        // e.g. node `for` is not a getter but has a getter dock `i`
-        if (getter) this.getter = getter;
-        if (setter) this.setter = setter;
-
-
+		
         // creating the actual HTML node element
         this.createNode();
-
-        // This second set of property assignments (styling) needs the HTML
-        // elements to be created because they directly take effect on them
+		
+		// second set of property assignments for styling. They are all involving setters which need
+		// the HTML element to exist in order to manipulate its style
         Object.assign(this, {
-            headerColor,
-            label: this.id,                                 // <? debugg
-            position: position ? position : [0, 0],
+			background,
+            headerColor: header,
+            label: name,
+            position: position || [0, 0],
         });
 
         // create and render all of the node's docks with their HTML elements
-        this.createDocks({ exeDocks, dataDocks });
+        this.createDocks(this.getDockDefinition(process, getters, exeDocks));
 
-        // adds this Node instance to the object of instances, it can be
-        // accessed with the unique node identifier provided previously
+        // adds this Node instance to the object of instances, it can be accessed with the unique id
         nodes[ this.id ] = this;
 
         // attach the process component to the node's instance
-        const interpreter = new Process(this);
-        this.calculate = interpreter.calculate.bind(interpreter);
-
-    };
-
-    /**
-     * With all the docks properties, the method instanciates all the Dock objects
-     * The method is instanciating them by side and by type by accessing the Dock's
-     * attributes object. Then for each element in the provided dockDef it calls the
-     * Dock constructor and adds the dock to the node's properties.
-     * @param {Object} { exeDocks, dataDocks } - the dock properties provided by Node's constructor
-     */
-    createDocks(dockDef) {
-
-        // the four arrays that will be filled with instances of Dock
-        this.exeDocks = { in: [], out: [] };
-        this.dataDocks = { in: [], out: [] };
-
-        Dock.sideAttributes.forEach(({ direction, side, isRight, sidePrefix }) => {
-        //                            'in'/'out', 'left'/'right', F/T, 'L'/'R'
-
-            [ DataDock.typeAttributes, ExeDock.typeAttributes ].forEach(({ isData, propertyName, typePrefix, blockName, otherBlockName }) => {
-            //                                                             true/false, 'exeDocks'/'dataDocks', 'e'/'d', 'head'/'body'
-
-                dockDef[ propertyName ][ direction ].forEach(({ label, editable, type, switchSection }, i) => {
-
-                    // default position of the dock is determined by its type but the position
-                    // can be switched by setting switchSection to true. In this case the dock
-                    // will take the other position. Available positions are in body and head
-                    const sectionName = (switchSection ? otherBlockName : blockName) + 'Section';
-
-                    const newDock = Dock.instanciate({
-                        id: this.id + typePrefix + sidePrefix + i,
-                        label,
-                        isRight,
-                        isData,
-                        editable: editable ? editable : false,
-                        type,
-                        node: this,                                  // @this is an instance of Node
-                        switchSection,
-                        blockElement: this[ sectionName ][ side ],   // the element where the dock will be appended
-                    });
-
-                    // <? is this really necessary, can we not save exeDocks et dataDocks in ControlFlow# and Process#
-                    this[ propertyName ][ direction ].push(newDock); // append the dock to the side-type specific array
-
-                    this.docks.push(newDock);                        // append the dock to the array containing all node's docks
-
-                });
-
-            });
-
-        });
+        // const interpreter = new Process(this);
+        // this.process.calculate = interpreter.calculate.bind(interpreter);
 
     }
 
+	getDockDefinition({ result, params = [] }, getters = [], exeDocks = {}) {
+
+		// we need to know the type of each dock before merging
+		if (result) result.dockType = 'result';
+		params.forEach(dock => dock.dockType = 'param');
+		getters.forEach(dock => dock.dockType = 'getter');
+
+		return {
+			exeDocks: {
+				in: exeDocks.in || [],
+				out: exeDocks.out || []
+			},
+			dataDocks: {
+				in: params,
+				out: [ result, ...getters ]
+			},
+		}
+
+	}
+	
+	/**
+	 * From the docks properties, the method instanciates all the Dock objects. The method is instanciating 
+	 * them by side and by type by accessing the Dock's attributes object. Then for each element in 
+	 * `dockDefinition` it calls `Dock`'s constructor and adds the dock's reference to the node's properties.
+	 * @param {Object} dockDefinition - contains `exeDocks` and `dataDocks`
+	 * 
+	 * @todo is this really necessary, can we not save exeDocks et dataDocks in ControlFlow# and Process#
+	 */
+	createDocks(dockDefinition) {
+
+		[ 'dataDocks', 'exeDocks' ].forEach(category => {
+
+			[ 'in', 'out' ].forEach(direction => {
+
+				dockDefinition[ category ][ direction ].forEach((dockObject, index) => {
+
+					// create a new instance of Dock
+					const parameters = Dock.configure({
+						node: this,
+						index,
+						dockObject,
+						sideAttributes: Dock.sideAttributes[ direction ],
+						dockAttributes: category == 'dataDocks' ? DataDock.attributes : ExeDock.attributes,
+					});
+
+					// create dock and bind it to the node 
+					this.createDock(parameters, dockObject.dockType, category, direction);
+
+				});
+
+			});
+
+		});
+
+	}
+
+	/**
+	 * 
+	 * @param {*} dock 
+	 * @param {*} dockType 
+	 * @param {*} category 
+	 * @param {*} direction 
+	 */
+	createDock(parameters, dockType, category, direction) {
+
+		let dock;
+		switch (dockType) {
+			case 'result':
+				dock = new DataDock(parameters);
+				this.process.result = dock;
+				break;
+			case 'param':
+				dock = parameters.editable ? new EditableDock(parameters) : new DataDock(parameters);
+				this.process.params.push(dock);
+				break;
+			case 'getter':
+				dock = new GetterDock(parameters);
+				this.getters[ parameters.name ] = dock;
+				break;
+			case 'executable':
+				dock = new ExeDock(parameters);
+				break;
+		}
+
+		// append the dock to the side-type specific array
+		this[ category ][ direction ].push(dock);
+
+		// append the dock to the array containing all node's docks  
+		this.docks.push(dock);
+
+	}
+
     /**
-     * Creates the node's HTML element and renders it on the canvas. Most HTMLElement
-     * objects are saved as the node's properties: nodeElement, headerElement, labelElement,
-     * headerSection.left, headerSection.right, bodySection.left and bodySection.right
-     *
-     * <? we might call in a class to deal with importing the html
-     *    should we use templates, as they are visible in the DOM
-     *    this method needs to know the structure: .container > .body > .block
-     */
-    createNode() { //
+     * Creates the node's HTML element and renders it on the canvas. All used HTML elements are saved
+	 * as HTML objects in the node instance. The property element contains the following elements:
+	 * { `node`, `header`, `label`, `headLeft`, `headRight`, `bodyLeft`, `bodyRight`, `background` }
+	 */
+    createNode() {
 
-        let template = document.querySelector('template#node');
-        template = document.importNode(template.content, true);
+		// retrieve the node HTML template
+        const $ = Template.node();
 
-        Object.assign(this, {
-            nodeElement: template.querySelector('.container'),
-            headerElement: template.querySelector('.header'),
-            labelElement: template.querySelector('.headerTitle'),
-            headSection: {
-                left: template.querySelector('.exeblock > .leftblock'),
-                right: template.querySelector('.exeblock > .rightblock')
-            },
-            bodySection: {
-                left: template.querySelector('.body > .leftblock'),
-                right: template.querySelector('.body > .rightblock')
-            }
-        });
+		// bind HTML elements § JS instance
+        Object.assign(this.element, {
+            node: $('.container'),
+			header: $('.header'),
+            label: $('.header-title'),
+            headLeft: $('.header-block > .left-block'),
+            headRight: $('.header-block > .right-block'),
+            bodyLeft: $('.body > .left-block'),
+			bodyRight: $('.body > .right-block'),
+			background: $('.body > .background')
+		});
+		
+		// bind JS instance § HTML element 
+        this.element.header.ref = this.id;	// <? is this needed
+		this.element.node.id = this.id;
 
-        if (this.hideBody) {
+		// hide parts if necessary
+		if (this.hideBody) this.hide('body');
+		if (this.hideHeader) this.hide('header');
 
-            this.nodeElement.classList.add('hideBody');
+		// append the node to the canvas
+        Canvas.nodeArea.appendChild(this.element.node);
 
-        } else {
-
-            template.querySelector('.body > .bodybefore').textContent = this.background;
-
-        }
-
-        template.querySelector('.header').ref = this.id;
-
-        this.nodeElement.id = this.id;
-
-        Canvas.nodeArea.appendChild(this.nodeElement);
-
-    };
+    }
 
     /**
      * This method updates all links connected to all docks of the node
@@ -303,7 +345,7 @@ class Node {
 
         });
 
-    };
+    }
 
     /**
      * This method removes the node and all its attached links
@@ -325,9 +367,9 @@ class Node {
         delete nodes[ this.id ];
 
         // remove the HTML element from the DOM
-        this.nodeElement.remove();
+        this.element.node.remove();
 
-    };
+    }
 
     /**
      * This static method destructs the given node object into a non circular object.
@@ -340,8 +382,6 @@ class Node {
      * @returns {object} { exeDocks, dataDocks, headerColor, label and position, ...rest } -
      * the returned object doesn't contain dock: the array of Dock instances, as it is not
      * needed in the saved node object
-     *
-     * <? this static method could be a Node#destruct method instead
      */
     static destruct({ exeDocks, dataDocks, docks, headerColor, label, position, ...rest }) {
 
@@ -352,6 +392,6 @@ class Node {
 
     	return { exeDocks, dataDocks, headerColor, label, position, ...rest };
 
-    };
+    }
 
-}; const nodes = {};
+} const nodes = {};

@@ -23,7 +23,7 @@ document.addEventListener('mousedown', event => {
         new Draggable({
             event,
             type: 'stick',
-            element: nodeObject.nodeElement,
+            element: nodeObject.element.node,
             object: nodeObject
         });
 

@@ -31,7 +31,7 @@ new State({
                 new Draggable({
                     event,
                     type: 'drag',
-                    element: nodeObject.nodeElement,
+                    element: nodeObject.element.node,
                     object: nodeObject,
                     callback:  nodeObject.update.bind(nodeObject)
                 });

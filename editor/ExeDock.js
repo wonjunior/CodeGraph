@@ -2,26 +2,27 @@
 
 class ExeDock extends Dock {
 
-    static typeAttributes = { isData: false, propertyName: 'exeDocks', typePrefix: 'e', blockName: 'head', otherBlockName: 'body' };
+    static attributes = { 
+		isData: false, 
+		defaultType: 'executable',
+		typePrefix: 'e', 
+		defaultLocation: 'head' 
+	};
     static offset = 10;
 
     constructor(parameters) {
 
         super(parameters);
 
-        const { editable, type, label } = parameters; // <? use Editable?
-        Object.assign(this, {/*type,*/ label});
+        const { name } = parameters; // <? use Editable?
+        Object.assign(this, { name });
 
-        this.element.block.appendChild(this.element.dock); // <? put this inside Dock?
+        this.element.parent.appendChild(this.element.dock); // <? put this inside Dock?
 
         docks[ this.id ] = this;
 
-        wait(() => this.offset = this.calculateRelativePos()); //<? use a promise on createDock
-
-        //
-
-
-
+		wait(() => this.offset = this.calculateRelativePos());
+		
     }
 
     createDock(label) {

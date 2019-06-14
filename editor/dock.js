@@ -2,35 +2,67 @@
 
 class Dock {
 
-    static sideAttributes = [
-        { direction: 'in', side: 'left', isRight: false, sidePrefix: 'L' },
-        { direction: 'out', side: 'right', isRight: true, sidePrefix: 'R' }
-    ];
+    static sideAttributes = {
+		in: { 
+			isRight: false, 
+			side: 'Left', 
+			sidePrefix: 'L' 
+		},
+        out: { 
+			isRight: true, 
+			side: 'Right', 
+			sidePrefix: 'R'
+		}
+	};
 
-    static instanciate(parameters) {
+	/*
+	{
+		id: this.id + typePrefix + sidePrefix + i,
+		label,
+		isRight,
+		isData,
+		editable: editable ? editable : false,
+		type,
+		node: this,                                  // @this is an instance of Node
+		switchSection,
+		blockElement: this[ sectionName ][ side ],   // the element where the dock will be appended
+	}
+	*/
 
-        if (!parameters.isData) return new ExeDock(parameters);
+    static configure({ node, index, dockObject, sideAttributes, dockAttributes }) {
 
-        if (parameters.getter) return new Getter(parameters);
+		const { name, location, dockType, ...other } = dockObject;
+		const { isRight, side, sidePrefix } = sideAttributes;
+		const { defaultType, typePrefix, defaultLocation } = dockAttributes;
 
-        if (parameters.editable) return new Editable(parameters);
+		// if position is specified and valid use it else use the default value for this type of dock
+		const parentName = ['body', 'head'].includes(location) ? location : defaultLocation;
 
-        return new DataDock(parameters);
+		return {
+			id: node.id + typePrefix + sidePrefix + index,
+			node,
+			name,
+			isRight,
+			dockType: dockType || defaultType,
+			location: parentName,
+			parent: node.element[ parentName + side ],
+			other,
+		};
 
     }
 
-    constructor({ id, label, isRight, isData, editable, type, node, blockElement, switchSection, getter }) {
+    constructor({ id, node, name, isRight, location, parent }) {
 
         Object.assign(this, {
-            id,
+			id,
+			name,
             isRight,
             node,
-            isData,
-            switchSection,
-            element: Object.assign(
-                {block:blockElement},
-                this.prepareElement(id, isRight)
-            ),
+            location,
+            element: {
+				parent,
+                ...this.prepareElement(id, isRight)
+			},
             links: [],
             occupied: false,
         });
@@ -170,7 +202,7 @@ class Dock {
 
     calculateRelativePos() {
 
-        const nodePos = this.node.nodeElement.getBoundingClientRect();
+        const nodePos = this.node.element.node.getBoundingClientRect();
         const dockPos = this.element.pin.getBoundingClientRect();
 
         const offset = this.isData ? DataDock.offset : ExeDock.offset;
