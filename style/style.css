@@ -50,7 +50,7 @@ body {
     overflow: hidden;
 }
 
-.body > .bodybefore { /* not using ::before with content, we need to access it's value with JS */
+.body > .background { /* not using ::before with content, we need to access it's value with JS */
   position:  absolute;
   font-size: 6em;
   left: 50%;

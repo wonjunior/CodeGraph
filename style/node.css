@@ -1,11 +1,8 @@
 /* <? not needed ? */
-.header > .exeblock {
+.header > .header-block {
     position: relative;
     width: 100%;
     bottom: calc(50% - 14px);
-}
-
-.header > .exeblock {
     pointer-events: none;
 }
 
@@ -62,8 +59,8 @@ input.occupied {
     border-color: rgba(111, 111, 111, 0);
     top: calc(50% - 14px);
 }
-.rightblock,
-.leftblock {
+.right-block,
+.left-block {
     display: inline-block;
     width: 50%;
     vertical-align: middle;
@@ -109,11 +106,18 @@ input.occupied {
     /* top: 100px; */
     /* left: 200px; */
 }
-.container.hideBody > .header {
-    border-radius: 12px;
+.container.hide-body > .header {
+    border-radius: 10px;
 }
-.container.hideBody > .body {
+.container.hide-body > .body {
     display: none;
+}
+
+.container.hide-header > .header {
+	display: none;
+}
+.container.hide-header > .body {
+	border-radius: 10px;
 }
 
 .header {
@@ -126,7 +130,7 @@ input.occupied {
     line-height: 25px;
     /* padding: 4px 0px; */
 }
-.headerTitle {
+.header-title {
     text-align: center;
     width: 100%;
     position:  absolute;
@@ -144,7 +148,8 @@ input.occupied {
     padding-top: 6px;
     padding-bottom: 6px;
     position: relative;
-    pointer-events: none;
+	pointer-events: none;
+	min-height: 50px;
 }
 
 .param-container {
