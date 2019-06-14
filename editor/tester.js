@@ -1,4 +1,4 @@
-new Node({ ...Library.node.log, position: [ 500, 450 ] });
+/*new Node({ ...Library.node.log, position: [ 500, 450 ] });
 
 new Node({ ...Library.node.log, position: [ 600, 550 ] });
 
@@ -35,19 +35,99 @@ new Node({ ...Library.node.divide, position: [820, 100] });
 
 // new Node({ ...Library.node.ifelse, position: [480, 480] });
 
-
-new Node({
-    label: 'test2',
-    position: [500, 100],
-    dataDocks: { in: [ {label: 'a'}, {label: 'b'} ], out: [ {label: 'result'}, {label: 'result'}, {label: 'result'} ] },
-    exeDocks: { in: [ {label: 'in'} ], out: [ {label: 'out'}] },
-    func: (a,b)  =>  undefined,
-    background: '{}',
-    headerColor: 'orange'
-});
+*/
 
 
-(function() {
+/*let params = {
+	name: 'test2',
+	background: '+',
+	header: 'lightgreen',
+	executable: false,
+    process:  {
+		params: [ 
+			{ label: 'a', type: 'number', editable: true },
+			{ label: 'b', type: 'number' }
+		],
+		result: { label: 'a+b', type: 'number' },
+		function: function(a, b) {
+			return a + b;
+		},
+		string: function(a, b) {
+			return `${a} + ${b}`;
+		}
+	},
+}*/
+
+params = {
+	name: 'GETTER',
+	header: 'lightgreen',
+	executable: true,
+	getters: [{
+		name: 'a'
+	}],
+	exeDocks: {
+		in: [ { name: 'in' } ],
+		out: [ { name: 'out' } ]
+	},
+    process:  {
+		params: [ 
+			{ name: 'a', type: 'number', editable: true },
+			{ name: 'b', type: 'number' }
+		],
+		result: { name: 'a+b', type: 'number' },
+		function: function(a, b) {
+			return a + b;
+		},
+		string: function(a, b) {
+			return `${a} + ${b}`;
+		}
+	},
+}
+
+/*
+
+=> docks: {
+		getter: [{
+			name: 'a'
+		}],
+		executable: {
+			in: [ { label: 'in', parent: 'body' } ],
+			out: [ { label: 'out', parent: 'body' } ]
+		}
+	},
+    process:  {
+		params: [ 
+			{ label: 'a', type: 'number', editable: true },
+			{ label: 'b', type: 'number' }
+		],
+		result: { label: 'a+b', type: 'number' },
+		function: function(a, b) {
+			return a + b;
+		},
+		toString: function(a, b) {
+			return `${a} + ${b}`;
+		}
+	}
+
+	dataDocks: {
+		in: [
+			{ label: 'a', type: 'number', editable: true },
+			{ label: 'b', type: 'number' }
+		],
+		out: [ { name: 'a' } ]
+	},
+	exeDocks: {
+		in: [ { label: 'in', parent: 'body' } ],
+		out: [ { label: 'out', parent: 'body' } ]
+	}
+ */
+
+new Node(params);
+
+
+
+
+/*(function() {
 
     const events = [
         [ docks.n6dR0, docks.n4dL1 ],
@@ -91,4 +171,4 @@ new Node({
 
     });
 
-})()
+})()*/
