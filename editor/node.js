@@ -8,6 +8,8 @@ class Node {
     static idOfLast = 1;
 	static idPrefix = 'n';
 	
+	static all = [];
+
     /**
      * Depending on the number of nodes already created, the function will create a new node identifier. This id
      * includes the idPrefix specific to Node.
@@ -19,16 +21,16 @@ class Node {
     }
 
     /**
-     * Property of Node: counts the number of instantiated nodes
+     * Counts the number of instantiated nodes
      */
     static get length() {
 
-        return Object.keys(nodes).length;
+        return Object.keys(Node.all).length;
 
     }
 
     /**
-     * Getter for Node#label which gets the node's displayed label
+     * Getter for `Node#label` which gets the node's displayed label
      */
     get label() {
 
@@ -38,7 +40,7 @@ class Node {
     }
 
     /**
-     * Setter for Node#label which sets the node's displayed label
+     * Setter for `Node#label` which sets the node's displayed label
      */
     set label(newLabel) {
 
@@ -47,18 +49,18 @@ class Node {
     }
 
     /**
-     * Getter for Node#position which returns the x and y coordinates of the node's position on the Canvas
+     * Getter for `Node#position` which returns the x and y coordinates of the node's position on the Canvas
      */
     get position() {
 
 		// gets the position directly from inline-style and converts it into an array of numbers
-		// <! try refactoring the map callback, just try. See ?
+		// <! try refactoring the map callback, just try.
         return [ this.element.node.style.left, this.element.node.style.top ].map(e => parseInt(e));
 
     }
 
     /**
-     * Setter for Node#position which sets the position of the node in the Canvas
+     * Setter for `Node#position` which sets the position of the node in the Canvas
      */
     set position([ x, y ]) {
 
@@ -69,8 +71,7 @@ class Node {
     }
 
     /**
-     * Getter for Node#headerColor to get the color of the node's header
-     * this getter is needed when saving the nodes into a string format
+     * Getter for `Node#headerColor` to get the color of the node's header
      */
     get headerColor() {
 
@@ -79,7 +80,7 @@ class Node {
     }
 
     /**
-     * Setter for Node#headerColor to change the color of the node's header
+     * Setter for `Node#headerColor` to change the color of the node's header
      */
     set headerColor(newColor) {
 
@@ -88,7 +89,7 @@ class Node {
     }
 
 	/**
-	 * Getter for Node#background which returns the text displayed in the node's background
+	 * Getter for `Node#background` which returns the text displayed in the node's background
 	 */
 	get background() {
 
@@ -97,7 +98,7 @@ class Node {
 	}
 
 	/**
-	 * Getter for Node#background to change the text displayed as the node's background
+	 * Getter for `Node#background` to change the text displayed as the node's background
 	 */
 	set background(newBackground) {
 
@@ -106,9 +107,7 @@ class Node {
 	}
 
     /**
-     * Getter for Node#size to get the size of the node container element
-     * Might as well be a method because it is not explicit enough
-     * @returns {Number[2]} - the width and height of the container element
+     * Getter for `Node#size` to get the size of the node container element as an array `[width, height]`
      */
     get size() {
 
@@ -127,6 +126,10 @@ class Node {
 
     }
 
+	/**
+	 * Hides the corresponding node portion
+	 * @param {string} part is either `"head"` or `"body"`
+	 */
 	hide(part) {
 
 		this.element.node.classList.add(`hide-${part}`);
@@ -163,15 +166,10 @@ class Node {
         Object.assign(this, {
             id: Node.createId(),
 			element: {},
-			docks: [],
-			getters: {},
 			process: { 
 				function: process.function,
 				string: process.string,
-				params: []
 			},
-			exeDocks: { in: [], out: [] },
-			dataDocks: { in: [], out: [] },
 			hideHeader: !!hideHeader,
 			hideBody: !!hideBody,
         });
@@ -189,107 +187,44 @@ class Node {
         });
 
         // create and render all of the node's docks with their HTML elements
-        this.createDocks(this.getDockDefinition(process, getters, exeDocks));
+        this.createDocks(process, getters, exeDocks);
 
         // adds this Node instance to the object of instances, it can be accessed with the unique id
-        nodes[ this.id ] = this;
+        Node.all[ this.id ] = this;
 
         // attach the process component to the node's instance
         // const interpreter = new Process(this);
         // this.process.calculate = interpreter.calculate.bind(interpreter);
 
     }
-
-	getDockDefinition({ result, params = [] }, getters = [], exeDocks = {}) {
-
-		// we need to know the type of each dock before merging
-		if (result) result.dockType = 'result';
-		params.forEach(dock => dock.dockType = 'param');
-		getters.forEach(dock => dock.dockType = 'getter');
-
-		return {
-			exeDocks: {
-				in: exeDocks.in || [],
-				out: exeDocks.out || []
-			},
-			dataDocks: {
-				in: params,
-				out: [ result, ...getters ]
-			},
-		}
-
-	}
 	
 	/**
 	 * From the docks properties, the method instanciates all the Dock objects. The method is instanciating 
-	 * them by side and by type by accessing the Dock's attributes object. Then for each element in 
+	 * them by side and by type by accessing the `Dock`'s attributes object. Then for each element in 
 	 * `dockDefinition` it calls `Dock`'s constructor and adds the dock's reference to the node's properties.
 	 * @param {Object} dockDefinition - contains `exeDocks` and `dataDocks`
 	 * 
-	 * @todo is this really necessary, can we not save exeDocks et dataDocks in ControlFlow# and Process#
+	 * @todo is this really necessary, can we not save exeDocks et dataDocks in `ControlFlow` and `Process`
 	 */
-	createDocks(dockDefinition) {
+	createDocks({ result, params = [] }, getters = [], exeDocks = {}) {
 
-		[ 'dataDocks', 'exeDocks' ].forEach(category => {
-
-			[ 'in', 'out' ].forEach(direction => {
-
-				dockDefinition[ category ][ direction ].forEach((dockObject, index) => {
-
-					// create a new instance of Dock
-					const parameters = Dock.configure({
-						node: this,
-						index,
-						dockObject,
-						sideAttributes: Dock.sideAttributes[ direction ],
-						dockAttributes: category == 'dataDocks' ? DataDock.attributes : ExeDock.attributes,
-					});
-
-					// create dock and bind it to the node 
-					this.createDock(parameters, dockObject.dockType, category, direction);
-
-				});
-
-			});
-
+		this.process.result = Dock.create([ result ], 'out', DataDock, this)[0];
+		this.process.params = Dock.create(params, 'in', DataDock, this);
+		this.getters = Dock.create(getters, 'out', GetterDock, this);
+		
+		Object.assign(this, {
+			exeDocks: {
+				in: Dock.create(exeDocks.in || [], 'in', ExeDock, this),
+				out: Dock.create(exeDocks.out || [], 'out', ExeDock, this)
+			},
+			dataDocks: {
+				in: this.process.params,
+				out: [ this.process.result, ...this.getters ]
+			}
 		});
 
-	}
-
-	/**
-	 * 
-	 * @param {*} dock 
-	 * @param {*} dockType 
-	 * @param {*} category 
-	 * @param {*} direction 
-	 */
-	createDock(parameters, dockType, category, direction) {
-
-		let dock;
-		switch (dockType) {
-			case 'result':
-				dock = new DataDock(parameters);
-				this.process.result = dock;
-				break;
-			case 'param':
-				dock = parameters.editable ? new EditableDock(parameters) : new DataDock(parameters);
-				this.process.params.push(dock);
-				break;
-			case 'getter':
-				dock = new GetterDock(parameters);
-				this.getters[ parameters.name ] = dock;
-				break;
-			case 'executable':
-				dock = new ExeDock(parameters);
-				break;
-		}
-
-		// append the dock to the side-type specific array
-		this[ category ][ direction ].push(dock);
-
-		// append the dock to the array containing all node's docks  
-		this.docks.push(dock);
-
+		this.docks = [ ...this.exeDocks.in, ...this.exeDocks.out, ...this.dataDocks.in, ...this.dataDocks.out ];
+		
 	}
 
     /**
@@ -336,9 +271,8 @@ class Node {
 
             dock.links.forEach(link => {
 
-                // get the path expression from the static Curve.get and
-                // change the link's path directly by utilising the Link#path
-                // setter which updates the SVG element in the DOM
+				// get the path expression from the static `Curve.get` and change the link's path 
+				// directly by utilising the `Link#path` setter which updates the SVG element
                 link.path = Curve.get(link.startDock.position, link.endDock.position);
 
             });
@@ -364,7 +298,7 @@ class Node {
         });
 
         // removes the node instance from the nodes object
-        delete nodes[ this.id ];
+        delete Node.all[ this.id ];
 
         // remove the HTML element from the DOM
         this.element.node.remove();
@@ -394,4 +328,4 @@ class Node {
 
     }
 
-} const nodes = {};
+}

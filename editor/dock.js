@@ -14,48 +14,35 @@ class Dock {
 			sidePrefix: 'R'
 		}
 	};
+	
+	static create(dockObjects, direction, dockConstructor, node) {
 
-	/*
-	{
-		id: this.id + typePrefix + sidePrefix + i,
-		label,
-		isRight,
-		isData,
-		editable: editable ? editable : false,
-		type,
-		node: this,                                  // @this is an instance of Node
-		switchSection,
-		blockElement: this[ sectionName ][ side ],   // the element where the dock will be appended
+		const { isRight, side, sidePrefix } = Dock.sideAttributes[ direction ];
+
+		return dockObjects.map(({ name, label, location/*, ...other*/ }, index) => {
+
+			// if position is specified and valid use it else use the default value for this type of dock
+			const parentName = ['body', 'head'].includes(location) ? location : dockConstructor.defaultLocation;
+
+			return new dockConstructor({
+				id: node.id + dockConstructor.typePrefix + sidePrefix + index,
+				node,
+				label: label || name,
+				isRight,
+				location: parentName,
+				parent: node.element[ parentName + side ],
+				// ...other,
+			});
+
+		});
+	
 	}
-	*/
 
-    static configure({ node, index, dockObject, sideAttributes, dockAttributes }) {
-
-		const { name, location, dockType, ...other } = dockObject;
-		const { isRight, side, sidePrefix } = sideAttributes;
-		const { defaultType, typePrefix, defaultLocation } = dockAttributes;
-
-		// if position is specified and valid use it else use the default value for this type of dock
-		const parentName = ['body', 'head'].includes(location) ? location : defaultLocation;
-
-		return {
-			id: node.id + typePrefix + sidePrefix + index,
-			node,
-			name,
-			isRight,
-			dockType: dockType || defaultType,
-			location: parentName,
-			parent: node.element[ parentName + side ],
-			other,
-		};
-
-    }
-
-    constructor({ id, node, name, isRight, location, parent }) {
+    constructor({ id, node, label, isRight, location, parent/*, ...other*/ }) {
 
         Object.assign(this, {
 			id,
-			name,
+			label,
             isRight,
             node,
             location,
