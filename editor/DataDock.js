@@ -2,19 +2,16 @@
 
 class DataDock extends Dock {
 
-    static attributes = { 
-		defaultType: 'data',
-		typePrefix: 'd', 
-		defaultLocation: 'body'
-	};
+    static typePrefix = 'd';
+	static defaultLocation = 'body';
     static offset = 7;
 
     constructor(parameters) {
 
         super(parameters);
 
-        const { editable, /*type,*/ name } = parameters; // <? use Editable?
-        Object.assign(this, {editable, /*type,*/ name});
+        const { editable, /*type,*/ label } = parameters; // <? use Editable?
+        Object.assign(this, {editable, /*type,*/ label});
 
         this.element.parent.appendChild(this.element.dock); // <? put this inside Dock?
 

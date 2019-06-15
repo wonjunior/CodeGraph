@@ -2,20 +2,16 @@
 
 class ExeDock extends Dock {
 
-    static attributes = { 
-		isData: false, 
-		defaultType: 'executable',
-		typePrefix: 'e', 
-		defaultLocation: 'head' 
-	};
+    static typePrefix = 'e'; 
+	static defaultLocation = 'head';
     static offset = 10;
 
     constructor(parameters) {
 
         super(parameters);
 
-        const { name } = parameters; // <? use Editable?
-        Object.assign(this, { name });
+        const { label } = parameters; // <? use Editable?
+        Object.assign(this, { label });
 
         this.element.parent.appendChild(this.element.dock); // <? put this inside Dock?
 
