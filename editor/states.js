@@ -21,13 +21,13 @@ new State({
 
             container: (event) => {
 
-                new Selection(nodes[ event.target.id ]);
+                new Selection(Node.all[ event.target.id ]);
 
             },
 
             header: () => {
 
-                const nodeObject = nodes[ event.target.ref ]; // $nodes
+                const nodeObject = Node.all[ event.target.ref ]; // $nodes
                 new Draggable({
                     event,
                     type: 'drag',
