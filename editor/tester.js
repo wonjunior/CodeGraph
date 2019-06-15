@@ -66,15 +66,15 @@ params = {
 		name: 'a'
 	}],
 	exeDocks: {
-		in: [ { name: 'in' } ],
-		out: [ { name: 'out' } ]
+		in: [ { label: 'in' } ],
+		out: [ { label: 'out' } ]
 	},
     process:  {
 		params: [ 
-			{ name: 'a', type: 'number', editable: true },
-			{ name: 'b', type: 'number' }
+			{ label: 'a', type: 'number', editable: true },
+			{ label: 'b', type: 'number' }
 		],
-		result: { name: 'a+b', type: 'number' },
+		result: { label: 'a+b', type: 'number' },
 		function: function(a, b) {
 			return a + b;
 		},
