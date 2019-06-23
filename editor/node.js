@@ -304,6 +304,21 @@ class Node {
 
     }
 
+	draggableBoundaryClamp(position) {
+
+        // clamp the node's position: it cannot go outside the canvas area
+        return position.map((value, i) => {
+
+            const minLimit = 0;
+            const maxLimit = (Canvas.size[i] - this.size[i]) / Canvas.zoomLevel;
+			
+			// here's where the clamp is actually happening
+			return value <= minLimit ? minLimit : (value >= maxLimit ? maxLimit : value);
+
+        });
+
+    };
+
     /**
      * This static method destructs the given node object into a non circular object.
      * Because node's have a property Node#docks which contains references to itself this

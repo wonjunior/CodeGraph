@@ -40,8 +40,8 @@ class View {
     static mousePosition(event) {
 
         const [ x, y ] = [ event.clientX, event.clientY ];
-        // const [ offsetX, offsetY ] = Canvas.positionFromOrigin();
-        const [ offsetX, offsetY ] = Canvas.position;																	/* finitepane-rollback */
+        const [ offsetX, offsetY ] = Canvas.positionFromOrigin();
+        // const [ offsetX, offsetY ] = Canvas.position;																	/* finitepane-rollback */
 
         return [ (x - offsetX) / Canvas.zoomLevel, (y - offsetY) / Canvas.zoomLevel ];
 
