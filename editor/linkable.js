@@ -5,7 +5,7 @@ class Linkable {
     constructor(event, startDock) {
 
         // determine if a link needs to be updated or a new one has to be created
-        if (startDock.occupied && ( !startDock.isRight || (startDock.isRight && !startDock.isData)) ) {
+        if (startDock.occupied && ( !startDock.isRight || (startDock.isRight && startDock instanceof ExeDock)) ) {
 
             this.link = startDock.links[0].edit();
 
@@ -40,7 +40,7 @@ class Linkable {
             // mouseenter .endDock
             if (!this.snapped) {
 
-                const endDock = docks[ e.target.ref ];
+                const endDock = Dock.all[ e.target.ref ];
 
                 // snapping can occur
                 if (this.link.startDock.isCompatible(endDock)) {
@@ -91,7 +91,7 @@ class Linkable {
 
             const endDock = this.link.endDock;
 
-            if (endDock.occupied && !(endDock.isData && endDock.isRight)) {
+            if (endDock.occupied && !(endDock instanceof DataDock && endDock.isRight)) {
 
                 const linkToPop = endDock.links[0];
                 linkToPop.remove();
