@@ -58,7 +58,7 @@ new Node({ ...Library.node.divide, position: [820, 100] });
 	},
 }*/
 
-params = {
+new Node({
 	name: 'GETTER',
 	header: 'lightgreen',
 	executable: true,
@@ -66,8 +66,8 @@ params = {
 		name: 'a'
 	}],
 	exeDocks: {
-		in: [ { label: 'in' } ],
-		out: [ { label: 'out' } ]
+		in: [ { } ],
+		out: [ { } ]
 	},
     process:  {
 		params: [ 
@@ -82,18 +82,14 @@ params = {
 			return `${a} + ${b}`;
 		}
 	},
-}
+});
 
-/*
-
-=> docks: {
-		getter: [{
-			name: 'a'
-		}],
-		executable: {
-			in: [ { label: 'in', parent: 'body' } ],
-			out: [ { label: 'out', parent: 'body' } ]
-		}
+new Node({
+	name: 'Sum',
+	header: 'lightgreen',
+	background: '+',
+	exeDocks: {
+		in: [ { } ],
 	},
     process:  {
 		params: [ 
@@ -104,26 +100,11 @@ params = {
 		function: function(a, b) {
 			return a + b;
 		},
-		toString: function(a, b) {
+		string: function(a, b) {
 			return `${a} + ${b}`;
 		}
-	}
-
-	dataDocks: {
-		in: [
-			{ label: 'a', type: 'number', editable: true },
-			{ label: 'b', type: 'number' }
-		],
-		out: [ { name: 'a' } ]
 	},
-	exeDocks: {
-		in: [ { label: 'in', parent: 'body' } ],
-		out: [ { label: 'out', parent: 'body' } ]
-	}
- */
-
-new Node(params);
-
+});
 
 
 
