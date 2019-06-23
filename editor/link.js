@@ -3,7 +3,7 @@
 class Link {
 
     static separator = '-';
-    static color = { data: 'green', exe: 'blue' };
+    static color = { data: '#4CAF50', exe: '#3F51B5' };
     static width = { data: 3, exe: 4 };
 
     get id() {
@@ -32,8 +32,9 @@ class Link {
 
     constructor(startDock, endDock = undefined) {
 
-        this.startDock = startDock;
-        this.isData = startDock.isData;
+		this.startDock = startDock;
+		// <? use isData on the link fully -> the dockType of the link
+        this.isData = startDock instanceof DataDock;
         // this.type = startDock.type;
 
         this.createLink();
@@ -51,7 +52,7 @@ class Link {
         this.startDock.links.push(this);
 
         // right-sided data docks are never occupied
-        startDock.occupied = !(startDock.isRight && startDock.isData);
+        startDock.occupied = !(startDock.isRight && startDock instanceof DataDock);
 
     };
 
