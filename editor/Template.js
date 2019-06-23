@@ -12,10 +12,10 @@ class Template {
 
 	}
 
-	static node() {
-
-		return Template.get('node');
-
-	}
-
 }
+
+[ 'node', 'dock' ].forEach(template => {
+
+	Template[ template ] = () => Template.get(template);
+
+});

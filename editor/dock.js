@@ -2,6 +2,8 @@
 
 class Dock {
 
+	static all = {};
+
     static sideAttributes = {
 		in: { 
 			isRight: false, 
@@ -13,7 +15,7 @@ class Dock {
 			side: 'Right', 
 			sidePrefix: 'R'
 		}
-	};
+	}
 	
 	static create(dockObjects, direction, dockConstructor, node) {
 
@@ -44,19 +46,54 @@ class Dock {
 			id,
 			label,
             isRight,
-            node,
+			node,
+			element: { parent },
             location,
-            element: {
-				parent,
-                ...this.prepareElement(id, isRight)
-			},
             links: [],
             occupied: false,
         });
 
-        this.defineArgumentGetSet();
+        // create the actual HTML dock element
+		this.createDock();
 
-    };
+        // add the Dock instance to the object of instances, it can be accessed with its unique id
+        Dock.all[ this.id ] = this;
+
+		// get the dock's element offset relative to the node element
+        wait(() => this.offset = this.getRelativePosition());
+
+        // this.defineArgumentGetSet();
+
+	}
+	
+	createDock() {
+
+		// retrieve the node HTML template
+		const $ = Template.dock();
+		
+		// bind HTML elements to JS instance
+        Object.assign(this.element, {
+            dock: $('.dock-container'),
+            pin: $('.dock'),
+            snap: $('.snap-dock'),
+            param: $('.param-container'),
+            label: $('.param-label'),
+        });
+
+        // add the dock's type and side to the list of classes
+        this.element.dock.classList.add(
+            this instanceof DataDock ? 'data' : 'exe',
+            this.isRight ? 'right' : 'left'
+        );
+
+		// bind JS instance to HTML element 
+        this.element.snap.ref = this.id;
+        this.element.dock.id = this.id;
+
+		// append the dock to the node element
+        this.element.parent.appendChild(this.element.dock);
+
+    }
 
     set constant(bool) {
 
@@ -64,13 +101,13 @@ class Dock {
 
         this.element.dock.classList[ bool ? 'add' : 'remove' ]('constant');
 
-    };
+    }
 
     get label() {
 
         return (this.element.label) ? this.element.label.textContent : "";
 
-    };
+    }
 
     set label(newLabel) {
 
@@ -78,7 +115,7 @@ class Dock {
 
         this.element.label.textContent = newLabel;
 
-    };
+    }
 
     get position() {
 
@@ -86,32 +123,6 @@ class Dock {
         const [ offsetX, offsetY ] = this.offset;
 
         return [ nodePosX + offsetX, nodePosY + offsetY ];
-
-    };
-
-    prepareElement(id, isRight) {
-
-        let template = document.querySelector('template#dock');
-        template = document.importNode(template.content, true);
-
-        const element = {
-            dock: template.querySelector('.dock-container'),
-            pin: template.querySelector('.dock'),
-            snap: template.querySelector('.snap-dock'),
-            param: template.querySelector('.param-container'),
-            label: template.querySelector('.param-label'),
-        }
-
-        // add the dock's type and side to the list of classes
-        element.dock.classList.add(
-            this instanceof DataDock ? 'data' : 'exe',
-            isRight ? 'right' : 'left'
-        );
-
-        element.dock.id = id;
-        element.snap.ref = id;
-
-        return element;
 
     }
 
@@ -125,7 +136,7 @@ class Dock {
 
                 get: () => {
 
-                    if (this.isData) {
+                    if (this instanceof DataDock) {
 
                         if (this.isRight) {
 
@@ -166,7 +177,7 @@ class Dock {
 
                         _argument = argument;
 
-                    } else if (argument && this.isData) {
+                    } else if (argument && this instanceof dataDock) {
 
                         const [ value, string, dependencies ] = argument;
                         if (this.isRight) {
@@ -185,30 +196,30 @@ class Dock {
             }
         });
 
-    };
+    }
 
-    calculateRelativePos() {
+    getRelativePosition() {
 
         const nodePos = this.node.element.node.getBoundingClientRect();
         const dockPos = this.element.pin.getBoundingClientRect();
-
-        const offset = this.isData ? DataDock.offset : ExeDock.offset;
+		const offset = this.constructor.offset;
+		
         return [
             (dockPos.x - nodePos.x) / Canvas.zoomLevel + offset,
             (dockPos.y - nodePos.y) / Canvas.zoomLevel + offset
         ];
 
-    };
+    }
 
     isCompatible(target) {
 
         const notEqual = (this.node != target.node);
         const opposite = (this.isRight != target.isRight);
-        const sameType = (this.isData == target.isData) && (this.type == target.type);
+        const sameType = (this instanceof DataDock == target instanceof DataDock) && (this.type == target.type);
 
         return notEqual && opposite && sameType;
 
-    };
+    }
 
     inputConstant(constant) {
 
@@ -223,7 +234,7 @@ class Dock {
         this.argument = this.adjustInput(constant);
         ControlFlow.update(this.node);
 
-    };
+    }
 
     adjustInput(input) {
 
@@ -239,13 +250,13 @@ class Dock {
 
         }
 
-    };
+    }
 
     inputVariable(variable) {
 
         _(variable);
 
-    };
+    }
 
     static destruct(docks) {
 
@@ -254,6 +265,6 @@ class Dock {
             out: docks.out.map(({ label, editable, switchSection }) => { return { label, editable, switchSection } })
         }
 
-    };
+    }
 
-} const docks = {};
+}
