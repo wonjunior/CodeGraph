@@ -10,18 +10,13 @@ class DataDock extends Dock {
 
         super(parameters);
 
-        const { editable, /*type,*/ label } = parameters; // <? use Editable?
-        Object.assign(this, {editable, /*type,*/ label});
+        // const { editable, /*type,*/ label } = parameters; // <? use Editable?
+        // Object.assign(this, {editable, /*type,*/ label});
 
-        this.element.parent.appendChild(this.element.dock); // <? put this inside Dock?
-
-        docks[ this.id ] = this;
-
-        wait(() => this.offset = this.calculateRelativePos());
-
-    };
+    }
 
     /*createDock(label) {
+
 
         // <input class="varInput" type="text" spellcheck="false">
         if (this.editable) { // <? Editable ?
@@ -40,6 +35,6 @@ class DataDock extends Dock {
 
         }
 
-    };*/
+    }*/
 
 }

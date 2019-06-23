@@ -10,18 +10,12 @@ class ExeDock extends Dock {
 
         super(parameters);
 
-        const { label } = parameters; // <? use Editable?
-        Object.assign(this, { label });
+        // const { label } = parameters; // <? use Editable?
+        // Object.assign(this, { label });
 
-        this.element.parent.appendChild(this.element.dock); // <? put this inside Dock?
-
-        docks[ this.id ] = this;
-
-		wait(() => this.offset = this.calculateRelativePos());
-		
     }
 
-    createDock(label) {
+    /*createDock(label) {
 
         this.element = this.prepareDock();
 
@@ -31,6 +25,6 @@ class ExeDock extends Dock {
 
         return this;
 
-    };
+    }*/
 
 }
