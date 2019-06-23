@@ -19,7 +19,7 @@ new State({
 
         left: {
 
-            container: (event) => {
+            'node-container': (event) => {
 
                 new Selection(Node.all[ event.target.id ]);
 
@@ -40,7 +40,7 @@ new State({
 
             'snap-dock': () => {
 
-                const dockObject = docks[ event.target.ref ];
+				const dockObject = Dock.all[ event.target.ref ];
                 new Linkable(event, dockObject);
 
             },
@@ -48,7 +48,7 @@ new State({
             varInput: function(event) {
 
                 this.input = event.target;
-                this.dock = docks[ this.input.ref ];
+                this.dock = Dock.all[ this.input.ref ];
 
                 // this.dock.inputConstant(this.input.value);
 

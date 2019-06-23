@@ -4,11 +4,11 @@
  * dd
  */
 class Node {
-
+	
+	static all = {};
+	
     static idOfLast = 1;
 	static idPrefix = 'n';
-	
-	static all = [];
 
     /**
      * Depending on the number of nodes already created, the function will create a new node identifier. This id
@@ -54,8 +54,7 @@ class Node {
     get position() {
 
 		// gets the position directly from inline-style and converts it into an array of numbers
-		// <! try refactoring the map callback, just try.
-        return [ this.element.node.style.left, this.element.node.style.top ].map(e => parseInt(e));
+        return [ this.element.node.style.left, this.element.node.style.top ].map(parseFloat);
 
     }
 
@@ -237,9 +236,9 @@ class Node {
 		// retrieve the node HTML template
         const $ = Template.node();
 
-		// bind HTML elements § JS instance
+		// bind HTML elements to JS instance
         Object.assign(this.element, {
-            node: $('.container'),
+            node: $('.node-container'),
 			header: $('.header'),
             label: $('.header-title'),
             headLeft: $('.header-block > .left-block'),
@@ -249,7 +248,7 @@ class Node {
 			background: $('.body > .background')
 		});
 		
-		// bind JS instance § HTML element 
+		// bind JS instance to HTML element 
         this.element.header.ref = this.id;	// <? is this needed
 		this.element.node.id = this.id;
 
