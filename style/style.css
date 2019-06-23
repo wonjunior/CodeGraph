@@ -108,25 +108,26 @@ body,
 svg {
     margin: 0px;
     padding: 0px;
-}
-svg {
-    width: 100px;
-    height: 100px;
-    overflow:  visible;
+    /* width: 100px; */												/* finitepane-rollback */
+	/* height: 100px; */ 											/* finitepane-rollback */
+	width: 100%;
+    height: 100%;
+    /* overflow:  visible; */										/* finitepane-rollback */
     border: 1px transparent
 }
 .canvas {
     position: absolute;
     box-sizing: border-box;
-    height: 100%;
-    width: 100%;
-    pointer-events: none;
+    /* height: 100%; */												/* finitepane-rollback */
+    /* width: 100%; */												/* finitepane-rollback */
+    /* pointer-events: none; */										/* finitepane-rollback */
 }
 
 .objects {
     /* width and height were on .canvas */
-    /* width: 1500px; */
-    /* height: 1500px; */
+    width: 3000px;													/* finitepane-rollback */
+	height: 3000px;													/* finitepane-rollback */
+	background: url(https://image.ibb.co/f1RAXF/background.png);	/* finitepane-rollback */
     /* width: 100%; */
     /* height: 100%; */
     font-weight: 500;
@@ -169,7 +170,7 @@ span.footer-em {
 
 .window {
     /* background: url('background.png'); */
-    background-image: url('background.png'), url('https://image.ibb.co/f1RAXF/background.png');
+    /* background-image: url('background.png'), url('https://image.ibb.co/f1RAXF/background.png'); */					/* finitepane-rollback */
     height: 100%;
 }
 

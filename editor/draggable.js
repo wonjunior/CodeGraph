@@ -2,7 +2,7 @@
 
 class Draggable {
 
-    constructor({ type, event, element, object, /*bounderyClamp,*/ callback }) {
+    constructor({ type, event, element, object, bounderyClamp, callback }) {  					/* finitepane-rollback */
         //                            <? just setter position
 
         this.element = element;
@@ -10,17 +10,17 @@ class Draggable {
 
         if (type == 'drag') {
 
-            this.startDrag(event, /*bounderyClamp, */ callback);
+            this.startDrag(event, bounderyClamp, callback);										/* finitepane-rollback */
 
         } else if (type == 'stick') {
 
-            this.startStick(event, /*bounderyClamp, */ callback);
+            this.startStick(event, bounderyClamp, callback);									/* finitepane-rollback */
 
         }
 
     };
 
-    startStick(e, /*bounderyClamp, */ callback) {
+    startStick(e, bounderyClamp, callback) {													/* finitepane-rollback */
 
         const parentProp = this.element.parentElement.getBoundingClientRect();
         this.offset = [
@@ -30,7 +30,7 @@ class Draggable {
 
         const eventHandler = event => {
 
-            this.dragging(event/*, bounderyClamp*/);
+            this.dragging(event, bounderyClamp);												/* finitepane-rollback */
 
             if (callback) callback();
 
@@ -43,7 +43,7 @@ class Draggable {
 
     };
 
-    startDrag(e, /*bounderyClamp, */ callback) {
+    startDrag(e, bounderyClamp, callback) {														/* finitepane-rollback */
 
         const selfProp = this.element.getBoundingClientRect();
         const parentProp = this.element.parentElement.getBoundingClientRect();
@@ -54,7 +54,7 @@ class Draggable {
 
         const eventHandler = event => {
 
-            this.dragging(event/*, bounderyClamp*/);
+            this.dragging(event, bounderyClamp);												/* finitepane-rollback */
 
             if (callback) callback();
 
@@ -75,8 +75,8 @@ class Draggable {
             (e.clientY - offsetY) / Canvas.zoomLevel
         ];
 
-        // this.object.position = bounderyClamp(targetPosition);
-        this.object.position = targetPosition;
+        this.object.position = bounderyClamp(targetPosition);									/* finitepane-rollback */
+        // this.object.position = targetPosition;												/* finitepane-rollback */
 
     };
 

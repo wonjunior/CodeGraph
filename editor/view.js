@@ -14,7 +14,7 @@ class View {
 
         Canvas.zoomLevel = scale;
 
-        // Canvas.position = Canvas.draggableBoundaryClamp(Canvas.position);
+        Canvas.position = Canvas.draggableBoundaryClamp(Canvas.position);												/* finitepane-rollback */
 
     };
 
@@ -40,7 +40,8 @@ class View {
     static mousePosition(event) {
 
         const [ x, y ] = [ event.clientX, event.clientY ];
-        const [ offsetX, offsetY ] = Canvas.positionFromOrigin();
+        // const [ offsetX, offsetY ] = Canvas.positionFromOrigin();
+        const [ offsetX, offsetY ] = Canvas.position;																	/* finitepane-rollback */
 
         return [ (x - offsetX) / Canvas.zoomLevel, (y - offsetY) / Canvas.zoomLevel ];
 
@@ -50,24 +51,33 @@ class View {
 
 View.zoomFactor = -0.05;
 
-Canvas.window.addEventListener('wheel', event => {
+Canvas.zoomWrapper.addEventListener('wheel', event => {																	/* finitepane-rollback */
 
     const sign = Math.sign(
         event.deltaY
     );
 
-    let newScale;
-    if (Canvas.zoomLevel < 1) {
+	const newScale = Canvas.zoomLevel + View.zoomFactor * sign;															/* finitepane-rollback */
 
-        newScale = 1 / (1 / Canvas.zoomLevel - 2 * View.zoomFactor * sign);
+	if (0.5 <= newScale &&  newScale <= 2) {																			/* finitepane-rollback */
 
-    } else {
+		View.zoom(newScale);																							/* finitepane-rollback */
 
-        newScale = Canvas.zoomLevel + View.zoomFactor * sign;
+	}
+	
+	/************************* finitepane-rollback **********************************/
+	// let newScale;
+    // if (Canvas.zoomLevel < 1) {
 
-    }
+        // newScale = 1 / (1 / Canvas.zoomLevel - 2 * View.zoomFactor * sign);
 
-    View.zoom(newScale, /*[event.clientX, event.clientY]*/);
+    // } else {
+
+        // newScale = Canvas.zoomLevel + View.zoomFactor * sign;
+
+    // }
+
+    // View.zoom(newScale, /*[event.clientX, event.clientY]*/);
 
 
     /*const newScale = Canvas.zoomLevel + View.zoomFactor * sign;

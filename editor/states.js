@@ -32,7 +32,8 @@ new State({
                     event,
                     type: 'drag',
                     element: nodeObject.element.node,
-                    object: nodeObject,
+					object: nodeObject,
+					bounderyClamp: nodeObject.draggableBoundaryClamp.bind(nodeObject),						/* finitepane-rollback */
                     callback:  nodeObject.update.bind(nodeObject)
                 });
 
