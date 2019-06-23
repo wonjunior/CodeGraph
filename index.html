@@ -13,8 +13,8 @@
 
 <body oncontextmenu="return false;">
 
-<button id="step">step forward</button>
-<button id="all">all</button>
+<!-- <button id="step">step forward</button>
+<button id="all">all</button> -->
 
 <div class="window">
 
@@ -38,7 +38,7 @@
 
     <div class="footer">
       <div class="signature s-left"># testfile.cg</div>
-      <div class="signature s-right">CodeGraph v0.5</div>
+      <div class="signature s-right"><span class="footer-em">C</span>ode<span class="footer-em">G</span>raph v0.5</div>
     </div>
 
 </div>
@@ -46,10 +46,10 @@
 <templates>
 
     <template id="node">
-        <div class="container" id="{node.id}">
+        <div class="node-container" id="{node.id}">
 
             <div class="header">
-                <div class="header-title">{node.label}</div>
+                <div class="header-title"></div>
                 <div class="header-block">
                     <div class="left-block"></div><!--
                     --><div class="right-block"></div>
@@ -74,26 +74,6 @@
             </div>
         </div>
     </template>
-
-    <!--<template id="dataDock">
-        <div class="data" id="{dock.id}">
-            <div class="dock"></div>
-            <div class="snapDock"></div>
-            <div class="paramContainer">
-                <div class="paramName"></div><input class="varInput" type="text" spellcheck="false">
-            </div>
-        </div>
-    </template>
-
-    <template id="exeDock">
-        <div class="exe" id="{dock.id}">
-          <div class="dock"></div>
-          <div class="snapDock"></div>
-          <div class="paramContainer">
-              <div class="paramName"></div>
-          </div>
-        </div>
-    </template>-->
 
     <template id="link">
         <svg>
