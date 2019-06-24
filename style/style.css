@@ -45,12 +45,13 @@ input:focus, textarea:focus, select:focus {
 }
 
 path {
-    fill: none;
-    pointer-events: visible;
+    fill: #ffffff0f;
+    pointer-events: none;
     stroke-dasharray: 10;
     animation: dash 30s linear;
     animation-iteration-count: infinite;
     animation-direction: reverse;
+    fill: none;
 }
 
 @keyframes dash {
@@ -109,11 +110,12 @@ svg {
     margin: 0px;
     padding: 0px;
     /* width: 100px; */												/* finitepane-rollback */
-	/* height: 100px; */ 											/* finitepane-rollback */
-	width: 100%;
+    /* height: 100px; */ 											/* finitepane-rollback */
+    width: 100%;
     height: 100%;
     /* overflow:  visible; */										/* finitepane-rollback */
-    border: 1px transparent
+    border: 1px transparent;
+    z-index: 1;
 }
 .canvas {
     position: absolute;
@@ -128,16 +130,16 @@ svg {
 .objects {
 	--objects-size: 5000px;
     /* width and height were on .canvas */
-    width: var(--objects-size);													/* finitepane-rollback */
-    height: var(--objects-size);													/* finitepane-rollback */
-    background: url(https://image.ibb.co/f1RAXF/background.png);	/* finitepane-rollback */
-    /* width: 100%; */
-    /* height: 100%; */
-    font-weight: 500;
-    font-family: Calibri;
-    position: absolute;
-    /* z-index: 2; */
-    border: 3px dashed #c31a1acf;
+	width: var(--objects-size);													/* finitepane-rollback */
+	height: var(--objects-size);													/* finitepane-rollback */
+	background: url(https://image.ibb.co/f1RAXF/background.png);	/* finitepane-rollback */
+	/* width: 100%; */
+	/* height: 100%; */
+	font-weight: 500;
+	font-family: Calibri;
+	position: absolute;
+	z-index: 2;
+	border: 3px dashed #c31a1acf;
 }
 
 .footer {
