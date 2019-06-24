@@ -60,7 +60,7 @@ class Canvas {
             const minLimit = - Canvas.positionFromOrigin()[i] / Canvas.zoomLevel + Canvas.position[i] ; // -1
             const maxLimit = minLimit - (Canvas.size[i] - View.screenSize[i]) / Canvas.zoomLevel;
 
-			return value >= minLimit ? Math.round(minLimit) : (value <= maxLimit ? Math.round(maxLimit) : value);
+			return value >= minLimit ? minLimit : (value <= maxLimit ? maxLimit : value);
 			
         });
 
