@@ -3,14 +3,14 @@
 // <? keyHandler.js is getting crowded make mouseHandler.js
 document.addEventListener('mousedown', event => {
 
-    if (event.target.classList.contains('window') && event.button == 2) {
+    if (event.target.classList.contains('objects') && event.button == 2) {					/* finitepane-rollback */
 
         new Draggable({
             event,
             type: 'drag',
-            element: Canvas.element,
+            element: event.target,															/* finitepane-rollback */
             object: Canvas,
-            // bounderyClamp: Canvas.draggableBoundaryClamp,
+            bounderyClamp: Canvas.draggableBoundaryClamp,									/* finitepane-rollback */
         });
 
     } else if (event.target.tagName == 'PATH') {

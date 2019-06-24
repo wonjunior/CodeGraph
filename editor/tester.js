@@ -63,10 +63,10 @@ new Node({
 	header: 'lightgreen',
 	executable: true,
 	getters: [{
-		name: 'a'
+		name: 'a', location: 'head'
 	}],
 	exeDocks: {
-		in: [ { } ],
+		in: [ { location: 'body' } ],
 		out: [ { } ]
 	},
     process:  {

@@ -5,7 +5,8 @@ class Canvas {
     static get zoomLevel() {
 
         const scaleFromStyle = Canvas.zoomWrapper.style.transform.replace(/[^\d.]/g, ''); // <? make class to handle it
-        return  (1*scaleFromStyle) || 1;
+		
+		return parseFloat(scaleFromStyle) || 1;
 
     };
 
@@ -17,8 +18,7 @@ class Canvas {
 
     static get position() {
 
-        return [Canvas.element.style.left, Canvas.element.style.top]
-            .map(posString => parseInt(posString));
+        return [ Canvas.element.style.left, Canvas.element.style.top ].map(parseFloat);
 
     };
 
@@ -55,24 +55,13 @@ class Canvas {
 
     static draggableBoundaryClamp(position) {
 
-
-        return position.map(( value, i ) => {
+        return position.map((value, i) => {
 
             const minLimit = - Canvas.positionFromOrigin()[i] / Canvas.zoomLevel + Canvas.position[i] ; // -1
             const maxLimit = minLimit - (Canvas.size[i] - View.screenSize[i]) / Canvas.zoomLevel;
 
-            if (value >= minLimit) {
-
-                return Math.round(minLimit);
-
-            } else if (value <= maxLimit) {
-
-                return Math.round(maxLimit);
-
-            }
-
-            return value;
-
+			return value >= minLimit ? minLimit : (value <= maxLimit ? maxLimit : value);
+			
         });
 
     }

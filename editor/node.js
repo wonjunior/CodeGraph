@@ -207,20 +207,19 @@ class Node {
 	 */
 	createDocks({ result, params = [] }, getters = [], exeDocks = {}) {
 
+		this.exeDocks = {
+			in: Dock.create(exeDocks.in || [], 'in', ExeDock, this),
+			out: Dock.create(exeDocks.out || [], 'out', ExeDock, this)
+		}
+
 		this.process.result = Dock.create([ result ], 'out', DataDock, this)[0];
 		this.process.params = Dock.create(params, 'in', DataDock, this);
 		this.getters = Dock.create(getters, 'out', GetterDock, this);
 		
-		Object.assign(this, {
-			exeDocks: {
-				in: Dock.create(exeDocks.in || [], 'in', ExeDock, this),
-				out: Dock.create(exeDocks.out || [], 'out', ExeDock, this)
-			},
-			dataDocks: {
-				in: this.process.params,
-				out: [ this.process.result, ...this.getters ]
-			}
-		});
+		this.dataDocks = {
+			in: this.process.params,
+			out: [ this.process.result, ...this.getters ]
+		}
 
 		this.docks = [ ...this.exeDocks.in, ...this.exeDocks.out, ...this.dataDocks.in, ...this.dataDocks.out ];
 		
@@ -303,6 +302,21 @@ class Node {
         this.element.node.remove();
 
     }
+
+	draggableBoundaryClamp(position) {
+
+        // clamp the node's position: it cannot go outside the canvas area
+        return position.map((value, i) => {
+
+            const minLimit = 0;
+            const maxLimit = (Canvas.size[i] - this.size[i]) / Canvas.zoomLevel;
+			
+			// here's where the clamp is actually happening
+			return value <= minLimit ? minLimit : (value >= maxLimit ? maxLimit : value);
+
+        });
+
+    };
 
     /**
      * This static method destructs the given node object into a non circular object.

@@ -93,14 +93,15 @@ input.occupied {
 /* font-family: Consolas, 'Courier New', monospace; */
 .node-container {
 	font-family: 'CONSOLAS';
-    width: 130px;
-    z-index: 1;
-    border-radius: 15px;
+	width: 130px;
+	z-index: 1;
+	border-radius: 15px;
 	position: absolute;
 	border: 2px solid transparent;
-    /* border: 1px solid rgba(23, 22, 22, 0.4); */
-    /* top: 100px; */
-    /* left: 200px; */
+	/* border: 1px solid rgba(23, 22, 22, 0.4); */
+	/* top: 100px; */
+	/* left: 200px; */
+	transition: box-shadow 0.2s linear;
 }
 
 .node-container.selected {
