@@ -42,7 +42,7 @@ Key.list = {
 	60: "<",
 	61: "equals (firefox)",
 	64: "@ (firefox)",
-	/*65: "a",
+	65: "a",
 	66: "b",
 	67: "c",
 	68: "d",
@@ -67,7 +67,7 @@ Key.list = {
 	87: "w",
 	88: "x",
 	89: "y",
-	90: "z",*/
+	90: "z",
 	91: "Windows Key / Left ⌘ / Chromebook Search key",
 	92: "right window key ",
 	93: "Windows Menu / Right ⌘",

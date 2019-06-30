@@ -24,34 +24,34 @@ new State({
 
         left: {
 
-            'node-container': (event) => {
+            '.node-container': ({ target }) => {
 
-                new Selection(Node.all[ event.target.id ]);
+				new Selection(Node.all[ target.id ]);
+	
+			},
 
-            },
+			'.header': ({ target }) => {
 
-            header: () => {
-
-                const nodeObject = Node.all[ event.target.ref ]; // $nodes
-                new Draggable({
+                const nodeInstance = Node.all[ target.parentElement.id ];
+				
+				new Draggable({
                     event,
                     type: 'drag',
-                    element: nodeObject.element.node,
-					object: nodeObject,
-					bounderyClamp: nodeObject.draggableBoundaryClamp.bind(nodeObject),						/* finitepane-rollback */
-                    callback:  nodeObject.update.bind(nodeObject)
+                    element: nodeInstance.element.node,
+					object: nodeInstance,
+					bounderyClamp: nodeInstance.draggableBoundaryClamp.bind(nodeInstance),						
+                    callback: nodeInstance.update.bind(nodeInstance)
                 });
 
             },
 
-            'snap-dock': () => {
+            '.snap-dock': ({ target }) => {
 
-				const dockObject = Dock.all[ event.target.ref ];
-                new Linkable(event, dockObject);
+                new Linkable(event, Dock.all[ target.ref ]);
 
             },
 
-            varInput: function(event) {
+            '.varInput': function(event) {
 
                 this.input = event.target;
                 this.dock = Dock.all[ this.input.ref ];
@@ -60,7 +60,7 @@ new State({
 
                 State.change(Editor.state.input, this);
 
-            },
+			}
 
         }
 
@@ -97,21 +97,11 @@ new State({
     },
 
     mousebinds: {
-
         all: {
-
             not: {
-
-                varInput: () => {
-
-                    State.change(Editor.state.default);
-
-                }
-
+                '.varInput': () => State.change(Editor.state.default)
             }
-
         }
-
     }
 
 });
