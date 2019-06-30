@@ -35,64 +35,82 @@ document.addEventListener('mousedown', event => {
 
 });
 
-
+// <? add mixins
 class State {
 
-    constructor({ defaultState, name, keybinds, mousebinds }) {
+	static all = {};
 
-        this.keybinds = keybinds || {};
-        this.mousebinds = mousebinds || {};
-        this.name = name;
+    constructor({ id, keybinds = {}, mousebinds = {} }) {
 
-        if (defaultState) {
+		Object.assign(this, {
+			id,
+			keybinds,
+			mousebinds
+		});
 
-            State.default = this;
-
-        } else {
-
-            if (name == 'editor') {
-
-                this.data = {};
-                State.current = this;
-
-            }
-
-            State.all[ name ] = this;
-
-        }
+		State.all[ id ] = this;
 
     }
 
-    static change(newState, passedData) {
+    static change(stateId, data = {}) {
 
-        State.current = State.all[ newState ];
-        State.current.data = passedData || {};
+		if (typeof stateId != 'symbol') throw new Error(`First argument for State.change must be a symbol, instead received: ${typeof stateId} (${stateId})`);
 
-    };
+        State.current = State.all[ stateId ];
+        State.current.data = data;
 
-};
-
-State.all = {};
-
-class Key {
-
-    static getName({ keyCode, ctrlKey, shiftKey, altKey }) {
-
-        const modKey = (ctrlKey ? 'ctrl_' : '') + (shiftKey ? 'shift_' : '') /*+ (altKey ? 'alt_' : '')*/;
-
-        return  Key.names[ keyCode ] ? (modKey + Key.names[ keyCode ]) : undefined;
-
-    };
+    }
 
 }
 
-Key.names = {
-    9: 'tab',
-    27: 'escape',
-    32: 'spacebar',
-    38: 'arrowup',
-    40: 'arrowdown',
-    46: 'delete',
+/**
+ * Helper class that associates key codes with their names
+ */
+class Key {
+
+	/**
+	 * Hash table mapping key codes and key names
+	 */
+	static list;
+
+	/**
+	 * Gives the key combination name corresponding to provided Event
+	 * @param {Event} event a document event
+	 */
+    static getName({ keyCode, ctrlKey, shiftKey, altKey }) {
+
+        const modKey = (ctrlKey ? 'ctrl_' : '') + (shiftKey ? 'shift_' : '') + (altKey ? 'alt_' : '');
+
+        return Key.list[ keyCode ] ? (modKey + Key.list[ keyCode ]) : null;
+
+    }
+
+}
+
+/**
+ * Helper class that associates mouse button codes codes with their names
+ */
+class Mouse {
+
+	/**
+	 * Hash table mapping mouse codes and mouse buttons
+	 */
+	static list = {
+		0: 'left',
+		1: 'middle',
+		2: 'right'
+	}
+
+	/**
+	 * Gives the button name associated with the mouse code
+	 * @param {Event} event a document event
+	 */
+    static getName({ button }) {
+
+        return Mouse.list[ button ];
+
+    }
+
 }
 
 class keyEvent {
@@ -105,42 +123,21 @@ class keyEvent {
 
         this.checkKeybinds(keyName);
 
-    };
+    }
 
     checkKeybinds(keyName) {
 
-        const keybinds = {
+        const keybinds = /*{
             ...State.default.keybinds,
-            ...this.state.keybinds,
-        };
+            ...*/this.state.keybinds/*,
+        }*/
 
         const eventCallback = keybinds[ keyName ];
 
-        if (eventCallback) {
-
-            // _('inner: ', State.current)
-            eventCallback.bind(this.state.data)(event);
-
-        }
+        if (eventCallback) eventCallback.bind(this.state.data)(event);
 
     };
 
-};
-
-class Mouse {
-
-    static getName(mouseCode) {
-
-        return Mouse.names[ mouseCode ];
-
-    };
-
-}
-
-Mouse.names = {
-    0: 'left',
-    1: 'middle',
-    2: 'right'
 }
 
 class mouseEvent {
@@ -155,14 +152,14 @@ class mouseEvent {
 
     watchElements(event) {
 
-        const buttonName = Mouse.getName(event.button);
+        const buttonName = Mouse.getName(event);
 
         const [ elementsOnClick, elementsOffClick ] = (({ not, ...on }) => {
 
             return [ on || {}, not || {} ];
 
         })({                                         // state    button
-            ...State.default.mousebinds.left,        // default  LMB
+            // ...State.default.mousebinds.left,        // default  LMB
             ...this.state.mousebinds.all,            // current  ALL
             ...this.state.mousebinds[ buttonName ]   // current  button
         });
@@ -178,11 +175,7 @@ class mouseEvent {
 
             const eventCallback = watchedElements[ selector ];
 
-            if (eventCallback) {
-
-                eventCallback.bind(this.state.data)(event);
-
-            }
+            if (eventCallback) eventCallback.bind(this.state.data)(event);
 
         });
 
@@ -215,19 +208,21 @@ class mouseEvent {
 };
 
 
+// captures all keyboard input on the document
 document.addEventListener('keyup', event => {
 
     new keyEvent(event, State.current);
 
 });
 
+// captures all mouse events (on any mouse button) on the document
 document.addEventListener('mousedown', event => {
 
     new mouseEvent(event, State.current);
 
 });
 
-document.addEventListener('keydown', event => {
+/*document.addEventListener('keydown', event => {
 
     if (event.keyCode == 9) {
 
@@ -235,4 +230,4 @@ document.addEventListener('keydown', event => {
 
     }
 
-});
+});*/

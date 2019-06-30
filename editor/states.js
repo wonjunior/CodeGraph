@@ -1,16 +1,21 @@
+Editor.state = {
+	default: Symbol('editorDefaultState'),
+	input: Symbol('editorInputState')
+}
+
 new State({
 
-    defaultState: true,
-
-    name: 'default',
+    id: Editor.state.default,
 
     keybinds: {
 
-        tab: function(event) {
+        spacebar: () => nodeFinder.show(),
 
+        ctrl_shift_spacebar: (event) => _('nope'),
 
+        delete: () => Selection.delete(),
 
-        }
+        tab: function(e) { e.preventDefault() }
 
     },
 
@@ -53,7 +58,7 @@ new State({
 
                 // this.dock.inputConstant(this.input.value);
 
-                State.change('inputConstant', this);
+                State.change(Editor.state.input, this);
 
             },
 
@@ -63,17 +68,19 @@ new State({
 
 });
 
+State.change(Editor.state.default)
+
 new State({
 
-    name: 'inputConstant',
+    id: Editor.state.input,
 
     keybinds: {
 
         escape: function() {
 
-            State.change('editor');
+            State.change(Editor.state.default);
 
-            this.input.blur();
+			this.input.blur();
 
         },
 
@@ -97,7 +104,7 @@ new State({
 
                 varInput: () => {
 
-                    State.change('editor');
+                    State.change(Editor.state.default);
 
                 }
 

@@ -51,19 +51,3 @@ class Editor {
     };
 
 }
-
-new State({
-
-    name: 'editor',
-
-    keybinds: {
-
-        spacebar: () => nodeFinder.show(),
-
-        ctrl_shift_spacebar: (event) => _('nope'),
-
-        delete: () => Selection.delete(),
-
-    }
-
-});

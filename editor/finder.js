@@ -145,7 +145,7 @@ class Finder {
 
         this.inputElement.focus();
 
-        State.change('finder');
+        State.change(Finder.state);
 
     };
 
@@ -155,7 +155,7 @@ class Finder {
 
         this.inputElement.value = "";
 
-        State.change('editor');
+        State.change(Editor.state.default);
 
     };
 
@@ -183,19 +183,20 @@ class Finder {
 
 };
 
-
+// <? could support more than one finder!
+// name: 'nodeFinder',
+// key: spacebar
 const nodeFinder = new Finder({
-    // name: 'nodeFinder',
     data: Library.node,
     container: Canvas.window,
     placeholder: 'search node...',
-    // key: spacebar
 });
 
+Finder.state = Symbol('finder');
 
 new State({
 
-    name: 'finder',
+    id: Finder.state,
 
     keybinds: {
 
