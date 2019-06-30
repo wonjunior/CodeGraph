@@ -199,21 +199,16 @@ new State({
     id: Finder.state,
 
     keybinds: {
-
-        escape: () => nodeFinder.hide(),
-
-        other: event => nodeFinder.search(event.target.value)
-
+		'escape': () => nodeFinder.hide(),
+        'alphabet': event => nodeFinder.search(event.target.value),
     },
 
     mousebinds: {
-
-        left: {
-
-            finder: () => nodeFinder.hide()
-
+        all: {
+			not: {
+				'.search-container': () => nodeFinder.hide()
+			}
         }
-
     }
 
 });
