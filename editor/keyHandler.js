@@ -38,6 +38,7 @@ document.addEventListener('mousedown', event => {
 // <? add mixins
 class State {
 
+	static debug = true;
 	static all = {};
 
     constructor({ id, keybinds = {}, mousebinds = {} }) {
@@ -119,7 +120,7 @@ class keyEvent {
 
         this.state = state;
 
-        const keyName = Key.getName(event) || 'other';
+        const keyName = Key.getName(event);
 
         this.checkKeybinds(keyName);
 
@@ -132,7 +133,7 @@ class keyEvent {
             ...*/this.state.keybinds/*,
         }*/
 
-        const eventCallback = keybinds[ keyName ];
+        const eventCallback = keybinds[ keyName ] || keybinds[ 'alphabet' ];
 
         if (eventCallback) eventCallback.bind(this.state.data)(event);
 
@@ -144,7 +145,9 @@ class mouseEvent {
 
     constructor(event, state) {
 
-        this.state = state;
+		if (State.debug) console.log('Mouse Clicked, path: ', event.path);
+
+		this.state = state;
 
         this.watchElements(event);
 
@@ -158,52 +161,61 @@ class mouseEvent {
 
             return [ on || {}, not || {} ];
 
-        })({                                         // state    button
-            // ...State.default.mousebinds.left,        // default  LMB
+        })({
             ...this.state.mousebinds.all,            // current  ALL
             ...this.state.mousebinds[ buttonName ]   // current  button
         });
 
-        this.checkSelectorsOn(event, elementsOnClick);
-        this.checkSelectorsOff(event, elementsOffClick);
+        this.checkSelectorsOn(event, Object.entries(elementsOnClick));
+        this.checkSelectorsOff(event, Object.entries(elementsOffClick));
 
-    };
+    }
 
-    checkSelectorsOn(event, watchedElements) {
+    checkSelectorsOn(event, observedSelectors) {
 
-        this.targetIdentifiers(event.target).forEach(selector => {
+		const matches = observedSelectors.map(([ observedSelector, callback ]) => {
 
-            const eventCallback = watchedElements[ selector ];
+			const matchIndex = event.path.findIndex(target => target.matches && target.matches(observedSelector));
 
-            if (eventCallback) eventCallback.bind(this.state.data)(event);
+			return !~matchIndex ? null : { 
+				distance: matchIndex, 
+				target: event.path[ matchIndex ],
+				callback, 
+				event, 
+				observedSelector
+			};
 
-        });
+		}).filter(Boolean);
 
-    };
+		const closestMatchIndex = matches.reduce((min, { distance }, i, a) => distance < a[min].distance ? i : min, 0)
 
-    checkSelectorsOff(event, watchedElements) {
+		if (matches.length) this.trigger(matches[ closestMatchIndex ]);
 
-        Object.entries(watchedElements).forEach(([watchedElementSelector, eventCallback]) => {
+    }
 
-            if (!~this.targetIdentifiers(event.target).indexOf(watchedElementSelector)) {
+    checkSelectorsOff(event, observedSelectors) {
 
-                eventCallback.bind(this.state.data)(event);
+		observedSelectors.forEach(([ observedSelector, callback ]) => {
 
-            }
+			const noMatch = event.path.every(element => !(element.matches && element.matches(observedSelector)));
 
-        });
+			if (noMatch) this.trigger({ callback, event, observedSelector });
 
-    };
+		});
 
-    targetIdentifiers(element) {
+	}
+	
+	trigger({ callback, event, observedSelector, target = null }) {
 
-        return [
-            ...event.target.classList,
-            event.target.tagName.toLowerCase(),
-            'document'
-        ];
+		if (State.debug) console.log({ event, target, selector: observedSelector });
 
-    };
+		callback.bind(this.state.data)({
+			event,
+			target,
+			selector: observedSelector,
+		});
+
+	}
 
 };
 
