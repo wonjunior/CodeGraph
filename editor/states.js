@@ -1,3 +1,5 @@
+'use strict'
+
 Editor.state = {
 	default: Symbol('editorDefaultState'),
 	input: Symbol('editorInputState')
@@ -21,6 +23,21 @@ new State({
 
     mousebinds: {
 
+		right: {
+
+			'.objects': ({ event, target }) => {
+
+				new Draggable({
+					event,
+					type: 'drag',
+					element: target,
+					object: Canvas,
+					bounderyClamp: Canvas.draggableBoundaryClamp,
+				});
+
+			}
+
+		},
 
         left: {
 
@@ -51,7 +68,7 @@ new State({
 
             },
 
-            '.varInput': function(event) {
+            '.var-input': function(event) {
 
                 this.input = event.target;
                 this.dock = Dock.all[ this.input.ref ];
@@ -59,6 +76,12 @@ new State({
                 // this.dock.inputConstant(this.input.value);
 
                 State.change(Editor.state.input, this);
+
+			},
+
+			'path': ({ target }) => {
+
+				_(target.id);
 
 			}
 
@@ -99,9 +122,20 @@ new State({
     mousebinds: {
         all: {
             not: {
-                '.varInput': () => State.change(Editor.state.default)
+                '.var-input': () => State.change(Editor.state.default)
             }
         }
     }
 
 });
+
+/*
+else if (event.target.tagName == 'TD') {
+const nodeObject = nodeFinder.select(event);
+new Draggable({
+	event,
+	type: 'stick',
+	element: nodeObject.element.node,
+	object: nodeObject
+});
+*/
