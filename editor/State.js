@@ -19,7 +19,7 @@ class State {
 	 * Adds a new state that can later be used with `State.change`
 	 * @param {Object} param0 defines state's keybinds and mousebinds
 	 */
-    constructor({ id, keybinds = {}, mousebinds = {} }) {
+	constructor({ id, keybinds = {}, mousebinds = {} }) {
 
 		if (typeof id != 'symbol') throw new Error(`Id of state must be a symbol, instead received: ${typeof id} (${id})`);
 
@@ -27,7 +27,7 @@ class State {
 
 		State.all[ id ] = this;
 
-    }
+ 	}
 
 	/**
 	 * Returns the state instance associated with the given symbol
@@ -44,13 +44,13 @@ class State {
 	 * @param {Symbol} symbol the identifier of the state
 	 * @param {Object} data the object that can be passed to the new state
 	 */
-    static change(symbol, data = {}) {
+	static change(symbol, data = {}) {
 
 		const state = State.get(symbol);
 		if (!state) throw new Error(`The provided State id (${symbol}) doesn't exist or hasn't been instanciated with \`new State\``);
 
 		State.current = { ...state, data };
 
-    }
+	}
 
 }
