@@ -18,7 +18,7 @@ class DataDock extends Dock {
     /*createDock(label) {
 
 
-        // <input class="varInput" type="text" spellcheck="false">
+        // <input class="var-input" type="text" spellcheck="false">
         if (this.editable) { // <? Editable ?
 
             this.inputElement = template.querySelector('.paramContainer > input');

@@ -203,7 +203,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-input.varInput::placeholder {
+input.var-input::placeholder {
     color: #666161;
     font-style: italic;
 }
@@ -253,10 +253,6 @@ input.varInput::placeholder {
     /* top: 100px; */
     /* left: 100px; */
     pointer-events:  visible;
-}
-
-.links {
-    pointer-events:  none;
 }
 
 .execute {
