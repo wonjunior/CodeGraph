@@ -1,4 +1,4 @@
-Key.list = {
+KeyCode.list = {
 	3: "break",
 	8: "backspace / delete",
 	9: "tab",
