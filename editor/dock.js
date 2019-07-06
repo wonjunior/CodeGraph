@@ -211,6 +211,18 @@ class Dock {
 
     }
 
+	occupiedAndUnique() {
+
+		return this.occupied && ( !this.isRight || this instanceof ExeDock );
+
+	}
+
+	getLink() {
+
+		return this.occupiedAndUnique() ? this.links.first.edit() : new Link(this);
+
+	}
+
     isCompatible(target) {
 
         const notEqual = (this.node != target.node);

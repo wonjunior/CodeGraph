@@ -1,43 +1,56 @@
 'use strict'
 
+/**
+ * Handles the dragging behavior of links in UI. Anytime the user is interacting with a link
+ * a new instance of this class is created and takes care of initiating and closing mouse events
+ * 
+ * @todo feat: add event hooks
+ * @todo bug: when linking and alt-switching the view, the link not tracked anymore
+ */
 class Linkable {
 
-    constructor(event, startDock) {
+	/**
+	 * When creating an event the link is not snapped by default
+	 */
+	snapped = false;
 
-        // determine if a link needs to be updated or a new one has to be created
-        if (startDock.occupied && ( !startDock.isRight || (startDock.isRight && startDock instanceof ExeDock)) ) {
+	/**
+	 * Creates a new event handler for the linking behavior
+	 * @param {MouseEvent} event the event that triggered Linkable
+	 * @param {Dock} startDock the dock from which the event is initiated
+	 */
+    constructor(e, startDock) {
 
-            this.link = startDock.links[0].edit();
+        this.link = startDock.getLink();
 
-        } else {
+        this.startLinking(e);
 
-            this.link = new Link(startDock);
+    }
 
-        }
+	/**
+	 * Initiates the mouse event listeners and binds the callbacks
+	 */
+    startLinking(e) {
 
-        this.snapped = false;
-
-        this.startLinking(event);
-
-    };
-
-    startLinking(event) {
-
-        Linkable.mousemove = event => this.linking(event);
-        Linkable.mousemove(event);
+		Linkable.mousemove = e => this.linking(e);
+		Linkable.mousemove(e)
         document.addEventListener('mousemove', Linkable.mousemove);
 
-        Linkable.mouseup = event => this.endLink(event);
+        Linkable.mouseup = e => this.endLink(e);
         document.addEventListener('mouseup', Linkable.mouseup, { once: true });
 
-    };
+    }
 
+	/**
+	 * 
+	 * @param {*} e 
+	 */
     linking(e) {
 
-        // mousemove on .endDock
-        if (e.target.classList.contains('snap-dock')) {
+		// [!] mouse is on a snap area
+        if (e.target.matches('.snap-dock')) {
 
-            // mouseenter .endDock
+            // [!] mouse just entered the snap area
             if (!this.snapped) {
 
                 const endDock = Dock.all[ e.target.ref ];
@@ -46,36 +59,44 @@ class Linkable {
                 if (this.link.startDock.isCompatible(endDock)) {
 
                     this.snap(endDock);
-
-                // snapping cannot occur
+					
+					// snapping cannot occur
                 } else {
-
-                    this.link.update(View.mousePosition(e));
+					
+					_('1')
+                    this.trackMouse(e);
 
                 }
 
-            // already snapped
+			// [!] mouse is already in the snap area 
             } else {
 
                 // this.link.update(this.endDock.position);
 
             }
 
-        // mousemove out of .endDock
+        // [!] mouse is not on snap area
         } else {
 
-            // mouseleave .endDock
+			// [!] mouse just left the snap area
             if (this.snapped) {
 
-                this.snapped = false;
+				this.snapped = false;
 
             }
 
-            this.link.update(View.mousePosition(e));
+            this.trackMouse(e);
 
         }
 
-    };
+	}
+	
+	trackMouse(event) {
+
+		_('2')
+		this.link.update(View.mousePosition(event));
+
+	}
 
     snap(endDock) {
 
@@ -83,20 +104,18 @@ class Linkable {
         this.link.endDock = endDock;
         this.link.update(endDock.position);
 
-    };
+    }
 
     endLink() {
 
-        if (this.snapped) { // <? make sure endDock.link.length == 0 otherwise pop the other one
+        if (this.snapped) {
 
-            const endDock = this.link.endDock;
-
-            if (endDock.occupied && !(endDock instanceof DataDock && endDock.isRight)) {
-
-                const linkToPop = endDock.links[0];
-                linkToPop.remove();
-
-                delete links[ linkToPop.id ]
+			// this.popExistingIfNeeded()
+			const endDock = this.link.endDock;
+			
+			if (endDock.occupiedAndUnique()) {
+				
+				endDock.links.first.remove();
 
             }
 
@@ -110,6 +129,6 @@ class Linkable {
 
         document.removeEventListener('mousemove', Linkable.mousemove);
 
-    };
+    }
 
 }
