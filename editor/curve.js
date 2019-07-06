@@ -46,8 +46,8 @@ class Curve {
 	static get factor() {
 		
 		return Curve.parameters.factor;
-
-    }
+	
+	}
 
 	/**
 	 * Sets the curve factor.
@@ -55,9 +55,9 @@ class Curve {
 	static set factor(newFactor) {
 		
 		Curve.parameters.factor = newFactor;
-        Link.updateAll();
-
-    }
+		Link.updateAll();
+	
+	}
 
 	/**
 	 * Gets the curve's relative size.
@@ -65,8 +65,8 @@ class Curve {
 	static get warp() {
 		
 		return Curve.parameters.warp;
-
-    }
+	
+	}
 
 	/**
 	 * Sets the curve's relative size. 
@@ -75,7 +75,7 @@ class Curve {
 		
 		Curve.parameters.warp = newWarp;
 		Link.updateAll();
-
-    }
+	
+	}
 
 }
