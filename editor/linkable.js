@@ -19,13 +19,13 @@ class Linkable {
 	 * @param {MouseEvent} event the event that triggered Linkable
 	 * @param {Dock} startDock the dock from which the event is initiated
 	 */
-    constructor(e, startDock) {
-
-        this.link = startDock.getLink();
-
-        document.addEventListener('mousemove', this.mouseMove);
-
-        document.addEventListener('mouseup', this.mouseUp, { once: true });
+	constructor(e, startDock) {
+		
+		this.link = startDock.getLink();
+		
+		document.addEventListener('mousemove', this.mouseMove);
+		
+		document.addEventListener('mouseup', this.mouseUp, { once: true });
 
     }
 	
@@ -58,15 +58,15 @@ class Linkable {
 	}
 
 	mouseLeave(e) {
-
+		
 		this.snapped = false;
-
+	
 	}
 
 	mouseUp = () => {
-
+		
 		this.snapped ? this.mouseUpIn() : this.mouseUpOut();
-
+		
 		document.removeEventListener('mousemove', this.mouseMove);
 
 	}
@@ -88,41 +88,41 @@ class Linkable {
 	popExistingLink() {
 		
 		const endDock = this.link.endDock;
-						
+		
 		if (endDock.occupiedAndUnique()) endDock.links.first.remove();
 
 	}
 
 	canSnap(endDock) {
-
+		
 		return this.link.startDock.isCompatible(endDock);
 
 	}
 
 	insideSnapArea(e) {
-
+		
 		return e.target.matches('.snap-dock');
 
 	}
 
 	trackMouse(event) {
-
+		
 		this.link.update(View.mousePosition(event));
 
 	}
 
 	trackDock(dock) {
-
+		
 		this.link.update(dock.position);
 
 	}
-
-    snap(endDock) {
-
-        this.snapped = true;
-        this.link.endDock = endDock;
-        this.trackDock(endDock);
-
-    }
+	
+	snap(endDock) {
+		
+		this.snapped = true;
+		this.link.endDock = endDock;
+		this.trackDock(endDock);
+	
+	}
 
 }
