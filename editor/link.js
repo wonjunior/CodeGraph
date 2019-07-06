@@ -100,15 +100,15 @@ class Link {
 
         if (!endPoint) {
 
-            this.path = Curve.get(this.startDock.position, this.endDock.position);
+            this.path = Curve.calculate(this.startDock.position, this.endDock.position);
 
         } else if (this.startDock.isRight) {
 
-            this.path = Curve.get(this.startDock.position, endPoint);
+            this.path = Curve.calculate(this.startDock.position, endPoint);
 
         } else {
 
-            this.path = Curve.get(endPoint, this.startDock.position);
+            this.path = Curve.calculate(endPoint, this.startDock.position);
 
         }
 

@@ -269,9 +269,9 @@ class Node {
 
             dock.links.forEach(link => {
 
-				// get the path expression from the static `Curve.get` and change the link's path 
+				// get the path expression from the static `Curve.calculate` and change the link's path 
 				// directly by utilising the `Link#path` setter which updates the SVG element
-                link.path = Curve.get(link.startDock.position, link.endDock.position);
+                link.path = Curve.calculate(link.startDock.position, link.endDock.position);
 
             });
 
