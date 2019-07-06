@@ -18,7 +18,7 @@ class Curve {
 	 * @param {*} param0 
 	 * @param {*} param1 
 	 */
-    static calculate([ startX, startY ], [ endX, endY ]) {
+	static calculate([ startX, startY ], [ endX, endY ]) {
 		
 		const Xdiff = Math.abs(endX - startX);
 		
@@ -43,7 +43,7 @@ class Curve {
 	/**
 	 * Gets the curve factor.
 	 */
-    static get factor() {
+	static get factor() {
 		
 		return Curve.parameters.factor;
 
@@ -52,7 +52,7 @@ class Curve {
 	/**
 	 * Sets the curve factor.
 	 */
-    static set factor(newFactor) {
+	static set factor(newFactor) {
 		
 		Curve.parameters.factor = newFactor;
         Link.updateAll();
@@ -62,7 +62,7 @@ class Curve {
 	/**
 	 * Gets the curve's relative size.
 	 */
-    static get warp() {
+	static get warp() {
 		
 		return Curve.parameters.warp;
 
@@ -71,7 +71,7 @@ class Curve {
 	/**
 	 * Sets the curve's relative size. 
 	 */
-    static set warp(newWarp) {
+	static set warp(newWarp) {
 		
 		Curve.parameters.warp = newWarp;
 		Link.updateAll();
