@@ -78,7 +78,7 @@ class Link {
         this.endDock.links = []; // reset the old endDock
         this.endDock.occupied = false;
 
-        ControlFlow.update(this.endDock.node);
+        // ControlFlow.update(this.endDock.node);
 
         delete this.endDock;
 
@@ -165,7 +165,7 @@ class Link {
 
             links[ linkId ] = this;
 
-            wait(() => ControlFlow.update(this.endDock.node));
+            // wait(() => ControlFlow.update(this.endDock.node));
 
         }
 
