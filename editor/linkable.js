@@ -6,6 +6,7 @@
  * 
  * @todo feat: add event hooks
  * @todo bug: when linking and alt-switching the view, the link not tracked anymore
+ * @todo improvement: create the link only when moving out of the snap area
  */
 class Linkable {
 
@@ -19,10 +20,11 @@ class Linkable {
 	 * @param {MouseEvent} event the event that triggered Linkable
 	 * @param {Dock} startDock the dock from which the event is initiated
 	 */
-	constructor(startDock) {
+	constructor(event, startDock) {
 		
 		this.link = new Link(startDock);
 		
+		this.mouseMove(event);
 		document.addEventListener('mousemove', this.mouseMove);
 		
 		document.addEventListener('mouseup', this.mouseUp, { once: true });
@@ -94,7 +96,7 @@ class Linkable {
 	 */
 	mouseUpIn() {
 		
-		this.link.set();
+		this.link.pin();
 
 	}
 
@@ -154,7 +156,9 @@ class Linkable {
 	snap(dock) {
 		
 		this.snapped = true;
+
 		this.link.endDock = dock;
+		
 		this.trackDock(dock);
 	
 	}
