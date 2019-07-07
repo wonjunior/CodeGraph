@@ -1,7 +1,47 @@
 'use strict'
 
 /**
+ * Data structure to hold registered links
+ */
+class Links {
+
+	/**
+	 * The actual object holding the Link instances.
+	 */
+	static all = {};
+
+	/**
+	 * Gets all values from the `Links` hash.
+	 */
+	static get values() {
+
+		return Object.values(Links.all);
+
+	}
+
+	static register(link) {
+
+		link.id = link.constructId();
+
+		Links.all[ link.id ] = link;
+
+		// _('UPDATE')
+
+	}
+
+	static unregister() {
+
+		delete Links.all[ link.id ];
+
+		// _('UPDATE')
+
+	}
+
+}
+
+/**
  * Represent a link object used to connect two nodes together
+ * Edited links (those that don't yet have an end dock are not registered in `Links`)
  */
 class Link {
 
@@ -9,20 +49,6 @@ class Link {
 	static parameters = {
 		data: { width: 3, stroke: '#4CAF50' },
 		exe: { width: 4, stroke: '#3F51B5' },
-	}
-
-	/**
-	 * Hash object containing all instanciated and set links.
-	 */
-	static all = {};
-
-	/**
-	 * Gets all values from the `Link.all` hash.
-	 */
-	static get values() {
-
-		return Object.values(Link.all);
-
 	}
 
 	/**
@@ -98,23 +124,21 @@ class Link {
 	}
 
 	/**
-	 * Adds a new link object to the Canvas.
+	 * Adds a new link object to the Canvas or edit a link if already exists
 	 * @param {Dock} startDock the dock from where the link has been pulled
 	 * @param {Dock || undefined} endDock a dock instance if the second dock is already known, else `undefined`
 	 */
 	constructor(startDock, endDock) {
 		
-		if (startDock.occupiedAndUnique()) {
-			
-			const link = startDock.links.first.edit();
-			if (!endDock) return link;
-
-			link.destroy();
-
-		}
-		
 		this.startDock = startDock;
 		this.isData = startDock instanceof DataDock;
+
+		if (startDock.occupiedAndUnique()) {
+			
+			const link = this.editExistingLink(endDock);
+			if (link) return link;
+
+		}
 		
 		this.createLink();
 		
@@ -127,7 +151,30 @@ class Link {
     }
 
 	/**
-	 * 
+	 * Deletes the existing link if the provided endDock is defined, else return this link.
+	 * @param {Dock} endDock
+	 */
+	editExistingLink(endDock) {
+		
+		const link = this.unpinExistingLink();
+		
+		return endDock ? link.destroy() : link;
+
+	}
+
+	/**
+	 * Returns the existing link hosted by the link's startDock.
+	 */
+	unpinExistingLink() {
+
+
+
+		return this.startDock.links.first.unpin();
+
+	}
+
+	/**
+	 * Check if endDock is compatible with link then save the link on the dock.
 	 * @param {Dock} endDock 
 	 */
 	setEndDock(endDock) {
@@ -136,7 +183,7 @@ class Link {
 
 		this.endDock = endDock;
 
-		this.set();
+		this.pin();
 		
 		this.update();
 
@@ -146,27 +193,29 @@ class Link {
      * Creates the link's HTML element and renders it on the canvas. All HTML elements that are needed
 	 * are saved as HTML objects in the link's instance.
 	 */
-    createLink() {
-
-        const $ = Template.link();
-
-        this.element = {
+	createLink() {
+		
+		const $ = Template.link();
+		
+		this.element = {
 			link: $('path')
 		};
 
 		Object.assign(this, Link.parameters[this.isData ? 'data' : 'exe']);
+		
+		Canvas.linkArea.appendChild(this.element.link);
+	
+	}
 
-        Canvas.linkArea.appendChild(this.element.link);
-
-    }
-
-    edit() {
-
-        delete Link.all[ this.id ];
+	/**
+	 * Remove the link from its endDock's links, unregister the link then return it.
+	 * @returns the link that is edited
+	 */
+    unpin() {
 
         this.endDock.dropLink();
 
-        // ControlFlow.update(this.endDock.node);
+        Links.unregister(this);
 
 		delete this.endDock;
 
@@ -174,72 +223,93 @@ class Link {
 
     }
 
-    update(position) {
-
-        if (!position) {
-
-            this.path = Curve.calculate(this.startDock.position, this.endDock.position);
-
-        } else if (this.startDock.isRight) {
-
-            this.path = Curve.calculate(this.startDock.position, position);
-
-        } else {
-
-            this.path = Curve.calculate(position, this.startDock.position);
-
-        }
-
-    }
-
-    set() {
+	/**
+	 * Adds the link to the endDock's links, swap docks if necessary and register it.
+	 */
+    pin() {
 
 		this.endDock.popExistingLink();
+		
+		this.endDock.addLink(this);
+		
+		if (this.endDock.isRight) this.swapDocks();
+		
+		Links.register(this);
+	
+	}
 
-        this.endDock.addLink(this);
+	/**
+	 * Updates the link's svg representation.
+	 * @param {Array<Number>} position an array of two numbers
+	 */
+    update(position) {
+		
+		if (!position) {
+			
+			this.path = Curve.calculate(this.startDock.position, this.endDock.position);
+		
+		} else if (this.startDock.isRight) {
 
-        if (this.endDock.isRight) this.swapDocks();
+			this.path = Curve.calculate(this.startDock.position, position);
 
-        this.id = this.constructId();
+		} else {
 
-		Link.all[ this.id ] = this;
+			this.path = Curve.calculate(position, this.startDock.position);
 
-    }
+		}
 
+	}
+
+	/**
+	 * Swaps out startDock and endDock.
+	 */
 	swapDocks() {
 
 		[ this.startDock, this.endDock ] = [ this.endDock, this.startDock ];
 
 	}
 
+	/**
+	 * Unregisters the link, deletes the HTML object and unpins from start and end docks.
+	 */
 	destroy() {
 
-        delete Link.all[ this.id ];
-
-        this.element.link.remove();
-
+		Links.unregister(this);
+		
+		this.element.link.remove();
+		
 		this.startDock.dropLink(this);
+		
+		if (this.endDock) this.endDock.dropLink(this);
+	
+	}
 
-        if (this.endDock) this.endDock.dropLink(this);
-
-    }
-
+	/**
+	 * Constructs an unique string to identify the link.
+	 * @returns {String} the link's id
+	 */
 	constructId() {
-
+		
 		return this.startDock.id + Link.separator + this.endDock.id;
 
 	}
 
+	/**
+	 * Serialiser simply returns an array of the start and end docks' id.
+	 */
     serialize() {
-
-        return [ this.startDock.id, this.endDock.id ];
+		
+		return [ this.startDock.id, this.endDock.id ];
 
 	}
 	
+	/**
+	 * Update all of registered links.
+	 */
 	static update() {
-
-        Link.values.forEach(link => link.update());
-
-    }
+		
+		Links.values.forEach(link => link.update());
+	
+	}
 
 }
