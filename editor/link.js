@@ -104,6 +104,14 @@ class Link {
 	 */
 	constructor(startDock, endDock) {
 		
+		if (startDock.occupiedAndUnique()) {
+			
+			const link = startDock.links.first.edit();
+			if (!endDock) return link;
+
+			link.destroy();
+
+		}
 		this.startDock = startDock;
 		this.isData = startDock instanceof DataDock;
 		
@@ -123,11 +131,23 @@ class Link {
 	 */
 	setEndDock(endDock) {
 		
+		if (!this.canSnap(endDock)) this.destroy();
+
 		this.endDock = endDock;
-		
-		this.update(endDock.position);
-		
+
 		this.set();
+		
+		this.update();
+
+	}
+
+	/**
+	 * Returns whether the link can snap on the given dock or not.
+	 * @param {Dock} dock against which we're testing the compatibility
+	 */
+	canSnap(dock) {
+		
+		return this.startDock.isCompatible(dock);
 
 	}
 
@@ -157,7 +177,7 @@ class Link {
 
         // ControlFlow.update(this.endDock.node);
 
-        delete this.endDock;
+		delete this.endDock;
 
         return this;
 
@@ -183,8 +203,7 @@ class Link {
 
     set() {
 
-		// _(this.endDock.id)
-		// this.endDock.popExistingLink(); // <? new
+		this.endDock.popExistingLink();
 
         this.endDock.addLink(this);
 
