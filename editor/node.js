@@ -158,7 +158,6 @@ class Node {
 		// call the Executable's constructor if this is not an instance of Executable but is supposed to be
 		if (!(this instanceof Executable) && parameters.executable) return new Executable(parameters);
 
-        // destructure the parameters into distinct variables
 		const { name, header, hideHeader, hideBody, background, position, process, getters, exeDocks } = parameters;
 
         // first set of properties assigned to the instance
@@ -282,14 +281,14 @@ class Node {
     /**
      * This method removes the node and all its attached links
      */
-    remove() {
+    destroy() {
 
         // remove all the attached links
         this.docks.forEach(dock => {
 
             dock.links.forEach(link => {
 
-                link.remove();
+                link.destroy();
 
             });
 
@@ -319,10 +318,10 @@ class Node {
     };
 
     /**
-     * This static method destructs the given node object into a non circular object.
+     * This static method serializes the given node object into a non circular object.
      * Because node's have a property Node#docks which contains references to itself this
      * circular structure cannot be stringified by the saving mechanism. Thefore this method
-     * has to modify the object by destructuring the node's dock instances into dock objects.
+     * has to modify the object by serializing the node's dock instances into dock objects.
      * @param {Node} { exeDocks, dataDocks, docks, headerColor, label, position, ...rest } -
      * exeDocks, dataDocks and docks have circular structures. headerColor, label and position
      * are  getters (they are not iterable i.e not in rest which contains all other properties.
@@ -330,12 +329,10 @@ class Node {
      * the returned object doesn't contain dock: the array of Dock instances, as it is not
      * needed in the saved node object
      */
-    static destruct({ exeDocks, dataDocks, docks, headerColor, label, position, ...rest }) {
+    static serialize({ exeDocks, dataDocks, docks, headerColor, label, position, ...rest }) {
 
-        // exeDocks and dataDocks are modified by Dock's own destruct method
-        // to convert the Docks objects into non circular dock objects
-    	exeDocks = Dock.destruct(exeDocks);
-    	dataDocks = Dock.destruct(dataDocks);
+    	exeDocks = Dock.serialize(exeDocks);
+    	dataDocks = Dock.serialize(dataDocks);
 
     	return { exeDocks, dataDocks, headerColor, label, position, ...rest };
 
