@@ -1,82 +1,159 @@
 'use strict'
 
+/**
+ * Represent a link object used to connect two nodes together
+ */
 class Link {
 
-    static separator = '-';
-    static color = { data: '#4CAF50', exe: '#3F51B5' };
-    static width = { data: 3, exe: 4 };
+	static separator = '-';
+	static parameters = {
+		data: { width: 3, stroke: '#4CAF50' },
+		exe: { width: 4, stroke: '#3F51B5' },
+	}
 
-    get id() {
+	/**
+	 * Hash object containing all instanciated and set links.
+	 */
+	static all = {};
 
-        return (this.linkElement) ? this.linkElement.id : undefined;
+	/**
+	 * Gets all values from the `Link.all` hash.
+	 */
+	static get values() {
 
-    };
+		return Object.values(Link.all);
 
-    set id(newId) {
+	}
 
-        this.linkElement.id = newId; // <? catch?
+	/**
+	 * Gets the link's unique identifier.
+	 */
+	get id() {
 
-    };
+		return (this.element.link) ? this.element.link.id : undefined;
 
-    get path() {
+ 	}
 
-        return this.linkElement.getAttribute('d');
+	/**
+	 * Sets the link's id on its HTML element.
+	 */
+ 	set id(newId) {
 
-    };
+		this.element.link.id = newId;
 
-    set path(newPath) {
+ 	}
 
-        this.linkElement.setAttribute('d', newPath);
+	/**
+	 * Retrieves the svg path string expression.
+	 */
+	get path() {
+
+		return this.element.link.getAttribute('d');
+
+	}
+
+	/**
+	 * Updates the position of the link's svg path.
+	 */
+	set path(newPath) {
+
+		this.element.link.setAttribute('d', newPath);
+
+	}
+	
+	/**
+	 * Gets the stroke value from the link html element's styles.
+	 */
+	get stroke() {
+
+		return this.element.link.style.stroke;
+
+	}
+
+	/**
+	 * Updates the link's drawing stroke.
+	 */
+	set stroke(newStroke) {
+
+		this.element.link.style.stroke = newStroke;
+
+	}
+
+	/**
+	 * Gets the stroke width from the link html element's styles.
+	 */
+	get width() {
+
+		return this.element.link.style.strokeWidth;
+
+	}
+
+	/**
+	 * Updates the link's drawing stroke width.
+	 */
+	set width(newWidth) {
+
+		this.element.link.style.strokeWidth = newWidth;
+
+	}
+
+	/**
+	 * Adds a new link object to the Canvas.
+	 * @param {Dock} startDock the dock from where the link has been pulled
+	 * @param {Dock || undefined} endDock a dock instance if the second dock is already known, else `undefined`
+	 */
+	constructor(startDock, endDock) {
+		
+		this.startDock = startDock;
+		this.isData = startDock instanceof DataDock;
+		
+		this.createLink();
+		
+		this.id = startDock.id;
+		
+		this.startDock.addLink(this);
+		
+		if (endDock) this.setEndDock(endDock);
 
     }
 
-    constructor(startDock, endDock = undefined) {
+	/**
+	 * 
+	 * @param {Dock} endDock 
+	 */
+	setEndDock(endDock) {
+		
+		this.endDock = endDock;
+		
+		this.update(endDock.position);
+		
+		this.set();
 
-		this.startDock = startDock;
-		// <? use isData on the link fully -> the dockType of the link
-        this.isData = startDock instanceof DataDock;
-        // this.type = startDock.type;
+	}
 
-        this.createLink();
-
-        this.id = startDock.id;
-
-        if (endDock) {
-
-            this.endDock = endDock;
-            this.update(endDock.position);
-            this.set();
-
-        }
-
-        this.startDock.links.push(this);
-
-        // right-sided data docks are never occupied
-        startDock.occupied = !(startDock.isRight && startDock instanceof DataDock);
-
-    };
-
+	/**
+     * Creates the link's HTML element and renders it on the canvas. All HTML elements that are needed
+	 * are saved as HTML objects in the link's instance.
+	 */
     createLink() {
 
-        let template = document.querySelector('template#link');
-        template = document.importNode(template.content, true);
+        const $ = Template.link();
 
-        this.linkElement = template.querySelector('path');
+        this.element = {
+			link: $('path')
+		};
 
-        const dataName = this.isData ? 'data' : 'exe';
-        this.linkElement.style.stroke = Link.color[ dataName ];
-        this.linkElement.style.strokeWidth = Link.width[ dataName ];
+		Object.assign(this, Link.parameters[this.isData ? 'data' : 'exe']);
 
-        Canvas.linkArea.appendChild(this.linkElement);
+        Canvas.linkArea.appendChild(this.element.link);
 
-    };
+    }
 
     edit() {
 
-        delete links[ this.id ];
+        delete Link.all[ this.id ];
 
-        this.endDock.links = []; // reset the old endDock
-        this.endDock.occupied = false;
+        this.endDock.dropLink();
 
         // ControlFlow.update(this.endDock.node);
 
@@ -84,97 +161,75 @@ class Link {
 
         return this;
 
-    };
+    }
 
-    static updateAll() {
+    update(position) {
 
-        Object.entries(links).forEach(([ id, link ]) => {
-
-            link.update();
-
-        });
-
-    };
-
-    update(endPoint) {
-
-        if (!endPoint) {
+        if (!position) {
 
             this.path = Curve.calculate(this.startDock.position, this.endDock.position);
 
         } else if (this.startDock.isRight) {
 
-            this.path = Curve.calculate(this.startDock.position, endPoint);
+            this.path = Curve.calculate(this.startDock.position, position);
 
         } else {
 
-            this.path = Curve.calculate(endPoint, this.startDock.position);
+            this.path = Curve.calculate(position, this.startDock.position);
 
         }
 
-    };
-
-    // <? is there any refactoring possible here? use linkIndexStartDock = this.startDock.links.indexOf(link);
-    remove() {
-
-        // make sure the link is removed from links
-        delete links[ this.id ];
-
-        this.linkElement.remove();
-
-        // make it a Dock method <Dock>.unpin(this) where this is <Link>
-        const linkIndexStartDock = this.startDock.links.findIndex(link => link.id == this.id);
-        this.startDock.links.splice(linkIndexStartDock, 1);
-
-        this.startDock.occupied = false;
-
-        if (this.endDock) {
-
-            const linkIndexSnapDock = this.endDock.links.findIndex(link => link.id == this.id);
-            this.endDock.links.splice(linkIndexSnapDock, 1);
-
-            this.endDock.occupied = false;
-
-        }
-
-    };
+    }
 
     set() {
 
-        // add to endDock
-        this.endDock.links.push(this);
-        this.endDock.occupied = true;
+		// _(this.endDock.id)
+		// this.endDock.popExistingLink(); // <? new
 
-        // swap startDock and endDock if necessary
-        if (this.endDock.isRight) {
+        this.endDock.addLink(this);
 
-            [ this.startDock, this.endDock ] = [ this.endDock, this.startDock ];
+        if (this.endDock.isRight) this.swapDocks();
 
-        }
+        this.id = this.constructId();
 
-        const linkId = this.startDock.id + Link.separator + this.endDock.id;
-        this.id = linkId;
+		Link.all[ this.id ] = this;
 
-        // this link already exists
-        if (links[ linkId ]) {
+    }
 
-            this.remove();
+	swapDocks() {
 
-        // link doesn't yet exist
-        } else {
+		[ this.startDock, this.endDock ] = [ this.endDock, this.startDock ];
 
-            links[ linkId ] = this;
+	}
 
-            // wait(() => ControlFlow.update(this.endDock.node));
+	destroy() {
 
-        }
+        delete Link.all[ this.id ];
 
-    };
+        this.element.link.remove();
 
-    static destruct(link) {
+		this.startDock.dropLink(this);
 
-        return [ link.startDock.id, link.endDock.id ];
+        if (this.endDock) this.endDock.dropLink(this);
 
-    };
+    }
 
-}; const links = {};
+	constructId() {
+
+		return this.startDock.id + Link.separator + this.endDock.id;
+
+	}
+
+    serialize() {
+
+        return [ this.startDock.id, this.endDock.id ];
+
+	}
+	
+	static update() {
+
+        Link.values.forEach(link => link.update());
+
+    }
+
+}

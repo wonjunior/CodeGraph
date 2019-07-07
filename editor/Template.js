@@ -1,10 +1,15 @@
 'use strict'
 
 /**
- * HTML Element factory for frequently created/used/rendered elements such as docks and nodes.
+ * HTML Element factory for docks, nodes and links.
  */
 class Template {
 	
+	/**
+	 * Retrieves the template from the DOM then clones its content.
+	 * @param {String} name template's name 
+	 * @return a `querySelector` binded to the cloned HTML element
+	 */
 	static get(name) {
 
 		const template = document.querySelector(`template#${name}`);
@@ -20,7 +25,7 @@ class Template {
 /**
  * Add a method for each type of template.
  */
-[ 'node', 'dock' ].forEach(template => {
+[ 'node', 'dock', 'link' ].forEach(template => {
 
 	Template[ template ] = () => Template.get(template);
 

@@ -4,6 +4,12 @@ class Dock {
 
 	static all = {};
 
+	static get values() {
+
+		return Object.values(Dock.all);
+
+	}
+
     static sideAttributes = {
 		in: { 
 			isRight: false, 
@@ -55,6 +61,8 @@ class Dock {
 
         // create the actual HTML dock element
 		this.createDock();
+
+		this.label = id;
 
         // add the Dock instance to the object of instances, it can be accessed with its unique id
         Dock.all[ this.id ] = this;
@@ -211,9 +219,18 @@ class Dock {
 
     }
 
+	/**
+	 * Right-sided data docks are never occupied
+	 */
+	allowsMultipleLinks() {
+
+		return this.isRight && this instanceof DataDock;
+
+	}
+
 	occupiedAndUnique() {
 
-		return this.occupied && ( !this.isRight || this instanceof ExeDock );
+		return this.occupied && !this.allowsMultipleLinks();
 
 	}
 
@@ -239,7 +256,7 @@ class Dock {
 
         if (this.occupied) {
 
-            this.links[0].remove();
+            this.links.first.destroy();
 
         }
 
@@ -270,7 +287,28 @@ class Dock {
 
     }
 
-    static destruct(docks) {
+	dropLink(link) {
+
+		this.links = link ? this.links.filter(({ id }) => id !== link.id) : [];
+		this.occupied = !!this.links.length;
+
+	}
+
+	addLink(link) {
+		
+		this.links.push(link);
+        this.occupied = true;
+
+	}
+
+	popExistingLink() { // <? new
+		
+		_(this.id)
+		if (this.occupiedAndUnique()) this.links.first.destroy();
+
+	}
+
+    static serialize(docks) {
 
         return {
             in: docks.in.map(({ label, editable, switchSection }) => { return { label, editable, switchSection } }),
