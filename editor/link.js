@@ -112,6 +112,7 @@ class Link {
 			link.destroy();
 
 		}
+		
 		this.startDock = startDock;
 		this.isData = startDock instanceof DataDock;
 		
@@ -131,23 +132,13 @@ class Link {
 	 */
 	setEndDock(endDock) {
 		
-		if (!this.canSnap(endDock)) this.destroy();
+		if (!this.startDock.isCompatible(endDock)) this.destroy();
 
 		this.endDock = endDock;
 
 		this.set();
 		
 		this.update();
-
-	}
-
-	/**
-	 * Returns whether the link can snap on the given dock or not.
-	 * @param {Dock} dock against which we're testing the compatibility
-	 */
-	canSnap(dock) {
-		
-		return this.startDock.isCompatible(dock);
 
 	}
 

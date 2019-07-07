@@ -65,7 +65,7 @@ class Linkable {
 		
 		const endDock = Dock.all[ e.target.ref ];
 
-		this.link.canSnap(endDock) ? this.snap(endDock) : this.trackMouse(e);
+		this.canSnap(endDock) ? this.snap(endDock) : this.trackMouse(e);
 		
 	}
 
@@ -137,6 +137,16 @@ class Linkable {
 
 	}
 	
+	/**
+	 * Returns whether the link can snap on the given dock or not.
+	 * @param {Dock} dock against which we're testing the link's compatibility
+	 */
+	canSnap(dock) {
+
+		return this.link.startDock.isCompatible(dock);
+
+	}
+
 	/**
 	 * Snaps the link to the dock given as argument.
 	 * @param {Dock} dock 
