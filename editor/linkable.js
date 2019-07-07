@@ -19,7 +19,7 @@ class Linkable {
 	 * @param {MouseEvent} event the event that triggered Linkable
 	 * @param {Dock} startDock the dock from which the event is initiated
 	 */
-	constructor(e, startDock) {
+	constructor(startDock) {
 		
 		this.link = startDock.getLink();
 		
@@ -94,7 +94,7 @@ class Linkable {
 	 */
 	mouseUpIn() {
 		
-		this.popExistingLink();
+		this.popExistingLink(); // <? new
 		
 		this.link.set();
 
@@ -105,7 +105,7 @@ class Linkable {
 	 */
 	mouseUpOut() {
 		
-		this.link.remove();
+		this.link.destroy();
 
 	}
 
@@ -115,14 +115,15 @@ class Linkable {
 	popExistingLink() {
 		
 		const endDock = this.link.endDock;
+		_(endDock)
 		
-		if (endDock.occupiedAndUnique()) endDock.links.first.remove();
+		if (endDock.occupiedAndUnique()) endDock.links.first.destroy();
 
-	}
+	} // <? new
 
 	/**
 	 * Returns whether the link can snap on the given dock or not.
-	 * @param {Dock} dock 
+	 * @param {Dock} dock against which we're testing the compatibility
 	 */
 	canSnap(dock) {
 		
