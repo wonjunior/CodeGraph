@@ -85,6 +85,7 @@ new Node({
 });
 
 new Node({
+	position: [436, 138],
 	name: 'Sum',
 	header: 'lightgreen',
 	background: '+',

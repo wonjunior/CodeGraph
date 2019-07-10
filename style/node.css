@@ -183,7 +183,8 @@ input.occupied {
     box-sizing:  border-box;
     width: 100%;
     /* height: 100%; */
-    display: inline-block;
+	display: inline-block;
+	color: #000000c2;
 }
 .left > .param-container > .param-label {
     text-align: center;

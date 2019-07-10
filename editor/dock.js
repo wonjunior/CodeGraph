@@ -240,11 +240,11 @@ class Dock {
 
 	}
 
-    isCompatible(target) {
+    isCompatible(dock) {
 
-        const notEqual = (this.node != target.node);
-        const opposite = (this.isRight != target.isRight);
-        const sameType = (this instanceof DataDock == target instanceof DataDock) && (this.type == target.type);
+        const notEqual = (this.node != dock.node);
+        const opposite = (this.isRight != dock.isRight);
+        const sameType = (this instanceof DataDock == dock instanceof DataDock) && (this.type == dock.type);
 
         return notEqual && opposite && sameType;
 
@@ -301,9 +301,11 @@ class Dock {
 
 	}
 
+	/**
+	 * Destroys the link if there is any that's occupying the dock
+	 */
 	popExistingLink() { // <? new
 		
-		_(this.id)
 		if (this.occupiedAndUnique()) this.links.first.destroy();
 
 	}

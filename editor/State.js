@@ -8,7 +8,7 @@ class State {
 	/**
 	 * Debug mode, whether to show the event logs or not in console
 	 */
-	static debug = true;
+	static debug = false;
 
 	/**
 	 * Contains all the states that have been instanciated

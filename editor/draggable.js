@@ -69,14 +69,13 @@ class Draggable {
 
         const [ offsetX, offsetY ] = this.offset;
 
-        // <? View<mousePosition> is doing the exact same thing
+        // View.mousePosition(e) careful with the offset!
         let targetPosition = [
             (e.clientX - offsetX) / Canvas.zoomLevel,
             (e.clientY - offsetY) / Canvas.zoomLevel
         ];
 
-        this.object.position = bounderyClamp(targetPosition);									/* finitepane-rollback */
-        // this.object.position = targetPosition;												/* finitepane-rollback */
+        this.object.position = bounderyClamp(targetPosition);
 
     };
 
