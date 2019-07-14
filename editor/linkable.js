@@ -135,7 +135,7 @@ class Linkable {
 	 */
 	trackDock(dock) {
 		
-		this.link.update(dock.position);
+		this.link.update(dock.element.position);
 
 	}
 	
