@@ -1,49 +1,26 @@
 'use strict'
 
-/**
- * Data structure to hold registered links
- */
-class Links {
+/*class Links {
 
-	/**
-	 * The actual object holding the Link instances.
-	 */
 	static all = {};
-
-	/**
-	 * Gets all values from the `Links` hash.
-	 */
 	static get values() {
-
 		return Object.values(Links.all);
-
 	}
-
 	static register(link) {
-
-		link.id = link.constructId();
-
 		Links.all[ link.id ] = link;
-
-		// _('UPDATE')
-
 	}
-
 	static unregister() {
-
 		delete Links.all[ link.id ];
-
-		// _('UPDATE')
-
 	}
-
-}
+}*/
 
 /**
  * Represent a link object used to connect two nodes together
  * Edited links (those that don't yet have an end dock are not registered in `Links`)
  */
-class Link {
+class Link extends CanvasObject {
+
+	static all = {};
 
 	static separator = '-';
 	static parameters = {
@@ -129,7 +106,9 @@ class Link {
 	 * @param {Dock || undefined} endDock a dock instance if the second dock is already known, else `undefined`
 	 */
 	constructor(startDock, endDock) {
-		
+
+		super();
+
 		this.startDock = startDock;
 		this.isData = startDock instanceof DataDock;
 
@@ -151,6 +130,16 @@ class Link {
     }
 
 	/**
+	 * Constructs an unique string to identify the link.
+	 * @returns {String} the link's id
+	 */
+	constructId() {
+		
+		return this.startDock.id + Link.separator + this.endDock.id;
+
+	}
+
+	/**
 	 * Deletes the existing link if the provided endDock is defined, else return this link.
 	 * @param {Dock} endDock
 	 */
@@ -166,8 +155,6 @@ class Link {
 	 * Returns the existing link hosted by the link's startDock.
 	 */
 	unpinExistingLink() {
-
-
 
 		return this.startDock.links.first.unpin();
 
@@ -213,9 +200,9 @@ class Link {
 	 */
     unpin() {
 
-        this.endDock.dropLink();
-
-        Links.unregister(this);
+		Link.unregister(this);
+		
+        this.endDock.dropLink(this);
 
 		delete this.endDock;
 
@@ -227,15 +214,17 @@ class Link {
 	 * Adds the link to the endDock's links, swap docks if necessary and register it.
 	 */
     pin() {
-
+		
 		this.endDock.popExistingLink();
 		
 		this.endDock.addLink(this);
 		
 		if (this.endDock.isRight) this.swapDocks();
+
+		this.element.link.id = this.constructId();
 		
-		Links.register(this);
-	
+		Link.register(this.constructId(), this);
+
 	}
 
 	/**
@@ -246,15 +235,15 @@ class Link {
 		
 		if (!position) {
 			
-			this.path = Curve.calculate(this.startDock.position, this.endDock.position);
+			this.path = Curve.calculate(this.startDock.element.position, this.endDock.element.position);
 		
 		} else if (this.startDock.isRight) {
 
-			this.path = Curve.calculate(this.startDock.position, position);
+			this.path = Curve.calculate(this.startDock.element.position, position);
 
 		} else {
 
-			this.path = Curve.calculate(position, this.startDock.position);
+			this.path = Curve.calculate(position, this.startDock.element.position);
 
 		}
 
@@ -274,7 +263,7 @@ class Link {
 	 */
 	destroy() {
 
-		Links.unregister(this);
+		Link.unregister(this);
 		
 		this.element.link.remove();
 		
@@ -282,16 +271,6 @@ class Link {
 		
 		if (this.endDock) this.endDock.dropLink(this);
 	
-	}
-
-	/**
-	 * Constructs an unique string to identify the link.
-	 * @returns {String} the link's id
-	 */
-	constructId() {
-		
-		return this.startDock.id + Link.separator + this.endDock.id;
-
 	}
 
 	/**
@@ -308,8 +287,9 @@ class Link {
 	 */
 	static update() {
 		
-		Links.values.forEach(link => link.update());
+		Link.values.forEach(link => link.update());
 	
 	}
 
 }
+// 295
