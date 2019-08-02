@@ -76,9 +76,10 @@ class NodeElement extends Element {
 
 		super(node, parent, parameters.select('headerColor', 'position', 'hideBody', 'hideHeader'));
 
-		this.render();
-
 		this.observe(node);
+
+		if (this.hideBody) this.hide('body');
+		if (this.hideHeader) this.hide('header');
 
 	}
 
@@ -105,9 +106,6 @@ class NodeElement extends Element {
 		
 		this.header.ref = node.id;
 		this.container.id = node.id;
-
-		if (this.hideBody) this.hide('body');
-		if (this.hideHeader) this.hide('header');
 
 	}
 

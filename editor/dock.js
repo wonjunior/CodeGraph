@@ -135,19 +135,6 @@ class Dock extends CanvasObject {
 
     }
 
-    /*getRelativePosition() {
-
-        const nodePos = this.node.element.container.getBoundingClientRect();
-        const dockPos = this.element.pin.getBoundingClientRect();
-		const offset = this.constructor.offset;
-		
-        return [
-            (dockPos.x - nodePos.x) / Canvas.zoomLevel + offset,
-            (dockPos.y - nodePos.y) / Canvas.zoomLevel + offset
-        ];
-
-    }*/
-
 	/**
 	 * Right-sided data docks are never occupied
 	 */

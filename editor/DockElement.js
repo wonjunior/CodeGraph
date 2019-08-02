@@ -30,8 +30,6 @@ class DockElement extends Element {
 		this.node = dock.node;
 		this.dock = dock;
 
-		this.render();
-
 		wait(() => this.offset = this.getRelativePosition());
 
 		this.observe(dock);

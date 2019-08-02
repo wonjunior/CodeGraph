@@ -6,9 +6,12 @@ class Element {
 
 		this.parent = parent;
 
+		// #create should be implemented by child class
 		this.create(objectInstance);
 		
 		this.setProperties(parameters);
+
+		this.render();
 
 	}
 

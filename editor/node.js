@@ -97,7 +97,7 @@ class Node extends CanvasObject {
 
             dock.links.forEach(link => {
 
-                link.path = Curve.calculate(link.startDock.element.position, link.endDock.element.position);
+				link.element.update()
 
             });
 
