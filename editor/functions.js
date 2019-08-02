@@ -23,3 +23,18 @@ Object.defineProperty(Array.prototype, 'first', {
 		this[0] = e;
 	}
 });
+
+Object.defineProperty(Object.prototype, 'select', {
+	/**
+	 * reduces an object to the provided keys
+	 * @param  {...any} keys the keys to pick from the object
+	 */
+	value: function(...keys) {
+		return Object.entries(this)
+			.filter(([key, value]) => ~keys.indexOf(key))
+			.reduce((projected, [key, value]) => ({ ...projected, [key]: value }), {});
+	}
+});
+
+const _Element = Element;
+const _Node = Node;

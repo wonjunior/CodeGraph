@@ -125,7 +125,7 @@ class Linkable {
 	 */
 	trackMouse(event) {
 		
-		this.link.update(View.mousePosition(event));
+		this.link.element.update(View.mousePosition(event));
 
 	}
 
@@ -135,7 +135,7 @@ class Linkable {
 	 */
 	trackDock(dock) {
 		
-		this.link.update(dock.position);
+		this.link.element.update(dock.element.position);
 
 	}
 	

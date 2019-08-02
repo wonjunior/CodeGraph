@@ -15,7 +15,7 @@ new State({
 		
 		ctrl_shift_spacebar: (event) => _('nope'),
 		
-		delete: () => Selection.delete(),
+		// delete: () => Selection.delete(),
 		
 		tab: function(e) { e.preventDefault() }
 
@@ -32,7 +32,7 @@ new State({
 					type: 'drag',
 					element: target,
 					object: Canvas,
-					bounderyClamp: Canvas.draggableBoundaryClamp,
+					bounderyClamp: Canvas.boundaryClamp,
 				});
 			
 			}
@@ -43,21 +43,22 @@ new State({
 
 			'.node-container': ({ target }) => {
 				
-				new Selection(Node.all[ target.id ]);
+				target.classList.toggle('selected')
+				// new Selection(Node.all[ target.id ]);
 			
 			},
 
 			'.header': ({ target }) => {
 				
-				const nodeInstance = Node.all[ target.parentElement.id ];
+				const node = Node.all[ target.parentElement.id ];
 				
 				new Draggable({
 					event,
 					type: 'drag',
-					element: nodeInstance.element.node,
-					object: nodeInstance,
-					bounderyClamp: nodeInstance.draggableBoundaryClamp.bind(nodeInstance),
-					callback: nodeInstance.update.bind(nodeInstance)
+					element: node.element.container,
+					object: node.element,
+					bounderyClamp: node.element.boundaryClamp.bind(node.element),
+					callback: node.update.bind(node)
                 });
 
 			},
@@ -132,7 +133,7 @@ const nodeObject = nodeFinder.select(event);
 new Draggable({
 	event,
 	type: 'stick',
-	element: nodeObject.element.node,
+	element: nodeObject.element.container,
 	object: nodeObject
 });
 */

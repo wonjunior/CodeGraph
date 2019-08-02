@@ -60,7 +60,7 @@ new Node({ ...Library.node.divide, position: [820, 100] });
 
 new Node({
 	name: 'GETTER',
-	header: 'lightgreen',
+	header: 'lightblue',
 	executable: true,
 	getters: [{
 		name: 'a', location: 'head'
@@ -87,7 +87,7 @@ new Node({
 new Node({
 	position: [436, 138],
 	name: 'Sum',
-	header: 'lightgreen',
+	header: 'pink',
 	background: '+',
 	exeDocks: {
 		in: [ { } ],

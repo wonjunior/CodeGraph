@@ -2,11 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Node Styling</title>
+	<title>Codegraph PoC</title>
+	<link rel="icon" href="media/knot.ico" />
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed" rel="stylesheet">
     <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> -->
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/finder.css">
     <link rel="stylesheet" href="style/node.css">
 </head>
@@ -105,8 +106,14 @@
     <script src="editor/functions.js"></script>
 
 	<script src="editor/Template.js"></script>
+	<script src="editor/Element.js"></script>
+	<script src="editor/NodeElement.js"></script>
+    <script src="editor/DockElement.js"></script>
+    <script src="editor/LinkElement.js"></script>
 	
 	<!-- Node -->
+    <script src="editor/CanvasObject.js"></script>
+    <script src="editor/Component.js"></script>
     <script src="editor/Node.js"></script>
     <script src="editor/Executable.js"></script>
 
@@ -122,16 +129,16 @@
     <script src="editor/EditableDock.js"></script>
     <script src="editor/ExeDock.js"></script>
 
-	<script src="editor/canvas.js"></script>
+	<script src="editor/Canvas.js"></script>
 	
 	<!-- Interactions UI behavior -->
-    <script src="editor/draggable.js"></script>
-	<script src="editor/linkable.js"></script>
+    <script src="editor/Draggable.js"></script>
+	<script src="editor/Linkable.js"></script>
 	
-    <script src="editor/curve.js"></script>
-    <script src="editor/link.js"></script>
+    <script src="editor/Curve.js"></script>
+    <script src="editor/Link.js"></script>
 
-    <script src="editor/view.js"></script>
+    <script src="editor/View.js"></script>
 
 	<!-- Event handling -->
     <script src="editor/State.js"></script>
@@ -142,12 +149,12 @@
 
     <script src="editor/library.js"></script>
 
-    <script src="editor/finder.js"></script>
-    <script src="editor/editor.js"></script>
+    <script src="editor/Finder.js"></script>
+    <script src="editor/Editor.js"></script>
     <script src="editor/states.js"></script>
 
     <script src="editor/tester.js"></script>
 
-    <script src="editor/selection.js"></script>
+	<script src="editor/Selection.js"></script>
 </javascript>
 </body>
