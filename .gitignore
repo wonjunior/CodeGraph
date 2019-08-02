@@ -1,3 +1,4 @@
 docs
 *.css
 *.ignore
+jsdoc.json
