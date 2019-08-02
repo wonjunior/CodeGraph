@@ -126,7 +126,7 @@ class NodeElement extends Element {
 
 	/**
 	 * Hides the corresponding node portion
-	 * @param {string} part is either `"head"` or `"body"`
+	 * @param {string} part is either `"header"` or `"body"`
 	 */
 	hide(part) {
 
