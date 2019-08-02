@@ -43,6 +43,7 @@ new State({
 
 			'.node-container': ({ target }) => {
 				
+				target.classList.toggle('selected')
 				// new Selection(Node.all[ target.id ]);
 			
 			},

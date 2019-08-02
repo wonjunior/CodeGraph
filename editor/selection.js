@@ -1,6 +1,6 @@
 'use strict'
 
-class Selection {
+/*class Selection {
 
     constructor(objects) {
 
@@ -39,4 +39,4 @@ Object.assign(Selection, {
 
     objects: []
 
-});
+});*/
