@@ -1,19 +1,5 @@
 'use strict'
 
-/*class Links {
-
-	static all = {};
-	static get values() {
-		return Object.values(Links.all);
-	}
-	static register(link) {
-		Links.all[ link.id ] = link;
-	}
-	static unregister() {
-		delete Links.all[ link.id ];
-	}
-}*/
-
 /**
  * Represent a link object used to connect two nodes together
  * Edited links (those that don't yet have an end dock are not registered in `Links`)
@@ -23,83 +9,7 @@ class Link extends CanvasObject {
 	static all = {};
 
 	static separator = '-';
-	static parameters = {
-		data: { width: 3, stroke: '#4CAF50' },
-		exe: { width: 4, stroke: '#3F51B5' },
-	}
-
-	/**
-	 * Gets the link's unique identifier.
-	 */
-	get id() {
-
-		return (this.element.link) ? this.element.link.id : undefined;
-
- 	}
-
-	/**
-	 * Sets the link's id on its HTML element.
-	 */
- 	set id(newId) {
-
-		this.element.link.id = newId;
-
- 	}
-
-	/**
-	 * Retrieves the svg path string expression.
-	 */
-	get path() {
-
-		return this.element.link.getAttribute('d');
-
-	}
-
-	/**
-	 * Updates the position of the link's svg path.
-	 */
-	set path(newPath) {
-
-		this.element.link.setAttribute('d', newPath);
-
-	}
 	
-	/**
-	 * Gets the stroke value from the link html element's styles.
-	 */
-	get stroke() {
-
-		return this.element.link.style.stroke;
-
-	}
-
-	/**
-	 * Updates the link's drawing stroke.
-	 */
-	set stroke(newStroke) {
-
-		this.element.link.style.stroke = newStroke;
-
-	}
-
-	/**
-	 * Gets the stroke width from the link html element's styles.
-	 */
-	get width() {
-
-		return this.element.link.style.strokeWidth;
-
-	}
-
-	/**
-	 * Updates the link's drawing stroke width.
-	 */
-	set width(newWidth) {
-
-		this.element.link.style.strokeWidth = newWidth;
-
-	}
-
 	/**
 	 * Adds a new link object to the Canvas or edit a link if already exists
 	 * @param {Dock} startDock the dock from where the link has been pulled
@@ -119,8 +29,8 @@ class Link extends CanvasObject {
 
 		}
 		
-		this.createLink();
-		
+		this.element = new LinkElement(this, Canvas.linkArea);
+
 		this.id = startDock.id;
 		
 		this.startDock.addLink(this);
@@ -172,26 +82,8 @@ class Link extends CanvasObject {
 
 		this.pin();
 		
-		this.update();
+		this.element.update();
 
-	}
-
-	/**
-     * Creates the link's HTML element and renders it on the canvas. All HTML elements that are needed
-	 * are saved as HTML objects in the link's instance.
-	 */
-	createLink() {
-		
-		const $ = Template.link();
-		
-		this.element = {
-			link: $('path')
-		};
-
-		Object.assign(this, Link.parameters[this.isData ? 'data' : 'exe']);
-		
-		Canvas.linkArea.appendChild(this.element.link);
-	
 	}
 
 	/**
@@ -221,31 +113,9 @@ class Link extends CanvasObject {
 		
 		if (this.endDock.isRight) this.swapDocks();
 
-		this.element.link.id = this.constructId();
+		this.id = this.constructId();
 		
 		Link.register(this.constructId(), this);
-
-	}
-
-	/**
-	 * Updates the link's svg representation.
-	 * @param {Array<Number>} position an array of two numbers
-	 */
-    update(position) {
-		
-		if (!position) {
-			
-			this.path = Curve.calculate(this.startDock.element.position, this.endDock.element.position);
-		
-		} else if (this.startDock.isRight) {
-
-			this.path = Curve.calculate(this.startDock.element.position, position);
-
-		} else {
-
-			this.path = Curve.calculate(position, this.startDock.element.position);
-
-		}
 
 	}
 
@@ -265,7 +135,7 @@ class Link extends CanvasObject {
 
 		Link.unregister(this);
 		
-		this.element.link.remove();
+		this.element.remove()
 		
 		this.startDock.dropLink(this);
 		
@@ -287,7 +157,7 @@ class Link extends CanvasObject {
 	 */
 	static update() {
 		
-		Link.values.forEach(link => link.update());
+		Link.values.forEach(link => link.element.update());
 	
 	}
 
