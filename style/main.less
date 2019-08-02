@@ -1,0 +1,102 @@
+* {
+	box-sizing: border-box;
+}
+
+html, body, section, svg {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+svg {
+    width: 100%;
+    border: 1px transparent;
+    z-index: 1;
+}
+
+body {
+    user-select: none;
+    cursor: default;
+    overflow: hidden;
+}
+
+.window {
+    height: 100%;
+}
+
+.canvas {
+    position: absolute;
+}
+
+.objects {
+	--objects-size: 5000px;
+	width: var(--objects-size);													/* finitepane-rollback */
+	height: var(--objects-size);													/* finitepane-rollback */
+	background: url(https://image.ibb.co/f1RAXF/background.png);	/* finitepane-rollback */
+	font-weight: 500;
+	font-family: Calibri;
+	position: absolute;
+	z-index: 2;
+	border: 3px dashed #c31a1acf;
+}
+
+@font-face {
+	font-family: CONSOLA;
+	src: url('fonts/CONSOLA.ttf') format('ttf');
+}
+
+.hidden {
+    display: none;
+}
+
+path {
+    fill: #ffffff0f;
+    pointer-events: none;
+    stroke-dasharray: 10;
+    animation: dash 30s linear;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+    fill: none;
+}
+
+@keyframes dash {
+	to {
+		stroke-dashoffset: 1000;
+	}
+}
+
+.footer {
+    pointer-events: none;
+    z-index: 100000;
+}
+
+span.footer-em {
+	color: #000000ad;
+}
+
+.signature {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    font-weight: 900;
+    font-family: 'Montserrat', sans-serif;
+	border: thick dotted transparent;
+	
+	&.s-right {
+		right: 0;
+		font-size: 57px;
+		color: rgba(0, 0, 0, 0.37);
+		width: 50%;
+		padding: 10px 17px;
+		text-align: right;
+	}
+
+	&.s-left {
+		font-size: 44px;
+		color: rgba(0, 0, 0, 0.37);
+		padding: 17px 30px;
+		width: 50%;
+		text-align: left;
+	}
+}
