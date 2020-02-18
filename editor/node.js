@@ -1,7 +1,9 @@
 'use strict'
 
+// Node is the model of a graph node. It uses by default to represent itself visually.
+// Node's View class (by default NodeElement) should meet implement the #update and #remove methods.
 class Node extends CanvasObject {
-	
+
 	static all = {};
 
     static idOfLast = 1;
@@ -24,106 +26,53 @@ class Node extends CanvasObject {
      * @param {Object | Node} parameters - an object containing all the necessary properties
 	 * to define a node or an actual instance of `Node`.
      */
-    constructor(parameters) {
+    constructor(args) {
 
-		super()
+		super();
 
 		// call the Executable's constructor if this is not an instance of Executable but is supposed to be
-		if (!(this instanceof Executable) && parameters.executable) return new Executable(parameters);
+		if (!(this instanceof Executable) && args.executable) return new Executable(args);
 
-		const { name, header, hideHeader, hideBody, background, position, process, getters, exeDocks } = parameters;
+		const { process, ...nodeAttributes } = args;
 
-        Object.assign(this, {
-			id: Node.constructId(),
-			process: { 
-				function: process.function,
-				string: process.string,
-			},
-			background,
-			label: name,
-		});
-		
+		this.id = Node.constructId();
 		Node.register(this.id, this);
 		
-		this.element = new NodeElement(this, Canvas.nodeArea, {
-			hideHeader, 
-			hideBody, 
-			headerColor: header,
-			position: position || [ 0, 0 ]
-		});
+		this.element = new NodeElement(this, Canvas.nodeArea, nodeAttributes);
 		
-        this.createDocks(process, getters, exeDocks);
-
+		const { func, stringFunc, params, result } = process; 
+		this.process = new Process(this, func, stringFunc, params, result);
+		
+		this.router = new DefaultRouter(this);
+		
+		this.docks = new Set([...this.process.docks, ...this.router.docks]);
+		
+		
+		// this.dependencies = new NodeDependencyHandler(this);
         // attach the process component to the node's instance
         // const interpreter = new Process(this);
         // this.process.calculate = interpreter.calculate.bind(interpreter);
 
     }
-	
-	/**
-	 * From the docks properties, the method instanciates all the Dock objects. The method is instanciating 
-	 * them by side and by type by accessing the `Dock`'s attributes object. Then for each element in 
-	 * `dockDefinition` it calls `Dock`'s constructor and adds the dock's reference to the node's properties.
-	 * @param {Object} dockDefinition - contains `exeDocks` and `dataDocks`
-	 * 
-	 * @todo is this really necessary, can we not save exeDocks et dataDocks in `ControlFlow` and `Process`
-	 */
-	createDocks({ result, params = [] }, getters = [], exeDocks = {}) {
-
-		this.exeDocks = {
-			in: Dock.create(exeDocks.in || [], 'in', ExeDock, this),
-			out: Dock.create(exeDocks.out || [], 'out', ExeDock, this)
-		}
-
-		this.process.result = Dock.create([ result ], 'out', DataDock, this).first;
-		this.process.params = Dock.create(params, 'in', DataDock, this);
-		this.getters = Dock.create(getters, 'out', GetterDock, this);
-		
-		this.dataDocks = {
-			in: this.process.params,
-			out: [ this.process.result, ...this.getters ]
-		}
-
-		this.docks = [ ...this.exeDocks.in, ...this.exeDocks.out, ...this.dataDocks.in, ...this.dataDocks.out ];
-		
-	}
 
     /**
      * This method updates all links connected to the node.
      */
-    update() {
+    update() { 
 
-        this.docks.forEach(dock => {
-
-            dock.links.forEach(link => {
-
-				link.element.update()
-
-            });
-
-        });
+        this.docks.forEach(dock => dock.update());
 
     }
 
     /**
-     * This method removes the node and all its attached links:
-	 * (1) destroy all connected links
-	 * (2) unregister the node
-	 * (3) remove the node element from canvas
+     * This method safely removes the node.
+	 * (1) destroy docks
+	 * (2) unregister node
+	 * (3) remove node element
      */
     destroy() {
 
-        this.docks.forEach(dock => {
-
-            dock.links.forEach(link => {
-
-                link.destroy();
-
-			});
-			
-			Dock.unregister(dock);
-
-        });
+        this.docks.forEach(dock => dock.destroy());
 
 		Node.unregister(this);
 
