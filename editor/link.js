@@ -49,6 +49,12 @@ class Link extends CanvasObject {
 
 	}
 
+	update() {
+
+		this.element.update();
+
+	}
+
 	/**
 	 * Deletes the existing link if the provided endDock is defined, else return this link.
 	 * @param {Dock} endDock

@@ -52,22 +52,11 @@ class LinkElement extends Element {
 
 	}
 
-	/**
-	 * Getter/Setter callback definitions delegated to `Link`.
-	 */
-	callbacks = {
-
-		/**
-		 * Sets the link's id.
-		 */
-		id(id) { this.container.id = id },
-
-	}
-
-
 	constructor(link, parent) {
 
-		super(link, parent);
+		super(link);
+
+		this.render(parent);
 
 		this.link = link;
 
