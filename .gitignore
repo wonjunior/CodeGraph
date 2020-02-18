@@ -9,3 +9,4 @@ node_modules
 # for now: no npm (no jest or ts)
 package-lock.json
 package.json
+editor/tester.js

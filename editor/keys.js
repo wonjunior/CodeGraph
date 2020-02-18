@@ -1,3 +1,5 @@
+'use strict'
+
 KeyCode.list = {
 	3: "break",
 	8: "backspace / delete",

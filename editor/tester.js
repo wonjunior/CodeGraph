@@ -1,3 +1,5 @@
+'use strict'
+
 /*new Node({ ...Library.node.log, position: [ 500, 450 ] });
 
 new Node({ ...Library.node.log, position: [ 600, 550 ] });
@@ -44,7 +46,7 @@ new Node({ ...Library.node.divide, position: [820, 100] });
 	header: 'lightgreen',
 	executable: false,
     process:  {
-		params: [ 
+		params: [
 			{ label: 'a', type: 'number', editable: true },
 			{ label: 'b', type: 'number' }
 		],
@@ -58,19 +60,78 @@ new Node({ ...Library.node.divide, position: [820, 100] });
 	},
 }*/
 
+/*new Node({
+	name: 'GETTER',
+	header: 'pink',
+	executable: true,
+	getters: [],
+	exeDocks: {},
+    process:  {
+		params: [],
+		result: { label: 'a+b', type: 'number' },
+		function: function(a, b) {
+			return a + b;
+		},
+		string: function(a, b) {
+			return `${a} + ${b}`;
+		}
+	},
+});
+
 new Node({
 	name: 'GETTER',
 	header: 'lightblue',
 	executable: true,
-	getters: [{
-		name: 'a', location: 'head'
-	}],
-	exeDocks: {
-		in: [ { location: 'body' } ],
-		out: [ { } ]
-	},
+	getters: [],
+	exeDocks: {},
     process:  {
-		params: [ 
+		params: [],
+		result: { label: 'a+b', type: 'number' },
+		function: function(a, b) {
+			return a + b;
+		},
+		string: function(a, b) {
+			return `${a} + ${b}`;
+		}
+	},
+});*/
+
+new Node({
+	label: 'Add',
+	header: 'lightblue',
+	background: '+',
+	position: [400,200],
+    process:  {
+		func: function(a, b) { return a + b; },
+		stringFunc: function(a, b) { return `${a} + ${b}`; },
+		params: [{label: 'a'}, {label: 'b'}],
+		result: {label: 'result'}
+	},
+});
+
+new Node({
+	label: 'Sub',
+	header: 'pink',
+	background: '-',
+    process:  {
+		func: function(a, b) { return a - b; },
+		stringFunc: function(a, b) { return `${a} - ${b}`; },
+		params: [{label: 'a'}, {label: 'b'}],
+		result: {label: 'result'}
+	},
+});
+
+/*new Node({
+	name: '101',
+	header: 'lightblue',
+	executable: true,
+	getters: [],
+	exeDocks: {
+        in: [{}],
+        out: [{}]
+    },
+    process:  {
+		params: [
 			{ label: 'a', type: 'number', editable: true },
 			{ label: 'b', type: 'number' }
 		],
@@ -93,7 +154,7 @@ new Node({
 		in: [ { } ],
 	},
     process:  {
-		params: [ 
+		params: [
 			{ label: 'a', type: 'number', editable: true },
 			{ label: 'b', type: 'number' }
 		],
@@ -105,7 +166,7 @@ new Node({
 			return `${a} + ${b}`;
 		}
 	},
-});
+});*/
 
 
 

@@ -6,7 +6,7 @@
 	<link rel="icon" href="media/knot.ico" />
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed" rel="stylesheet">
-    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/finder.css">
     <link rel="stylesheet" href="style/node.css">
@@ -108,7 +108,7 @@
 	<script src="editor/Template.js"></script>
 	<script src="editor/Element.js"></script>
 	<script src="editor/NodeElement.js"></script>
-    <script src="editor/DockElement.js"></script>
+    
     <script src="editor/LinkElement.js"></script>
 	
 	<!-- Node -->
@@ -116,25 +116,34 @@
     <script src="editor/Component.js"></script>
     <script src="editor/Node.js"></script>
     <script src="editor/Executable.js"></script>
-
-	<!-- Interpreter -->
+    
+    <!-- Docks -->
+    <script src="editor/dock/DockElement.js"></script>
+    <script src="editor/dock/Dock.js"></script>
+    <script src="editor/dock/DataDock.js"></script>
+    <script src="editor/dock/ExeDock.js"></script>
+    <script src="editor/dock/DockDefinition.js"></script>
+    <script src="editor/dock/DockFactory.js"></script>
+    <script src="editor/dock/InDataDockFactory.js"></script>
+    <script src="editor/dock/OutDataDockFactory.js"></script>
+    <script src="editor/dock/InExeDockFactory.js"></script>
+    <script src="editor/dock/OutExeDockFactory.js"></script>
+    
     <script src="compiler/Process.js"></script>
-    <script src="compiler/ControlFlow.js"></script>
+    <script src="compiler/Router.js"></script>
+    <script src="compiler/DefaultRouter.js"></script>
+    
+    <!-- Interpreter -->
+    <!-- <script src="compiler/ControlFlow.js"></script>
     <script src="compiler/Stream.js"></script>
-
-	<!-- Docks -->
-    <script src="editor/Dock.js"></script>
-    <script src="editor/DataDock.js"></script>
-    <script src="editor/GetterDock.js"></script>
-    <script src="editor/EditableDock.js"></script>
-    <script src="editor/ExeDock.js"></script>
+	<script src="compiler/NodeDependencyHandler.js"></script>
+	<script src="compiler/DockDependencyHandler.js"></script> -->
 
 	<script src="editor/Canvas.js"></script>
 	
 	<!-- Interactions UI behavior -->
     <script src="editor/Draggable.js"></script>
 	<script src="editor/Linkable.js"></script>
-	
     <script src="editor/Curve.js"></script>
     <script src="editor/Link.js"></script>
 

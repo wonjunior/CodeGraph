@@ -1,3 +1,5 @@
+'use strict'
+
 /**
   * Miscellaneous functions used throughout the code
   */
