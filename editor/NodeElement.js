@@ -33,7 +33,7 @@ class NodeElement extends Element {
 	 */
 	set highlight(bool) { 
 		
-		this.element.container.classList[ bool ? 'add' : 'remove' ]('selected'); 
+		this.container.classList[ bool ? 'add' : 'remove' ]('selected'); 
 	
 	}
 
@@ -49,34 +49,53 @@ class NodeElement extends Element {
 	/**
 	 * Setter to update the absolute position of the node container on the parent canvas.
 	 */
-	set position([ x, y ] = [ 0, 0 ]) { 
+	set position(position = [0, 0]) { 
 		
+		const [ x, y ] = this.boundaryClamp(position);
 		Object.assign(this.container.style, { left: `${x}px`, top: `${y}px` });
 
 	}
 
-	/**
-	 * Getter/Setter callback definitions delegated to `Node`.
-	 */
-	callbacks = {
-		
-		/**
-		 * Sets the text on the node's header section.
-		 */
-		label(label) { this.label.textContent = label },
+	get labelText() {
 
-		/**
-		 * Sets the text displayed on the node's background
-		 */
-		background(background) { this.background.textContent = background },
+		return this.label.textContent;
+
+	}
+
+	/**
+	 * Sets the text label on the node's header section.
+	 */
+	set labelText(label) {
+
+		this.label.textContent = label;
+
+	}
+
+	get backgroundText() {
+
+		return this.label.textContent;
+
+	}
+
+	/**
+	 * Sets the text label on the node's body section.
+	 */
+	set backgroundText(background) {
+
+		this.background.textContent = background;
 
 	}
 		
-	constructor(node, parent, parameters) {
+	constructor(node, parent, params) {
 
-		super(node, parent, parameters.select('headerColor', 'position', 'hideBody', 'hideHeader'));
+		super(node);
+		
+		this.render(parent);
 
-		this.observe(node);
+		this.labelText = params.label;
+		this.backgroundText = params.background;
+		this.headerColor = params.header;
+		this.position = params.position || [0,0];
 
 		if (this.hideBody) this.hide('body');
 		if (this.hideHeader) this.hide('header');

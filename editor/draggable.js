@@ -2,7 +2,7 @@
 
 class Draggable {
 
-    constructor({ type, event, element, object, bounderyClamp, callback }) {  					/* finitepane-rollback */
+    constructor({ type, event, element, object, callback }) {                       /* bounderyClamp finitepane-rollback */
         //                            <? just setter position
 
         this.element = element;
@@ -10,17 +10,17 @@ class Draggable {
 
         if (type == 'drag') {
 
-            this.startDrag(event, bounderyClamp, callback);										/* finitepane-rollback */
+            this.startDrag(event, callback);										/* bounderyClamp finitepane-rollback */
 
         } else if (type == 'stick') {
 
-            this.startStick(event, bounderyClamp, callback);									/* finitepane-rollback */
+            this.startStick(event, callback);                                       /* bounderyClamp finitepane-rollback */
 
         }
 
     };
 
-    startStick(e, bounderyClamp, callback) {													/* finitepane-rollback */
+    startStick(e, callback) {													    /* bounderyClamp finitepane-rollback */
 
         const parentProp = this.element.parentElement.getBoundingClientRect();
         this.offset = [
@@ -30,7 +30,7 @@ class Draggable {
 
         const eventHandler = event => {
 
-            this.dragging(event, bounderyClamp);												/* finitepane-rollback */
+            this.dragging(event);												    /* bounderyClamp finitepane-rollback */
 
             if (callback) callback();
 
@@ -43,7 +43,7 @@ class Draggable {
 
     };
 
-    startDrag(e, bounderyClamp, callback) {														/* finitepane-rollback */
+    startDrag(e, callback) {														/* bounderyClamp finitepane-rollback */
 
         const selfProp = this.element.getBoundingClientRect();
         const parentProp = this.element.parentElement.getBoundingClientRect();
@@ -54,7 +54,7 @@ class Draggable {
 
         const eventHandler = event => {
 
-            this.dragging(event, bounderyClamp);												/* finitepane-rollback */
+            this.dragging(event);												    /* bounderyClamp finitepane-rollback */
 
             if (callback) callback();
 
@@ -65,7 +65,7 @@ class Draggable {
 
     };
 
-    dragging(e, bounderyClamp) {
+    dragging(e) {                                                                   /* bounderyClamp */
 
         const [ offsetX, offsetY ] = this.offset;
 
@@ -75,7 +75,7 @@ class Draggable {
             (e.clientY - offsetY) / Canvas.zoomLevel
         ];
 
-        this.object.position = bounderyClamp(targetPosition);
+        this.object.position = targetPosition;                                      /* bounderyClamp */
 
     };
 

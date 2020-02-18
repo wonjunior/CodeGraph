@@ -22,13 +22,14 @@ class Canvas {	 // <? extends there #size and #position!
 	
 	}
 	
-	static set position([ x, y ]) {
+	static set position(position) { 
 		
-		Canvas.element.style.left = x + 'px';
-		Canvas.element.style.top = y + 'px';
-	
+		const [ x, y ] = this.boundaryClamp(position);
+		Object.assign(Canvas.element.style, { left: `${x}px`, top: `${y}px` });
+
 	}
-	
+
+
 	static positionFromOrigin()  {
 		
 		const properties = this.element.getBoundingClientRect();

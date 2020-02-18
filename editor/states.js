@@ -32,7 +32,7 @@ new State({
 					type: 'drag',
 					element: target,
 					object: Canvas,
-					bounderyClamp: Canvas.boundaryClamp,
+					// bounderyClamp: Canvas.boundaryClamp,
 				});
 			
 			}
@@ -57,7 +57,7 @@ new State({
 					type: 'drag',
 					element: node.element.container,
 					object: node.element,
-					bounderyClamp: node.element.boundaryClamp.bind(node.element),
+					// bounderyClamp: node.element.boundaryClamp.bind(node.element),
 					callback: node.update.bind(node)
                 });
 
