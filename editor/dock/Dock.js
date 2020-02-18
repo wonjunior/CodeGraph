@@ -4,43 +4,7 @@ class Dock extends CanvasObject {
 
 	static all = {};
 
-    static sideAttributes = {
-		in: { 
-			isRight: false, 
-			side: 'Left', 
-			sidePrefix: 'L' 
-		},
-        out: { 
-			isRight: true, 
-			side: 'Right', 
-			sidePrefix: 'R'
-		}
-	}
-	
-	static create(dockObjects, direction, dockConstructor, node) {
-
-		const { isRight, side, sidePrefix } = Dock.sideAttributes[ direction ];
-
-		return dockObjects.map(({ name, label, location/*, ...other*/ }, index) => {
-
-			// if position is specified and valid use it else use the default value for this type of dock
-			const parentName = ['body', 'head'].includes(location) ? location : dockConstructor.defaultLocation;
-
-			return new dockConstructor({
-				id: node.id + dockConstructor.typePrefix + sidePrefix + index,
-				node,
-				label: label || name,
-				isRight,
-				location: parentName,
-				parent: node.element[ parentName + side ],
-				// ...other,
-			});
-
-		});
-	
-	}
-
-    constructor({ id, node, label, isRight, location, parent/*, ...other*/ }) {
+    constructor({ id, node, label, isRight, location }) {
 
 		super();
 
@@ -54,14 +18,29 @@ class Dock extends CanvasObject {
             location,
             links: [],
             occupied: false,
-			label: id
+			label: label || id
         });
 
-		this.element = new DockElement(this, parent, {});
+		this.element = new DockElement(this, location, {label});
 
+		// this.dependencies = new DockDependencyHandler(this);
         // this.defineArgumentGetSet();
 
 	}
+
+    update() {
+
+        this.links.forEach(link => link.update());
+
+    }
+
+    destroy() {
+
+        this.links.forEach(link => link.destroy());
+
+        Dock.unregister(this);
+
+    }
 
     defineArgumentGetSet() {
 

@@ -2,37 +2,45 @@
 
 class DockElement extends Element {
 
+    static parameters = {
+        ExeDock: { offset: 10 },
+        DataDock: { offset: 7 }
+    }
+
 	get position() {
 
-        const [ nodePosX, nodePosY ] = this.node.element.position;
+        const [ nodePosX, nodePosY ] = this.nodeElement.position;
         const [ offsetX, offsetY ] = this.offset;
 
         return [ nodePosX + offsetX, nodePosY + offsetY ];
 
     }
 
-	/**
-	 * Getter/Setter callback definitions delegated to `Dock`.
-	 */
-	callbacks = {
+    get labelText() {
+        
+        return this.label.textContent;
+    
+    }
 
-		/**
-		 * Sets the text displayed beside the dock.
-		 */
-		label(label) { this.label.textContent = label },
+    set labelText(label) {
+        
+        this.label.textContent = label;
 
-	}
+    }
 
-	constructor(dock, parent, parameters) {
+	constructor(dock, location, params) {
 
-		super(dock, parent, parameters.select('label'));
+		super(dock);
 
-		this.node = dock.node;
-		this.dock = dock;
-
-		wait(() => this.offset = this.getRelativePosition());
-
-		this.observe(dock);
+        this.render(dock.node.element[location]);
+        
+		this.nodeElement = dock.node.element;
+        this.location = location;
+        this.dock = dock;
+        
+        this.labelText = params.label;
+        
+        wait(() => this.offset = this.getRelativePosition());
 
 	}
 
@@ -60,10 +68,10 @@ class DockElement extends Element {
 
 	getRelativePosition() {
 
-        const nodePos = this.node.element.container.getBoundingClientRect();
+        const nodePos = this.nodeElement.container.getBoundingClientRect();
         const dockPos = this.pin.getBoundingClientRect();
-		const offset = this.dock.constructor.offset;
-		
+        const offset = DockElement.parameters[this.dock.constructor.name].offset;
+
         return [
             (dockPos.x - nodePos.x) / Canvas.zoomLevel + offset,
             (dockPos.y - nodePos.y) / Canvas.zoomLevel + offset
