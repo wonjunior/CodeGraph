@@ -1,4 +1,11 @@
-docs
+_docs
+_dump
+_test
 *.css
 *.ignore
 jsdoc.json
+node_modules
+
+# for now: no npm (no jest or ts)
+package-lock.json
+package.json
