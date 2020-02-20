@@ -103,22 +103,25 @@
 
 
 <javascript>
+	<!-- Utils -->
     <script src="editor/functions.js"></script>
 
-	<script src="editor/Template.js"></script>
-	<script src="editor/Element.js"></script>
-	<script src="editor/NodeElement.js"></script>
-    <script src="editor/LinkElement.js"></script>
-    <script src="editor/dock/DockElement.js"></script>
-    
-	<!-- Node -->
+	<!-- View -->
+	<script src="editor/view/Template.js"></script>
+	<script src="editor/view/Element.js"></script>
+	<script src="editor/view/NodeElement.js"></script>
+    <script src="editor/view/LinkElement.js"></script>
+    <script src="editor/view/DockElement.js"></script>
+
+	<!-------- Components -------->
     <script src="editor/CanvasObject.js"></script>
-    <script src="editor/Node.js"></script>
-    <script src="editor/FunctionNode.js"></script>
-    
-    <script src="editor/Component.js"></script>
+
+    <!-- Node -->
+    <script src="editor/node/Node.js"></script>
+    <script src="editor/node/FunctionNode.js"></script>
+    <!-- <script src="editor/Component.js"></script> -->
     <!-- <script src="editor/Executable.js"></script> -->
-    
+
     <!-- Docks -->
     <script src="editor/dock/Dock.js"></script>
     <script src="editor/dock/DataDock.js"></script>
@@ -129,14 +132,15 @@
     <script src="editor/dock/OutDataDockFactory.js"></script>
     <script src="editor/dock/InExeDockFactory.js"></script>
     <script src="editor/dock/OutExeDockFactory.js"></script>
-    
+
+    <!-- Interpreter -->
     <script src="compiler/Process.js"></script>
     <script src="compiler/GetterProcess.js"></script>
     <script src="compiler/SetterProcess.js"></script>
+    
     <script src="compiler/Router.js"></script>
     <script src="compiler/DefaultRouter.js"></script>
     
-    <!-- Interpreter -->
     <!-- <script src="compiler/ControlFlow.js"></script>
     <script src="compiler/Stream.js"></script>
 	<script src="compiler/NodeDependencyHandler.js"></script>
@@ -149,7 +153,6 @@
 	<script src="editor/Linkable.js"></script>
     <script src="editor/Curve.js"></script>
     <script src="editor/Link.js"></script>
-
     <script src="editor/View.js"></script>
 
 	<!-- Event handling -->

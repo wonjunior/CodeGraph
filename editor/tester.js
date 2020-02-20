@@ -96,7 +96,7 @@ new Node({
 	},
 });*/
 
-new Node({
+new FunctionNode({
 	label: 'Add',
 	header: 'lightblue',
 	background: '+',
@@ -109,7 +109,7 @@ new Node({
 	},
 });
 
-new Node({
+new FunctionNode({
 	label: 'Sub',
 	header: 'pink',
 	background: '-',
