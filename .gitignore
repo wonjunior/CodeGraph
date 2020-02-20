@@ -5,6 +5,7 @@ _test
 *.ignore
 jsdoc.json
 node_modules
+.vscode
 
 # for now: no npm (no jest or ts)
 package-lock.json

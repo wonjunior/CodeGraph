@@ -2,13 +2,13 @@
 
 class DefaultRouter extends Router {
 
-    constructor(node) {
+    constructor() {
 
         super();
 
-        this.in = new InExeDockFactory([new DockDefinition('in', 'head')], node);
+        this.in = new InExeDockFactory([new DockDefinition('in', 'head')]);
 
-        this.out = new OutExeDockFactory([new DockDefinition('out', 'head')], node);
+        this.out = new OutExeDockFactory([new DockDefinition('out', 'head')]);
 
         this.docks = new Set([...this.in.docks, ...this.out.docks]);
 
