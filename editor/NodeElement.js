@@ -3,7 +3,7 @@
 class NodeElement extends Element {
 
 	/**
-	 * Getter/Setter for `NodeElement#headerColor`, the node's header background color.
+	 * Getter/Setter for the node's header background color.
 	 */
 	get headerColor() { 
 		
@@ -18,7 +18,7 @@ class NodeElement extends Element {
 	}
 
 	/**
-	 * Getter for `NodeElement#size`, the width and length of the node's container returned as an array.
+	 * Getter for the width and length of the node's container returned as an array.
 	 */
 	get size() {
 		
@@ -38,7 +38,7 @@ class NodeElement extends Element {
 	}
 
 	/**
-     * Getter for `Node#position` which returns the x and y coordinates of the node's position on the canvas
+     * Getter/Setter which returns the x and y coordinates of the node's position on the canvas.
      */
     get position() {
 
@@ -46,9 +46,6 @@ class NodeElement extends Element {
 
     }
 
-	/**
-	 * Setter to update the absolute position of the node container on the parent canvas.
-	 */
 	set position(position = [0, 0]) { 
 		
 		const [ x, y ] = this.boundaryClamp(position);
@@ -56,41 +53,41 @@ class NodeElement extends Element {
 
 	}
 
+	/**
+	 * Getter/Setter for the text label on the node's header section.
+	 */
 	get labelText() {
 
 		return this.label.textContent;
 
 	}
 
-	/**
-	 * Sets the text label on the node's header section.
-	 */
 	set labelText(label) {
 
 		this.label.textContent = label;
 
 	}
 
+	/**
+	 * Getter/Setter for node's background text label.
+	 */
 	get backgroundText() {
 
 		return this.label.textContent;
 
 	}
 
-	/**
-	 * Sets the text label on the node's body section.
-	 */
 	set backgroundText(background) {
 
 		this.background.textContent = background;
 
 	}
 		
-	constructor(node, parent, params) {
+	constructor(node, dockElements, parent, params) {
 
 		super(node);
 		
-		this.render(parent);
+		this.render(parent, dockElements);
 
 		this.labelText = params.label;
 		this.backgroundText = params.background;
@@ -99,6 +96,14 @@ class NodeElement extends Element {
 
 		if (this.hideBody) this.hide('body');
 		if (this.hideHeader) this.hide('header');
+
+	}
+
+	render(parent, dockElements) {
+
+		super.render(parent);
+
+		dockElements.forEach(dockElement => dockElement.render(this));
 
 	}
 

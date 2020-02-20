@@ -32,17 +32,21 @@ class DockElement extends Element {
 
 		super(dock);
 
-        this.render(dock.node.element[location]);
-        
-		this.nodeElement = dock.node.element;
         this.location = location;
         this.dock = dock;
-        
         this.labelText = params.label;
         
-        wait(() => this.offset = this.getRelativePosition());
-
 	}
+    
+    render(nodeElement) {
+        
+        super.render(nodeElement[this.location]);
+        
+		this.nodeElement = nodeElement;
+        
+        wait(() => this.initRelativePosition());
+
+    }
 
 	create(dock) {
 
@@ -66,13 +70,13 @@ class DockElement extends Element {
 
     }
 
-	getRelativePosition() {
+	initRelativePosition() {
 
         const nodePos = this.nodeElement.container.getBoundingClientRect();
         const dockPos = this.pin.getBoundingClientRect();
         const offset = DockElement.parameters[this.dock.constructor.name].offset;
 
-        return [
+        this.offset = [
             (dockPos.x - nodePos.x) / Canvas.zoomLevel + offset,
             (dockPos.y - nodePos.y) / Canvas.zoomLevel + offset
         ];
