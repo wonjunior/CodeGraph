@@ -2,9 +2,9 @@
 
 class OutExeDockFactory extends DockFactory {
 
-    constructor(dockDefinitions, node) {
+    constructor(dockDefinitions) {
 
-        super(dockDefinitions, 'right', ExeDock, node);
+        super(dockDefinitions, 'right', ExeDock);
 
     }
 

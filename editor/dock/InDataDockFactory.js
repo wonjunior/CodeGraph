@@ -2,9 +2,9 @@
 
 class InDataDockFactory extends DockFactory {
 
-    constructor(dockDefinitions, node) {
+    constructor(dockDefinitions) {
 
-        super(dockDefinitions, 'left', DataDock, node);
+        super(dockDefinitions, 'left', DataDock);
 
     }
 

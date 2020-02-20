@@ -16,6 +16,9 @@ const isEmpty = str => !str.replace(/\s/g, '').length;
 // adds the given function to the JS queue of execution
 const wait = fn => setTimeout(fn, 0);
 
+// Convert a random double into base 36 (numbers + letters), and grabs the first 4 characters
+const uniqueId = () => Math.random().toString(36).substr(2, 4);
+
 // quick sugar getter to retrieve first element or Array
 Object.defineProperty(Array.prototype, 'first', {
 	get: function() {

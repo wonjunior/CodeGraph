@@ -4,7 +4,7 @@ class Dock extends CanvasObject {
 
 	static all = {};
 
-    constructor({ id, node, label, isRight, location }) {
+    constructor({ id, label, isRight, location }) {
 
 		super();
 
@@ -14,7 +14,6 @@ class Dock extends CanvasObject {
 			id,
 			label,
             isRight,
-			node,
             location,
             links: [],
             occupied: false,
@@ -168,14 +167,6 @@ class Dock extends CanvasObject {
 
 	}
 
-    serialize(docks) {
-
-        return {
-            in: docks.in.map(({ label, editable, switchSection }) => { return { label, editable, switchSection } }),
-            out: docks.out.map(({ label, editable, switchSection }) => { return { label, editable, switchSection } })
-        }
-
-    }
+    serialize() { }
 
 }
-// 323

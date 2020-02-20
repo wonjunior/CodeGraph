@@ -12,7 +12,7 @@ class DockFactory {
 		ExeDock: { prefix: 'e' },
 	}
 
-    constructor(dockDefinitions, side, factory, node) {
+    constructor(dockDefinitions, side, factory) {
 
 		this.sideAttributes = DockFactory.sideAttributes[ side ];
 		this.typeAttributes = DockFactory.typeAttributes[ factory.name ];
@@ -22,9 +22,8 @@ class DockFactory {
 			const { label, location } = dockDefinition;
 
 			return new factory({
-				id: this.constructId(node.id, index),
+				id: this.constructId(index),
 				isRight: this.sideAttributes.bool,
-				node,
 				label,
 				location: location + this.sideAttributes.capitalized,
 			});
@@ -33,9 +32,9 @@ class DockFactory {
 	
 	}
 	
-	constructId(nodeId, index) {
+	constructId(index) {
 
-        return nodeId + this.sideAttributes.prefix + this.typeAttributes.prefix + index;
+        return uniqueId() + this.sideAttributes.prefix + this.typeAttributes.prefix + index;
 
     }
 }
