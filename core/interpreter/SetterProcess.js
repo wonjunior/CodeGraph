@@ -18,7 +18,7 @@ class SetterProcess extends Process {
 
     stringFunc(value) {
 
-        return `${this.getter}  = ${value}`;
+        return `${this.getter} = ${value}`;
 
     }
 

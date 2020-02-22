@@ -4,8 +4,7 @@ class GetterNode extends Node {
 
 	constructor(args) {
 
-		const { /*process,*/ ...nodeAttributes } = args;
-		// const { func, stringFunc, params, result } = process;
+		const { ...nodeAttributes } = args;
 
 		super(
 			new GetterProcess('a'),
