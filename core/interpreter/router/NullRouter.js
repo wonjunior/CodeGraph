@@ -2,12 +2,12 @@
 
 class NullRouter extends Router {
 
-    constructor() {
+	constructor() {
 
-        super();
+		super();
 
-        this.docks = new Set();
+		this.docks = new Set();
 
-    }
+	}
 
 }

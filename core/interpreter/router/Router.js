@@ -2,10 +2,10 @@
 
 class Router {
 
-    constructor() {
+	constructor() {
 
-        
+			
 
-    }
+	}
 
 }

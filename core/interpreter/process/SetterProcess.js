@@ -2,24 +2,24 @@
 
 class SetterProcess extends Process {
 
-    constructor(variable) {
+	constructor(variable) {
 
-        super(null, null, [{ label: variable }], []);
-        
-        this.getter = variable;
+		super(null, null, [{ label: variable }], []);
+			
+		this.getter = variable;
 
-    };
+	}
 
-    func() {
+	func() {
 
-        return true;
+		return true;
 
-    }
+	}
 
-    stringFunc(value) {
+	stringFunc(value) {
 
-        return `${this.getter} = ${value}`;
+		return `${this.getter} = ${value}`;
 
-    }
+	}
 
 }
