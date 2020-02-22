@@ -97,10 +97,10 @@ new Node({
 });*/
 
 new FunctionNode({
-	label: 'f',
+	label: 'f-node',
 	header: 'pink',
 	background: 'f',
-	position: [100,100],
+	position: [50,100],
 	process:  {
 		func: function(a, b) { return a - b; },
 		stringFunc: function(a, b) { return `${a} - ${b}`; },
@@ -110,10 +110,10 @@ new FunctionNode({
 });
 
 new OperatorNode({
-	label: 'Add',
+	label: 'o-node',
 	header: 'lightblue',
 	background: '+',
-	position: [300,100],
+	position: [250,100],
     process:  {
 		func: function(a, b) { return a + b; },
 		stringFunc: function(a, b) { return `${a} + ${b}`; },
@@ -123,17 +123,34 @@ new OperatorNode({
 });
 
 new GetterNode({
-	label: 'Getter',
+	label: 'g-node',
 	header: 'lightgreen',
 	background: 'a',
-	position: [500,100],
+	position: [450,100],
 });
 
 new SetterNode({
-	label: 'Setter',
+	label: 's-node',
 	header: 'navyblue',
 	background: 'a',
-	position: [700,100],
+	position: [650,100],
+});
+
+
+new ControlFlowNode({
+	type: 'Conditional',
+	label: 'cf-node',
+	header: 'lightcoral',
+	background: '?',
+	position: [850,100],
+});
+
+new ControlFlowNode({
+	type: 'ForLoop',
+	label: 'cf-node',
+	header: 'lightslategray',
+	background: '🛡',
+	position: [850,250],
 });
 
 /*new Node({

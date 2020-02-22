@@ -4,12 +4,11 @@ class ControlFlowNode extends Node {
 
 	constructor(args) {
 
-		const { process, ...nodeAttributes } = args;
-		const { func, stringFunc, params, result } = process;
+		const { type, ...nodeAttributes } = args;
 
 		super(
-			new Process(func, stringFunc, params, [result]),
-			new Router(),
+			new ControlFlowProcess[type](),
+			new ControlFlowRouter[type](),
 			nodeAttributes
 		);
 		

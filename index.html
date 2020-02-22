@@ -104,76 +104,81 @@
 
 <javascript>
 	<!-- Utils -->
-    <script src="editor/functions.js"></script>
+    <script src="core/functions.js"></script>
 
 	<!-- View -->
-	<script src="editor/view/Template.js"></script>
-	<script src="editor/view/Element.js"></script>
-	<script src="editor/view/NodeElement.js"></script>
-    <script src="editor/view/LinkElement.js"></script>
-    <script src="editor/view/DockElement.js"></script>
+	<script src="core/view/Template.js"></script>
+	<script src="core/view/Element.js"></script>
+	<script src="core/view/NodeElement.js"></script>
+    <script src="core/view/LinkElement.js"></script>
+    <script src="core/view/DockElement.js"></script>
 
 	<!-------- Components -------->
-    <script src="editor/CanvasObject.js"></script>
+    <script src="core/CanvasObject.js"></script>
 
     <!-- Node -->
-    <script src="editor/node/Node.js"></script>
-    <script src="editor/node/FunctionNode.js"></script>
-    <script src="editor/node/OperatorNode.js"></script>
-    <script src="editor/node/GetterNode.js"></script>
-    <script src="editor/node/SetterNode.js"></script>
-    <!-- <script src="editor/Component.js"></script> -->
-    <!-- <script src="editor/Executable.js"></script> -->
+    <script src="core/node/Node.js"></script>
+    <script src="core/node/FunctionNode.js"></script>
+    <script src="core/node/OperatorNode.js"></script>
+    <script src="core/node/GetterNode.js"></script>
+    <script src="core/node/SetterNode.js"></script>
+    <script src="core/node/ControlFlowNode.js"></script>
+    <!-- <script src="core/Component.js"></script> -->
+    <!-- <script src="core/Executable.js"></script> -->
 
     <!-- Docks -->
-    <script src="editor/dock/Dock.js"></script>
-    <script src="editor/dock/DataDock.js"></script>
-    <script src="editor/dock/ExeDock.js"></script>
-    <script src="editor/dock/DockDefinition.js"></script>
-    <script src="editor/dock/DockFactory.js"></script>
-    <script src="editor/dock/InDataDockFactory.js"></script>
-    <script src="editor/dock/OutDataDockFactory.js"></script>
-    <script src="editor/dock/InExeDockFactory.js"></script>
-    <script src="editor/dock/OutExeDockFactory.js"></script>
+    <script src="core/dock/Dock.js"></script>
+    <script src="core/dock/DataDock.js"></script>
+    <script src="core/dock/ExeDock.js"></script>
+    <script src="core/dock/DockDefinition.js"></script>
+    <script src="core/dock/DockFactory.js"></script>
+    <script src="core/dock/InDataDockFactory.js"></script>
+    <script src="core/dock/OutDataDockFactory.js"></script>
+    <script src="core/dock/InExeDockFactory.js"></script>
+    <script src="core/dock/OutExeDockFactory.js"></script>
 
     <!-- Interpreter -->
-    <script src="compiler/Process.js"></script>
-    <script src="compiler/GetterProcess.js"></script>
-    <script src="compiler/SetterProcess.js"></script>
+    <script src="core/interpreter/process/Process.js"></script>
+    <script src="core/interpreter/process/GetterProcess.js"></script>
+    <script src="core/interpreter/process/SetterProcess.js"></script>
     
-    <script src="compiler/Router.js"></script>
-    <script src="compiler/NullRouter.js"></script>
-    <script src="compiler/DefaultRouter.js"></script>
+    <script src="core/interpreter/process/ControlFlowProcess.js"></script>
     
-    <!-- <script src="compiler/ControlFlow.js"></script>
-    <script src="compiler/Stream.js"></script>
-	<script src="compiler/NodeDependencyHandler.js"></script>
-	<script src="compiler/DockDependencyHandler.js"></script> -->
+    <script src="core/interpreter/router/Router.js"></script>
+    <script src="core/interpreter/router/NullRouter.js"></script>
+    <script src="core/interpreter/router/DefaultRouter.js"></script>
 
-	<script src="editor/Canvas.js"></script>
+    <script src="core/interpreter/router/ControlFlowRouter.js"></script>
+    
+    <!-- <script src="core/interpreter/ControlFlow.js"></script>
+    <script src="core/interpreter/Stream.js"></script>
+	<script src="core/interpreter/NodeDependencyHandler.js"></script>
+	<script src="core/interpreter/DockDependencyHandler.js"></script> -->
+
+	<script src="core/Canvas.js"></script>
 	
 	<!-- Interactions UI behavior -->
-    <script src="editor/Draggable.js"></script>
-	<script src="editor/Linkable.js"></script>
-    <script src="editor/Curve.js"></script>
-    <script src="editor/Link.js"></script>
-    <script src="editor/View.js"></script>
+    <script src="core/Draggable.js"></script>
+	<script src="core/Linkable.js"></script>
+    <script src="core/Curve.js"></script>
+    <script src="core/Link.js"></script>
+    <script src="core/View.js"></script>
 
 	<!-- Event handling -->
-    <script src="editor/State.js"></script>
-    <script src="editor/mouseHandler.js"></script>
-    <script src="editor/keyHandler.js"></script>
-    <script src="editor/keys.js"></script>
-    <script src="editor/eventListeners.js"></script>
+    <script src="core/State.js"></script>
+    <script src="core/mouseHandler.js"></script>
+    <script src="core/keyHandler.js"></script>
+    <script src="core/keys.js"></script>
+    <script src="core/eventListeners.js"></script>
 
-    <script src="editor/library.js"></script>
+    <script src="core/library.js"></script>
 
-    <script src="editor/Finder.js"></script>
-    <script src="editor/Editor.js"></script>
-    <script src="editor/states.js"></script>
+    <script src="core/Finder.js"></script>
+    <script src="core/Editor.js"></script>
+    <script src="core/states.js"></script>
 
-    <script src="editor/tester.js"></script>
+    <script src="core/tester.js"></script>
 
-	<script src="editor/Selection.js"></script>
+	<script src="core/Selection.js"></script>
 </javascript>
 </body>
