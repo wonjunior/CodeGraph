@@ -97,10 +97,23 @@ new Node({
 });*/
 
 new FunctionNode({
+	label: 'f',
+	header: 'pink',
+	background: 'f',
+	position: [100,100],
+	process:  {
+		func: function(a, b) { return a - b; },
+		stringFunc: function(a, b) { return `${a} - ${b}`; },
+		params: [{label: 'a'}, {label: 'b'}],
+		result: {label: 'f(a,b)'}
+	},
+});
+
+new OperatorNode({
 	label: 'Add',
 	header: 'lightblue',
 	background: '+',
-	position: [400,200],
+	position: [300,100],
     process:  {
 		func: function(a, b) { return a + b; },
 		stringFunc: function(a, b) { return `${a} + ${b}`; },
@@ -109,16 +122,18 @@ new FunctionNode({
 	},
 });
 
-new FunctionNode({
-	label: 'Sub',
-	header: 'pink',
-	background: '-',
-    process:  {
-		func: function(a, b) { return a - b; },
-		stringFunc: function(a, b) { return `${a} - ${b}`; },
-		params: [{label: 'a'}, {label: 'b'}],
-		result: {label: 'result'}
-	},
+new GetterNode({
+	label: 'Getter',
+	header: 'lightgreen',
+	background: 'a',
+	position: [500,100],
+});
+
+new SetterNode({
+	label: 'Setter',
+	header: 'navyblue',
+	background: 'a',
+	position: [700,100],
 });
 
 /*new Node({

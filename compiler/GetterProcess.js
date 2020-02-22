@@ -2,9 +2,9 @@
 
 class GetterProcess extends Process {
 
-    constructor(node, variable) {
+    constructor(variable) {
 
-        super(node, null, null, [], [{ label: variable }]);
+        super(null, null, [], [{ label: variable }]);
         
         this.getter = variable;
 
