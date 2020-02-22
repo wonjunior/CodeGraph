@@ -12,7 +12,7 @@ class FunctionNode extends Node {
       new DefaultRouter(),
       nodeAttributes
     );
-    
+
   }
 
 }

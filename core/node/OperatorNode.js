@@ -2,17 +2,17 @@
 
 class OperatorNode extends Node {
 
-	constructor(args) {
+  constructor(args) {
 
-		const { process, ...nodeAttributes } = args;
-		const { func, stringFunc, params, result } = process;
+    const { process, ...nodeAttributes } = args;
+    const { func, stringFunc, params, result } = process;
 
-		super(
-			new Process(func, stringFunc, params, [result]),
-			new NullRouter(),
-			nodeAttributes
-		);
-		
-	}
+    super(
+      new Process(func, stringFunc, params, [result]),
+      new NullRouter(),
+      nodeAttributes
+    );
+    
+  }
 
 }

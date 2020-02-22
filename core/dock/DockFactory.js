@@ -2,9 +2,9 @@
 
 class DockFactory {
 
-    static sideAttributes = {
+  static sideAttributes = {
 		left: { bool: false, capitalized: 'Left', prefix: 'L' },
-        right: { bool: true, capitalized: 'Right', prefix: 'R' }
+    right: { bool: true, capitalized: 'Right', prefix: 'R' }
 	}
 
 	static typeAttributes = {
@@ -12,29 +12,29 @@ class DockFactory {
 		ExeDock: { prefix: 'e' },
 	}
 
-    constructor(dockDefinitions, side, factory) {
+  constructor(dockDefinitions, side, factory) {
 
-		this.sideAttributes = DockFactory.sideAttributes[ side ];
-		this.typeAttributes = DockFactory.typeAttributes[ factory.name ];
+    this.sideAttributes = DockFactory.sideAttributes[side];
+    this.typeAttributes = DockFactory.typeAttributes[factory.name];
 
-		this.docks = dockDefinitions.map((dockDefinition, index) => {
-			
-			const { label, location } = dockDefinition;
+    this.docks = dockDefinitions.map((dockDefinition, index) => {
 
-			return new factory({
-				id: this.constructId(index),
-				isRight: this.sideAttributes.bool,
-				label,
-				location: location + this.sideAttributes.capitalized,
-			});
+      const { label, location } = dockDefinition;
 
-		});
-	
-	}
-	
-	constructId(index) {
+      return new factory({
+        id: this.constructId(index),
+        isRight: this.sideAttributes.bool,
+        label,
+        location: location + this.sideAttributes.capitalized,
+      });
 
-        return uniqueId() + this.sideAttributes.prefix + this.typeAttributes.prefix + index;
+    });
 
-    }
+  }
+
+  constructId(index) {
+
+    return uniqueId() + this.sideAttributes.prefix + this.typeAttributes.prefix + index;
+
+  }
 }

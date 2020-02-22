@@ -2,10 +2,10 @@
 
 class DockDefinition {
 
-    constructor(label, location) {
+  constructor(label, location) {
 
-        Object.assign(this, { label, location });
+    Object.assign(this, { label, location });
 
-    }
+  }
 
 }

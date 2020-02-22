@@ -2,171 +2,96 @@
 
 class Dock extends CanvasObject {
 
-	static all = {};
+  static all = {};
 
-    constructor({ id, label, isRight, location }) {
+  constructor({ id, label, isRight, location }) {
 
-		super();
+    super();
 
-		Dock.register(id, this);
+    Dock.register(id, this);
 
-        Object.assign(this, {
-			id,
-			label,
-            isRight,
-            location,
-            links: [],
-            occupied: false,
-			label: label || id
-        });
+    Object.assign(this, {
+      id,
+      label,
+      isRight,
+      location,
+      links: [],
+      occupied: false,
+      label: label || id
+    });
 
-		this.element = new DockElement(this, location, {label});
+    this.element = new DockElement(this, location, {label});
 
-		// this.dependencies = new DockDependencyHandler(this);
-        // this.defineArgumentGetSet();
+  }
 
-	}
+  update() {
 
-    update() {
+    this.links.forEach(link => link.update());
 
-        this.links.forEach(link => link.update());
+  }
 
-    }
+  destroy() {
 
-    destroy() {
+    this.links.forEach(link => link.destroy());
 
-        this.links.forEach(link => link.destroy());
+    Dock.unregister(this);
 
-        Dock.unregister(this);
+  }
 
-    }
+  /**
+   * Right-sided data docks are never occupied
+   */
+  allowsMultipleLinks() {
 
-    defineArgumentGetSet() {
+    return this.isRight && this instanceof DataDock;
 
-        var _argument;
-        var _dependencies = this.node.getter && { [this.node.getter.variableName]: [[this.node]] };
+  }
 
-        Object.defineProperties(this, {
-            "argument": {
+  occupiedAndUnique() {
 
-                get: () => {
+    return this.occupied && !this.allowsMultipleLinks();
 
-                    if (this instanceof DataDock) {
+  }
 
-                        if (this.isRight) {
+  getLink() {
 
-                            if (_argument) {
+    return this.occupiedAndUnique() ? this.links.first.edit() : new Link(this);
 
-                                return _argument;
+  }
 
-                            } else if(this.node.getter) {
+  isCompatible(dock) {
 
-                                return {
-                                    ... this.node.func.bind(this.node.getter)(),
-                                    dependencies: _dependencies,
-                                };
+    const notEqual = (this.node != dock.node);
+    const opposite = (this.isRight != dock.isRight);
+    const sameType = (this instanceof DataDock == dock instanceof DataDock) && (this.type == dock.type);
 
-                            }
+    return notEqual && opposite && sameType;
 
-                        } else {
+  }
 
-                            if (this.occupied) {
+  dropLink(link) {
 
-                                return this.links[0].startDock.argument; // <? make a Dock method
+    this.links = link ? this.links.filter(({ id }) => id !== link.id) : [];
+    this.occupied = !!this.links.length;
 
-                            } else {
+  }
 
-                                return _argument;
+  addLink(link) {
 
-                            }
+    this.links.push(link);
+    this.occupied = true;
 
-                        }
+  }
 
-                    }
+  /**
+   * Destroys the link if there is any that's occupying the dock
+   */
+  popExistingLink() {
 
-                },
+    if (this.occupiedAndUnique()) this.links.first.destroy();
 
-                set: (argument) => {
+  }
 
-                    if (!argument) {
-
-                        _argument = argument;
-
-                    } else if (argument && this instanceof dataDock) {
-
-                        const [ value, string, dependencies ] = argument;
-                        if (this.isRight) {
-
-                            this.label = value;
-                            this.element.label.title = string;
-
-                        }
-
-                        _argument = { value, string, dependencies };
-
-                    }
-
-                }
-
-            }
-        });
-
-    }
-
-	/**
-	 * Right-sided data docks are never occupied
-	 */
-	allowsMultipleLinks() {
-
-		return this.isRight && this instanceof DataDock;
-
-	}
-
-	occupiedAndUnique() {
-
-		return this.occupied && !this.allowsMultipleLinks();
-
-	}
-
-	getLink() {
-
-		return this.occupiedAndUnique() ? this.links.first.edit() : new Link(this);
-
-	}
-
-    isCompatible(dock) {
-
-        const notEqual = (this.node != dock.node);
-        const opposite = (this.isRight != dock.isRight);
-        const sameType = (this instanceof DataDock == dock instanceof DataDock) && (this.type == dock.type);
-
-        return notEqual && opposite && sameType;
-
-    }
-
-	dropLink(link) {
-
-		this.links = link ? this.links.filter(({ id }) => id !== link.id) : [];
-		this.occupied = !!this.links.length;
-
-	}
-
-	addLink(link) {
-		
-		this.links.push(link);
-        this.occupied = true;
-
-	}
-
-	/**
-	 * Destroys the link if there is any that's occupying the dock
-	 */
-	popExistingLink() {
-		
-		if (this.occupiedAndUnique()) this.links.first.destroy();
-
-	}
-
-    serialize() { }
+  serialize() { }
 
 }

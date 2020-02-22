@@ -2,85 +2,85 @@
 
 class DockElement extends Element {
 
-    static parameters = {
-        ExeDock: { offset: 10 },
-        DataDock: { offset: 7 }
-    }
+  static parameters = {
+    ExeDock: { offset: 10 },
+    DataDock: { offset: 7 }
+  }
 
-	get position() {
+  get position() {
 
-        const [ nodePosX, nodePosY ] = this.nodeElement.position;
-        const [ offsetX, offsetY ] = this.offset;
+    const [ nodePosX, nodePosY ] = this.nodeElement.position;
+    const [ offsetX, offsetY ] = this.offset;
 
-        return [ nodePosX + offsetX, nodePosY + offsetY ];
+    return [ nodePosX + offsetX, nodePosY + offsetY ];
 
-    }
+  }
 
-    get labelText() {
-        
-        return this.label.textContent;
-    
-    }
+  get labelText() {
 
-    set labelText(label) {
-        
-        this.label.textContent = label;
+    return this.label.textContent;
 
-    }
+  }
 
-	constructor(dock, location, params) {
+  set labelText(label) {
 
-		super(dock);
+    this.label.textContent = label;
 
-        this.location = location;
-        this.dock = dock;
-        this.labelText = params.label;
-        
-	}
-    
-    render(nodeElement) {
-        
-        super.render(nodeElement[this.location]);
-        
-		this.nodeElement = nodeElement;
-        
-        wait(() => this.initRelativePosition());
+  }
 
-    }
+constructor(dock, location, params) {
 
-	create(dock) {
+  super(dock);
 
-		const $ = Template.dock();
-		
-        Object.assign(this, {
-            container: $('.dock-container'),
-            pin: $('.dock'),
-            snap: $('.snap-dock'),
-            param: $('.param-container'),
-            label: $('.param-label'),
-        });
+    this.location = location;
+    this.dock = dock;
+    this.labelText = params.label;
 
-        this.container.classList.add(
-            dock instanceof DataDock ? 'data' : 'exe',
-            dock.isRight ? 'right' : 'left'
-        );
+  }
 
-        this.snap.ref = dock.id;
-        this.container.id = dock.id;
+  render(nodeElement) {
 
-    }
+    super.render(nodeElement[this.location]);
 
-	initRelativePosition() {
+    this.nodeElement = nodeElement;
 
-        const nodePos = this.nodeElement.container.getBoundingClientRect();
-        const dockPos = this.pin.getBoundingClientRect();
-        const offset = DockElement.parameters[this.dock.constructor.name].offset;
+    wait(() => this.initRelativePosition());
 
-        this.offset = [
-            (dockPos.x - nodePos.x) / Canvas.zoomLevel + offset,
-            (dockPos.y - nodePos.y) / Canvas.zoomLevel + offset
-        ];
+  }
 
-    }
+create(dock) {
+
+  const $ = Template.dock();
+
+    Object.assign(this, {
+      container: $('.dock-container'),
+      pin: $('.dock'),
+      snap: $('.snap-dock'),
+      param: $('.param-container'),
+      label: $('.param-label'),
+    });
+
+    this.container.classList.add(
+      dock instanceof DataDock ? 'data' : 'exe',
+      dock.isRight ? 'right' : 'left'
+    );
+
+    this.snap.ref = dock.id;
+    this.container.id = dock.id;
+
+  }
+
+  initRelativePosition() {
+
+    const nodePos = this.nodeElement.container.getBoundingClientRect();
+    const dockPos = this.pin.getBoundingClientRect();
+    const offset = DockElement.parameters[this.dock.constructor.name].offset;
+
+    this.offset = [
+      (dockPos.x - nodePos.x) / Canvas.zoomLevel + offset,
+      (dockPos.y - nodePos.y) / Canvas.zoomLevel + offset
+    ];
+
+  }
 
 }

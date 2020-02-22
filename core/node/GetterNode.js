@@ -2,16 +2,16 @@
 
 class GetterNode extends Node {
 
-	constructor(args) {
+  constructor(args) {
 
-		const { ...nodeAttributes } = args;
+    const { ...nodeAttributes } = args;
 
-		super(
-			new GetterProcess('a'),
-			new NullRouter(),
-			nodeAttributes
-		);
-		
-	}
+    super(
+      new GetterProcess('a'),
+      new NullRouter(),
+      nodeAttributes
+    );
+    
+  }
 
 }

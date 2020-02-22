@@ -4,72 +4,72 @@
 // Node's View class (by default NodeElement) should meet implement the #update and #remove methods.
 class Node extends CanvasObject {
 
-	static all = {};
+  static all = {};
 
-	static idOfLast = 1;
-	static idPrefix = 'n';
+  static idOfLast = 1;
+  static idPrefix = 'n';
 
-	/**
-	 * Depending on the number of nodes already instanciated, the function will create a new node 
-	 * identifier.
-	 */
-	static constructId() {
+  /**
+   * Depending on the number of nodes already instanciated, the function will create a new node 
+   * identifier.
+   */
+  static constructId() {
 
-		return Node.idPrefix + Node.idOfLast++;
+    return Node.idPrefix + Node.idOfLast++;
 
-	}
+  }
 
-	constructor(process, router, nodeAttributes) {
+  constructor(process, router, nodeAttributes) {
 
-		super();
+    super();
 
-		this.id = Node.constructId();
-		this.process = process;
-		this.router = router;
-		
-		this.attachDocks();
+    this.id = Node.constructId();
+    this.process = process;
+    this.router = router;
+    
+    this.attachDocks();
 
-		Node.register(this.id, this);
+    Node.register(this.id, this);
 
-		this.element = new NodeElement(
-			this, 
-			[...this.docks].map(({element}) => element), 
-			Canvas.nodeArea, 
-			nodeAttributes
-		);
+    this.element = new NodeElement(
+      this, 
+      [...this.docks].map(({element}) => element), 
+      Canvas.nodeArea, 
+      nodeAttributes
+    );
 
-	}
+  }
 
-	attachDocks() {
+  attachDocks() {
 
-		this.docks = new Set([...this.process.docks, ...this.router.docks]);
+    this.docks = new Set([...this.process.docks, ...this.router.docks]);
 
-		this.docks.forEach(dock => dock.node = this);
+    this.docks.forEach(dock => dock.node = this);
 
-	}
+  }
 
-	/**
-	 * This method updates all links connected to the node.
-	 */
-	update() { 
+  /**
+   * This method updates all links connected to the node.
+   */
+  update() { 
 
-		this.docks.forEach(dock => dock.update());
+    this.docks.forEach(dock => dock.update());
 
-	}
+  }
 
-	/**
-	 * This method safely removes the node: destroy docks -> unregister node -> remove node element
-	 */
-	destroy() {
+  /**
+   * This method safely removes the node: destroy docks -> unregister node -> remove node element
+   */
+  destroy() {
 
-		this.docks.forEach(dock => dock.destroy());
+    this.docks.forEach(dock => dock.destroy());
 
-		Node.unregister(this);
-	
-		this.element.remove();
+    Node.unregister(this);
+  
+    this.element.remove();
 
-	}
+  }
 
-	serialize() { }
+  serialize() { }
 
 }

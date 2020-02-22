@@ -2,10 +2,10 @@
 
 class DataDock extends Dock {
 
-    constructor(parameters) {
+  constructor(parameters) {
 
-        super(parameters);
+    super(parameters);
 
-    }
+  }
 
 }

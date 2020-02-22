@@ -2,42 +2,42 @@
 
 class NodeElement extends Element {
 
-	/**
-	 * Getter/Setter for the node's header background color.
-	 */
-	get headerColor() { 
-		
-		return this.header.style.background;
-	
-	}
+  /**
+   * Getter/Setter for the node's header background color.
+   */
+  get headerColor() {
 
-	set headerColor(color) {
+    return this.header.style.background;
 
-		this.header.style.background = color;
-	
-	}
+  }
 
-	/**
-	 * Getter for the width and length of the node's container returned as an array.
-	 */
-	get size() {
-		
-		const properties = this.container.getBoundingClientRect();
+  set headerColor(color) {
 
-		return [ properties.width, properties.height ];
+    this.header.style.background = color;
 
-	}
+  }
 
- 	/**
-	 * Setter which adds or remove the `"selected"` class name the node's container.
-	 */
-	set highlight(bool) { 
-		
-		this.container.classList[ bool ? 'add' : 'remove' ]('selected'); 
-	
-	}
+  /**
+   * Getter for the width and length of the node's container returned as an array.
+   */
+  get size() {
 
-	/**
+    const properties = this.container.getBoundingClientRect();
+
+    return [ properties.width, properties.height ];
+
+  }
+
+   /**
+   * Setter which adds or remove the `"selected"` class name the node's container.
+   */
+  set highlight(bool) {
+
+    this.container.classList[ bool ? 'add' : 'remove' ]('selected');
+
+  }
+
+  /**
      * Getter/Setter which returns the x and y coordinates of the node's position on the canvas.
      */
     get position() {
@@ -46,126 +46,126 @@ class NodeElement extends Element {
 
     }
 
-	set position(position = [0, 0]) { 
-		
-		const [ x, y ] = this.boundaryClamp(position);
-		Object.assign(this.container.style, { left: `${x}px`, top: `${y}px` });
+  set position(position = [0, 0]) {
 
-	}
+    const [ x, y ] = this.boundaryClamp(position);
+    Object.assign(this.container.style, { left: `${x}px`, top: `${y}px` });
 
-	/**
-	 * Getter/Setter for the text label on the node's header section.
-	 */
-	get labelText() {
+  }
 
-		return this.label.textContent;
+  /**
+   * Getter/Setter for the text label on the node's header section.
+   */
+  get labelText() {
 
-	}
+    return this.label.textContent;
 
-	set labelText(label) {
+  }
 
-		this.label.textContent = label;
+  set labelText(label) {
 
-	}
+    this.label.textContent = label;
 
-	/**
-	 * Getter/Setter for node's background text label.
-	 */
-	get backgroundText() {
+  }
 
-		return this.label.textContent;
+  /**
+   * Getter/Setter for node's background text label.
+   */
+  get backgroundText() {
 
-	}
+    return this.label.textContent;
 
-	set backgroundText(background) {
+  }
 
-		this.background.textContent = background;
+  set backgroundText(background) {
 
-	}
-		
-	constructor(node, dockElements, parent, params) {
+    this.background.textContent = background;
 
-		super(node);
-		
-		this.render(parent, dockElements);
+  }
 
-		this.labelText = params.label;
-		this.backgroundText = params.background;
-		this.headerColor = params.header;
-		this.position = params.position || [0,0];
+  constructor(node, dockElements, parent, params) {
 
-		if (this.hideBody) this.hide('body');
-		if (this.hideHeader) this.hide('header');
+    super(node);
 
-	}
+    this.render(parent, dockElements);
 
-	render(parent, dockElements) {
+    this.labelText = params.label;
+    this.backgroundText = params.background;
+    this.headerColor = params.header;
+    this.position = params.position || [0,0];
 
-		super.render(parent);
+    if (this.hideBody) this.hide('body');
+    if (this.hideHeader) this.hide('header');
 
-		dockElements.forEach(dockElement => dockElement.render(this));
+  }
 
-	}
+  render(parent, dockElements) {
 
-	/**
-	 * Creates the node's HTML element. All HTML elements that are needed are saved as HTML objects 
-	 * in the NodeElement instance. The property element contains the following elements:
-	 * { `node`, `header`, `label`, `headLeft`, `headRight`, `bodyLeft`, `bodyRight`, `background` }
-	 * @override
-	 */
-	create(node) {
+    super.render(parent);
 
-		const $ = Template.node();
+    dockElements.forEach(dockElement => dockElement.render(this));
 
-		Object.assign(this, {
-			container: $('.node-container'),
-			header: $('.header'),
-			label: $('.header-title'),
-			headLeft: $('.header-block > .left-block'),
-			headRight: $('.header-block > .right-block'),
-			bodyLeft: $('.body > .left-block'),
-			bodyRight: $('.body > .right-block'),
-			background: $('.body > .background')
-		});
-		
-		this.header.ref = node.id;
-		this.container.id = node.id;
+  }
 
-	}
+  /**
+   * Creates the node's HTML element. All HTML elements that are needed are saved as HTML objects
+   * in the NodeElement instance. The property element contains the following elements:
+   * { `node`, `header`, `label`, `headLeft`, `headRight`, `bodyLeft`, `bodyRight`, `background` }
+   * @override
+   */
+  create(node) {
 
-	/**
-	 * Clamps the provided [x, y] position so the node container remains inside its parent canvas area.
-	 */
-	boundaryClamp(position) {
+    const $ = Template.node();
 
-		return position.map((value, i) => {
+    Object.assign(this, {
+      container: $('.node-container'),
+      header: $('.header'),
+      label: $('.header-title'),
+      headLeft: $('.header-block > .left-block'),
+      headRight: $('.header-block > .right-block'),
+      bodyLeft: $('.body > .left-block'),
+      bodyRight: $('.body > .right-block'),
+      background: $('.body > .background')
+    });
 
-			const [ minLimit, maxLimit ] = [ 0, (Canvas.size[i] - this.size[i]) / Canvas.zoomLevel ];
+    this.header.ref = node.id;
+    this.container.id = node.id;
 
-			return value <= minLimit ? minLimit : (value >= maxLimit ? maxLimit : value);
+  }
 
-		});
+  /**
+   * Clamps the provided [x, y] position so the node container remains inside its parent canvas area.
+   */
+  boundaryClamp(position) {
 
-	}
+    return position.map((value, i) => {
 
-	/**
-	 * Hides the corresponding node portion
-	 * @param {string} part is either `"header"` or `"body"`
-	 */
-	hide(part) {
+      const [ minLimit, maxLimit ] = [ 0, (Canvas.size[i] - this.size[i]) / Canvas.zoomLevel ];
 
-		this.container.classList.add(`hide-${part}`);
+      return value <= minLimit ? minLimit : (value >= maxLimit ? maxLimit : value);
 
-	}
+    });
 
-	/**
-	 * Toggles the `"selected"` class name on the node's container element.
-	 * @returns {Boolean} - the state of the node, i.e. if it is selected or not
-	 */
-	toggleHighlight() {
-		
-		return this.container.classList.toggle('selected');
+  }
 
-	}
+  /**
+   * Hides the corresponding node portion
+   * @param {string} part is either `"header"` or `"body"`
+   */
+  hide(part) {
+
+    this.container.classList.add(`hide-${part}`);
+
+  }
+
+  /**
+   * Toggles the `"selected"` class name on the node's container element.
+   * @returns {Boolean} - the state of the node, i.e. if it is selected or not
+   */
+  toggleHighlight() {
+
+    return this.container.classList.toggle('selected');
+
+  }
 
 }
