@@ -1,100 +1,3 @@
-'use strict'
-
-/*new Node({ ...Library.node.log, position: [ 500, 450 ] });
-
-new Node({ ...Library.node.log, position: [ 600, 550 ] });
-
-new Node({ ...Library.node.sum, position: [ 200, 100 ] });
-
-new Node({ ...Library.node.sum, position: [ 350, 266 ] });
-
-
-new Node({ ...Library.node.sum, position: [ 200, 450 ] });
-
-new Node({
-    ...Library.node.get,
-    position: [ 180, 400 ],
-    getter: { variableName: 'a' }
-});
-
-new Node({
-    ...Library.node.get,
-    position: [ 150, 250 ],
-    getter: { variableName: 'b' }
-});
-
-new Node({
-    ...Library.node.set,
-    position: [700, 320],
-    setter: { variableName: 'a' }
-});
-
-new Node({ ...Library.node.sub, position: [950, 300] });
-
-new Node({ ...Library.node.abs, position: [780, 500] });
-
-new Node({ ...Library.node.divide, position: [820, 100] });
-
-// new Node({ ...Library.node.ifelse, position: [480, 480] });
-
-*/
-
-
-/*let params = {
-	name: 'test2',
-	background: '+',
-	header: 'lightgreen',
-	executable: false,
-    process:  {
-		params: [
-			{ label: 'a', type: 'number', editable: true },
-			{ label: 'b', type: 'number' }
-		],
-		result: { label: 'a+b', type: 'number' },
-		function: function(a, b) {
-			return a + b;
-		},
-		string: function(a, b) {
-			return `${a} + ${b}`;
-		}
-	},
-}*/
-
-/*new Node({
-	name: 'GETTER',
-	header: 'pink',
-	executable: true,
-	getters: [],
-	exeDocks: {},
-    process:  {
-		params: [],
-		result: { label: 'a+b', type: 'number' },
-		function: function(a, b) {
-			return a + b;
-		},
-		string: function(a, b) {
-			return `${a} + ${b}`;
-		}
-	},
-});
-
-new Node({
-	name: 'GETTER',
-	header: 'lightblue',
-	executable: true,
-	getters: [],
-	exeDocks: {},
-    process:  {
-		params: [],
-		result: { label: 'a+b', type: 'number' },
-		function: function(a, b) {
-			return a + b;
-		},
-		string: function(a, b) {
-			return `${a} + ${b}`;
-		}
-	},
-});*/
 
 new FunctionNode({
 	label: 'f-node',
@@ -113,7 +16,7 @@ new OperatorNode({
 	label: 'o-node',
 	header: 'lightblue',
 	background: '+',
-	position: [250,100],
+	position: [50,250],
     process:  {
 		func: function(a, b) { return a + b; },
 		stringFunc: function(a, b) { return `${a} + ${b}`; },
@@ -149,9 +52,25 @@ new ControlFlowNode({
 	type: 'ForLoop',
 	label: 'cf-node',
 	header: 'lightslategray',
-	background: '🛡',
+	background: '🤢',
 	position: [850,250],
 });
+
+wait(() => {
+	new Link(Node.all.n1.process.results.first, Node.all.n6.process.params[0]);
+	new Link(Node.all.n2.process.results.first, Node.all.n6.process.params[1]);
+	Node.all.n1.process.results.first.dependencies.add('1');
+	Node.all.n1.process.results.first.result = 1;
+	Node.all.n1.process.results.first.dependencies.add('2');
+	Node.all.n2.process.results.first.dependencies.add('3');
+	Node.all.n2.process.results.first.result = 2;
+	_('[TEST001] mergeDependencies on n6', Node.all.n6.process.mergeDependencies());
+	const args = Node.all.n6.process.getArguments();
+	_('[TEST002] getArguments() on n6', args);
+	_('[TEST003] calculate() on n6', Node.all.n6.process.calculate(args[0], args[1]));
+});
+
+
 
 /*new Node({
 	name: '101',
