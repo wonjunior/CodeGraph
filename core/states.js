@@ -6,27 +6,27 @@ Editor.state = {
 }
 
 new State({
-	
+
 	id: Editor.state.default,
-	
+
 	keybinds: {
-		
+
 		spacebar: () => nodeFinder.show(),
-		
+
 		ctrl_shift_spacebar: (event) => _('nope'),
-		
+
 		// delete: () => Selection.delete(),
-		
+
 		tab: function(e) { e.preventDefault() }
 
 	},
-	
+
 	mousebinds: {
-		
+
 		right: {
-			
+
 			'.objects': ({ event, target }) => {
-				
+
 				new Draggable({
 					event,
 					type: 'drag',
@@ -34,24 +34,34 @@ new State({
 					object: Canvas,
 					// bounderyClamp: Canvas.boundaryClamp,
 				});
-			
-			}
-		
+
+			},
+
+			// debugg
+			'.snap-dock': ({target}) => {
+
+				event.path.forEach(e => {
+					if (e.classList && e.classList.contains('dock-container'))
+						window.$ = Dock.all[e.id];
+				});
+
+			},
+
 		},
-		
+
 		left: {
 
 			'.node-container': ({ target }) => {
-				
+
 				target.classList.toggle('selected')
 				// new Selection(Node.all[ target.id ]);
-			
+
 			},
 
 			'.header': ({ target }) => {
-				
+
 				const node = Node.all[ target.parentElement.id ];
-				
+
 				new Draggable({
 					event,
 					type: 'drag',
@@ -62,33 +72,33 @@ new State({
                 });
 
 			},
-			
+
 			'.snap-dock': ({ target }) => {
-				
+
 				// _('where does this come from???', event)
 				new Linkable(event, Dock.all[ target.ref ]);
 
 			},
-			
+
 			'.var-input': function(event) {
-				
+
 				this.input = event.target;
 				this.dock = Dock.all[ this.input.ref ];
-				
+
 				// this.dock.inputConstant(this.input.value);
-				
+
 				State.change(Editor.state.input, this);
-			
+
 			},
-			
+
 			'path': ({ target }) => {
-				
+
 				_(target.id);
 
 			}
-		
+
 		}
-	
+
 	}
 
 });
@@ -96,27 +106,27 @@ new State({
 State.change(Editor.state.default)
 
 new State({
-	
+
 	id: Editor.state.input,
-	
+
 	keybinds: {
-		
+
 		escape: function() {
-			
+
 			State.change(Editor.state.default);
-			
+
 			this.input.blur();
-		
+
 		},
-		
+
 		other: function() {
-			
+
 			this.dock.inputConstant(this.input.value);
-		
+
 		},
-	
+
 	},
-	
+
 	mousebinds: {
 		all: {
 			not: {
