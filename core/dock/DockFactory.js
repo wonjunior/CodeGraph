@@ -8,7 +8,8 @@ class DockFactory {
 	}
 
 	static typeAttributes = {
-		DataDock: { prefix: 'd' },
+		InDataDock: { prefix: 'id' },
+		OutDataDock: { prefix: 'od' },
 		ExeDock: { prefix: 'e' },
 	}
 
