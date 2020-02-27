@@ -12,7 +12,11 @@ class Process {
 
     if (this.constructor === Process) Object.assign(this, { func, stringFunc });
 
-    this.docks = new Set([...this.inputs, ...this.outputs]);
+	}
+
+	getDocks() {
+
+		return new Set([...this.inputs, ...this.outputs]);
 
 	}
 
@@ -34,21 +38,27 @@ class Process {
 
 	}
 
-	calculate(results, strings) {
+	calculate(params, stringParams) {
 
-		return [ this.func(...results), this.stringFunc(...strings) ];
+		return [ this.func(...params), this.stringFunc(...stringParams) ];
+
+	}
+
+	route() {
+
+		// this.outputs.forEach(output => )
 
 	}
 
 	func() {
 
-		throw `func not set on Process`;
+		throw `func not set on Process ${this}`;
 
 	}
 
 	stringFunc() {
 
-		throw `stringFunc not set on Process`;
+		throw `stringFunc not set on Process ${this}`;
 
 	}
 

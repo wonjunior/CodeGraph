@@ -2,8 +2,17 @@
 
 class Router {
 
-  constructor() {
+	in = [];
+	out = [];
+
+  constructor(func, input, ouput) {
 
   }
+
+	getDocks() {
+
+	 	return new Set([...this.in, ...this.out]);
+
+	}
 
 }

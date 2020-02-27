@@ -6,16 +6,14 @@ const ControlFlowRouter = (function() {
     constructor() {
 
       super();
-  
-      this.in = new InExeDockFactory([new DockDefinition('in', 'head')]);
-  
+
+      this.in = new InExeDockFactory([new DockDefinition('in', 'head')]).docks;
+
       this.out = new OutExeDockFactory([
         new DockDefinition('if', 'body'),
         new DockDefinition('else', 'body'),
-      ]);
-  
-      this.docks = new Set([...this.in.docks, ...this.out.docks]);
-  
+      ]).docks;
+
     }
   }
 
@@ -23,15 +21,13 @@ const ControlFlowRouter = (function() {
     constructor() {
 
       super();
-  
-      this.in = new InExeDockFactory([new DockDefinition('in', 'head')]);
-  
+
+      this.in = new InExeDockFactory([new DockDefinition('in', 'head')]).docks;
+
       this.out = new OutExeDockFactory([
         new DockDefinition('end', 'body'),
         new DockDefinition('body', 'body'),
-      ]);
-  
-      this.docks = new Set([...this.in.docks, ...this.out.docks]);
+      ]).docks;
 
     }
   }
