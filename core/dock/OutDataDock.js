@@ -15,7 +15,7 @@ class OutDataDock extends DataDock {
 
 	getValue() {
 
-		return { result: this.result, stringified: this.stringified };
+		return [ this.result, this.stringified ];
 
 	}
 

@@ -30,9 +30,7 @@ class Process {
 
 	getArguments() {
 
-		return this.inputs
-			.map(input => input.getValue())
-			.reduce(([R, S], {result, stringified}) => [[...R, result], [...S, stringified]], [[],[]]);
+		return zip(...this.inputs.map(input => input.getValue()));
 
 	}
 
