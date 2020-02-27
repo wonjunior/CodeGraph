@@ -16,12 +16,36 @@ new OperatorNode({
 	label: 'o-node',
 	header: 'lightblue',
 	background: '+',
-	position: [50,250],
+	position: [275,275],
     process:  {
 		func: function(a, b) { return a + b; },
 		stringFunc: function(a, b) { return `${a} + ${b}`; },
 		params: [{label: 'a'}, {label: 'b'}],
 		result: {label: 'result'}
+	},
+});
+
+new OperatorNode({
+	label: 'fake getter',
+	header: 'cadetblue',
+	position: [50,250],
+    process:  {
+		func: function(a, b) { return 1; },
+		stringFunc: function(a, b) { return `1`; },
+		params: [],
+		result: {label: '1'}
+	},
+});
+
+new OperatorNode({
+	label: 'fake getter',
+	header: 'cadetblue',
+	position: [50,350],
+    process:  {
+		func: function(a, b) { return 2; },
+		stringFunc: function(a, b) { return `2`; },
+		params: [],
+		result: {label: '2'}
 	},
 });
 
@@ -35,8 +59,8 @@ new GetterNode({
 new SetterNode({
 	label: 's-node',
 	header: 'navyblue',
-	background: 'a',
-	position: [650,100],
+	background: 'c',
+	position: [490,292],
 });
 
 
@@ -57,112 +81,47 @@ new ControlFlowNode({
 });
 
 wait(() => {
-	new Link(Node.all.n1.process.results.first, Node.all.n6.process.params[0]);
-	new Link(Node.all.n2.process.results.first, Node.all.n6.process.params[1]);
-	Node.all.n1.process.results.first.dependencies.add('1');
-	Node.all.n1.process.results.first.result = 1;
-	Node.all.n1.process.results.first.dependencies.add('2');
-	Node.all.n2.process.results.first.dependencies.add('3');
-	Node.all.n2.process.results.first.result = 2;
-	_('[TEST001] mergeDependencies on n6', Node.all.n6.process.mergeDependencies());
-	const args = Node.all.n6.process.getArguments();
-	_('[TEST002] getArguments() on n6', args);
-	_('[TEST003] calculate() on n6', Node.all.n6.process.calculate(args[0], args[1]));
+	const n1 = Node.all.n3;
+	const n2 = Node.all.n4;
+	const n6 = Node.all.n2;
+	const n4 = Node.all.n6;
+
+	new Link(n1.process.outputs.first, n6.process.inputs[0]);
+	new Link(n2.process.outputs.first, n6.process.inputs[1]);
+	new Link(n6.process.outputs.first, n4.process.inputs[0]);
+
+	n1.process.outputs.first.dependencies.add('a');
+	n1.process.outputs.first.parents.add(n1);
+	n1.process.outputs.first.result = 1;
+	n1.process.outputs.first.stringified = '1';
+
+	n2.process.outputs.first.dependencies.add('b');
+	n2.process.outputs.first.parents.add(n2);
+	n2.process.outputs.first.result = 2;
+	n2.process.outputs.first.stringified = '2';
+
+	// ---- n6
+	const n6_res = {};
+	n6_res.deps = n6.process.mergeDependencies();
+	n6_res.pars = n6.process.mergeParents();
+	n6_res.args = n6.process.getArguments();
+	// verify that all arguments are available
+	n6_res.ress = n6.process.calculate(...n6_res.args);
+
+	// -> set to output dock
+	n6.process.outputs.first.setDependencies(n6_res.deps);
+	n6.process.outputs.first.setParents(n6_res.pars);
+	n6.process.outputs.first.setValue(...n6_res.ress);
+
+	_(n6_res);
+
+	// ---- n4
+	const n4_res = {};
+	n4_res.deps = n4.process.mergeDependencies();
+	n4_res.pars = n4.process.mergeParents();
+	n4_res.args = n4.process.getArguments();
+	n4_res.ress = n4.process.calculate(...n4_res.args);
+	_(n4_res);
+
+
 });
-
-
-
-/*new Node({
-	name: '101',
-	header: 'lightblue',
-	executable: true,
-	getters: [],
-	exeDocks: {
-        in: [{}],
-        out: [{}]
-    },
-    process:  {
-		params: [
-			{ label: 'a', type: 'number', editable: true },
-			{ label: 'b', type: 'number' }
-		],
-		result: { label: 'a+b', type: 'number' },
-		function: function(a, b) {
-			return a + b;
-		},
-		string: function(a, b) {
-			return `${a} + ${b}`;
-		}
-	},
-});
-
-new Node({
-	position: [436, 138],
-	name: 'Sum',
-	header: 'pink',
-	background: '+',
-	exeDocks: {
-		in: [ { } ],
-	},
-    process:  {
-		params: [
-			{ label: 'a', type: 'number', editable: true },
-			{ label: 'b', type: 'number' }
-		],
-		result: { label: 'a+b', type: 'number' },
-		function: function(a, b) {
-			return a + b;
-		},
-		string: function(a, b) {
-			return `${a} + ${b}`;
-		}
-	},
-});*/
-
-
-
-/*(function() {
-
-    const events = [
-        [ docks.n6dR0, docks.n4dL1 ],
-        [ docks.n7dR0, docks.n4dL0 ],
-        [ docks.n4dR0, docks.n1dL0 ],
-        [ docks.n1eR0, docks.n8eL0 ],
-        [ docks.n4dR0, docks.n8dL0 ],
-        [ docks.n6dR0, docks.n2dL0 ],
-    ];
-    let i = 0;
-
-    const removeAll = () => {
-        document.querySelector('#step').remove();
-        document.querySelector('#all').remove();
-    }
-
-    document.querySelector('#step').addEventListener('mousedown', function() {
-
-        if (i >= events.length) {
-            removeAll();
-            return;
-        }
-
-        new Link(events[i][0], events[i][1]);
-
-        i++;
-
-        _('--------------------------')
-
-    });
-
-    document.querySelector('#all').addEventListener('mousedown', function() {
-
-        removeAll();
-
-        new Link(docks.n6dR0, docks.n4dL1);
-        new Link(docks.n7dR0, docks.n4dL0);
-        new Link(docks.n4dR0, docks.n1dL0);
-        new Link(docks.n1eR0, docks.n8eL0);
-        new Link(docks.n4dR0, docks.n8dL0);
-
-    });
-
-})()*/

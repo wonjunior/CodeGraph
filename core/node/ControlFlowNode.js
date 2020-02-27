@@ -6,12 +6,8 @@ class ControlFlowNode extends Node {
 
     const { type, ...nodeAttributes } = args;
 
-    super(
-      new ControlFlowProcess[type](),
-      new ControlFlowRouter[type](),
-      nodeAttributes
-    );
-        
+    super(new ControlFlowProcess[type](), new ControlFlowRouter[type](), nodeAttributes);
+
   }
 
 }

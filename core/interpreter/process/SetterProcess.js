@@ -5,7 +5,7 @@ class SetterProcess extends Process {
   constructor(variable) {
 
     super(null, null, [{ label: variable }], []);
-      
+
     this.getter = variable;
 
   }

@@ -6,12 +6,8 @@ class SetterNode extends Node {
 
     const { ...nodeAttributes } = args;
 
-    super(
-      new SetterProcess('a'),
-      new DefaultRouter(),
-      nodeAttributes
-    );
-    
+    super(new SetterProcess('c'), new DefaultRouter(), nodeAttributes);
+
   }
 
 }
