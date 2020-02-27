@@ -10,8 +10,7 @@ class Node extends CanvasObject {
   static idPrefix = 'n';
 
   /**
-   * Depending on the number of nodes already instanciated, the function will create a new node 
-   * identifier.
+   * Depending on the number of nodes already instanciated, the function will create a new node id
    */
   static constructId() {
 
@@ -25,16 +24,16 @@ class Node extends CanvasObject {
 
     this.id = Node.constructId();
     this.process = process;
-    this.router = router;
-    
+    this.router = router || new NullRouter();
+
     this.attachDocks();
 
     Node.register(this.id, this);
 
     this.element = new NodeElement(
-      this, 
-      [...this.docks].map(({element}) => element), 
-      Canvas.nodeArea, 
+      this,
+      [...this.docks].map(({element}) => element),
+      Canvas.nodeArea,
       nodeAttributes
     );
 
@@ -51,7 +50,7 @@ class Node extends CanvasObject {
   /**
    * This method updates all links connected to the node.
    */
-  update() { 
+  update() {
 
     this.docks.forEach(dock => dock.update());
 
@@ -65,7 +64,7 @@ class Node extends CanvasObject {
     this.docks.forEach(dock => dock.destroy());
 
     Node.unregister(this);
-  
+
     this.element.remove();
 
   }

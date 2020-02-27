@@ -6,12 +6,8 @@ class GetterNode extends Node {
 
     const { ...nodeAttributes } = args;
 
-    super(
-      new GetterProcess('a'),
-      new NullRouter(),
-      nodeAttributes
-    );
-    
+    super(new GetterProcess('a'), null, nodeAttributes);
+
   }
 
 }
