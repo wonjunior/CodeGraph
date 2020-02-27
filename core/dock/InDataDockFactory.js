@@ -2,10 +2,10 @@
 
 class InDataDockFactory extends DockFactory {
 
-	constructor(dockDefinitions) {
+  constructor(dockDefinitions) {
 
-		super(dockDefinitions, 'left', InDataDock);
+    super(dockDefinitions, 'left', InDataDock);
 
-	}
+  }
 
 }

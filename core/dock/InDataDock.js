@@ -2,11 +2,11 @@
 
 class InDataDock extends DataDock {
 
-	get ancestor() {
+  get ancestor() {
 
-		return this.links.first ? this.links.first.startDock : null;
+    return this.links.first ? this.links.first.startDock : null;
 
-	}
+  }
 
   constructor(parameters) {
 
@@ -14,28 +14,28 @@ class InDataDock extends DataDock {
 
   }
 
-	getValue() {
+  getValue() {
 
-		return this.ancestor.getValue();
+    return this.ancestor.getValue();
 
-	}
+  }
 
-	getDependencies() {
+  getDependencies() {
 
-		return this.ancestor.getDependencies();
+    return this.ancestor.getDependencies();
 
-	}
+  }
 
-	getParents() {
+  getParents() {
 
-		return this.ancestor.getParents();
+    return this.ancestor.getParents();
 
-	}
+  }
 
-	trigger(updateET) {
+  trigger(updateET) {
 
-		_('triggering: ', this.node);
+    _('triggering: ', this.node);
 
-	}
+  }
 
 }

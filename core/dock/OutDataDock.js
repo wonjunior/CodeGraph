@@ -2,57 +2,57 @@
 
 class OutDataDock extends DataDock {
 
-	result = null;
-	stringified = '';
-	dependencies = new Set();
-	parents = new Set();
+  result = null;
+  stringified = '';
+  dependencies = new Set();
+  parents = new Set();
 
   constructor(parameters) {
 
-		super(parameters);
+    super(parameters);
 
   }
 
-	getValue() {
+  getValue() {
 
-		return [ this.result, this.stringified ];
+    return [ this.result, this.stringified ];
 
-	}
+  }
 
-	setValue(result, stringified) {
+  setValue(result, stringified) {
 
-		Object.assign(this, { result, stringified });
+    Object.assign(this, { result, stringified });
 
-	}
+  }
 
-	getDependencies() {
+  getDependencies() {
 
-		return this.dependencies;
+    return this.dependencies;
 
-	}
+  }
 
-	setDependencies(dependencies) {
+  setDependencies(dependencies) {
 
-		dependencies.forEach(dep => this.dependencies.add(dep));
+    dependencies.forEach(dep => this.dependencies.add(dep));
 
-	}
+  }
 
-	getParents() {
+  getParents() {
 
-		return this.parents.add(this.node);
+    return this.parents.add(this.node);
 
-	}
+  }
 
-	setParents(parents) {
+  setParents(parents) {
 
-		parents.forEach(parent => this.parents.add(parent));
+    parents.forEach(parent => this.parents.add(parent));
 
-	}
+  }
 
-	propagate(updateET) {
+  propagate(updateET) {
 
-		this.links.forEach(({endDock}) => endDock.trigger(updateET));
+    this.links.forEach(({endDock}) => endDock.trigger(updateET));
 
-	}
+  }
 
 }

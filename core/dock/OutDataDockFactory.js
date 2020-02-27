@@ -2,10 +2,10 @@
 
 class OutDataDockFactory extends DockFactory {
 
-	constructor(dockDefinitions) {
+  constructor(dockDefinitions) {
 
-		super(dockDefinitions, 'right', OutDataDock);
+    super(dockDefinitions, 'right', OutDataDock);
 
-	}
+  }
 
 }

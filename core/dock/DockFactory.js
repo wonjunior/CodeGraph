@@ -3,15 +3,15 @@
 class DockFactory {
 
   static sideAttributes = {
-		left: { bool: false, capitalized: 'Left', prefix: 'L' },
+    left: { bool: false, capitalized: 'Left', prefix: 'L' },
     right: { bool: true, capitalized: 'Right', prefix: 'R' }
-	}
+  }
 
-	static typeAttributes = {
-		InDataDock: { prefix: 'id' },
-		OutDataDock: { prefix: 'od' },
-		ExeDock: { prefix: 'e' },
-	}
+  static typeAttributes = {
+    InDataDock: { prefix: 'id' },
+    OutDataDock: { prefix: 'od' },
+    ExeDock: { prefix: 'e' },
+  }
 
   constructor(dockDefinitions, side, factory) {
 

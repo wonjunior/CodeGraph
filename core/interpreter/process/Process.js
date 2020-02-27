@@ -12,54 +12,54 @@ class Process {
 
     if (this.constructor === Process) Object.assign(this, { func, stringFunc });
 
-	}
+  }
 
-	getDocks() {
+  getDocks() {
 
-		return new Set([...this.inputs, ...this.outputs]);
+    return new Set([...this.inputs, ...this.outputs]);
 
-	}
+  }
 
-	mergeDependencies() {
+  mergeDependencies() {
 
-		return new Set(this.inputs.reduce((res, input) => res.concat(...input.getDependencies()), []));
+    return new Set(this.inputs.reduce((res, input) => res.concat(...input.getDependencies()), []));
 
-	}
+  }
 
-	mergeParents() {
+  mergeParents() {
 
-		return new Set(this.inputs.reduce((res, input) => res.concat(...input.getParents()), []));
+    return new Set(this.inputs.reduce((res, input) => res.concat(...input.getParents()), []));
 
-	}
+  }
 
-	getArguments() {
+  getArguments() {
 
-		return zip(...this.inputs.map(input => input.getValue()));
+    return zip(...this.inputs.map(input => input.getValue()));
 
-	}
+  }
 
-	calculate(params, stringParams) {
+  calculate(params, stringParams) {
 
-		return [ this.func(...params), this.stringFunc(...stringParams) ];
+    return [ this.func(...params), this.stringFunc(...stringParams) ];
 
-	}
+  }
 
-	route() {
+  route() {
 
-		// this.outputs.forEach(output => )
+    // this.outputs.forEach(output => )
 
-	}
+  }
 
-	func() {
+  func() {
 
-		throw `func not set on Process ${this}`;
+    throw `func not set on Process ${this}`;
 
-	}
+  }
 
-	stringFunc() {
+  stringFunc() {
 
-		throw `stringFunc not set on Process ${this}`;
+    throw `stringFunc not set on Process ${this}`;
 
-	}
+  }
 
 }

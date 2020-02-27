@@ -2,10 +2,10 @@
 
 class InExeDockFactory extends DockFactory {
 
-	constructor(dockDefinitions) {
+  constructor(dockDefinitions) {
 
-		super(dockDefinitions, 'left', ExeDock);
+    super(dockDefinitions, 'left', ExeDock);
 
-	}
+  }
 
 }
