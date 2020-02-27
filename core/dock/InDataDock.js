@@ -26,6 +26,12 @@ class InDataDock extends DataDock {
 
 	}
 
+	getParents() {
+
+		return this.ancestor.getParents();
+
+	}
+
 	trigger(updateET) {
 
 		_('triggering: ', this.node);

@@ -5,10 +5,11 @@ class OutDataDock extends DataDock {
 	result = null;
 	stringified = '';
 	dependencies = new Set();
+	parents = new Set();
 
   constructor(parameters) {
 
-    super(parameters);
+		super(parameters);
 
   }
 
@@ -32,7 +33,19 @@ class OutDataDock extends DataDock {
 
 	setDependencies(dependencies) {
 
-		this.dependencies = dependencies;
+		dependencies.forEach(dep => this.dependencies.add(dep));
+
+	}
+
+	getParents() {
+
+		return this.parents.add(this.node);
+
+	}
+
+	setParents(parents) {
+
+		parents.forEach(parent => this.parents.add(parent));
 
 	}
 
