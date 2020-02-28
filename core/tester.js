@@ -69,7 +69,7 @@ new ControlFlowNode({
 	label: 'cf-node',
 	header: 'lightcoral',
 	background: '?',
-	position: [850,100],
+	position: [750,100],
 });
 
 new ControlFlowNode({
@@ -77,7 +77,7 @@ new ControlFlowNode({
 	label: 'cf-node',
 	header: 'lightslategray',
 	background: '🤢',
-	position: [850,250],
+	position: [750,250],
 });
 
 wait(() => {
@@ -90,38 +90,22 @@ wait(() => {
 	new Link(n2.process.outputs.first, n6.process.inputs[1]);
 	new Link(n6.process.outputs.first, n4.process.inputs[0]);
 
-	n1.process.outputs.first.dependencies.add('a');
-	n1.process.outputs.first.parents.add(n1);
+	n1.process.dependencies.add('a');
+	n1.process.parents.add(n1);
 	n1.process.outputs.first.result = 1;
 	n1.process.outputs.first.stringified = '1';
 
-	n2.process.outputs.first.dependencies.add('b');
-	n2.process.outputs.first.parents.add(n2);
+	n2.process.dependencies.add('b');
+	n2.process.parents.add(n2);
 	n2.process.outputs.first.result = 2;
 	n2.process.outputs.first.stringified = '2';
 
 	// ---- n6
-	const n6_res = {};
-	n6_res.deps = n6.process.mergeDependencies();
-	n6_res.pars = n6.process.mergeParents();
-	n6_res.args = n6.process.getArguments();
-	// verify that all arguments are available
-	n6_res.ress = n6.process.calculate(...n6_res.args);
-
-	// -> set to output dock
-	n6.process.outputs.first.setDependencies(n6_res.deps);
-	n6.process.outputs.first.setParents(n6_res.pars);
-	n6.process.outputs.first.setValue(...n6_res.ress);
-
-	_(n6_res);
+	n6.process.update();
+	_(n6.process);
 
 	// ---- n4
-	const n4_res = {};
-	n4_res.deps = n4.process.mergeDependencies();
-	n4_res.pars = n4.process.mergeParents();
-	n4_res.args = n4.process.getArguments();
-	n4_res.ress = n4.process.calculate(...n4_res.args);
-	_(n4_res);
-
+	n4.process.update();
+	_(n4.process);
 
 });

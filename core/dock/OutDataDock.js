@@ -4,8 +4,6 @@ class OutDataDock extends DataDock {
 
   result = null;
   stringified = '';
-  dependencies = new Set();
-  parents = new Set();
 
   constructor(parameters) {
 
@@ -19,7 +17,7 @@ class OutDataDock extends DataDock {
 
   }
 
-  setValue(result, stringified) {
+  setValue([result, stringified]) {
 
     Object.assign(this, { result, stringified });
 
@@ -27,25 +25,13 @@ class OutDataDock extends DataDock {
 
   getDependencies() {
 
-    return this.dependencies;
-
-  }
-
-  setDependencies(dependencies) {
-
-    dependencies.forEach(dep => this.dependencies.add(dep));
+    return this.process.dependencies;
 
   }
 
   getParents() {
 
-    return this.parents.add(this.node);
-
-  }
-
-  setParents(parents) {
-
-    parents.forEach(parent => this.parents.add(parent));
+    return this.process.parents.add(this.node);
 
   }
 

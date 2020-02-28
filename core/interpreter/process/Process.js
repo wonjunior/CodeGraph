@@ -2,21 +2,38 @@
 
 class Process {
 
-  constructor(func, stringFunc, inputs, outputs) {
+  dependencies = new Set();
+  parents = new Set();
+  arguments = [];
+  result = null;
 
-    const paramDefs = inputs.map(({label}, i) => new DockDefinition(label, 'body'));
-    this.inputs = new InDataDockFactory(paramDefs).docks;
+  get docks() {
 
-    const resultDefs = outputs.map(({label}, i) => new DockDefinition(label, 'body'));
-    this.outputs = new OutDataDockFactory(resultDefs).docks;
-
-    if (this.constructor === Process) Object.assign(this, { func, stringFunc });
+    return new Set([...this.inputs, ...this.outputs]);
 
   }
 
-  getDocks() {
+  missingArguments() {
 
-    return new Set([...this.inputs, ...this.outputs]);
+    return this.inputs.some(({ancestor}) => !ancestor);
+
+  }
+
+  update() {
+
+    if (this.missingArguments()) return;
+
+    this.mergeAttributes();
+    this.result = this.calculate(...this.arguments);
+    this.route();
+
+  }
+
+  mergeAttributes() {
+
+    this.dependencies = this.mergeDependencies();
+    this.parents = this.mergeParents();
+    this.arguments = this.mergeArguments();
 
   }
 
@@ -32,7 +49,7 @@ class Process {
 
   }
 
-  getArguments() {
+  mergeArguments() {
 
     return zip(...this.inputs.map(input => input.getValue()));
 
@@ -46,7 +63,7 @@ class Process {
 
   route() {
 
-    // this.outputs.forEach(output => )
+    this.outputs.forEach(output => output.setValue(this.result));
 
   }
 
