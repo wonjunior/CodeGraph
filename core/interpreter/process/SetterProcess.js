@@ -1,6 +1,6 @@
 'use strict'
 
-class SetterProcess extends Process {
+class SetterProcess extends CustomProcess {
 
   constructor(variable) {
 
@@ -10,11 +10,7 @@ class SetterProcess extends Process {
 
   }
 
-  func() {
-
-    return true;
-
-  }
+  func() { return null; }
 
   stringFunc(value) {
 

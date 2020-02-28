@@ -1,18 +1,18 @@
 'use strict'
 
-class GetterProcess extends Process {
+class GetterProcess extends CustomProcess {
 
   constructor(variable) {
 
     super(null, null, [], [{ label: variable }]);
-    
+
     this.getter = variable;
 
   };
 
   func() {
 
-    return true;
+    return true; // this.process.scope.get(this.getter);
 
   }
 

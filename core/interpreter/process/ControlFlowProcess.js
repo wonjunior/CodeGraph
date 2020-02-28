@@ -2,44 +2,23 @@
 
 const ControlFlowProcess = (function() {
 
-  class Conditional extends Process {
+  class Conditional extends CustomProcess {
     constructor() {
-  
-      super(null, null, [{ label: 'condition' }], []);
-  
-    }
-  
-    func() {
-    
-      return condition;
-  
-    }
-  
-    stringFunc(condition) {
 
-      return `if(${condition}) {`;
+      super(null, null, [{ label: 'condition' }], []);
 
     }
   }
 
-  class ForLoop extends Process {
+  class ForLoop extends CustomProcess {
     constructor() {
 
-      super(null, null, [{ label: 'first'}, { label: 'last'}], [{ label: 'index'}]);
+      super(null, null, [{ label: 'first'}, { label: 'last'}], [{ label: 'index'},{ label: 'array'}]);
 
     }
 
-    func() {
-
-      return null;
-
-    }
-
-    stringFunc() {
-
-      return null;
-
-    }
+    stringFunc(a,b) {return a+b}
+    func(a,b) {return a+b}
   }
 
   return { Conditional, ForLoop };
