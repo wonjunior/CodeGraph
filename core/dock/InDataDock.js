@@ -34,7 +34,7 @@ class InDataDock extends DataDock {
 
   trigger(updateET) {
 
-    _('triggering: ', this.node);
+    _(`triggering: ${updateET ? 'w/' : 'w/out'}`, this.node);
 
   }
 

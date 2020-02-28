@@ -9,7 +9,7 @@ class Router {
 
   }
 
-  getDocks() {
+  get docks() {
 
     return new Set([...this.in, ...this.out]);
 

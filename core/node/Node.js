@@ -41,8 +41,10 @@ class Node extends CanvasObject {
 
   attachDocks() {
 
-    this.docks = new Set([...this.process.getDocks(), ...this.router.getDocks()]);
+    this.docks = new Set([...this.process.docks, ...this.router.docks]);
 
+    this.process.docks.forEach(dock => dock.process = this.process);
+    this.router.docks.forEach(dock => dock.router = this.router);
     this.docks.forEach(dock => dock.node = this);
 
   }
