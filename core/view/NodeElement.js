@@ -89,7 +89,7 @@ class NodeElement extends Element {
 
     this.render(parent, dockElements);
 
-    this.labelText = params.label;
+    this.labelText = node.id; //params.label;
     this.backgroundText = params.background;
     this.headerColor = params.header;
     this.position = params.position || [0,0];

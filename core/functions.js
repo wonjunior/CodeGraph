@@ -1,11 +1,16 @@
 'use strict'
 
+const DEBUG = true;
+
 /**
   * Miscellaneous functions used throughout the code
   */
 
 // console.log handy shortcut
 const _ = (...a) => console.log(...a);
+
+// console.log only when debug is active
+const $log = (...a) => { if(DEBUG) console.log('DEBUG |', ...a) };
 
 // console.table handy shortcut
 const __ = (a) => console.table(a);
