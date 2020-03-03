@@ -15,6 +15,18 @@ const ControlFlowRouter = (function() {
       ]).docks;
 
     }
+
+    func() {
+
+      this.out[this.process.arguments[0][0] ? 0 : 1].trigger();
+
+    }
+
+    header() {
+
+      return `if (${this.process.arguments[1][0]}) { \n   blah blah \n }`;
+
+    }
   }
 
   class ForLoop extends Router {

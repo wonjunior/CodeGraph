@@ -34,7 +34,9 @@ class InDataDock extends DataDock {
 
   trigger(updateET) {
 
-    _(`triggering: ${updateET ? 'w/' : 'w/out'}`, this.node);
+    $log();
+    $log(`-> triggering (updateET = ${updateET}) ${this.node.constructor.name} id#${this.node.id} (from ${this.constructor.name} id#${this.id})`)
+    this.node.process.update();
 
   }
 

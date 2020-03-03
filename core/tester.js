@@ -53,14 +53,14 @@ new GetterNode({
 	label: 'g-node',
 	header: 'lightgreen',
 	background: 'a',
-	position: [450,100],
+	position: [450,150],
 });
 
 new SetterNode({
 	label: 's-node',
 	header: 'navyblue',
 	background: 'c',
-	position: [490,292],
+	position: [570,292],
 });
 
 
@@ -85,10 +85,15 @@ wait(() => {
 	const n2 = Node.all.n4;
 	const n6 = Node.all.n2;
 	const n4 = Node.all.n6;
+	const n11 = Node.all.n1;
+	const n7 = Node.all.n7;
 
 	new Link(n1.process.outputs.first, n6.process.inputs[0]);
 	new Link(n2.process.outputs.first, n6.process.inputs[1]);
 	new Link(n6.process.outputs.first, n4.process.inputs[0]);
+	new Link(n6.process.outputs.first, n7.process.inputs[0]);
+
+	new Link(n11.router.out.first, n7.router.in.first);
 
 	n1.process.dependencies.add('a');
 	n1.process.parents.add(n1);
@@ -100,12 +105,6 @@ wait(() => {
 	n2.process.outputs.first.result = 2;
 	n2.process.outputs.first.stringified = '2';
 
-	// ---- n6
-	n6.process.update();
-	_(n6.process);
-
-	// ---- n4
-	n4.process.update();
-	_(n4.process);
+	n1.process.outputs.first.propagate(true);
 
 });

@@ -8,6 +8,9 @@ const ControlFlowProcess = (function() {
       super(null, null, [{ label: 'condition' }], []);
 
     }
+
+    stringFunc(condition) { return condition; }
+    func(condition) { return Boolean(condition); }
   }
 
   class ForLoop extends CustomProcess {

@@ -8,4 +8,10 @@ class ExeDock extends Dock {
 
   }
 
+  get ancestor() {
+
+    return this.links.first ? this.links.first.startDock : null;
+
+  }
+
 }
