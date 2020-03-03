@@ -8,6 +8,8 @@ class ControlFlowNode extends Node {
 
     super(new ControlFlowProcess[type](), new ControlFlowRouter[type](), nodeAttributes);
 
+    this.router.process = this.process;
+
   }
 
 }
