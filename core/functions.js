@@ -9,8 +9,19 @@ const DEBUG = true;
 // console.log handy shortcut
 const _ = (...a) => console.log(...a);
 
-// console.log only when debug is active
-const $log = (...a) => { if(DEBUG) console.log('DEBUG |', ...a) };
+// console.log on debug mode with indentation
+const $_ = ((tabs = 0) => {
+
+	let space = s => new Array(2*s).fill(' ').join('');
+
+	return {
+		indent:  () => tabs++,
+		unindent: () => tabs--,
+		newline: DEBUG ? () => console.log('') : () => {},
+		log: DEBUG ? (...a) => console.log('(DEBUG)', space(tabs), ...a) : () => {}
+	}
+
+})();
 
 // console.table handy shortcut
 const __ = (a) => console.table(a);
