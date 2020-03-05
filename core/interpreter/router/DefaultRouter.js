@@ -12,4 +12,10 @@ class DefaultRouter extends Router {
 
   }
 
+  func() {
+
+    this.out[0].trigger();
+
+  }
+
 }
