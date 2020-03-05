@@ -19,20 +19,22 @@ class Process {
 
   }
 
-  update() {
+  execute() {
 
-    $log(`! UPDATING ${this.constructor.name} !`);
+    $_.log(`[P] UPDATING ${this.constructor.name}`);
+    $_.indent()
     if (this.missingArguments()) return;
-    $log(`(1) all arguments are ready`);
+    $_.log(`(1) all arguments are ready`);
 
     this.mergeAttributes();
     this.result = this.calculate(...this.arguments);
-    $log(`(5) calculated result:`, this.result);
+    $_.log(`(5) calculated result:`, this.result);
 
-    $log(`(6) routing data to output docks:`, this.outputs);
+    $_.log(`(6) routing data to output docks:`, this.outputs);
     this.route();
 
-    $log(`(7) propagating update through links:`, this.outputs.map(({links}) => links));
+    $_.log(`(7) propagating update through links:`, this.outputs.map(({links}) => links));
+    $_.unindent();
     this.propagate();
 
   }
@@ -40,13 +42,13 @@ class Process {
   mergeAttributes() {
 
     this.dependencies = this.mergeDependencies();
-    $log(`(2) merged dependencies:`, this.dependencies);
+    $_.log(`(2) merged dependencies:`, this.dependencies);
 
     this.parents = this.mergeParents();
-    $log(`(3) merged parents:`, this.parents);
+    $_.log(`(3) merged parents:`, this.parents);
 
     this.arguments = this.mergeArguments();
-    $log(`(4) merged arguments:`, this.arguments);
+    $_.log(`(4) merged arguments:`, this.arguments);
 
   }
 
