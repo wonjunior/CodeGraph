@@ -4,7 +4,7 @@ class OutExeDockFactory extends DockFactory {
 
   constructor(dockDefinitions) {
 
-    super(dockDefinitions, 'right', ExeDock);
+    super(dockDefinitions, OutExeDock);
 
   }
 

@@ -3,9 +3,8 @@
 class DockElement extends Element {
 
   static parameters = {
-    ExeDock: { offset: 10 },
-    InDataDock: { offset: 7 },
-    OutDataDock: { offset: 7 }
+    InExeDock: { offset: 10 }, OutExeDock: { offset: 10 },
+    InDataDock: { offset: 7 }, OutDataDock: { offset: 7 }
   }
 
   get position() {

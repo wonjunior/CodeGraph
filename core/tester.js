@@ -107,4 +107,8 @@ wait(() => {
 
 	n1.process.outputs.first.propagate(true);
 
+	$_.newline();
+
+	n11.router.in.first.trigger();
+
 });
