@@ -12,14 +12,14 @@ const _ = (...a) => console.log(...a);
 // console.log on debug mode with indentation
 const $_ = ((tabs = 0) => {
 
-	let space = s => new Array(2*s).fill(' ').join('');
+  let space = s => new Array(2*s).fill(' ').join('');
 
-	return {
-		indent:  () => tabs++,
-		unindent: () => tabs--,
-		newline: DEBUG ? () => console.log('') : () => {},
-		log: DEBUG ? (...a) => console.log('(DEBUG)', space(tabs), ...a) : () => {}
-	}
+  return {
+    indent:  () => tabs++,
+    unindent: () => tabs--,
+    newline: DEBUG ? () => console.log('') : () => {},
+    log: DEBUG ? (...a) => console.log('(DEBUG)', space(tabs), ...a) : () => {}
+  }
 
 })();
 
@@ -38,26 +38,32 @@ const uniqueId = () => Math.random().toString(36).substr(2, 4);
 // zip function
 const zip = (...arrays) => arrays[0].map((_,i) => arrays.map(array => array[i]));
 
+// converts integer to alphabetic character
+const abc = i => [
+  'z','a','b','c','d','e','f','g','h', 'i','j', 'k','l',
+  'm','n','o','p','q','r','s','t','u','v','w','x','y'
+][i%26];
+
 // quick sugar getter to retrieve first element or Array
 Object.defineProperty(Array.prototype, 'first', {
-	get: function() {
-    	return this[0];
-    },
-	set: function(e) {
-		this[0] = e;
-	}
+  get: function() {
+    return this[0];
+  },
+  set: function(e) {
+    this[0] = e;
+  }
 });
 
 Object.defineProperty(Object.prototype, 'select', {
-	/**
-	 * reduces an object to the provided keys
-	 * @param  {...any} keys the keys to pick from the object
-	 */
-	value: function(...keys) {
-		return Object.entries(this)
-			.filter(([key, value]) => ~keys.indexOf(key))
-			.reduce((projected, [key, value]) => ({ ...projected, [key]: value }), {});
-	}
+  /**
+   * reduces an object to the provided keys
+   * @param  {...any} keys the keys to pick from the object
+   */
+  value: function(...keys) {
+    return Object.entries(this)
+      .filter(([key, value]) => ~keys.indexOf(key))
+      .reduce((projected, [key, value]) => ({ ...projected, [key]: value }), {});
+  }
 });
 
 const _Element = Element;
