@@ -2,9 +2,11 @@
 
 class Scope {
 
-	constructor() {
+	map = new Map();
 
+	add(key, value) {
 
+		this.map.set(key, value);
 
 	}
 

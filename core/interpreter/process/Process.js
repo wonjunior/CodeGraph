@@ -19,36 +19,48 @@ class Process {
 
   }
 
-  execute() {
+  execute(updateET) {
 
-    $_.log(`[P] UPDATING ${this.constructor.name}`);
     $_.indent()
-    if (this.missingArguments()) return;
-    $_.log(`(1) all arguments are ready`);
+    $_.log(`[P] ${this.constructor.name}#execute(updateET=${updateET})`);
+    if (this.missingArguments()) {
+
+      $_.log(`└── (1) some arguments are missing, exiting`);
+      return;
+
+    } else {
+
+      $_.log(`├── (1) all arguments are available`);
+
+    };
 
     this.mergeAttributes();
     this.result = this.calculate(...this.arguments);
-    $_.log(`(5) calculated result:`, this.result);
+    $_.log(`├── (5) calculated result:`, this.result);
 
-    $_.log(`(6) routing data to output docks:`, this.outputs);
+    $_.log(`├── (6) routing data to output docks:`, this.outputs.map(({id}) => id));
     this.route();
 
-    $_.log(`(7) propagating update through links:`, this.outputs.map(({links}) => links));
-    $_.unindent();
+    $_.log(`└── (7) propagating to links:`, this.outputs.reduce((arr, {links}) => arr.concat(links.map(({id}) => id)), []));
+
+    $_.indent();
     this.propagate();
+    $_.unindent();
+
+    $_.unindent();
 
   }
 
   mergeAttributes() {
 
     this.dependencies = this.mergeDependencies();
-    $_.log(`(2) merged dependencies:`, this.dependencies);
+    $_.log(`├── (2) merged dependencies:`, this.dependencies);
 
     this.parents = this.mergeParents();
-    $_.log(`(3) merged parents:`, this.parents);
+    $_.log(`├── (3) merged parents:`, this.parents);
 
     this.arguments = this.mergeArguments();
-    $_.log(`(4) merged arguments:`, this.arguments);
+    $_.log(`├── (4) merged arguments:`, this.arguments);
 
   }
 

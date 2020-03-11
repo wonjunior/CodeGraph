@@ -35,13 +35,9 @@ class InDataDock extends DataDock {
   trigger(updateET) {
 
     $_.newline();
-    if (this.node.router.isExecutable()) {
-      $_.log(`-> executing ${this.node.router.constructor.name} id#${this.node.id} --updateET=${updateET}`)
-      return this.node.router.execute();
-    }
+    $_.log(`TRIGGERING ${this.node.id} (updateET=${updateET}) (router=${this.node.router.constructor.name})`)
 
-    $_.log(`-> executing ${this.node.constructor.name} id#${this.node.id} --updateET=${updateET}) from ${this.constructor.name} id#${this.id}`)
-    this.node.process.execute();
+    return this.node.router.execute(updateET);
 
   }
 
