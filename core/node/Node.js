@@ -27,6 +27,7 @@ class Node extends CanvasObject {
     this.router = router || new NullRouter();
 
     this.bindDocks();
+    this.bindRouterToProcess();
 
     Node.register(this.id, this);
 
@@ -36,6 +37,12 @@ class Node extends CanvasObject {
       Canvas.nodeArea,
       nodeAttributes
     );
+
+  }
+
+  bindRouterToProcess() {
+
+    this.router.process = this.process;
 
   }
 
