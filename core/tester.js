@@ -105,10 +105,9 @@ wait(() => {
 	n2.process.outputs.first.result = 2;
 	n2.process.outputs.first.stringified = '2';
 
+	// <? n1.router.execute(true); fails, cf. zip accessed array[0])
 	n1.process.outputs.first.propagate(true);
 
-	$_.newline();
-
-	n11.router.in.first.trigger();
+	// n11.router.in.first.trigger();
 
 });
