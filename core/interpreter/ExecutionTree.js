@@ -20,6 +20,7 @@ class ExecutionTree {
 
   update() {
 
+    $_.log(`[ET] ${this.constructor.name}#update()`);
     $_.log(`├── (root) execute root router`);
     this.current = this.root;
     this.execute();
@@ -28,7 +29,7 @@ class ExecutionTree {
 
   execute() {
 
-    this.current.execute(false);
+    this.current.execute(false, true);
 
   }
 

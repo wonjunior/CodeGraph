@@ -19,20 +19,22 @@ class Process {
 
   }
 
-  execute(updateET) {
+  execute(allowPropagation, executeRouter) {
 
     $_.indent()
-    $_.log(`[P] ${this.constructor.name}#execute(updateET=${updateET})`);
-    if (this.missingArguments()) {
+    $_.log(`[P] ${this.constructor.name}#execute(allowPropagation=${allowPropagation}), executeRouter=${executeRouter}`);
 
-      $_.log(`└── (1) some arguments are missing, exiting`);
+    /*if (!executeRouter) {
+
+      $_.log('WTF')
+      $_.log('no router execution: exiting.')
+      $_.unindent();
       return;
 
-    } else {
+    }*/
 
-      $_.log(`├── (1) all arguments are available`);
-
-    };
+    $_.log(`└── (1) ${this.missingArguments() ? 'some arguments are missing, exiting.' : 'all arguments are available'}`);
+    if (this.missingArguments()) return;
 
     this.mergeAttributes();
     this.result = this.calculate(...this.arguments);
@@ -44,7 +46,7 @@ class Process {
     $_.log(`└── (7) propagating to links:`, this.outputs.reduce((arr, {links}) => arr.concat(links.map(({id}) => id)), []));
 
     $_.indent();
-    this.propagate();
+    this.propagate(allowPropagation, executeRouter);
     $_.unindent();
 
     $_.unindent();
@@ -94,9 +96,9 @@ class Process {
 
   }
 
-  propagate() {
+  propagate(...params) {
 
-    this.outputs.forEach(output => output.propagate(true));
+    this.outputs.forEach(output => output.propagate(...params));
 
   }
 

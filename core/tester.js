@@ -16,7 +16,7 @@ new OperatorNode({
 	label: 'o-node',
 	header: 'lightblue',
 	background: '+',
-	position: [275,275],
+	position: [325,275],
     process:  {
 		func: function(a, b) { return a + b; },
 		stringFunc: function(a, b) { return `${a} + ${b}`; },
@@ -53,14 +53,14 @@ new GetterNode({
 	label: 'g-node',
 	header: 'lightgreen',
 	background: 'a',
-	position: [450,150],
+	position: [450,550],
 });
 
 new SetterNode({
 	label: 's-node',
 	header: 'navyblue',
 	background: 'c',
-	position: [570,292],
+	position: [700,292],
 });
 
 
@@ -69,7 +69,7 @@ new ControlFlowNode({
 	label: 'cf-node',
 	header: 'lightcoral',
 	background: '?',
-	position: [750,100],
+	position: [700,100],
 });
 
 new ControlFlowNode({
@@ -77,7 +77,7 @@ new ControlFlowNode({
 	label: 'cf-node',
 	header: 'lightslategray',
 	background: '🤢',
-	position: [750,250],
+	position: [750,550],
 });
 
 wait(() => {
@@ -91,7 +91,10 @@ wait(() => {
 	new Link(n1.process.outputs.first, n6.process.inputs[0]);
 	new Link(n2.process.outputs.first, n6.process.inputs[1]);
 	new Link(n6.process.outputs.first, n4.process.inputs[0]);
-	new Link(n6.process.outputs.first, n7.process.inputs[0]);
+	new Link(n11.process.outputs.first, n7.process.inputs[0]);
+	new Link(n6.process.outputs.first, n7.process.inputs[1]);
+	new Link(n1.process.outputs.first, n11.process.inputs[0]);
+	new Link(n2.process.outputs.first, n11.process.inputs[1]);
 
 	new Link(n11.router.out.first, n7.router.in.first);
 
@@ -106,7 +109,8 @@ wait(() => {
 	n2.process.outputs.first.stringified = '2';
 
 	// <? n1.router.execute(true); fails, cf. zip accessed array[0])
-	n1.process.outputs.first.propagate(true);
+	// n1.process.outputs.first.propagate(true);
+	n6.router.execute();
 
 	// n11.router.in.first.trigger();
 

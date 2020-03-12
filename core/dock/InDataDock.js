@@ -32,12 +32,11 @@ class InDataDock extends DataDock {
 
   }
 
-  trigger(updateET) {
+  trigger(...params) {
 
-    $_.newline();
-    $_.log(`TRIGGERING ${this.node.id} (updateET=${updateET}) (router=${this.node.router.constructor.name})`)
+    $_.log(`├──> data-TRIGGERED ${this.node.id}`); // (updateET=${updateET}) (router=${this.node.router.constructor.name})`)
 
-    return this.node.router.execute(updateET);
+    return this.node.router.execute(...params);
 
   }
 

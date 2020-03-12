@@ -35,9 +35,9 @@ class OutDataDock extends DataDock {
 
   }
 
-  propagate(updateET) {
+  propagate(...params) {
 
-    this.links.forEach(({endDock}) => endDock.trigger(updateET));
+    this.links.forEach(({endDock}) => endDock.trigger(...params));
 
   }
 

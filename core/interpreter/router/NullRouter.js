@@ -5,9 +5,9 @@ class NullRouter extends Router {
 	/**
 	 * @Overrides Router#execute
 	 */
-	execute(updateET) {
+	execute(updateET = true, executeProcess = true) {
 
-		return this.process.execute(updateET);
+		return this.process.execute(updateET, executeProcess);
 
 	}
 

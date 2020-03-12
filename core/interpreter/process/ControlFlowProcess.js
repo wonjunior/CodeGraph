@@ -5,7 +5,7 @@ const ControlFlowProcess = (function() {
   class Conditional extends CustomProcess {
     constructor() {
 
-      super(null, null, [{ label: 'condition' }], []);
+      super(null, null, [{ label: 'condition' }, { label: 'condition' }], []);
 
     }
 

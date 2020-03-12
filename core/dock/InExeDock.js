@@ -17,7 +17,7 @@ class InExeDock extends Dock {
   trigger(updateET) {
 
     $_.newline();
-    $_.log(`-> executing ${this.node.router.constructor.name} id#${this.node.id} --updateET=${updateET}`)
+    $_.log(`-> exe-TRIGGERED ${this.node.router.constructor.name} id#${this.node.id} --updateET=${updateET}`)
     this.node.router.execute();
 
   }
