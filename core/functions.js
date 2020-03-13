@@ -9,19 +9,14 @@ const DEBUG = true;
 // console.log handy shortcut
 const _ = (...a) => console.log(...a);
 
-// console.log on debug mode with indentation
-const $_ = ((tabs = 0) => {
-
-  let space = s => new Array(2*s).fill(' ').join('');
-
-  return {
-    indent:  () => tabs++,
-    unindent: () => tabs--,
-    newline: DEBUG ? () => console.log('') : () => {},
-    log: DEBUG ? (...a) => console.log('(DEBUG)', space(tabs), ...a) : () => {}
-  }
-
-})();
+// console.log on debug mode with indentation with tree-like structure
+const $_ = ((head = '') => ({
+  indent:  () => head += '  ',
+  pipe: () => head += ' |',
+  unindent: () => head = head.slice(0,-2),
+  newline: DEBUG ? () => console.log('') : () => {},
+  log: DEBUG ? (...a) => console.log('(DEBUG)', head, ...a) : () => {}
+}))();
 
 // console.table handy shortcut
 const __ = (a) => console.table(a);

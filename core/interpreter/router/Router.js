@@ -18,12 +18,10 @@ class Router {
 
   }
 
-  execute(updateET = true, executeProcess = true) {
+  trigger(updateET = true) {
 
-    if (!updateET && !executeProcess) return;
-
+    $_.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
     $_.indent();
-    $_.log(`[R] ${this.constructor.name}#execute(updateET=${updateET}, executeProcess=${executeProcess})`); // ${!!this.executionTree}
 
     if (updateET) {
 
@@ -36,13 +34,21 @@ class Router {
       executionTree.update();
       $_.unindent();
 
-    } else if (executeProcess) {
+    } else {
 
-      $_.log(`└── (1) part of a ET execution: propagation w/out triggering routers`);
-      this.process.execute(false, false);
+      $_.log('└──  update blocked, exiting');
 
     }
 
+    $_.unindent();
+
+  }
+
+  execute(updateET) {
+
+    $_.log(`└──> [R] ${this.constructor.name}#execute(updateET=${updateET})`);
+    $_.indent();
+    this.process.execute(updateET);
     $_.unindent();
 
   }

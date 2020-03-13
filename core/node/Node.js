@@ -78,6 +78,12 @@ class Node extends CanvasObject {
 
   }
 
+  toString() {
+
+    return `${this.constructor.name.substring(1,-1)}-node#${this.id}`;
+
+  }
+
   serialize() { }
 
 }

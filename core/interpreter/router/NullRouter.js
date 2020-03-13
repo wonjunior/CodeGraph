@@ -3,11 +3,15 @@
 class NullRouter extends Router {
 
 	/**
-	 * @Overrides Router#execute
+	 * @Overrides Router#trigger
 	 */
-	execute(updateET = true, executeProcess = true) {
+	trigger(updateET = true) {
 
-		return this.process.execute(updateET, executeProcess);
+		$_.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
+    $_.indent();
+		this.execute(updateET);
+		$_.unindent();
+		return;
 
 	}
 

@@ -18,6 +18,7 @@ const ControlFlowRouter = (function() {
 
     func() {
 
+      this.process.execute();
       this.out[this.process.arguments[0][0] ? 0 : 1].trigger();
 
     }

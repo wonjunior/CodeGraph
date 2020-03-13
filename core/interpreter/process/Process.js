@@ -19,21 +19,12 @@ class Process {
 
   }
 
-  execute(allowPropagation, executeRouter) {
+  execute(allowPropagation = false) {
 
+    $_.log(`└──> [P] ${this.constructor.name}#execute(allowPropagation=${allowPropagation})`);
     $_.indent()
-    $_.log(`[P] ${this.constructor.name}#execute(allowPropagation=${allowPropagation}), executeRouter=${executeRouter}`);
 
-    /*if (!executeRouter) {
-
-      $_.log('WTF')
-      $_.log('no router execution: exiting.')
-      $_.unindent();
-      return;
-
-    }*/
-
-    $_.log(`└── (1) ${this.missingArguments() ? 'some arguments are missing, exiting.' : 'all arguments are available'}`);
+    $_.log(`${this.missingArguments() ? '└── (1) some arguments are missing, exiting.' : '├── (1) all arguments are available'}`);
     if (this.missingArguments()) return;
 
     this.mergeAttributes();
@@ -46,10 +37,12 @@ class Process {
     $_.log(`└── (7) propagating to links:`, this.outputs.reduce((arr, {links}) => arr.concat(links.map(({id}) => id)), []));
 
     $_.indent();
-    this.propagate(allowPropagation, executeRouter);
+    this.propagate(allowPropagation);
+    $_.log('└──/ data propagation ended')
+    $_.unindent();
     $_.unindent();
 
-    $_.unindent();
+    return this.result;
 
   }
 
@@ -59,7 +52,7 @@ class Process {
     $_.log(`├── (2) merged dependencies:`, this.dependencies);
 
     this.parents = this.mergeParents();
-    $_.log(`├── (3) merged parents:`, this.parents);
+    $_.log(`├── (3) merged parents: {${[...this.parents].join(', ')}}`);
 
     this.arguments = this.mergeArguments();
     $_.log(`├── (4) merged arguments:`, this.arguments);

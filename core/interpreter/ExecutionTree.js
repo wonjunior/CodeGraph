@@ -20,22 +20,34 @@ class ExecutionTree {
 
   update() {
 
-    $_.log(`[ET] ${this.constructor.name}#update()`);
+    $_.log(`└──> [ET] ${this.constructor.name}#update()`);
+    $_.indent();
     $_.log(`├── (root) execute root router`);
     this.current = this.root;
+    $_.pipe();
     this.execute();
+    $_.unindent();
+    $_.log('└──/ tree execution ended');
+    $_.unindent();
+
+    /*while(this.next()) {
+
+      this.current = this.current.execute();
+
+      break; // safety first
+    }*/
 
   }
 
   execute() {
 
-    this.current.execute(false, true);
+    this.current.execute(false);
 
   }
 
   next() {
 
-
+    return this.current;
 
   }
 
