@@ -1,65 +1,62 @@
-
-
 // ::parameter container
 .param-container {
-    width: 100%;
-    color: #030303;
-    top: 50%;
-    position: absolute;
-    transform: translateY(-50%);
-    font-size: 16px;
-    font-weight: 500;
-    box-sizing: border-box;
+  width: 100%;
+  color: #030303;
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+  font-size: 16px;
+  font-weight: 500;
+  box-sizing: border-box;
 }
 .param-label {
-    box-sizing: border-box;
-    width: 100%;
-	display: inline-block;
-	color: #0000009d;
+  box-sizing: border-box;
+  width: 100%;
+  display: inline-block;
+  color: #0000009d;
 }
 .left > .param-container > .param-label {
-    text-align: center;
-    margin-left: 9px;
-    margin-right: 4px;
-    width: initial;
-    max-width: calc(50% - 13px);
+  text-align: center;
+  margin-left: 9px;
+  margin-right: 4px;
+  width: initial;
+  max-width: calc(50% - 13px);
 }
 .right > .param-container > .param-label {
-    text-align: right;
-    padding-right: 11px;
+  text-align: right;
+  padding-right: 11px;
 }
-
 
 // ::Canvas
 .dock-container {
-    height: 35px;
-    line-height: 25px;
-    margin: auto;
-    position: relative;
-    box-sizing:  border-box;
-    vertical-align:  middle;
+  height: 35px;
+  line-height: 25px;
+  margin: auto;
+  position: relative;
+  box-sizing:  border-box;
+  vertical-align:  middle;
 }
 
 .nodes {
-    pointer-events:  visible;
+  pointer-events:  visible;
 }
 
 // ::Dock::
 .data {
-	&.left > .dock {
-		background-color: #14a914;
-	}
-	&.right > .dock {
-		background-color: #d93f8c;
-	}
+  &.left > .dock {
+    background-color: #14a914;
+  }
+  &.right > .dock {
+    background-color: #d93f8c;
+  }
 }
 
 .exe {
-	> .dock {
-		transform: rotate(45deg);
-		background-color: #2439a9;
-		border-radius: 0px;
-	}
+  > .dock {
+    transform: rotate(45deg);
+    background-color: #2439a9;
+    border-radius: 0px;
+  }
 }
 
 .dock {
@@ -69,126 +66,126 @@
 
 .dock,
 .snap-dock {
-    pointer-events: visible;
-    height: 14px;
-    width: 14px;
-    border-radius: 8px;
-    vertical-align: middle;
-    position: absolute;
-    border: 0.05em solid rgba(0, 0, 0, 0.5);
-    box-sizing: border-box;
-    z-index: 1;
+  pointer-events: visible;
+  height: 14px;
+  width: 14px;
+  border-radius: 8px;
+  vertical-align: middle;
+  position: absolute;
+  border: 0.05em solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  z-index: 1;
 }
 
 .snap-dock {
-    z-index: 3;
-    width: 30px;
-    height: 30px;
-    background-color: rgba(111, 111, 111, 0);
-    cursor: pointer;
-    border-color: rgba(111, 111, 111, 0);
-    top: ~"calc(50% - 14px)";
+  z-index: 3;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(111, 111, 111, 0);
+  cursor: pointer;
+  border-color: rgba(111, 111, 111, 0);
+  top: ~"calc(50% - 14px)";
 }
 
 .left {
-	> .dock {
-		left: -7px;
-	}
-	> .snap-dock {
-		left: -15px;
-	}
+  > .dock {
+    left: -7px;
+  }
+  > .snap-dock {
+    left: -15px;
+  }
 }
 
 .right {
-	> .dock {
-		right: -8px;
-	}
-	> .snap-dock {
-		right: -16px;
-	}
+  > .dock {
+    right: -8px;
+  }
+  > .snap-dock {
+    right: -16px;
+  }
 }
 
-.exe {
-	&.right {
-		// & > .dock {
-		// 	background-color: #2038bb;
-		// 	border: 2px solid #FF9800;
-		// 	border-left-width: 0;
-		// 	border-bottom-width: 0;
-		// }
-	}
-}
-	
+// .exe {
+//   &.right {
+//     // & > .dock {
+//     // 	background-color: #2038bb;
+//     // 	border: 2px solid #FF9800;
+//     // 	border-left-width: 0;
+//     // 	border-bottom-width: 0;
+//     // }
+//   }
+// }
+
 .dock, .snap-dock {
-	border: none;
+  border: none;
 }
 
 .right > .dock {
-	right: -7px;
+  right: -7px;
 }
 
 .left > .param-container > .param-label {
-	margin-left: 12px;
+  margin-left: 12px;
 }
 
 // ::Node
 .node-container {
-	font-family: Consolas, 'Courier New', monospace;
-	z-index: 1;
-	position: absolute;
-	width: 150px;
-	box-sizing: border-box;
-	transition: border 0.2s linear;
-	border: 3px solid transparent;
-	border-radius: 12px 12px 8px 8px;
-	border-color: transparent;
+  font-family: Consolas, 'Courier New', monospace;
+  z-index: 1;
+  position: absolute;
+  width: 150px;
+  box-sizing: border-box;
+  transition: border 0.2s linear;
+  border: 3px solid transparent;
+  border-radius: 12px 12px 8px 8px;
+  border-color: transparent;
 
-	&.selected {
-		box-shadow: 0 0 2px #f44336;
-	}
+  &.selected {
+    box-shadow: 0 0 2px #f44336;
+  }
 
-	&:hover {
-		border: 3px solid #1b1b1b85;
-	}
+  &:hover {
+    border: 3px solid #1b1b1b85;
+  }
 
-	&.hide-body {
-		> .header {
-			border-radius: 10px;
-		}
-		> .body {
-			display: none;
-		}
-	}
-	
-	&.hide-header {
-		> .header {
-			display: none;
-		}
-		> .body {
-			border-radius: 10px;
-		}
-	}
+  &.hide-body {
+    > .header {
+      border-radius: 10px;
+    }
+    > .body {
+      display: none;
+    }
+  }
 
-	> .body > .background {
-		position:  absolute;
-		font-size: 5em;
-		left: 50%;
-		transform: translate(-50%);
-		bottom: 50%;
-		height: 55px;
-		width: 100%;
-		color: #00000042;
-		text-align: center;
-	  }
+  &.hide-header {
+    > .header {
+      display: none;
+    }
+    > .body {
+      border-radius: 10px;
+    }
+  }
+
+  > .body > .background {
+    position:  absolute;
+    font-size: 5em;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 50%;
+    height: 55px;
+    width: 100%;
+    color: #00000042;
+    text-align: center;
+    }
 }
 
 .body {
-    background-color: rgb(81, 81, 81);
-    position: relative;
-	pointer-events: none;
-	min-height: 50px;
-	padding: 8px 0px;
-	border-radius: 0px 0px 8px 8px;
+  background-color: rgb(81, 81, 81);
+  position: relative;
+  pointer-events: none;
+  min-height: 50px;
+  padding: 8px 0px;
+  border-radius: 0px 0px 8px 8px;
 }
 
 .right-block, .left-block {
@@ -198,28 +195,28 @@
 }
 
 .header {
-	border-radius: 8px 8px 0px 0px;
-	border-radius: 12px 12px 0px 0px;
-    background-color: rgb(56, 55, 56);
-    position: relative;
-    cursor: move;
-    z-index: 1;
-    height: 100%;
-	font-weight: bold;
-	font-family: 'Saira Semi Condensed';
-	min-height: 40px;
-	line-height: 40px;
+  border-radius: 8px 8px 0px 0px;
+  border-radius: 12px 12px 0px 0px;
+  background-color: rgb(56, 55, 56);
+  position: relative;
+  cursor: move;
+  z-index: 1;
+  height: 100%;
+  font-weight: bold;
+  font-family: 'Saira Semi Condensed';
+  min-height: 40px;
+  line-height: 40px;
 }
 
 .header-title {
-    text-align: center;
-    width: 100%;
-    position: absolute;
-    margin: auto;
-    vertical-align: middle;
-    top: 50%;
-    left: 50%;
-    pointer-events:  none;
-    transform: translate(-50%, -50%);
-    font-size: 17px;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  margin: auto;
+  vertical-align: middle;
+  top: 50%;
+  left: 50%;
+  pointer-events:  none;
+  transform: translate(-50%, -50%);
+  font-size: 17px;
 }

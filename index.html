@@ -103,10 +103,10 @@
 
 
 <javascript>
-	<!-- Utils -->
+	<!-- Utils & debugging -->
     <script src="core/utils.js"></script>
-    <script src="core/DEBUG.js"></script>
-    <script src="core/ConsoleWriter.js"></script>
+    <script src="core/dev/DEBUG.js"></script>
+    <script src="core/dev/ConsoleWriter.js"></script>
 
 	<!-- View -->
 	<script src="core/view/Template.js"></script>
@@ -125,7 +125,6 @@
     <script src="core/node/GetterNode.js"></script>
     <script src="core/node/SetterNode.js"></script>
     <script src="core/node/ControlFlowNode.js"></script>
-    <!-- <script src="core/Component.js"></script> -->
 
     <!-- Docks -->
     <script src="core/dock/Dock.js"></script>
@@ -175,21 +174,23 @@
     <script src="core/View.js"></script>
 
 	<!-- Event handling -->
-    <script src="core/State.js"></script>
-    <script src="core/mouseHandler.js"></script>
-    <script src="core/keyHandler.js"></script>
-    <script src="core/keys.js"></script>
-    <script src="core/eventListeners.js"></script>
+    <script src="core/controller/state/State.js"></script>
+    <script src="core/controller/MouseCode.js"></script>
+    <script src="core/controller/MouseEventHandler.js"></script>
+    <script src="core/controller/KeyCode.js"></script>
+    <script src="core/controller/KeyEventHandler.js"></script>
+    <script src="core/controller/bindings.js"></script>
+    <script src="core/controller/eventlisteners.js"></script>
 
     <script src="core/library.js"></script>
 
     <script src="core/Finder.js"></script>
     <script src="core/Editor.js"></script>
 
-    <script src="core/controller/EditorStates.js"></script>
+    <script src="core/controller/state/EditorState.js"></script>
+    <script src="core/controller/state/FinderState.js"></script>
 
-    <script src="core/tester.js"></script>
+    <script src="core/dev/tester.js"></script>
 
-	<script src="core/Selection.js"></script>
 </javascript>
 </body>

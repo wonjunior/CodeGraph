@@ -1,102 +1,105 @@
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body, section, svg {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+html,
+body,
+section,
+svg {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body,
 svg {
-    width: 100%;
-    border: 1px transparent;
-    z-index: 1;
+  width: 100%;
+  border: 1px transparent;
+  z-index: 1;
 }
 
 body {
-    user-select: none;
-    cursor: default;
-    overflow: hidden;
+  user-select: none;
+  cursor: default;
+  overflow: hidden;
 }
 
 .window {
-    height: 100%;
+  height: 100%;
 }
 
 .canvas {
-    position: absolute;
+  position: absolute;
 }
 
 .objects {
-	--objects-size: 5000px;
-	width: var(--objects-size);													/* finitepane-rollback */
-	height: var(--objects-size);													/* finitepane-rollback */
-	background: url(https://image.ibb.co/f1RAXF/background.png);	/* finitepane-rollback */
-	font-weight: 500;
-	font-family: Calibri;
-	position: absolute;
-	z-index: 2;
-	border: 3px dashed #c31a1acf;
+  --objects-size: 5000px;
+  width: var(--objects-size);
+  height: var(--objects-size);
+  background: url(https://image.ibb.co/f1RAXF/background.png);
+  font-weight: 500;
+  font-family: Calibri;
+  position: absolute;
+  z-index: 2;
+  border: 3px dashed #c31a1acf;
 }
 
 @font-face {
-	font-family: CONSOLA;
-	src: url('fonts/CONSOLA.ttf') format('ttf');
+  font-family: CONSOLA;
+  src: url('fonts/CONSOLA.ttf') format('ttf');
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 path {
-    fill: #ffffff0f;
-    pointer-events: none;
-    stroke-dasharray: 10;
-    animation: dash 30s linear;
-    animation-iteration-count: infinite;
-    animation-direction: reverse;
-    fill: none;
+  fill: #ffffff0f;
+  // pointer-events: none; // w/out it, is this an issue?
+  stroke-dasharray: 10;
+  animation: dash 30s linear;
+  animation-iteration-count: infinite;
+  animation-direction: reverse;
+  fill: none;
 }
 
 @keyframes dash {
-	to {
-		stroke-dashoffset: 1000;
-	}
+  to {
+    stroke-dashoffset: 1000;
+  }
 }
 
 .footer {
-    pointer-events: none;
-    z-index: 100000;
+  pointer-events: none;
+  z-index: 100000;
 }
 
 span.footer-em {
-	color: #000000ad;
+  color: #000000ad;
 }
 
 .signature {
-    position: fixed;
-    bottom: 0;
-    text-align: center;
-    font-weight: 900;
-    font-family: 'Montserrat', sans-serif;
-	border: thick dotted transparent;
-	
-	&.s-right {
-		right: 0;
-		font-size: 57px;
-		color: rgba(0, 0, 0, 0.37);
-		width: 50%;
-		padding: 10px 17px;
-		text-align: right;
-	}
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  border: thick dotted transparent;
 
-	&.s-left {
-		font-size: 44px;
-		color: rgba(0, 0, 0, 0.37);
-		padding: 17px 30px;
-		width: 50%;
-		text-align: left;
-	}
+  &.s-right {
+    right: 0;
+    font-size: 57px;
+    color: rgba(0, 0, 0, 0.37);
+    padding: 10px 17px;
+    text-align: right;
+    float: right;
+  }
+
+  &.s-left {
+    font-size: 44px;
+    color: rgba(0, 0, 0, 0.37);
+    padding: 17px 30px;
+    text-align: left;
+    float: left;
+  }
 }
