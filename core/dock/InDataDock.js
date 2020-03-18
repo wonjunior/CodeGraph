@@ -34,11 +34,11 @@ class InDataDock extends DataDock {
 
   trigger(...params) {
 
-    $_.log(`├──> data propagation to ${this.node.id}`); // (updateET=${updateET}) (router=${this.node.router.constructor.name})`)
+    $.Execution.log(`├──> data propagation to ${this.node.id}`); // (updateET=${updateET}) (router=${this.node.router.constructor.name})`)
 
-    $_.pipe();
+    $.Execution.pipe();
     this.node.router.trigger(...params);
-    $_.unindent();
+    $.Execution.unindent();
 
   }
 

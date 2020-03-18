@@ -21,26 +21,26 @@ class Process {
 
   execute(allowPropagation = false) {
 
-    $_.log(`└──> [P] ${this.constructor.name}#execute(allowPropagation=${allowPropagation})`);
-    $_.indent()
+    $.Execution.log(`└──> [P] ${this.constructor.name}#execute(allowPropagation=${allowPropagation})`);
+    $.Execution.indent()
 
-    $_.log(`${this.missingArguments() ? '└── (1) some arguments are missing, exiting.' : '├── (1) all arguments are available'}`);
+    $.Execution.log(`${this.missingArguments() ? '└── (1) some arguments are missing, exiting.' : '├── (1) all arguments are available'}`);
     if (this.missingArguments()) return;
 
     this.mergeAttributes();
     this.result = this.calculate(...this.arguments);
-    $_.log(`├── (5) calculated result:`, this.result);
+    $.Execution.log(`├── (5) calculated result:`, this.result);
 
-    $_.log(`├── (6) routing data to output docks:`, this.outputs.map(({id}) => id));
+    $.Execution.log(`├── (6) routing data to output docks:`, this.outputs.map(({id}) => id));
     this.route();
 
-    $_.log(`└── (7) propagating to links:`, this.outputs.reduce((arr, {links}) => arr.concat(links.map(({id}) => id)), []));
+    $.Execution.log(`└── (7) propagating to links:`, this.outputs.reduce((arr, {links}) => arr.concat(links.map(({id}) => id)), []));
 
-    $_.indent();
+    $.Execution.indent();
     this.propagate(allowPropagation);
-    $_.log('└──/ data propagation ended')
-    $_.unindent();
-    $_.unindent();
+    $.Execution.log('└──/ data propagation ended')
+    $.Execution.unindent();
+    $.Execution.unindent();
 
     return this.result;
 
@@ -49,13 +49,13 @@ class Process {
   mergeAttributes() {
 
     this.dependencies = this.mergeDependencies();
-    $_.log(`├── (2) merged dependencies:`, this.dependencies);
+    $.Execution.log(`├── (2) merged dependencies:`, this.dependencies);
 
     this.parents = this.mergeParents();
-    $_.log(`├── (3) merged parents: {${[...this.parents].join(', ')}}`);
+    $.Execution.log(`├── (3) merged parents: {${[...this.parents].join(', ')}}`);
 
     this.arguments = this.mergeArguments();
-    $_.log(`├── (4) merged arguments:`, this.arguments);
+    $.Execution.log(`├── (4) merged arguments:`, this.arguments);
 
   }
 
@@ -89,9 +89,9 @@ class Process {
 
   }
 
-  propagate(...params) {
+  propagate(updateET) {
 
-    this.outputs.forEach(output => output.propagate(...params));
+    this.outputs.forEach(output => output.propagate(updateET, this.parents));
 
   }
 

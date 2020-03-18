@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-	<title>Codegraph PoC</title>
+	<title>Codegraph cg2020</title>
 	<link rel="icon" href="media/knot.ico" />
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed" rel="stylesheet">
@@ -39,7 +39,7 @@
 
     <div class="footer">
       <div class="signature s-left"># testfile.cg</div>
-      <div class="signature s-right"><span class="footer-em">C</span>ode<span class="footer-em">G</span>raph v0.5</div>
+      <div class="signature s-right"><span style="color:#4285f4">C</span>ode<span style="color:#ea4335">G</span>raph v0.5</div>
     </div>
 
 </div>
@@ -104,7 +104,9 @@
 
 <javascript>
 	<!-- Utils -->
-    <script src="core/functions.js"></script>
+    <script src="core/utils.js"></script>
+    <script src="core/DEBUG.js"></script>
+    <script src="core/ConsoleWriter.js"></script>
 
 	<!-- View -->
 	<script src="core/view/Template.js"></script>
@@ -183,7 +185,8 @@
 
     <script src="core/Finder.js"></script>
     <script src="core/Editor.js"></script>
-    <script src="core/states.js"></script>
+
+    <script src="core/controller/EditorStates.js"></script>
 
     <script src="core/tester.js"></script>
 

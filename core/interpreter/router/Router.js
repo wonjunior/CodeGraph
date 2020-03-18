@@ -18,38 +18,38 @@ class Router {
 
   }
 
-  trigger(updateET = true) {
+  trigger(updateET = true, parents) {
 
-    $_.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
-    $_.indent();
+    $.Execution.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
+    $.Execution.indent();
 
     if (updateET) {
 
-      $_.log(`├── (1) root ${this.root === this ? 'is' : 'is not'} self`);
-      $_.log(`├── (2) get the execution tree ${this.root === this ? 'from self' : 'from root'}`);
+      $.Execution.log(`├── (1) root ${this.root === this ? 'is' : 'is not'} self`);
+      $.Execution.log(`├── (2) get the execution tree ${this.root === this ? 'from self' : 'from root'}`);
 
-      const executionTree = ExecutionTree.getExecutionTree(this.root);
-      $_.log(`└── (3) executing the execution tree ${this.root.executionTree}`);
-      $_.indent();
+      const executionTree = ExecutionTree.getExecutionTree(this.root, parents);
+      $.Execution.log(`└── (3) executing the execution tree ${this.root.executionTree}`);
+      $.Execution.indent();
       executionTree.update();
-      $_.unindent();
+      $.Execution.unindent();
 
     } else {
 
-      $_.log('└──  update blocked, exiting');
+      $.Execution.log('└──  update blocked, exiting');
 
     }
 
-    $_.unindent();
+    $.Execution.unindent();
 
   }
 
   execute(updateET) {
 
-    $_.log(`└──> [R] ${this.constructor.name}#execute(updateET=${updateET})`);
-    $_.indent();
+    $.Execution.log(`└──> [R] ${this.constructor.name}#execute(updateET=${updateET})`);
+    $.Execution.indent();
     this.process.execute(updateET);
-    $_.unindent();
+    $.Execution.unindent();
 
   }
 

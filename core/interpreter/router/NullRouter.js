@@ -7,10 +7,10 @@ class NullRouter extends Router {
 	 */
 	trigger(updateET = true) {
 
-		$_.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
-    $_.indent();
+		$.Execution.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
+    $.Execution.indent();
 		this.execute(updateET);
-		$_.unindent();
+		$.Execution.unindent();
 		return;
 
 	}

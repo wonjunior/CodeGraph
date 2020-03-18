@@ -5,13 +5,13 @@ class ExecutionTree {
   scope = new Map();
   accessBuffer = {};
 
-  static getExecutionTree(root) {
+  static getExecutionTree(root, parents) {
 
-    return root.executionTree || new ExecutionTree(root);
+    return root.executionTree || new ExecutionTree(root, parents);
 
   }
 
-  constructor(root) {
+  constructor(root, parents) {
 
     this.root = root;
     root.executionTree = this;
@@ -20,15 +20,15 @@ class ExecutionTree {
 
   update() {
 
-    $_.log(`└──> [ET] ${this.constructor.name}#update()`);
-    $_.indent();
-    $_.log(`├── (root) execute root router`);
+    $.Execution.log(`└──> [ET] ${this.constructor.name}#update()`);
+    $.Execution.indent();
+    $.Execution.log(`├── (root) execute root router`);
     this.current = this.root;
-    $_.pipe();
+    $.Execution.pipe();
     this.execute();
-    $_.unindent();
-    $_.log('└──/ tree execution ended');
-    $_.unindent();
+    $.Execution.unindent();
+    $.Execution.log('└──/ tree execution ended');
+    $.Execution.unindent();
 
     /*while(this.next()) {
 
