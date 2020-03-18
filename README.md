@@ -21,3 +21,9 @@ Codegraph can work with an existing code base, the objective is not to translate
 ![](https://i.ibb.co/DrnQ3Q4/process.png)
 
 (updated on March 13th)
+
+---
+
+##### cg2020 - release 0.1 (Mar 13) - Data propagation and tree execution with detailed logs
+
+![](https://i.ibb.co/pZND4x9/releaseA.png)
