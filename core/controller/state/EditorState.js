@@ -27,7 +27,7 @@ new State({
           event,
           type: 'drag',
           element: target,
-          object: Canvas,
+          object: $CANVAS.element,
         });
       },
 

@@ -184,8 +184,9 @@ class Finder {
 // <? could support more than one finder!
 // name: 'nodeFinder',
 // key: spacebar
-const nodeFinder = new Finder({
-  data: Library.node,
-  container: Canvas.window,
-  placeholder: 'search node...',
-});
+
+// const nodeFinder = new Finder({
+//   data: Library.node,
+//   container: Canvas.window,
+//   placeholder: 'search node...',
+// });
