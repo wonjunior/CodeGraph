@@ -15,8 +15,8 @@ class GraphEventHandler {
 
 	handleLink(link) {
 
-		const needsUpdating = link.endDock;
-		$.GraphEvent.log(`${needsUpdating}`);
+		$.GraphEvent.log(`updating ${link.endDock}`);
+		link.endDock.trigger();
 
 	}
 
