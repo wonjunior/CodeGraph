@@ -2,87 +2,69 @@
 
 class Draggable {
 
-    constructor({ type, event, element, object, callback }) {                       /* bounderyClamp finitepane-rollback */
-        //                            <? just setter position
+  constructor({ type, event, element, object, callback }) { // <? just setter position
 
-        this.element = element;
-        this.object = object;
+    $.Draggable.log(`┌── Starting dragging`, element);
 
-        if (type == 'drag') {
+    this.element = element;
+    this.object = object;
+    this.callback = callback || (() => {});
 
-            this.startDrag(event, callback);										/* bounderyClamp finitepane-rollback */
+    (type == 'stick') ? this.startStick(event, callback) : this.startDrag(event, callback);
 
-        } else if (type == 'stick') {
+  };
 
-            this.startStick(event, callback);                                       /* bounderyClamp finitepane-rollback */
+  startStick(e) {
 
-        }
+    const parentProp = this.element.parentElement.getBoundingClientRect();
+    this.offset = [ parentProp.x + 50, parentProp.y + 10 ];
 
-    };
+    const eventHandler = e => this.dragging(e);
 
-    startStick(e, callback) {													    /* bounderyClamp finitepane-rollback */
+    this.dragging(e);
 
-        const parentProp = this.element.parentElement.getBoundingClientRect();
-        this.offset = [
-            parentProp.x + 50,
-            parentProp.y + 10
-        ];
+    document.addEventListener('mousemove', eventHandler);
+    document.addEventListener('mousedown', () => this.endDrag(eventHandler), { once: true });
 
-        const eventHandler = event => {
+  };
 
-            this.dragging(event);												    /* bounderyClamp finitepane-rollback */
+  startDrag({clientX, clientY}) {
 
-            if (callback) callback();
+    const selfPos = this.element.getBoundingClientRect();
+    const parentPos = this.element.parentElement.getBoundingClientRect();
+    this.offset = [ clientX - selfPos.x + parentPos.x, clientY - selfPos.y + parentPos.y ];
 
-        };
+    $.Draggable.pipe();
+    $.Draggable.log(`- initial parent->mouse offset is [${this.offset}]`);
 
-        this.dragging(e);
+    const eventHandler = e => this.dragging(e);
 
-        document.addEventListener('mousemove', eventHandler);
-        document.addEventListener('mousedown', () => this.endDrag(eventHandler), { once: true });
+    document.addEventListener('mousemove', eventHandler);
+    document.addEventListener('mouseup', () => this.endDrag(eventHandler), { once: true });
 
-    };
+  };
 
-    startDrag(e, callback) {														/* bounderyClamp finitepane-rollback */
+  dragging(e) {
 
-        const selfProp = this.element.getBoundingClientRect();
-        const parentProp = this.element.parentElement.getBoundingClientRect();
-        this.offset = [
-            e.clientX - selfProp.x + parentProp.x,
-            e.clientY - selfProp.y + parentProp.y
-        ];
+    const [ offsetX, offsetY ] = this.offset;
 
-        const eventHandler = event => {
+    // View.mousePosition(e) careful with the offset!
+    let targetPosition = [ (e.clientX - offsetX) / $CANVAS.element.zoomLevel, (e.clientY - offsetY) /  $CANVAS.element.zoomLevel ];
 
-            this.dragging(event);												    /* bounderyClamp finitepane-rollback */
+    $.Draggable.log(`- target position [${targetPosition}]`);
 
-            if (callback) callback();
+    this.object.position = targetPosition;
 
-        };
+    this.callback();
 
-        document.addEventListener('mousemove', eventHandler);
-        document.addEventListener('mouseup', () => this.endDrag(eventHandler), { once: true });
+  };
 
-    };
+  endDrag(fct) {
 
-    dragging(e) {                                                                   /* bounderyClamp */
+    $.Draggable.unindent();
+    $.Draggable.log('└──/ dragging ended');
+    document.removeEventListener('mousemove', fct);
 
-        const [ offsetX, offsetY ] = this.offset;
-
-        // View.mousePosition(e) careful with the offset!
-        let targetPosition = [
-            (e.clientX - offsetX) / Canvas.zoomLevel,
-            (e.clientY - offsetY) / Canvas.zoomLevel
-        ];
-
-        this.object.position = targetPosition;                                      /* bounderyClamp */
-
-    };
-
-    endDrag(fct) {
-
-        document.removeEventListener('mousemove', fct);
-
-    };
+  };
 
 };

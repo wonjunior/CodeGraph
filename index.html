@@ -19,23 +19,19 @@
 
 <div class="window">
 
-    <div class="canvas" style="transform: scale(1)">
+    <!-- <div class="canvas" style="transform: scale(1)">
         <div class="objects" style="top:0;left:0;">
 
             <div class="nodes">
-                <!--<div class="tester" style="border-radius:5px; width:10px; height:10px; position:absolute; background:black; z-index:99"></div>-->
-                <!---->
-                <!--<div class="tester" style="border-radius:5px; width:10px; height:10px; position:absolute; background:red; z-index:99; bottom:0; right:0"></div>-->
             </div>
 
             <div class="links">
                 <svg height="10000" width="10000">
-                    <!---->
                 </svg>
             </div>
 
         </div>
-    </div>
+    </div> -->
 
     <div class="footer">
       <div class="signature s-left"># testfile.cg</div>
@@ -48,6 +44,15 @@
 </div>
 
 <templates>
+
+    <template id="canvas">
+        <div class="canvas" style="transform: scale(1)">
+            <div class="objects" style="top:0;left:0;">
+                <div class="nodes"></div>
+                <div class="links"><svg height="10000" width="10000"></svg></div>
+            </div>
+        </div>
+    </template>
 
     <template id="node">
         <div class="node-container" id="{node.id}">
@@ -117,11 +122,14 @@
 	<script src="core/view/NodeElement.js"></script>
     <script src="core/view/LinkElement.js"></script>
     <script src="core/view/DockElement.js"></script>
+	<script src="core/view/CanvasElement.js"></script>
 
 	<!-------- Components -------->
     <script src="core/CanvasObject.js"></script>
 
     <script src="core/interpreter/GraphEventHandler.js"></script>
+
+	<script src="core/Canvas.js"></script>
 
     <!-- Node -->
     <script src="core/node/Node.js"></script>
@@ -169,7 +177,6 @@
 	<script src="core/interpreter/NodeDependencyHandler.js"></script>
 	<script src="core/interpreter/DockDependencyHandler.js"></script> -->
 
-	<script src="core/Canvas.js"></script>
 
 	<!-- Interactions UI behavior -->
     <script src="core/Draggable.js"></script>
@@ -195,7 +202,7 @@
     <script src="core/controller/state/EditorState.js"></script>
     <script src="core/controller/state/FinderState.js"></script>
 
-    <script src="core/dev/tester.js"></script>
+    <!-- <script src="core/dev/tester.js"></script> -->
 
 </javascript>
 </body>

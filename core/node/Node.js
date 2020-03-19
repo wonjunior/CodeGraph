@@ -34,7 +34,7 @@ class Node extends CanvasObject {
     this.element = new NodeElement(
       this,
       [...this.docks].map(({element}) => element),
-      Canvas.nodeArea,
+      $CANVAS.element,// Canvas.nodeArea,
       nodeAttributes
     );
 

@@ -10,7 +10,7 @@ class Template {
    * @param {String} name template's name
    * @return a `querySelector` binded to the cloned HTML element
    */
-  static get(name) {
+  static import(name) {
 
     const template = document.querySelector(`template#${name}`);
 
@@ -25,8 +25,8 @@ class Template {
 /**
  * Add a method for each type of template.
  */
-[ 'node', 'dock', 'link' ].forEach(template => {
+[ 'node', 'dock', 'link', 'canvas' ].forEach(template => {
 
-  Template[ template ] = () => Template.get(template);
+  Template[ template ] = () => Template.import(template);
 
 });

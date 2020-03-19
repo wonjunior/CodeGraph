@@ -83,13 +83,14 @@ class NodeElement extends Element {
 
   }
 
-  constructor(node, dockElements, parent, params) {
+  constructor(node, dockElements, canvas, params) {
 
     super(node);
 
-    this.render(parent, dockElements);
+    this.canvas = canvas;
+    this.render(canvas.nodeArea, dockElements);
 
-    this.labelText = node.id; //params.label;
+    this.labelText = node.id; //DEBUG params.label;
     this.backgroundText = params.background;
     this.headerColor = params.header;
     this.position = params.position || [0,0];
@@ -139,8 +140,8 @@ class NodeElement extends Element {
   boundaryClamp(position) {
 
     return position.map((value, i) => {
-
-      const [ minLimit, maxLimit ] = [ 0, (Canvas.size[i] - this.size[i]) / Canvas.zoomLevel ];
+      // _(this.canvas.element)
+      const [ minLimit, maxLimit ] = [ 0, (this.canvas.size[i] - this.size[i]) / Canvas.zoomLevel ];
 
       return value <= minLimit ? minLimit : (value >= maxLimit ? maxLimit : value);
 

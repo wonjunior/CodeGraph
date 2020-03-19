@@ -1,76 +1,14 @@
 'use strict'
 
 class Canvas {	 // <? extends there #size and #position!
-	
-	static get zoomLevel() {
-		
-		const scaleFromStyle = Canvas.zoomWrapper.style.transform.replace(/[^\d.]/g, ''); // <? make class to handle it
-		
-		return parseFloat(scaleFromStyle) || 1;
 
-	}
-	
-	static set zoomLevel(scale) {
-		
-		Canvas.zoomWrapper.style.transform = `scale(${scale})`;
-	
-	}
-	
-	static get position() {
-		
-		return [ Canvas.element.style.left, Canvas.element.style.top ].map(parseFloat);
-	
-	}
-	
-	static set position(position) { 
-		
-		const [ x, y ] = this.boundaryClamp(position);
-		Object.assign(Canvas.element.style, { left: `${x}px`, top: `${y}px` });
+	constructor(parent) {
 
-	}
-
-
-	static positionFromOrigin()  {
-		
-		const properties = this.element.getBoundingClientRect();
-		return [ properties.x, properties.y ];
-
-	}
-	
-	static get size() {
-		
-		const properties = this.element.getBoundingClientRect();
-		return [ properties.width, properties.height ];
-
-	}
-
-	/*static set size([ x, y ]) {
-
-		// more complex than that: need to check
-		//  a) not too small
-		//  b) displace all the Canvas' content i.e. re-center the canvas
-		Canvas.element.style.left = x + 'px';
-		Canvas.element.style.top = y + 'px';
-
-	};*/
-
-	static boundaryClamp(position) {
-
-		return position.map((value, i) => {
-
-			const minLimit = - Canvas.positionFromOrigin()[i] / Canvas.zoomLevel + Canvas.position[i];
-			const maxLimit = minLimit - (Canvas.size[i] - View.screenSize[i]) / Canvas.zoomLevel;
-
-			return value >= minLimit ? minLimit : (value <= maxLimit ? maxLimit : value);
-			
-		});
+		this.parent = parent
+		this.element = new CanvasElement(this, parent);
 
 	}
 
 };
 
-Canvas.window = document.querySelector('.window');
-Canvas.zoomWrapper = document.querySelector('.canvas');
-Canvas.element = document.querySelector('.objects');
-Canvas.nodeArea = document.querySelector('.nodes');
-Canvas.linkArea = document.querySelector('.links > svg');
+const $CANVAS = new Canvas(document.querySelector('.window'));
