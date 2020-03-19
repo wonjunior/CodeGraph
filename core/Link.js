@@ -6,166 +6,162 @@
  */
 class Link extends CanvasObject {
 
-	static all = {};
+  static all = {};
 
-	static separator = '-';
-	
-	/**
-	 * Adds a new link object to the Canvas or edit a link if already exists
-	 * @param {Dock} startDock the dock from where the link has been pulled
-	 * @param {Dock || undefined} endDock a dock instance if the second dock is already known, else `undefined`
-	 */
-	constructor(startDock, endDock) {
+  static separator = '-';
 
-		super();
+  /**
+   * Adds a new link object to the Canvas or edit a link if already exists
+   * @param {Dock} startDock the dock from where the link has been pulled
+   * @param {Dock || undefined} endDock a dock instance if the second dock is already known, else `undefined`
+   */
+  constructor(startDock, endDock) {
 
-		this.startDock = startDock;
-		this.isData = startDock instanceof DataDock;
+    super();
 
-		if (startDock.occupiedAndUnique()) {
-			
-			const link = this.editExistingLink(endDock);
-			if (link) return link;
+    this.startDock = startDock;
+    this.isData = startDock instanceof DataDock;
 
-		}
-		
-		this.element = new LinkElement(this, Canvas.linkArea);
+    if (startDock.occupiedAndUnique()) {
 
-		this.id = startDock.id;
-		
-		this.startDock.addLink(this);
-		
-		if (endDock) this.setEndDock(endDock);
+      const link = this.editExistingLink(endDock);
+      if (link) return link;
 
     }
 
-	/**
-	 * Constructs an unique string to identify the link.
-	 * @returns {String} the link's id
-	 */
-	constructId() {
-		
-		return this.startDock.id + Link.separator + this.endDock.id;
+    this.element = new LinkElement(this, Canvas.linkArea);
 
-	}
+    this.id = startDock.id;
 
-	update() {
+    this.startDock.addLink(this);
 
-		this.element.update();
-
-	}
-
-	/**
-	 * Deletes the existing link if the provided endDock is defined, else return this link.
-	 * @param {Dock} endDock
-	 */
-	editExistingLink(endDock) {
-		
-		const link = this.unpinExistingLink();
-		
-		return endDock ? link.destroy() : link;
-
-	}
-
-	/**
-	 * Returns the existing link hosted by the link's startDock.
-	 */
-	unpinExistingLink() {
-
-		return this.startDock.links.first.unpin();
-
-	}
-
-	/**
-	 * Check if endDock is compatible with link then save the link on the dock.
-	 * @param {Dock} endDock 
-	 */
-	setEndDock(endDock) {
-		
-		if (!this.startDock.isCompatible(endDock)) this.destroy();
-
-		this.endDock = endDock;
-
-		this.pin();
-		
-		this.element.update();
-
-	}
-
-	/**
-	 * Remove the link from its endDock's links, unregister the link then return it.
-	 * @returns the link that is edited
-	 */
-    unpin() {
-
-		Link.unregister(this);
-		
-        this.endDock.dropLink(this);
-
-		delete this.endDock;
-
-        return this;
+    if (endDock) this.setEndDock(endDock);
 
     }
 
-	/**
-	 * Adds the link to the endDock's links, swap docks if necessary and register it.
-	 */
-    pin() {
-		
-		this.endDock.popExistingLink();
-		
-		this.endDock.addLink(this);
-		
-		if (this.endDock.isRight) this.swapDocks();
+  /**
+   * Constructs an unique string to identify the link.
+   * @returns {String} the link's id
+   */
+  constructId() {
 
-		this.id = this.constructId();
-		
-		Link.register(this.constructId(), this);
+    return this.startDock.id + Link.separator + this.endDock.id;
 
-	}
+  }
 
-	/**
-	 * Swaps out startDock and endDock.
-	 */
-	swapDocks() {
+  update() {
 
-		[ this.startDock, this.endDock ] = [ this.endDock, this.startDock ];
+    this.element.update();
 
-	}
+  }
 
-	/**
-	 * Unregisters the link, deletes the HTML object and unpins from start and end docks.
-	 */
-	destroy() {
+  /**
+   * Deletes the existing link if the provided endDock is defined, else return this link.
+   * @param {Dock} endDock
+   */
+  editExistingLink(endDock) {
 
-		Link.unregister(this);
-		
-		this.element.remove()
-		
-		this.startDock.dropLink(this);
-		
-		if (this.endDock) this.endDock.dropLink(this);
-	
-	}
+    const link = this.unpinExistingLink();
 
-	/**
-	 * Serialiser simply returns an array of the start and end docks' id.
-	 */
-    serialize() {
-		
-		return [ this.startDock.id, this.endDock.id ];
+    return endDock ? link.destroy() : link;
 
-	}
-	
-	/**
-	 * Update all of registered links.
-	 */
-	static update() {
-		
-		Link.values.forEach(link => link.element.update());
-	
-	}
+  }
+
+  /**
+   * Returns the existing link hosted by the link's startDock.
+   */
+  unpinExistingLink() {
+
+    return this.startDock.links.first.unpin();
+
+  }
+
+  /**
+   * Check if endDock is compatible with link then save the link on the dock.
+   * @param {Dock} endDock
+   */
+  setEndDock(endDock) {
+
+    if (!this.startDock.isCompatible(endDock)) this.destroy();
+
+    this.endDock = endDock;
+
+    this.pin();
+
+    this.element.update();
+
+  }
+
+  /**
+   * Remove the link from its endDock's links, unregister the link then return it.
+   * @returns the link that is edited
+   */
+  unpin() {
+
+    Link.unregister(this);
+
+    this.endDock.dropLink(this);
+
+    delete this.endDock;
+
+    return this;
+
+  }
+
+  /**
+   * Adds the link to the endDock's links, swap docks if necessary and register it.
+   */
+  pin() {
+
+    $.Linkable.log(`(1) popping existing links on ${this.endDock}`);
+    this.endDock.popExistingLink();
+
+    this.endDock.addLink(this);
+
+    if (this.endDock.isRight) this.swapDocks();
+
+    this.id = this.constructId();
+
+    $.Linkable.log(`(2) registering new link with id=${this.id}`);
+    Link.register(this.constructId(), this);
+
+    geh.handle(this);
+
+  }
+
+  /**
+   * Swaps out startDock and endDock.
+   */
+  swapDocks() {
+
+    [ this.startDock, this.endDock ] = [ this.endDock, this.startDock ];
+
+  }
+
+  /**
+   * Unregisters the link, deletes the HTML object and unpins from start and end docks.
+   */
+  destroy() {
+
+    Link.unregister(this);
+
+    this.element.remove()
+
+    this.startDock.dropLink(this);
+
+    if (this.endDock) this.endDock.dropLink(this);
+
+  }
+
+  /**
+   * Update all of registered links.
+   */
+  static update() {
+
+    Link.values.forEach(link => link.element.update());
+
+  }
+
+  serialize() {}
 
 }
-// 295
