@@ -80,7 +80,7 @@ class Node extends CanvasObject {
 
   toString() {
 
-    return `${this.constructor.name.substring(1,-1)}-node#${this.id}`;
+    return `${this.constructor.name.substring(1,-1).toLocaleLowerCase()}-node#${this.id}`;
 
   }
 

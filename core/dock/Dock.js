@@ -92,6 +92,12 @@ class Dock extends CanvasObject {
 
   }
 
+  toString() {
+
+    return `${this.constructor.name}#${this.id}`;
+
+  }
+
   serialize() { }
 
 }
