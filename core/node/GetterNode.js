@@ -4,9 +4,9 @@ class GetterNode extends Node {
 
   constructor(args) {
 
-    const { ...nodeAttributes } = args;
+    const { canvas, ...nodeAttributes } = args;
 
-    super(new GetterProcess('a'), null, nodeAttributes);
+    super(new GetterProcess('a'), null, canvas, nodeAttributes);
 
   }
 

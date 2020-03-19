@@ -53,11 +53,12 @@ class Dock extends CanvasObject {
 
   }
 
-  getLink() {
+  // dead code ?!
+  // getLink() {
 
-    return this.occupiedAndUnique() ? this.links.first.edit() : new Link(this);
+  //   return this.occupiedAndUnique() ? this.links.first.edit() : new Link(this);
 
-  }
+  // }
 
   isCompatible(dock) {
 

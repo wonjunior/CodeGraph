@@ -2,6 +2,13 @@
 
 class CanvasElement extends Element {
 
+	get viewportSize() {
+
+    const properties = this.parent.getBoundingClientRect();
+    return [ properties.width, properties.height ];
+
+	}
+
   get zoomLevel() {
 
     const scaleFromStyle = this.zoomWrapper.style.transform.replace(/[^\d.]/g, '');
@@ -31,28 +38,17 @@ class CanvasElement extends Element {
 
   get size() {
 
-    _(this)
     const properties = this.positionWrapper.getBoundingClientRect();
     return [ properties.width, properties.height ];
 
   }
 
-
-  // static set size([ x, y ]) {
-
-  // 	// more complex than that: need to check
-  // 	//  a) not too small
-  // 	//  b) displace all the Canvas' content i.e. re-center the canvas
-  // 	Canvas.positionWrapper.style.left = x + 'px';
-  // 	Canvas.positionWrapper.style.top = y + 'px';
-
-  // };
-
   constructor(canvas, parent) {
 
     super(canvas);
+    this.parent = parent;
 
-    _(parent, 'appended to', this.container)
+    _(this.container, 'appended to', parent);
     this.render(parent);
 
   }
@@ -78,12 +74,21 @@ class CanvasElement extends Element {
 
   }
 
+  mousePosition(event) {
+
+		const [ x, y ] = [ event.clientX, event.clientY ];
+		const [ offsetX, offsetY ] = this.positionFromOrigin();
+
+		return [ (x - offsetX) / this.zoomLevel, (y - offsetY) / this.zoomLevel ];
+
+	}
+
   boundaryClamp(position) {
 
     return position.map((value, i) => {
 
-      const minLimit = - [i] / this.zoomLevel + this.position[i];
-      const maxLimit = minLimit - (this.size[i] - View.screenSize[i]) / this.zoomLevel;
+      const minLimit = - this.positionFromOrigin()[i] / this.zoomLevel + this.position[i];
+      const maxLimit = minLimit - (this.size[i] - this.viewportSize[i]) / this.zoomLevel;
 
       return value >= minLimit ? minLimit : (value <= maxLimit ? maxLimit : value);
 

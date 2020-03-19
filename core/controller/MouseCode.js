@@ -14,9 +14,9 @@ class MouseCode {
    * Gives the button name associated with the mouse code
    * @param {Event} event a document event
    */
-  static get({ button }) {
+  static get({ button, deltaY }) {
 
-    return MouseCode.list[ button ];
+    return deltaY ? 'wheel' : MouseCode.list[ button ];
 
   }
 

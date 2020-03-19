@@ -20,6 +20,22 @@ new State({
 
   mousebinds: {
 
+    wheel: {
+
+      '.objects': ({ direction, selector, target }) => {
+
+        /*// we need to access the current Canvas w/ selector/target -> canvas need ids!
+        // same for the CanvasView where are we?
+        $.Event.log(selection, target, direction);
+
+        const newScale = Canvas.zoomLevel + CanvasView.zoomFactor * Math.sign(event.deltaY);
+
+        if (0.5 <= newScale && newScale <= 2) CanvasView.zoom(newScale, event);*/
+
+      }
+
+    },
+
     right: {
 
       '.objects': ({ event, target }) => {
@@ -28,6 +44,7 @@ new State({
           type: 'drag',
           element: target,
           object: $CANVAS.element,
+          canvas: $CANVAS,
         });
       },
 
@@ -53,12 +70,13 @@ new State({
           type: 'drag',
           element: node.element.container,
           object: node.element,
-          callback: node.update.bind(node)
+          canvas: $CANVAS,
+          callback: node.update.bind(node),
         });
       },
 
       '.snap-dock': ({ target }) => {
-        new Linkable(event, Dock.all[ target.ref ]);
+        new Linkable(event, Dock.all[ target.ref ], $CANVAS);
       },
 
       // --debug = links need an exact mouse click on the element, we will need a ghost element

@@ -15,10 +15,11 @@ class Link extends CanvasObject {
    * @param {Dock} startDock the dock from where the link has been pulled
    * @param {Dock || undefined} endDock a dock instance if the second dock is already known, else `undefined`
    */
-  constructor(startDock, endDock) {
+  constructor(startDock, endDock, canvas) {
 
     super();
 
+    this.canvas = canvas;
     this.startDock = startDock;
     this.isData = startDock instanceof DataDock;
 
@@ -29,7 +30,7 @@ class Link extends CanvasObject {
 
     }
 
-    this.element = new LinkElement(this, Canvas.linkArea);
+    this.element = new LinkElement(this, canvas.linkArea);
 
     this.id = startDock.id;
 
