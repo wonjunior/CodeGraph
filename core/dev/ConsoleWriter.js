@@ -55,9 +55,9 @@ class ConsoleWriter {
     } else {
 
       return [
-        space(Math.floor((ConsoleWriter.labelLength - text.length)/2)),
+        space(Math.ceil((ConsoleWriter.labelLength - text.length)/2)),
         text,
-        space(Math.ceil((ConsoleWriter.labelLength - text.length)/2))
+        space(Math.floor((ConsoleWriter.labelLength - text.length)/2))
       ].join('');
 
     }
