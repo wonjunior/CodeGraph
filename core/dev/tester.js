@@ -10,6 +10,7 @@ new FunctionNode({
     params: [{label: 'a'}, {label: 'b'}],
     result: {label: 'f(a,b)'}
   },
+  canvas: $CANVAS,
 });
 
 new OperatorNode({
@@ -23,6 +24,7 @@ new OperatorNode({
     params: [{label: 'a'}, {label: 'b'}],
     result: {label: 'result'}
   },
+  canvas: $CANVAS,
 });
 
 new OperatorNode({
@@ -35,6 +37,7 @@ new OperatorNode({
     params: [],
     result: {label: '1'}
   },
+  canvas: $CANVAS,
 });
 
 new OperatorNode({
@@ -47,6 +50,7 @@ new OperatorNode({
     params: [],
     result: {label: '2'}
   },
+  canvas: $CANVAS,
 });
 
 // new GetterNode({
@@ -54,6 +58,7 @@ new OperatorNode({
 // 	header: 'lightgreen',
 // 	background: 'a',
 // 	position: [450,550],
+//  canvas: $CANVAS,
 // });
 
 new OperatorNode({
@@ -67,6 +72,7 @@ new OperatorNode({
     params: [{label:''}],
     result: {label: ''}
   },
+  canvas: $CANVAS,
 });
 
 new SetterNode({
@@ -74,6 +80,7 @@ new SetterNode({
   header: 'navyblue',
   background: 'c',
   position: [680,292],
+  canvas: $CANVAS,
 });
 
 
@@ -83,6 +90,7 @@ new ControlFlowNode({
   header: 'lightcoral',
   background: '?',
   position: [680,100],
+  canvas: $CANVAS,
 });
 
 // new ControlFlowNode({
@@ -91,6 +99,7 @@ new ControlFlowNode({
 // 	header: 'lightslategray',
 // 	background: '🤢',
 // 	position: [630,550],
+//  canvas: $CANVAS,
 // });
 
 wait(() => {

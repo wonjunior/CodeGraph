@@ -3,7 +3,7 @@
 MouseCode.list = {
   0: 'left',
   1: 'middle',
-  2: 'right'
+  2: 'right',
 }
 
 KeyCode.list = {

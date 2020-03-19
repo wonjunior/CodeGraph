@@ -38,13 +38,13 @@ constructor(dock, location, params) {
 
   }
 
-  render(nodeElement) {
+  render(nodeElement, canvas) {
 
     super.render(nodeElement[this.location]);
 
     this.nodeElement = nodeElement;
 
-    wait(() => this.initRelativePosition());
+    wait(() => this.initRelativePosition(canvas));
 
   }
 
@@ -70,15 +70,15 @@ create(dock) {
 
   }
 
-  initRelativePosition() {
+  initRelativePosition(canvas) {
 
     const nodePos = this.nodeElement.container.getBoundingClientRect();
     const dockPos = this.pin.getBoundingClientRect();
     const offset = DockElement.parameters[this.dock.constructor.name].offset;
 
     this.offset = [
-      (dockPos.x - nodePos.x) / Canvas.zoomLevel + offset,
-      (dockPos.y - nodePos.y) / Canvas.zoomLevel + offset
+      (dockPos.x - nodePos.x) / canvas.zoomLevel + offset,
+      (dockPos.y - nodePos.y) / canvas.zoomLevel + offset
     ];
 
   }

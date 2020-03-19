@@ -16,9 +16,10 @@ class Linkable {
    * @param {MouseEvent} event the event that triggered Linkable
    * @param {Dock} startDock the dock from which the event is initiated
    */
-  constructor(event, startDock) {
+  constructor(event, startDock, canvas) {
 
-    this.link = new Link(startDock);
+    this.link = new Link(startDock, null, canvas.element);
+    this.canvas = canvas;
 
     $.Linkable.log(`┌── Dragging link <${this.link.startDock}> id=${this.link.id}`);
     this.mouseMove(event);
@@ -128,7 +129,7 @@ class Linkable {
    */
   trackMouse(event) {
 
-    this.link.element.update(View.mousePosition(event));
+    this.link.element.update(this.canvas.element.mousePosition(event));
 
   }
 

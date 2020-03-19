@@ -88,9 +88,9 @@ class NodeElement extends Element {
     super(node);
 
     this.canvas = canvas;
-    this.render(canvas.nodeArea, dockElements);
+    this.render(dockElements);
 
-    this.labelText = node.id; //DEBUG params.label;
+    this.labelText = node.id; // --debug params.label;
     this.backgroundText = params.background;
     this.headerColor = params.header;
     this.position = params.position || [0,0];
@@ -100,11 +100,11 @@ class NodeElement extends Element {
 
   }
 
-  render(parent, dockElements) {
+  render(dockElements) {
 
-    super.render(parent);
+    super.render(this.canvas.nodeArea);
 
-    dockElements.forEach(dockElement => dockElement.render(this));
+    dockElements.forEach(dockElement => dockElement.render(this, this.canvas));
 
   }
 
@@ -141,7 +141,7 @@ class NodeElement extends Element {
 
     return position.map((value, i) => {
       // _(this.canvas.element)
-      const [ minLimit, maxLimit ] = [ 0, (this.canvas.size[i] - this.size[i]) / Canvas.zoomLevel ];
+      const [ minLimit, maxLimit ] = [ 0, (this.canvas.size[i] - this.size[i]) / this.canvas.zoomLevel ];
 
       return value <= minLimit ? minLimit : (value >= maxLimit ? maxLimit : value);
 

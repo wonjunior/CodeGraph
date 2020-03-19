@@ -1,7 +1,7 @@
 'use strict'
 
 // Node is the model of a graph node. It uses by default to represent itself visually.
-// Node's View class (by default NodeElement) should meet implement the #update and #remove methods.
+// Node's view class (by default NodeElement) should meet implement the #update and #remove methods.
 class Node extends CanvasObject {
 
   static all = {};
@@ -18,7 +18,7 @@ class Node extends CanvasObject {
 
   }
 
-  constructor(process, router, nodeAttributes) {
+  constructor(process, router, canvas, nodeAttributes) {
 
     super();
 
@@ -34,7 +34,7 @@ class Node extends CanvasObject {
     this.element = new NodeElement(
       this,
       [...this.docks].map(({element}) => element),
-      $CANVAS.element,// Canvas.nodeArea,
+      canvas.element,
       nodeAttributes
     );
 

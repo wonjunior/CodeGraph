@@ -19,8 +19,8 @@ class MouseEventHandler {
     this.state = state;
 
     this.checkSelectors(event);
-    $.Event.unindent();
 
+    $.Event.unindent();
     $.Event.log(`└──/ <MouseEventHandler> ended`);
 
   }

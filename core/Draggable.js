@@ -2,13 +2,14 @@
 
 class Draggable {
 
-  constructor({ type, event, element, object, callback }) { // <? just setter position
+  constructor({ type, event, element, object, canvas, callback }) { // <? just setter position
 
     $.Draggable.log(`┌── Starting dragging`, element);
 
     this.element = element;
     this.object = object;
     this.callback = callback || (() => {});
+    this.canvas = canvas;
 
     (type == 'stick') ? this.startStick(event, callback) : this.startDrag(event, callback);
 
@@ -48,11 +49,13 @@ class Draggable {
 
     const [ offsetX, offsetY ] = this.offset;
 
-    // View.mousePosition(e) careful with the offset!
-    let targetPosition = [ (e.clientX - offsetX) / $CANVAS.element.zoomLevel, (e.clientY - offsetY) /  $CANVAS.element.zoomLevel ];
+    // $.Draggable.log(`- target position [${targetPosition}]`);
+    $.Draggable.log(`-> client=[${e.clientX}, ${e.clientY}], canvasZoomLevel=${this.offset}`);
 
-    $.Draggable.log(`- target position [${targetPosition}]`);
+    // let targetPosition = [ (e.clientX - offsetX) / this.canvas.element.zoomLevel, (e.clientY - offsetY) /  this.canvas.element.zoomLevel ];
+    let targetPosition = [ (e.clientX - offsetX), (e.clientY - offsetY) ];
 
+    $.Draggable.log(`${targetPosition}`)
     this.object.position = targetPosition;
 
     this.callback();

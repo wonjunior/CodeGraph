@@ -10,7 +10,7 @@ class DEBUG {
 
   static Linkable = { active: true, color: 'magenta' };
 
-  static Draggable = { active: true, color: 'purple' };
+  static Draggable = { active: false, color: 'purple' };
 
   static GraphEvent = { active: true, color: '#4285f4' };
 
