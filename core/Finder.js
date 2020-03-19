@@ -2,170 +2,168 @@
 
 class Finder {
 
-    get visible() {
+  get visible() {
 
-        return this.finderElement.style.display != 'none';
+    return this.finderElement.style.display != 'none';
 
-    };
+  };
 
-    set visible(state) {
+  set visible(state) {
 
-        if (state) this.hideResultBox();
+    if (state) this.hideResultBox();
 
-        const style = !!state ? 'block' : 'none';
-        this.finderElement.style.display = style;
+    const style = !!state ? 'block' : 'none';
+    this.finderElement.style.display = style;
 
-    };
+  };
 
-    constructor({ name, data, container, placeholder }) {
+  constructor({ name, data, container, placeholder }) {
 
-        Object.assign(this, {
+    Object.assign(this, {
+      // name,
+      container,
+      placeholder,
+      // hovering: false
+    });
 
-            // name,
-            container,
-            placeholder,
-            // hovering: false
+    this.create();
 
-        });
+    this.data = Object.entries(data).map(([ ref, obj ]) => ({ ref, obj })); // comes from the library
+    this.results = {};
+    this.populate();
 
-        this.create();
+  };
 
-        this.data = Object.entries(data).map(([ ref, obj ]) => ({ ref, obj })); // comes from the library
-        this.results = {};
-        this.populate();
+  create() {
 
-    };
+    let template = document.querySelector('template#finder');
+    template = document.importNode(template.content, true);
 
-    create() {
+    this.finderElement = template.querySelector('.finder');
+    this.wrapperElement = template.querySelector('.search-wrap');
+    this.tableElement = template.querySelector('.search-table');
+    this.inputElement = template.querySelector('input');
 
-        let template = document.querySelector('template#finder');
-        template = document.importNode(template.content, true);
+    this.inputElement.placeholder = this.placeholder;
 
-        this.finderElement = template.querySelector('.finder');
-        this.wrapperElement = template.querySelector('.search-wrap');
-        this.tableElement = template.querySelector('.search-table');
-        this.inputElement = template.querySelector('input');
+    this.container.appendChild(this.finderElement);
 
-        this.inputElement.placeholder = this.placeholder;
+  };
 
-        this.container.appendChild(this.finderElement);
+  populate() {
 
-    };
+    this.data.forEach(({ ref, obj }) => {
 
-    populate() {
+      let template = document.querySelector('template#finderResult');
+      template = document.importNode(template.content, true);
 
-        this.data.forEach(({ ref, obj }) => {
+      template.querySelector('td').textContent = obj.label;
+      template.querySelector('td').id = ref;
 
-            let template = document.querySelector('template#finderResult');
-            template = document.importNode(template.content, true);
+      const element = template.querySelector('tr');
 
-            template.querySelector('td').textContent = obj.label;
-            template.querySelector('td').id = ref;
+      this.tableElement.appendChild(element);
 
-            const element = template.querySelector('tr');
+      this.results[ ref ] = { element: element, obj } ;
 
-            this.tableElement.appendChild(element);
+    });
 
-            this.results[ ref ] = { element: element, obj } ;
+  };
 
-        });
+  isIn(input, data) {
 
-    };
+    return Boolean(~data.toLowerCase().indexOf(input.toLowerCase()));
 
-    isIn(input, data) {
+  };
 
-        return Boolean(~data.toLowerCase().indexOf(input.toLowerCase()));
+  filter(input, data) {
 
-    };
+    return input == '*' || (input && this.isIn(input, data));
 
-    filter(input, data) {
+  };
 
-        return input == '*' || (input && this.isIn(input, data));
+  search(input) {
 
-    };
+    let noResults = true;
 
-    search(input) {
+    this.data.forEach(({ ref, obj } , i) => {
 
-        let noResults = true;
+      if (this.filter(input, obj.meta)) {
 
-        this.data.forEach(({ ref, obj } , i) => {
+        noResults = false;
+        this.displayResult(ref);
 
-            if (this.filter(input, obj.meta)) {
+      } else {
 
-                noResults = false;
-                this.displayResult(ref);
+        this.hideResult(ref);
 
-            } else {
+      }
 
-                this.hideResult(ref);
+    });
 
-            }
+    if (noResults) {
 
-        });
+      this.hideResultBox();
 
-        if (noResults) {
+    } else {
 
-            this.hideResultBox();
+      this.displayResultBox();
 
-        } else {
+    }
 
-            this.displayResultBox();
+  };
 
-        }
+  displayResultBox() {
 
-    };
+    this.wrapperElement.classList.remove('hidden'); // <? could use handleDisplay('add', HTMLelement)
 
-    displayResultBox() {
+  };
 
-        this.wrapperElement.classList.remove('hidden'); // <? could use handleDisplay('add', HTMLelement)
+  hideResultBox() {
 
-    };
+    this.wrapperElement.classList.add('hidden');
 
-    hideResultBox() {
+  };
 
-        this.wrapperElement.classList.add('hidden');
+  displayResult(ref) {
 
-    };
+    this.results[ ref ].element.classList.remove('hidden');
 
-    displayResult(ref) {
+  };
 
-        this.results[ ref ].element.classList.remove('hidden');
+  hideResult(ref) {
 
-    };
+    this.results[ ref ].element.classList.add('hidden');
 
-    hideResult(ref) {
+  };
 
-        this.results[ ref ].element.classList.add('hidden');
+  show() {
 
-    };
+    this.visible = true;
 
-    show() {
+    this.inputElement.focus();
 
-        this.visible = true;
+    State.change(Finder.state);
 
-        this.inputElement.focus();
+  };
 
-        State.change(Finder.state);
+  hide() {
 
-    };
+    this.visible = false;
 
-    hide() {
+    this.inputElement.value = "";
 
-        this.visible = false;
+    State.change(Editor.state.default);
 
-        this.inputElement.value = "";
+  };
 
-        State.change(Editor.state.default);
+  select(event) {
 
-    };
+    this.hide();
 
-    select(event) {
-
-        this.hide();
-
-        return new Node(
-            this.results[ event.target.id ].obj
-        );
+    return new Node(
+      this.results[ event.target.id ].obj
+    );
 
     };
 
@@ -187,28 +185,7 @@ class Finder {
 // name: 'nodeFinder',
 // key: spacebar
 const nodeFinder = new Finder({
-    data: Library.node,
-    container: Canvas.window,
-    placeholder: 'search node...',
-});
-
-Finder.state = Symbol('finder');
-
-new State({
-
-    id: Finder.state,
-
-    keybinds: {
-		'escape': () => nodeFinder.hide(),
-        'alphabet': event => nodeFinder.search(event.target.value),
-    },
-
-    mousebinds: {
-        all: {
-			not: {
-				'.search-container': () => nodeFinder.hide()
-			}
-        }
-    }
-
+  data: Library.node,
+  container: Canvas.window,
+  placeholder: 'search node...',
 });
