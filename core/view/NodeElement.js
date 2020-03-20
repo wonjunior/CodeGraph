@@ -140,8 +140,8 @@ class NodeElement extends Element {
   boundaryClamp(position) {
 
     return position.map((value, i) => {
-      // _(this.canvas.element)
-      const [ minLimit, maxLimit ] = [ 0, (this.canvas.size[i] - this.size[i]) / this.canvas.zoomLevel ];
+
+      const [ minLimit, maxLimit ] = [ 0, (this.canvas.size[i] - this.size[i]) / this.canvas.zoom.level ];
 
       return value <= minLimit ? minLimit : (value >= maxLimit ? maxLimit : value);
 

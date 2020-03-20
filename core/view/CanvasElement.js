@@ -2,26 +2,12 @@
 
 class CanvasElement extends Element {
 
-	get viewportSize() {
+	get parentSize() {
 
     const properties = this.parent.getBoundingClientRect();
     return [ properties.width, properties.height ];
 
 	}
-
-  get zoomLevel() {
-
-    const scaleFromStyle = this.zoomWrapper.style.transform.replace(/[^\d.]/g, '');
-
-    return parseFloat(scaleFromStyle) || 1;
-
-  }
-
-  set zoomLevel(scale) {
-
-    this.zoomWrapper.style.transform = `scale(${scale})`;
-
-  }
 
   get position() {
 
@@ -47,8 +33,8 @@ class CanvasElement extends Element {
 
     super(canvas);
     this.parent = parent;
+    this.zoom = new CanvasZoom(this, this.zoomWrapper);
 
-    _(this.container, 'appended to', parent);
     this.render(parent);
 
   }
@@ -67,6 +53,19 @@ class CanvasElement extends Element {
 
   }
 
+  recalculatePosition() {
+
+    this.position = this.position;
+
+  }
+
+  parentPositionFromOrigin() {
+
+    const properties = this.parent.getBoundingClientRect();
+    return [ properties.x, properties.y ];
+
+  }
+
   positionFromOrigin()  {
 
     const properties = this.positionWrapper.getBoundingClientRect();
@@ -79,7 +78,7 @@ class CanvasElement extends Element {
 		const [ x, y ] = [ event.clientX, event.clientY ];
 		const [ offsetX, offsetY ] = this.positionFromOrigin();
 
-		return [ (x - offsetX) / this.zoomLevel, (y - offsetY) / this.zoomLevel ];
+		return [ (x - offsetX) / this.zoom.level, (y - offsetY) / this.zoom.level ];
 
 	}
 
@@ -87,8 +86,8 @@ class CanvasElement extends Element {
 
     return position.map((value, i) => {
 
-      const minLimit = - this.positionFromOrigin()[i] / this.zoomLevel + this.position[i];
-      const maxLimit = minLimit - (this.size[i] - this.viewportSize[i]) / this.zoomLevel;
+      const minLimit = (this.parentPositionFromOrigin()[i] - this.positionFromOrigin()[i]) / this.zoom.level + this.position[i];
+      const maxLimit = minLimit - (this.size[i] - this.parentSize[i]) / this.zoom.level;
 
       return value >= minLimit ? minLimit : (value <= maxLimit ? maxLimit : value);
 

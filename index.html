@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
 	<title>Codegraph cg2020</title>
 	<link rel="icon" href="media/knot.ico" />
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -13,25 +13,10 @@
 </head>
 
 <body oncontextmenu="return false;">
-<!-- <input class="var-input"></input>	 -->
-<!-- <button id="step">step forward</button>
-<button id="all">all</button> -->
 
-<div class="window">
-
-    <!-- <div class="canvas" style="transform: scale(1)">
-        <div class="objects" style="top:0;left:0;">
-
-            <div class="nodes">
-            </div>
-
-            <div class="links">
-                <svg height="10000" width="10000">
-                </svg>
-            </div>
-
-        </div>
-    </div> -->
+  <div>YO</div>
+<div class="window-wrapper">
+  <div class="window">
 
     <div class="footer">
       <div class="signature s-left"># testfile.cg</div>
@@ -41,169 +26,162 @@
     <!-- <div class="background-text" style="z-index:2;transform:translate(-30%,-30%);color:blue">cg2020</div>
     <div class="background-text" style="z-index:1">cg2020</div> -->
 
+  </div>
 </div>
+
 
 <templates>
 
-    <template id="canvas">
-        <div class="canvas" style="transform: scale(1)">
-            <div class="objects" style="top:0;left:0;">
-                <div class="nodes"></div>
-                <div class="links"><svg height="10000" width="10000"></svg></div>
-            </div>
+  <template id="canvas">
+    <div class="canvas" style="transform: scale(1)">
+      <div class="objects" style="top:0;left:0;">
+        <div class="nodes"></div>
+        <div class="links"><svg height="10000" width="10000"></svg></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="node">
+    <div class="node-container" id="{node.id}">
+      <div class="header">
+        <div class="header-title"></div>
+        <div class="header-block">
+          <div class="left-block"></div><!--
+          --><div class="right-block"></div>
         </div>
-    </template>
+      </div>
+      <div class="body">
+        <div class="background"></div>
+        <div class="left-block"></div><!--
+        --><div class="right-block"></div>
+      </div>
+    </div>
+  </template>
 
-    <template id="node">
-        <div class="node-container" id="{node.id}">
+  <template id="dock">
+    <div class="dock-container" id="{dock.id}">
+      <div class="dock"></div>
+      <div class="snap-dock"></div>
+      <div class="param-container">
+        <div class="param-label"></div>
+      </div>
+    </div>
+  </template>
 
-            <div class="header">
-                <div class="header-title"></div>
-                <div class="header-block">
-                    <div class="left-block"></div><!--
-                    --><div class="right-block"></div>
-                </div>
-            </div>
+  <template id="link">
+    <svg><path></path></svg>
+  </template>
 
-            <div class="body">
-                <div class="background"></div>
-                <div class="left-block"></div><!--
-                --><div class="right-block"></div>
-            </div>
-
+  <template id="finder">
+      <div class="finder" style="display:none">
+        <div class="search-container">
+          <input spellcheck="false" value="" type="text" class="search-input">
+          <div class="search-wrap hidden">
+            <table class="search-table"></table>
+          </div>
         </div>
-    </template>
+    </div>
+  </template>
 
-    <template id="dock">
-        <div class="dock-container" id="{dock.id}">
-            <div class="dock"></div>
-            <div class="snap-dock"></div>
-            <div class="param-container">
-                <div class="param-label"></div>
-            </div>
-        </div>
-    </template>
-
-    <template id="link">
-        <svg>
-            <path></path>
-        </svg>
-    </template>
-
-    <template id="finder">
-        <div class="finder" style="display:none">
-
-            <div class="search-container">
-                <input spellcheck="false" value="" type="text" class="search-input">
-                <div class="search-wrap hidden">
-                    <table class="search-table"></table>
-                </div>
-            </div>
-
-        </div>
-    </template>
-
-    <template id="finderResult">
-        <tr class="hidden"><td></td></tr>
-    </template>
+  <template id="finderResult">
+    <tr class="hidden"><td></td></tr>
+  </template>
 
 </templates>
 
 
 <javascript>
-	<!-- Utils & debugging -->
-    <script src="core/utils.js"></script>
-    <script src="core/dev/DEBUG.js"></script>
-    <script src="core/dev/ConsoleWriter.js"></script>
+  <script src="core/setup.js"></script>
+
+  <!-- Utils & debugging -->
+  <script src="core/utils.js"></script>
+  <script src="core/dev/DEBUG.js"></script>
+  <script src="core/dev/ConsoleWriter.js"></script>
 
 	<!-- View -->
 	<script src="core/view/Template.js"></script>
 	<script src="core/view/Element.js"></script>
 	<script src="core/view/NodeElement.js"></script>
-    <script src="core/view/LinkElement.js"></script>
-    <script src="core/view/DockElement.js"></script>
-	<script src="core/view/CanvasElement.js"></script>
+  <script src="core/view/LinkElement.js"></script>
+  <script src="core/view/DockElement.js"></script>
+
+  <script src="core/view/CanvasElement.js"></script>
+  <script src="core/view/CanvasZoom.js"></script>
 
 	<!-------- Components -------->
-    <script src="core/CanvasObject.js"></script>
+  <script src="core/CanvasObject.js"></script>
 
-    <script src="core/interpreter/GraphEventHandler.js"></script>
+  <script src="core/interpreter/GraphEventHandler.js"></script>
 
 	<script src="core/Canvas.js"></script>
 
-    <!-- Node -->
-    <script src="core/node/Node.js"></script>
-    <script src="core/node/FunctionNode.js"></script>
-    <script src="core/node/OperatorNode.js"></script>
-    <script src="core/node/GetterNode.js"></script>
-    <script src="core/node/SetterNode.js"></script>
-    <script src="core/node/ControlFlowNode.js"></script>
+  <!-- Node -->
+  <script src="core/node/Node.js"></script>
+  <script src="core/node/FunctionNode.js"></script>
+  <script src="core/node/OperatorNode.js"></script>
+  <script src="core/node/GetterNode.js"></script>
+  <script src="core/node/SetterNode.js"></script>
+  <script src="core/node/ControlFlowNode.js"></script>
 
-    <!-- Docks -->
-    <script src="core/dock/Dock.js"></script>
-    <script src="core/dock/DataDock.js"></script>
-    <script src="core/dock/InDataDock.js"></script>
-    <script src="core/dock/OutDataDock.js"></script>
-    <script src="core/dock/ExeDock.js"></script>
-    <script src="core/dock/InExeDock.js"></script>
-    <script src="core/dock/OutExeDock.js"></script>
+  <!-- Docks -->
+  <script src="core/dock/Dock.js"></script>
+  <script src="core/dock/DataDock.js"></script>
+  <script src="core/dock/InDataDock.js"></script>
+  <script src="core/dock/OutDataDock.js"></script>
+  <script src="core/dock/ExeDock.js"></script>
+  <script src="core/dock/InExeDock.js"></script>
+  <script src="core/dock/OutExeDock.js"></script>
 
-    <script src="core/dock/DockDefinition.js"></script>
-    <script src="core/dock/DockFactory.js"></script>
-    <script src="core/dock/InDataDockFactory.js"></script>
-    <script src="core/dock/OutDataDockFactory.js"></script>
-    <script src="core/dock/InExeDockFactory.js"></script>
-    <script src="core/dock/OutExeDockFactory.js"></script>
+  <script src="core/dock/DockDefinition.js"></script>
+  <script src="core/dock/DockFactory.js"></script>
+  <script src="core/dock/InDataDockFactory.js"></script>
+  <script src="core/dock/OutDataDockFactory.js"></script>
+  <script src="core/dock/InExeDockFactory.js"></script>
+  <script src="core/dock/OutExeDockFactory.js"></script>
 
-    <!-- Interpreter -->
-    <script src="core/interpreter/Scope.js"></script>
-    <script src="core/interpreter/ExecutionTree.js"></script>
+  <!-- Interpreter -->
+  <script src="core/interpreter/Scope.js"></script>
+  <script src="core/interpreter/ExecutionTree.js"></script>
 
-    <script src="core/interpreter/process/Process.js"></script>
-    <script src="core/interpreter/process/CustomProcess.js"></script>
-    <script src="core/interpreter/process/GetterProcess.js"></script>
-    <script src="core/interpreter/process/SetterProcess.js"></script>
+  <script src="core/interpreter/process/Process.js"></script>
+  <script src="core/interpreter/process/CustomProcess.js"></script>
+  <script src="core/interpreter/process/GetterProcess.js"></script>
+  <script src="core/interpreter/process/SetterProcess.js"></script>
 
-    <script src="core/interpreter/process/ControlFlowProcess.js"></script>
+  <script src="core/interpreter/process/ControlFlowProcess.js"></script>
 
-    <script src="core/interpreter/router/Router.js"></script>
-    <script src="core/interpreter/router/NullRouter.js"></script>
-    <script src="core/interpreter/router/DefaultRouter.js"></script>
+  <script src="core/interpreter/router/Router.js"></script>
+  <script src="core/interpreter/router/NullRouter.js"></script>
+  <script src="core/interpreter/router/DefaultRouter.js"></script>
 
-    <script src="core/interpreter/router/ControlFlowRouter.js"></script>
-
-    <!-- <script src="core/interpreter/ControlFlow.js"></script>
-    <script src="core/interpreter/Stream.js"></script>
-	<script src="core/interpreter/NodeDependencyHandler.js"></script>
-	<script src="core/interpreter/DockDependencyHandler.js"></script> -->
+  <script src="core/interpreter/router/ControlFlowRouter.js"></script>
 
 
-	<!-- Interactions UI behavior -->
-    <script src="core/Draggable.js"></script>
-	<script src="core/Linkable.js"></script>
-    <script src="core/Curve.js"></script>
-    <script src="core/Link.js"></script>
-    <script src="core/CanvasView.js"></script>
+  <!-- Interactions UI behavior -->
+  <script src="core/Draggable.js"></script>
+  <script src="core/Linkable.js"></script>
+  <script src="core/Curve.js"></script>
+  <script src="core/Link.js"></script>
 
-	<!-- Event handling -->
-    <script src="core/controller/state/State.js"></script>
-    <script src="core/controller/MouseCode.js"></script>
-    <script src="core/controller/MouseEventHandler.js"></script>
-    <script src="core/controller/MouseWheelEventHandler.js"></script>
-    <script src="core/controller/KeyCode.js"></script>
-    <script src="core/controller/KeyEventHandler.js"></script>
-    <script src="core/controller/bindings.js"></script>
-    <script src="core/controller/eventlisteners.js"></script>
+  <!-- Event handling -->
+  <script src="core/controller/state/State.js"></script>
+  <script src="core/controller/MouseCode.js"></script>
+  <script src="core/controller/MouseEventHandler.js"></script>
+  <script src="core/controller/MouseWheelEventHandler.js"></script>
+  <script src="core/controller/KeyCode.js"></script>
+  <script src="core/controller/KeyEventHandler.js"></script>
+  <script src="core/controller/bindings.js"></script>
+  <script src="core/controller/eventlisteners.js"></script>
 
-    <script src="core/library.js"></script>
+  <script src="core/library.js"></script>
 
-    <script src="core/Finder.js"></script>
-    <script src="core/Editor.js"></script>
+  <script src="core/Finder.js"></script>
+  <script src="core/Editor.js"></script>
 
-    <script src="core/controller/state/EditorState.js"></script>
-    <script src="core/controller/state/FinderState.js"></script>
+  <script src="core/controller/state/EditorState.js"></script>
+  <script src="core/controller/state/FinderState.js"></script>
 
-    <script src="core/dev/tester.js"></script>
+  <script src="core/dev/tester.js"></script>
 
 </javascript>
 </body>

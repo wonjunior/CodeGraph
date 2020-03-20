@@ -24,13 +24,10 @@ new State({
 
       '.objects': ({ direction, selector, target }) => {
 
-        /*// we need to access the current Canvas w/ selector/target -> canvas need ids!
+        // we need to access the current Canvas w/ selector/target -> canvas need ids!
         // same for the CanvasView where are we?
-        $.Event.log(selection, target, direction);
-
-        const newScale = Canvas.zoomLevel + CanvasView.zoomFactor * Math.sign(event.deltaY);
-
-        if (0.5 <= newScale && newScale <= 2) CanvasView.zoom(newScale, event);*/
+        // $.Event.log(selection, target, direction);
+        $CANVAS.element.zoom.update(direction);
 
       }
 
@@ -44,7 +41,7 @@ new State({
           type: 'drag',
           element: target,
           object: $CANVAS.element,
-          canvas: $CANVAS,
+          canvas: $CANVAS.element,
         });
       },
 
@@ -70,7 +67,7 @@ new State({
           type: 'drag',
           element: node.element.container,
           object: node.element,
-          canvas: $CANVAS,
+          canvas: $CANVAS.element,
           callback: node.update.bind(node),
         });
       },

@@ -35,11 +35,8 @@ class Draggable {
     const parentPos = this.element.parentElement.getBoundingClientRect();
     this.offset = [ clientX - selfPos.x + parentPos.x, clientY - selfPos.y + parentPos.y ];
 
-    $.Draggable.pipe();
-    $.Draggable.log(`- initial parent->mouse offset is [${this.offset}]`);
 
     const eventHandler = e => this.dragging(e);
-
     document.addEventListener('mousemove', eventHandler);
     document.addEventListener('mouseup', () => this.endDrag(eventHandler), { once: true });
 
@@ -49,14 +46,15 @@ class Draggable {
 
     const [ offsetX, offsetY ] = this.offset;
 
-    // $.Draggable.log(`- target position [${targetPosition}]`);
-    $.Draggable.log(`-> client=[${e.clientX}, ${e.clientY}], canvasZoomLevel=${this.offset}`);
+    $.Draggable.log(`├──> client=[${e.clientX}, ${e.clientY}], offset=${this.offset}`);
+    let targetPosition = [ (e.clientX - offsetX) / this.canvas.zoom.level, (e.clientY - offsetY) / this.canvas.zoom.level ];
 
-    // let targetPosition = [ (e.clientX - offsetX) / this.canvas.element.zoomLevel, (e.clientY - offsetY) /  this.canvas.element.zoomLevel ];
-    let targetPosition = [ (e.clientX - offsetX), (e.clientY - offsetY) ];
-
-    $.Draggable.log(`${targetPosition}`)
+    $.Draggable.pipe();
+    $.Draggable.log(`└──> new position = [${targetPosition}]`);
+    $.Draggable.indent();
     this.object.position = targetPosition;
+    $.Draggable.unindent();
+    $.Draggable.unindent();
 
     this.callback();
 
@@ -64,7 +62,6 @@ class Draggable {
 
   endDrag(fct) {
 
-    $.Draggable.unindent();
     $.Draggable.log('└──/ dragging ended');
     document.removeEventListener('mousemove', fct);
 

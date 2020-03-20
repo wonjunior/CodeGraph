@@ -27,8 +27,8 @@ const zip = (...arrays) => arrays[0].map((_,i) => arrays.map(array => array[i]))
 
 // converts integer to alphabetic character
 const abc = i => [
-  'z','a','b','c','d','e','f','g','h', 'i','j', 'k','l',
-  'm','n','o','p','q','r','s','t','u','v','w','x','y'
+  'a','b','c','d','e','f','g','h', 'i','j', 'k','l','m',
+  'n','o','p','q','r','s','t','u','v','w','x','y','z'
 ][i%26];
 
 // quick sugar getter to retrieve first element of an Array
