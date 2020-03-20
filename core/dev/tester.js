@@ -111,16 +111,16 @@ wait(() => {
   const n6 = Node.all.n6;
   const n7 = Node.all.n7;
 
-  /*
-  new Link(n1.router.out.first, n7.router.in.first);
-  new Link(n1.process.outputs.first, n7.process.inputs[0]);
-  new Link(n2.process.outputs.first, n5.process.inputs.first);
-  new Link(n3.process.outputs.first, n1.process.inputs[0]);
-  new Link(n3.process.outputs.first, n2.process.inputs[0]);
-  new Link(n4.process.outputs.first, n1.process.inputs[1]);
-  new Link(n4.process.outputs.first, n2.process.inputs[1]);
-  new Link(n5.process.outputs.first, n6.process.inputs[0]);
-  new Link(n5.process.outputs.first, n7.process.inputs[1]);
+/*
+  new Link(n1.router.out.first, n7.router.in.first, $CANVAS.element);
+  new Link(n1.process.outputs.first, n7.process.inputs[0], $CANVAS.element);
+  new Link(n2.process.outputs.first, n5.process.inputs.first, $CANVAS.element);
+  new Link(n3.process.outputs.first, n1.process.inputs[0], $CANVAS.element);
+  new Link(n3.process.outputs.first, n2.process.inputs[0], $CANVAS.element);
+  new Link(n4.process.outputs.first, n1.process.inputs[1], $CANVAS.element);
+  new Link(n4.process.outputs.first, n2.process.inputs[1], $CANVAS.element);
+  new Link(n5.process.outputs.first, n6.process.inputs[0], $CANVAS.element);
+  new Link(n5.process.outputs.first, n7.process.inputs[1], $CANVAS.element);
 
   // initialize n3 & n4
   n3.process.dependencies.add('a');
@@ -136,7 +136,7 @@ wait(() => {
   // trigger n2's router
   // n2.process.inputs.first.trigger();
   n2.router.trigger();
-  */
+*/
 
 });
 // <? n1.router.execute(true); fails, cf. zip accessed array[0])
