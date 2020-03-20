@@ -4,7 +4,6 @@ class Canvas {	 // <? extends there #size and #position!
 
 	constructor(parent) {
 
-		this.parent = parent
 		this.element = new CanvasElement(this, parent);
 
 	}

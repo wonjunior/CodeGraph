@@ -4,7 +4,7 @@ class CanvasElement extends Element {
 
 	get parentSize() {
 
-    const properties = this.parent.getBoundingClientRect();
+    const properties = this.container.getBoundingClientRect();
     return [ properties.width, properties.height ];
 
 	}
@@ -32,7 +32,6 @@ class CanvasElement extends Element {
   constructor(canvas, parent) {
 
     super(canvas);
-    this.parent = parent;
     this.zoom = new CanvasZoom(this, this.zoomWrapper);
 
     this.render(parent);
@@ -44,7 +43,7 @@ class CanvasElement extends Element {
     const $ = Template.canvas();
 
     Object.assign(this, {
-      container: $('.canvas'),
+      container: $('.canvas-wrapper'),
       zoomWrapper: $('.canvas'),
       positionWrapper: $('.objects'),
       nodeArea: $('.nodes'),
@@ -61,7 +60,7 @@ class CanvasElement extends Element {
 
   parentPositionFromOrigin() {
 
-    const properties = this.parent.getBoundingClientRect();
+    const properties = this.container.getBoundingClientRect();
     return [ properties.x, properties.y ];
 
   }
