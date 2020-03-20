@@ -30,7 +30,7 @@ class Link extends CanvasObject {
 
     }
 
-    this.element = new LinkElement(this, canvas.linkArea);
+    this.element = new LinkElement(this, canvas.element.linkArea);
 
     this.id = startDock.id;
 

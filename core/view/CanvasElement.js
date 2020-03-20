@@ -4,10 +4,27 @@ class CanvasElement extends Element {
 
 	get parentSize() {
 
-    const properties = this.container.getBoundingClientRect();
-    return [ properties.width, properties.height ];
+    return this.getBoundingClientRect(this.container, 'size');
 
 	}
+
+  get size() {
+
+    return this.getBoundingClientRect(this.positionWrapper, 'size');
+
+  }
+
+  get parentOffset() {
+
+    return this.getBoundingClientRect(this.container, 'position');
+
+  }
+
+  get offset()  {
+
+    return this.getBoundingClientRect(this.positionWrapper, 'position');
+
+  }
 
   get position() {
 
@@ -15,30 +32,27 @@ class CanvasElement extends Element {
 
   }
 
-  set position(position) {
+  set position([ x, y ]) {
 
-    const [ x, y ] = this.boundaryClamp(position);
     Object.assign(this.positionWrapper.style, { left: `${x}px`, top: `${y}px` });
 
   }
 
-  get size() {
+  constructor(parent) {
 
-    const properties = this.positionWrapper.getBoundingClientRect();
-    return [ properties.width, properties.height ];
-
-  }
-
-  constructor(canvas, parent) {
-
-    super(canvas);
-    this.zoom = new CanvasZoom(this, this.zoomWrapper);
+    super();
 
     this.render(parent);
 
   }
 
-  create(canvas) {
+  getProperties() {
+
+    return zip(this.position, this.offset, this.parentOffset, this.size, this.parentSize);
+
+  }
+
+  create() {
 
     const $ = Template.canvas();
 
@@ -48,48 +62,6 @@ class CanvasElement extends Element {
       positionWrapper: $('.objects'),
       nodeArea: $('.nodes'),
       linkArea: $('.links > svg'),
-    });
-
-  }
-
-  recalculatePosition() {
-
-    this.position = this.position;
-
-  }
-
-  parentPositionFromOrigin() {
-
-    const properties = this.container.getBoundingClientRect();
-    return [ properties.x, properties.y ];
-
-  }
-
-  positionFromOrigin()  {
-
-    const properties = this.positionWrapper.getBoundingClientRect();
-    return [ properties.x, properties.y ];
-
-  }
-
-  mousePosition(event) {
-
-		const [ x, y ] = [ event.clientX, event.clientY ];
-		const [ offsetX, offsetY ] = this.positionFromOrigin();
-
-		return [ (x - offsetX) / this.zoom.level, (y - offsetY) / this.zoom.level ];
-
-	}
-
-  boundaryClamp(position) {
-
-    return position.map((value, i) => {
-
-      const minLimit = (this.parentPositionFromOrigin()[i] - this.positionFromOrigin()[i]) / this.zoom.level + this.position[i];
-      const maxLimit = minLimit - (this.size[i] - this.parentSize[i]) / this.zoom.level;
-
-      return value >= minLimit ? minLimit : (value <= maxLimit ? maxLimit : value);
-
     });
 
   }

@@ -33,7 +33,6 @@ class CanvasZoom {
   update(direction) {
 
     const newScale = this.level + this.factor * direction;
-
     if (0.5 <= newScale && newScale <= 2) this.zoom(newScale);
 
   }
@@ -49,7 +48,7 @@ class CanvasZoom {
 
   updateOrigin() {
 
-    const CSSProperty = this.canvas.parentSize.map(value => value / 2 + 'px').join(' ');
+    const CSSProperty = this.canvas.element.parentSize.map(value => value / 2 + 'px').join(' ');
     this.element.style.transformOrigin = CSSProperty;
 
   }

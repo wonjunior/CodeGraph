@@ -28,4 +28,16 @@ class Element {
 
   }
 
+  getBoundingClientRect(element, property) {
+
+    const { width, height, x, y } = element.getBoundingClientRect();
+
+    switch (property) {
+      case 'size': return [ width, height ];
+      case 'position': return [ x, y ];
+      default: return [NaN, NaN];
+    }
+
+  }
+
 }
