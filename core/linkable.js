@@ -18,7 +18,7 @@ class Linkable {
    */
   constructor(event, startDock, canvas) {
 
-    this.link = new Link(startDock, null, canvas.element);
+    this.link = new Link(startDock, null, canvas);
     this.canvas = canvas;
 
     $.Linkable.log(`┌── Dragging link <${this.link.startDock}> id=${this.link.id}`);
@@ -129,7 +129,7 @@ class Linkable {
    */
   trackMouse(event) {
 
-    this.link.element.update(this.canvas.element.mousePosition(event));
+    this.link.element.update(this.canvas.mousePosition(event));
 
   }
 
