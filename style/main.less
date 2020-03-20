@@ -22,18 +22,35 @@ body {
   user-select: none;
   cursor: default;
   overflow: hidden;
+  background: pink;
 }
 
 .window {
   height: 100%;
 }
 
-.canvas {
+.window-wrapper {
+  overflow: hidden;
+  width: 1000px;
+  height: 750px;
+  background:
+    radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+  background-color: lightcoral;
+  background-size: 16px 16px;
   position: absolute;
+  left: 10px;
+}
+
+.canvas {
+  position: relative;
 }
 
 .objects {
-  --objects-size: 5000px;
+  // --objects-size: 5000px;
+  --objects-size: 1500px;
   width: var(--objects-size);
   height: var(--objects-size);
   background: url(https://image.ibb.co/f1RAXF/background.png);
