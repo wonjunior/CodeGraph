@@ -14,29 +14,32 @@
 
 <body oncontextmenu="return false;">
 
-  <div>YO</div>
-<div class="window-wrapper">
-  <div class="window">
+<div class="window">
 
-    <div class="footer">
-      <div class="signature s-left"># testfile.cg</div>
-      <div class="signature s-right"><span style="color:#4285f4">C</span>ode<span style="color:#ea4335">G</span>raph v0.5</div>
-    </div>
+  <!-- <div class="footer">
+    <div class="signature s-left"># testfile.cg</div>
+    <div class="signature s-right"><span style="color:#4285f4">C</span>ode<span style="color:#ea4335">G</span>raph v0.5</div>
+  </div> -->
 
-    <!-- <div class="background-text" style="z-index:2;transform:translate(-30%,-30%);color:blue">cg2020</div>
-    <div class="background-text" style="z-index:1">cg2020</div> -->
+  <!-- <div class="background-text" style="z-index:2;transform:translate(-30%,-30%);color:blue">cg2020</div>
+  <div class="background-text" style="z-index:1">cg2020</div> -->
 
-  </div>
 </div>
 
 
 <templates>
 
   <template id="canvas">
-    <div class="canvas" style="transform: scale(1)">
-      <div class="objects" style="top:0;left:0;">
-        <div class="nodes"></div>
-        <div class="links"><svg height="10000" width="10000"></svg></div>
+    <div class="canvas-wrapper">
+      <div class="canvas" style="transform: scale(1)">
+        <div class="objects" style="top:0;left:0;">
+          <div class="nodes"></div>
+          <div class="links"><svg height="10000" width="10000"></svg></div>
+        </div>
+      </div>
+      <div class="canvas-footer">
+        <div class="left"># testfile.cg</div>
+        <div class="right"><span style="color:#4285f4">c</span>ode<span style="color:#ea4335">g</span>raph v0.5</div>
       </div>
     </div>
   </template>
