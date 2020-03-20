@@ -73,7 +73,7 @@ new State({
       },
 
       '.snap-dock': ({ target }) => {
-        new Linkable(event, Dock.all[ target.ref ], $CANVAS);
+        new Linkable(event, Dock.all[ target.ref ], $CANVAS.element);
       },
 
       // --debug = links need an exact mouse click on the element, we will need a ghost element

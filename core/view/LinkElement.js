@@ -82,7 +82,7 @@ class LinkElement extends Element {
    * Updates the link's svg representation.
    * @param {Array<Number>} position an array of two numbers
    */
-    update(position) {
+  update(position) {
 
     if (!position) {
 

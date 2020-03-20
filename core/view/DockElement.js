@@ -77,8 +77,8 @@ create(dock) {
     const offset = DockElement.parameters[this.dock.constructor.name].offset;
 
     this.offset = [
-      (dockPos.x - nodePos.x) / canvas.zoomLevel + offset,
-      (dockPos.y - nodePos.y) / canvas.zoomLevel + offset
+      (dockPos.x - nodePos.x) / canvas.zoom.level + offset,
+      (dockPos.y - nodePos.y) / canvas.zoom.level + offset
     ];
 
   }
