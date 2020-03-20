@@ -25,21 +25,21 @@ body {
   background: pink;
 }
 
-.window {
+.canvas-wrapper {
   height: 100%;
 }
 
-.window-wrapper {
+.window {
   overflow: hidden;
   width: 1000px;
   height: 750px;
-  background:
-    radial-gradient(black 15%, transparent 16%) 0 0,
-    radial-gradient(black 15%, transparent 16%) 8px 8px,
-    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
-    radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
-  background-color: lightcoral;
-  background-size: 16px 16px;
+  // background:
+  //   radial-gradient(black 15%, transparent 16%) 0 0,
+  //   radial-gradient(black 15%, transparent 16%) 8px 8px,
+  //   radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+  //   radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+  // background-color: lightcoral;
+  // background-size: 16px 16px;
   position: absolute;
   left: 10px;
 }
@@ -49,11 +49,39 @@ body {
 }
 
 .objects {
-  // --objects-size: 5000px;
-  --objects-size: 1500px;
+  --objects-size: 5000px;
+  // --objects-size: 1500px;
   width: var(--objects-size);
   height: var(--objects-size);
-  background: url(https://image.ibb.co/f1RAXF/background.png);
+
+  // ------------------------- background
+  --small-line-color: #1a1a1a45;
+  --main-line-color: #24242487;
+  --background-color: #393939;
+  --small-line-size: 1px;
+  --main-line-size: 1.5px;
+
+  background:
+    linear-gradient(-90deg, var(--small-line-color) var(--small-line-size), transparent 1px),
+    linear-gradient(var(--small-line-color) var(--small-line-size), transparent 1px),
+    linear-gradient(-90deg, var(--main-line-color) var(--main-line-size), transparent 1px),
+    linear-gradient(var(--main-line-color) var(--main-line-size), transparent 1px),
+    linear-gradient(transparent 3px, var(--background-color) 3px, var(--background-color) 88px, transparent 88px),
+    linear-gradient(-90deg, black 1px, transparent 1px),
+    linear-gradient(-90deg, transparent 3px, var(--background-color) 3px, var(--background-color) 88px, transparent 88px),
+    linear-gradient(black 1px, transparent 1px),
+    var(--background-color);
+
+    background-size:
+      18px 18px,
+      18px 18px,
+      90px 90px,
+      90px 90px,
+      90px 90px,
+      90px 90px,
+      90px 90px,
+      90px 90px;
+
   font-weight: 500;
   font-family: Calibri;
   position: absolute;
@@ -86,12 +114,6 @@ path {
   }
 }
 
-.footer {
-  pointer-events: none;
-  z-index: 100000;
-  position: absolute;
-}
-
 .background-text {
   // color: rgba(19, 19, 19, 0.075);
   color: red;
@@ -106,33 +128,29 @@ path {
   z-index: 0;
 }
 
-
-span.footer-em {
-  color: #000000ad;
-}
-
-.signature {
-  position: fixed;
+.canvas-footer {
+  pointer-events: none;
+  z-index: 100000;
+  position: absolute;
   bottom: 0;
-  text-align: center;
-  font-weight: 900;
   font-family: 'Montserrat', sans-serif;
-  border: thick dotted transparent;
+  font-weight: 900;
+  width: 100%;
 
-  &.s-right {
-    right: 0;
-    font-size: 57px;
-    color: rgba(0, 0, 0, 0.37);
-    padding: 10px 17px;
-    text-align: right;
-    float: right;
-  }
-
-  &.s-left {
+  .left {
     font-size: 44px;
     color: rgba(0, 0, 0, 0.37);
-    padding: 17px 30px;
+    padding: 10px 30px;
     text-align: left;
     float: left;
+  }
+
+  .right {
+    right: 0;
+    font-size: 52px;
+    color: rgba(0, 0, 0, 0.37);
+    padding: 2px 15px;
+    text-align: right;
+    float: right;
   }
 }
