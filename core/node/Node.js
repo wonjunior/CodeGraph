@@ -31,12 +31,8 @@ class Node extends CanvasObject {
 
     Node.register(this.id, this);
 
-    this.element = new NodeElement(
-      this,
-      [...this.docks].map(({element}) => element),
-      canvas.element,
-      nodeAttributes
-    );
+    const dockElements = [...this.docks].map(({element}) => element);
+    this.element = new NodeElement(this, dockElements, canvas, nodeAttributes);
 
   }
 
