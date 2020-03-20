@@ -9,7 +9,7 @@ class DockElement extends Element {
 
   get position() {
 
-    const [ nodePosX, nodePosY ] = this.nodeElement.position;
+    const [ nodePosX, nodePosY ] = this.node.position;
     const [ offsetX, offsetY ] = this.offset;
 
     return [ nodePosX + offsetX, nodePosY + offsetY ];
@@ -38,19 +38,19 @@ constructor(dock, location, params) {
 
   }
 
-  render(nodeElement, canvas) {
+  render(node, canvasZoom) {
 
-    super.render(nodeElement[this.location]);
+    super.render(node[this.location]);
 
-    this.nodeElement = nodeElement;
+    this.node = node;
 
-    wait(() => this.initRelativePosition(canvas));
+    wait(() => this.initRelativePosition(canvasZoom));
 
   }
 
-create(dock) {
+  create(dock) {
 
-  const $ = Template.dock();
+    const $ = Template.dock();
 
     Object.assign(this, {
       container: $('.dock-container'),
@@ -70,15 +70,15 @@ create(dock) {
 
   }
 
-  initRelativePosition(canvas) {
+  initRelativePosition(canvasZoom) {
 
-    const nodePos = this.nodeElement.container.getBoundingClientRect();
+    const nodePos = this.node.container.getBoundingClientRect();
     const dockPos = this.pin.getBoundingClientRect();
     const offset = DockElement.parameters[this.dock.constructor.name].offset;
 
     this.offset = [
-      (dockPos.x - nodePos.x) / canvas.zoom.level + offset,
-      (dockPos.y - nodePos.y) / canvas.zoom.level + offset
+      (dockPos.x - nodePos.x) / canvasZoom.level + offset,
+      (dockPos.y - nodePos.y) / canvasZoom.level + offset
     ];
 
   }

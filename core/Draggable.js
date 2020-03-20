@@ -2,14 +2,14 @@
 
 class Draggable {
 
-  constructor({ type, event, element, object, canvas, callback }) { // <? just setter position
+  constructor({ type, event, element, object, canvasZoom, callback }) { // <? just setter position
 
     $.Draggable.log(`┌── Starting dragging`, element);
 
     this.element = element;
     this.object = object;
     this.callback = callback || (() => {});
-    this.canvas = canvas;
+    this.canvasZoom = canvasZoom;
 
     (type == 'stick') ? this.startStick(event, callback) : this.startDrag(event, callback);
 
@@ -47,7 +47,7 @@ class Draggable {
     const [ offsetX, offsetY ] = this.offset;
 
     $.Draggable.log(`├──> client=[${e.clientX}, ${e.clientY}], offset=${this.offset}`);
-    let targetPosition = [ (e.clientX - offsetX) / this.canvas.zoom.level, (e.clientY - offsetY) / this.canvas.zoom.level ];
+    let targetPosition = [ (e.clientX - offsetX) / this.canvasZoom.level, (e.clientY - offsetY) / this.canvasZoom.level ];
 
     $.Draggable.pipe();
     $.Draggable.log(`└──> new position = [${targetPosition}]`);

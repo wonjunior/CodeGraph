@@ -102,9 +102,9 @@ class NodeElement extends Element {
 
   render(dockElements) {
 
-    super.render(this.canvas.nodeArea);
+    super.render(this.canvas.element.nodeArea);
 
-    dockElements.forEach(dockElement => dockElement.render(this, this.canvas));
+    dockElements.forEach(dockElement => dockElement.render(this, this.canvas.zoom)); //FÄRH
 
   }
 
@@ -141,7 +141,7 @@ class NodeElement extends Element {
 
     return position.map((value, i) => {
 
-      const [ minLimit, maxLimit ] = [ 0, (this.canvas.size[i] - this.size[i]) / this.canvas.zoom.level ];
+      const [ minLimit, maxLimit ] = [ 0, (this.canvas.element.size[i] - this.size[i]) / this.canvas.zoom.level ];
 
       return value <= minLimit ? minLimit : (value >= maxLimit ? maxLimit : value);
 
