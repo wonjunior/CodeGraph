@@ -1,19 +1,25 @@
 
-new FunctionNode({
-  label: 'f-node',
-  header: 'pink',
-  background: 'f',
-  position: [270,100],
-  process:  {
-    func: function(a, b) { return a - b; },
-    stringFunc: function(a, b) { return `${a} - ${b}`; },
-    params: [{label: 'a'}, {label: 'b'}],
-    result: {label: 'f(a,b)'}
-  },
-  canvas: $CANVAS,
-});
+const graph = new Graph(document.querySelector('.window'));
 
-new OperatorNode({
+const c1 = new Component(
+  FunctionNode,
+  {
+    label: 'f-node',
+    header: 'pink',
+    background: 'f',
+    position: [270,100],
+    process:  {
+      func: function(a, b) { return a - b; },
+      stringFunc: function(a, b) { return `${a} - ${b}`; },
+      params: [{label: 'a'}, {label: 'b'}],
+      result: {label: 'f(a,b)'}
+    }
+  }
+);
+
+const c2 = new Component(
+  OperatorNode,
+  {
   label: 'o-node',
   header: 'lightblue',
   background: '+',
@@ -24,21 +30,28 @@ new OperatorNode({
     params: [{label: 'a'}, {label: 'b'}],
     result: {label: 'result'}
   },
-  canvas: $CANVAS,
 });
 
-new OperatorNode({
-  label: 'fake getter',
-  header: 'cadetblue',
-  position: [30,250],
-  process:  {
-    func: function(a, b) { return 1; },
-    stringFunc: function(a, b) { return `1`; },
-    params: [],
-    result: {label: '1'}
+const c3 = new Component(
+  OperatorNode,
+  {
+    label: 'fake getter',
+    header: 'cadetblue',
+    position: [30,250],
+    process:  {
+      func: function(a, b) { return 1; },
+      stringFunc: function(a, b) { return `1`; },
+      params: [],
+      result: {label: '1'}
+    },
   },
-  canvas: $CANVAS,
-});
+)
+
+graph.add(c1);
+graph.add(c2);
+graph.add(c3);
+
+/*
 
 new OperatorNode({
   label: 'fake getter',
@@ -50,7 +63,6 @@ new OperatorNode({
     params: [],
     result: {label: '2'}
   },
-  canvas: $CANVAS,
 });
 
 // new GetterNode({
@@ -58,7 +70,6 @@ new OperatorNode({
 // 	header: 'lightgreen',
 // 	background: 'a',
 // 	position: [450,550],
-//  canvas: $CANVAS,
 // });
 
 new OperatorNode({
@@ -72,7 +83,6 @@ new OperatorNode({
     params: [{label:''}],
     result: {label: ''}
   },
-  canvas: $CANVAS,
 });
 
 new SetterNode({
@@ -80,7 +90,6 @@ new SetterNode({
   header: 'navyblue',
   background: 'c',
   position: [680,292],
-  canvas: $CANVAS,
 });
 
 
@@ -90,7 +99,6 @@ new ControlFlowNode({
   header: 'lightcoral',
   background: '?',
   position: [680,100],
-  canvas: $CANVAS,
 });
 
 // new ControlFlowNode({
@@ -99,10 +107,10 @@ new ControlFlowNode({
 // 	header: 'lightslategray',
 // 	background: '🤢',
 // 	position: [630,550],
-//  canvas: $CANVAS,
-// });
+// });*/
 
 wait(() => {
+/*
   const n1 = Node.all.n1;
   const n2 = Node.all.n2;
   const n3 = Node.all.n3;
@@ -111,7 +119,6 @@ wait(() => {
   const n6 = Node.all.n6;
   const n7 = Node.all.n7;
 
-/*
   new Link(n1.router.out.first, n7.router.in.first, $CANVAS.element);
   new Link(n1.process.outputs.first, n7.process.inputs[0], $CANVAS.element);
   new Link(n2.process.outputs.first, n5.process.inputs.first, $CANVAS.element);

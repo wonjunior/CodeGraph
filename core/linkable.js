@@ -15,11 +15,12 @@ class Linkable {
    * Creates a new event handler for the linking behavior and initiates the mouse event listeners.
    * @param {MouseEvent} event the event that triggered Linkable
    * @param {Dock} startDock the dock from which the event is initiated
+   * @param {Graph} graph
    */
-  constructor(event, startDock, canvas) {
+  constructor(event, startDock, graph) {
 
-    this.link = new Link(startDock, null, canvas);
-    this.canvas = canvas;
+    this.link = new Link(startDock, null, graph);
+    this.graph = graph;
 
     $.Linkable.log(`┌── Dragging link <${this.link.startDock}> id=${this.link.id}`);
     this.mouseMove(event);
@@ -63,7 +64,7 @@ class Linkable {
    */
   mouseEnter(e) {
 
-    const endDock = Dock.all[ e.target.ref ];
+    const endDock = this.graph.store.get('dock', e.target.ref);
     this.canSnap(endDock) ? this.snap(endDock) : this.trackMouse(e);
 
   }
@@ -129,7 +130,7 @@ class Linkable {
    */
   trackMouse(event) {
 
-    this.link.element.update(this.canvas.mousePosition(event));
+    this.link.element.update(this.graph.canvas.mousePosition(event));
 
   }
 
@@ -160,7 +161,6 @@ class Linkable {
   snap(dock) {
 
     this.snapped = true;
-
     this.link.endDock = dock;
     $.Linkable.log(`├── link snapped to <${this.link.endDock}>`);
 

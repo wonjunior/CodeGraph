@@ -2,11 +2,9 @@
 
 class SetterNode extends Node {
 
-  constructor(args) {
+  constructor(graph, args) {
 
-    const { canvas, ...nodeAttributes } = args;
-
-    super(new SetterProcess('c'), new DefaultRouter(), canvas, nodeAttributes);
+    super(new SetterProcess('c'), new DefaultRouter(), graph, args); // <?! "c"
 
   }
 

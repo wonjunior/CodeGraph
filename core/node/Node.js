@@ -2,49 +2,35 @@
 
 // Node is the model of a graph node. It uses by default to represent itself visually.
 // Node's view class (by default NodeElement) should meet implement the #update and #remove methods.
-class Node extends CanvasObject {
+class Node extends GraphObject {
 
-  static all = {};
+  static generateId(graph) {
 
-  static idOfLast = 1;
-  static idPrefix = 'n';
-
-  /**
-   * Depending on the number of nodes already instanciated, the function will create a new node id
-   */
-  static constructId() {
-
-    return Node.idPrefix + Node.idOfLast++;
+    return `${graph.id}-n${graph.generateNodeId()}`;
 
   }
 
-  constructor(process, router, canvas, nodeAttributes) {
+  constructor(process, router, graph, nodeAttributes) {
 
     super();
 
-    this.id = Node.constructId();
+    this.id = Node.generateId(graph);
+    this.graph = graph;
     this.process = process;
     this.router = router || new NullRouter();
+    this.router.process = this.process;
 
     this.bindDocks();
-    this.bindRouterToProcess();
-
-    Node.register(this.id, this);
 
     const dockElements = [...this.docks].map(({element}) => element);
-    this.element = new NodeElement(this, dockElements, canvas, nodeAttributes);
-
-  }
-
-  bindRouterToProcess() {
-
-    this.router.process = this.process;
+    this.element = new NodeElement(this, dockElements, graph.canvas, nodeAttributes);
 
   }
 
   bindDocks() {
 
     this.docks = new Set([...this.process.docks, ...this.router.docks]);
+    this.docks.forEach(dock => this.graph.register(dock));
 
     this.process.docks.forEach(dock => dock.process = this.process);
     this.router.docks.forEach(dock => dock.router = this.router);
@@ -68,7 +54,7 @@ class Node extends CanvasObject {
 
     this.docks.forEach(dock => dock.destroy());
 
-    Node.unregister(this);
+    this.graph.unregister(this);
 
     this.element.remove();
 
