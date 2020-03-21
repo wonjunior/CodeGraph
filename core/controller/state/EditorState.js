@@ -22,31 +22,26 @@ new State({
 
     wheel: {
 
-      '.objects': ({ direction, selector, target }) => {
-
-        // we need to access the current Canvas w/ selector/target -> canvas need ids!
-        // same for the CanvasView where are we?
-        // $.Event.log(selection, target, direction);
-        $CANVAS.zoom.update(direction);
-
+      '.objects': ({ direction, target }, graph = Graph.get(target.id)) => {
+        graph.canvas.zoom.update(direction);
       }
 
     },
 
     right: {
 
-      '.objects': ({ event, target }) => {
+      '.objects': ({ event, target }, graph = Graph.get(target.id)) => {
         new Draggable({
-          event,
+          event,  // <?! can we not remove this?
           type: 'drag',
           element: target,
-          object: $CANVAS,
-          canvasZoom: $CANVAS.zoom,
+          object: graph.canvas,
+          canvasZoom: graph.canvas.zoom,
         });
       },
 
       // --debug
-      '.snap-dock': () => {
+      '.snap-dock': ({ target }, graph = Graph.get(target.closest('.objects').id)) => {
         event.path.some(e => {
           if (e.classList && e.classList.contains('dock-container'))
             window.$DOCK = Dock.all[e.id];
@@ -61,19 +56,21 @@ new State({
         target.classList.toggle('selected')
       },
 
-      '.header': ({ target }, node = Node.all[ target.parentElement.id ]) => {
+      '.header': ({ target },
+                  graph = Graph.get(target.closest('.objects').id),
+                  node = graph.store.get('node', target.parentElement.id)) => {
         new Draggable({
           event,
           type: 'drag',
           element: node.element.container,
           object: node.element,
-          canvasZoom: $CANVAS.zoom,
+          canvasZoom: graph.canvas.zoom,
           callback: node.update.bind(node),
         });
       },
 
-      '.snap-dock': ({ target }) => {
-        new Linkable(event, Dock.all[ target.ref ], $CANVAS);
+      '.snap-dock': ({ target }, graph = Graph.get(target.closest('.objects').id)) => {
+        new Linkable(event, graph.store.get('dock', target.ref), graph);
       },
 
       // --debug = links need an exact mouse click on the element, we will need a ghost element

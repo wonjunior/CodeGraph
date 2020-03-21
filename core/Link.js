@@ -4,22 +4,21 @@
  * Represent a link object used to connect two nodes together
  * Edited links (those that don't yet have an end dock are not registered in `Links`)
  */
-class Link extends CanvasObject {
-
-  static all = {};
+class Link extends GraphObject {
 
   static separator = '-';
 
   /**
    * Adds a new link object to the Canvas or edit a link if already exists
-   * @param {Dock} startDock the dock from where the link has been pulled
-   * @param {Dock || undefined} endDock a dock instance if the second dock is already known, else `undefined`
+   * @param {Dock} startDock the dock from which the link has been pulled
+   * @param {Dock || null} endDock a dock instance if second dock is known
+   * @param {Graph} graph
    */
-  constructor(startDock, endDock, canvas) {
+  constructor(startDock, endDock, graph) {
 
     super();
 
-    this.canvas = canvas;
+    this.graph = graph;
     this.startDock = startDock;
     this.isData = startDock instanceof DataDock;
 
@@ -30,7 +29,7 @@ class Link extends CanvasObject {
 
     }
 
-    this.element = new LinkElement(this, canvas.element.linkArea);
+    this.element = new LinkElement(this, graph.canvas.element.linkArea); // <?! meh
 
     this.id = startDock.id;
 
@@ -99,7 +98,7 @@ class Link extends CanvasObject {
    */
   unpin() {
 
-    Link.unregister(this);
+    this.graph.register(this);
 
     this.endDock.dropLink(this);
 
@@ -121,12 +120,11 @@ class Link extends CanvasObject {
 
     if (this.endDock.isRight) this.swapDocks();
 
-    this.id = this.constructId();
-
     $.Linkable.log(`(2) registering new link with id=${this.id}`);
-    Link.register(this.constructId(), this);
+    this.id = this.constructId();
+    this.graph.register(this);
 
-    geh.handle(this);
+    // geh.handle(this);
 
   }
 
@@ -144,7 +142,7 @@ class Link extends CanvasObject {
    */
   destroy() {
 
-    Link.unregister(this);
+    this.graph.unregister(this);
 
     this.element.remove()
 

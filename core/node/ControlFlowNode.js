@@ -2,11 +2,11 @@
 
 class ControlFlowNode extends Node {
 
-  constructor(args) {
+  constructor(graph, args) {
 
-    const { canvas, type, ...nodeAttributes } = args;
+    const { type, ...nodeAttributes } = args;
 
-    super(new ControlFlowProcess[type](), new ControlFlowRouter[type](), canvas, nodeAttributes);
+    super(new ControlFlowProcess[type](), new ControlFlowRouter[type](), graph, nodeAttributes);
 
   }
 

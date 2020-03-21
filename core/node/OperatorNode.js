@@ -2,12 +2,12 @@
 
 class OperatorNode extends Node {
 
-  constructor(args) {
+  constructor(graph, args) {
 
-    const { canvas, process, ...nodeAttributes } = args;
+    const { process, ...nodeAttributes } = args;
     const { func, stringFunc, params, result } = process;
 
-    super(new CustomProcess(func, stringFunc, params, [result]), null, canvas, nodeAttributes);
+    super(new CustomProcess(func, stringFunc, params, [result]), null, graph, nodeAttributes);
 
   }
 

@@ -2,11 +2,9 @@
 
 class GetterNode extends Node {
 
-  constructor(args) {
+  constructor(graph, args) {
 
-    const { canvas, ...nodeAttributes } = args;
-
-    super(new GetterProcess('a'), null, canvas, nodeAttributes);
+    super(new GetterProcess('a'), null, graph, args); // <?! wait wait wait how do you it's "a"?
 
   }
 

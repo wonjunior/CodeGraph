@@ -8,9 +8,9 @@ class Canvas {
 
   }
 
-	constructor(parent) {
+	constructor(parent, graphId) {
 
-		this.element = new CanvasElement(parent);
+		this.element = new CanvasElement(parent, graphId);
     this.zoom = new CanvasZoom(this, this.element.zoomWrapper);
 
 	}
@@ -49,5 +49,3 @@ class Canvas {
   }
 
 }
-
-const $CANVAS = new Canvas(document.querySelector('.window'));

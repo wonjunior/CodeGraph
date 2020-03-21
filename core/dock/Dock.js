@@ -1,14 +1,10 @@
 'use strict'
 
-class Dock extends CanvasObject {
-
-  static all = {};
+class Dock extends GraphObject {
 
   constructor({ id, label, isRight, location }) {
 
     super();
-
-    Dock.register(id, this);
 
     Object.assign(this, {
       id,
@@ -34,7 +30,7 @@ class Dock extends CanvasObject {
 
     this.links.forEach(link => link.destroy());
 
-    Dock.unregister(this);
+    //graph.register(this); <?! need graph here!
 
   }
 
