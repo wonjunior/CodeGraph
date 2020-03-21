@@ -12,7 +12,7 @@ class DockElement extends Element {
     const [ nodePosX, nodePosY ] = this.node.position;
     const [ offsetX, offsetY ] = this.offset;
 
-    return [ nodePosX + offsetX, nodePosY + offsetY ];
+    return [ nodePosX + offsetX, nodePosY + offsetY ];  // <?! zip it boi
 
   }
 
@@ -28,9 +28,9 @@ class DockElement extends Element {
 
   }
 
-constructor(dock, location, params) {
+  constructor(dock, location, params) {
 
-  super(dock);
+    super(dock);
 
     this.location = location;
     this.dock = dock;

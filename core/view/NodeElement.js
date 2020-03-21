@@ -28,7 +28,7 @@ class NodeElement extends Element {
 
   }
 
-   /**
+  /**
    * Setter which adds or remove the `"selected"` class name the node's container.
    */
   set highlight(bool) {
@@ -38,13 +38,13 @@ class NodeElement extends Element {
   }
 
   /**
-     * Getter/Setter which returns the x and y coordinates of the node's position on the canvas.
-     */
-    get position() {
+   * Getter/Setter which returns the x and y coordinates of the node's position on the canvas.
+   */
+  get position() {
 
-        return [ this.container.style.left, this.container.style.top ].map(parseFloat);
+    return [ this.container.style.left, this.container.style.top ].map(parseFloat);
 
-    }
+  }
 
   set position(position = [0, 0]) {
 
