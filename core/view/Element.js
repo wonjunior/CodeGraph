@@ -2,14 +2,10 @@
 
 class Element {
 
-  constructor(objectInstance){//, parent) {
-
-    // this.parent = parent;
+  constructor(args) {
 
     // #create must be implemented by child class
-    this.create(objectInstance);
-
-    // this.render();
+    this.create(args);
 
   }
 

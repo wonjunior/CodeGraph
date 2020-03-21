@@ -20,12 +20,10 @@ class Draggable {
     const parentProp = this.element.parentElement.getBoundingClientRect();
     this.offset = [ parentProp.x + 50, parentProp.y + 10 ];
 
-    const eventHandler = e => this.dragging(e);
-
-    this.dragging(e);
-
-    document.addEventListener('mousemove', eventHandler);
-    document.addEventListener('mousedown', () => this.endDrag(eventHandler), { once: true });
+    const callback = e => this.dragging(e);
+    callback(e);
+    document.addEventListener('mousemove', callback);
+    document.addEventListener('mousedown', () => this.endDrag(callback), { once: true });
 
   };
 
