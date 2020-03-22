@@ -2,26 +2,26 @@
 
 class Component {
 
-	/**
-	 *
-	 * @param {} nodeKlass
-	 * @param {*} properties
-	 */
-	constructor(nodeKlass, properties) {
+  /**
+   *
+   * @param {} nodeKlass
+   * @param {*} properties
+   */
+  constructor(nodeKlass, properties) {
 
-		this.nodeKlass = nodeKlass;
-		this.properties = properties;
+    this.nodeKlass = nodeKlass;
+    this.properties = properties;
 
-	}
+  }
 
-	/**
-	 *
-	 * @param {Graph} graph
-	 */
-	instanciate(graph) {
+  /**
+   *
+   * @param {Graph} graph
+   */
+  instanciate(graph) {
 
-		return new this.nodeKlass(graph, this.properties);
+    return new this.nodeKlass(graph, this.properties);
 
-	}
+  }
 
 }
