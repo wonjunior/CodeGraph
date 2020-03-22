@@ -83,14 +83,14 @@ class NodeElement extends Element {
 
   }
 
-  constructor(node, dockElements, canvas, params) {
+  constructor(dockElements, canvas, params) {
 
-    super(node);
+    super();
 
     this.canvas = canvas;
     this.render(dockElements);
 
-    this.labelText = node.id; // --debug params.label;
+    this.labelText = params.label;
     this.backgroundText = params.background;
     this.headerColor = params.header;
     this.position = params.position || [0,0];
@@ -104,17 +104,21 @@ class NodeElement extends Element {
 
     super.render(this.canvas.element.nodeArea);
 
-    dockElements.forEach(dockElement => dockElement.render(this, this.canvas.zoom)); //FÄRH
+    dockElements.forEach(dock => dock.render(this, this.canvas.zoom));
+
+  }
+
+  getBodyPart(location, side) {
+
+    return this[ location + capitalize(side)];
 
   }
 
   /**
-   * Creates the node's HTML element. All HTML elements that are needed are saved as HTML objects
-   * in the NodeElement instance. The property element contains the following elements:
-   * { `node`, `header`, `label`, `headLeft`, `headRight`, `bodyLeft`, `bodyRight`, `background` }
-   * @override
+   * Creates the node's HTML element. All needed elements are saved inside the NodeElement instance.
+   * @overrides Element#create
    */
-  create(node) {
+  create() {
 
     const $ = Template.node();
 
@@ -129,8 +133,8 @@ class NodeElement extends Element {
       background: $('.body > .background')
     });
 
-    this.header.ref = node.id;
-    this.container.id = node.id;
+    // this.header.ref = node.id;
+    // this.container.id = node.id;
 
   }
 
