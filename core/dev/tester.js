@@ -48,6 +48,7 @@ const c3 = new Component(
 )
 
 graph.add(c1);
+// graph.add(c1);
 graph.add(c2);
 graph.add(c3);
 

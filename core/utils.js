@@ -28,6 +28,9 @@ const zip = (...arrays) => arrays[0].map((_,i) => arrays.map(array => array[i]))
 // clamp function
 const clamp = (x, min, max) => x > max ? max : (x < min ? min : x);
 
+// capitalize first letter of string
+const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
+
 // converts integer to alphabetic character
 const abc = i => [
   'a','b','c','d','e','f','g','h', 'i','j', 'k','l','m',
