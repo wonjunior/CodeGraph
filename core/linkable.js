@@ -62,9 +62,9 @@ class Linkable {
   /**
    * {Event callback} Executed when mouse is entering a snap area.
    */
-  mouseEnter(e) {
+  mouseEnter(e, dock = e.target) {
 
-    const endDock = this.graph.store.get('dock', e.target.ref);
+    const endDock = this.graph.store.get(dock);
     this.canSnap(endDock) ? this.snap(endDock) : this.trackMouse(e);
 
   }

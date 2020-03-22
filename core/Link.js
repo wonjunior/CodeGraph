@@ -6,8 +6,6 @@
  */
 class Link extends GraphObject {
 
-  static separator = '-';
-
   /**
    * Adds a new link object to the Canvas or edit a link if already exists
    * @param {Dock} startDock the dock from which the link has been pulled
@@ -18,61 +16,22 @@ class Link extends GraphObject {
 
     super();
 
-    this.graph = graph;
-    this.startDock = startDock;
-    this.isData = startDock instanceof DataDock;
+    Object.assign(this, { startDock, endDock, graph });
 
-    if (startDock.occupiedAndUnique()) {
+    if (this.isEditing()) return this.startDock.editLink();
 
-      const link = this.editExistingLink(endDock);
-      if (link) return link;
-
-    }
-
-    this.element = new LinkElement(this, graph.canvas.element.linkArea); // <?! meh
-
-    this.id = startDock.id;
+    const flowType = (startDock instanceof DataDock) ? 'data' : 'exe';
+    this.element = new LinkElement(this, graph.canvas.element.linkArea, flowType);
 
     this.startDock.addLink(this);
 
     if (endDock) this.setEndDock(endDock);
 
-    }
-
-  /**
-   * Constructs an unique string to identify the link.
-   * @returns {String} the link's id
-   */
-  constructId() {
-
-    return this.startDock.id + Link.separator + this.endDock.id;
-
   }
 
-  update() {
+  isEditing() {
 
-    this.element.update();
-
-  }
-
-  /**
-   * Deletes the existing link if the provided endDock is defined, else return this link.
-   * @param {Dock} endDock
-   */
-  editExistingLink(endDock) {
-
-    const link = this.unpinExistingLink();
-
-    return endDock ? link.destroy() : link;
-
-  }
-
-  /**
-   * Returns the existing link hosted by the link's startDock.
-   */
-  unpinExistingLink() {
-
-    return this.startDock.links.first.unpin();
+    return !this.endDock && this.startDock.isFull();
 
   }
 
@@ -93,38 +52,31 @@ class Link extends GraphObject {
   }
 
   /**
-   * Remove the link from its endDock's links, unregister the link then return it.
+   * Adds the link to the endDock's links, swapping docks if necessary
+   */
+  pin() {
+
+    this.endDock.popExisting();
+
+    this.endDock.addLink(this);
+
+    if (this.endDock.isRight) this.swapDocks();
+
+    // geh.handle(this);
+
+  }
+
+  /**
+   * Remove the link from its endDock's links
    * @returns the link that is edited
    */
   unpin() {
-
-    this.graph.register(this);
 
     this.endDock.dropLink(this);
 
     delete this.endDock;
 
     return this;
-
-  }
-
-  /**
-   * Adds the link to the endDock's links, swap docks if necessary and register it.
-   */
-  pin() {
-
-    $.Linkable.log(`(1) popping existing links on ${this.endDock}`);
-    this.endDock.popExistingLink();
-
-    this.endDock.addLink(this);
-
-    if (this.endDock.isRight) this.swapDocks();
-
-    $.Linkable.log(`(2) registering new link with id=${this.id}`);
-    this.id = this.constructId();
-    this.graph.register(this);
-
-    // geh.handle(this);
 
   }
 
@@ -137,12 +89,16 @@ class Link extends GraphObject {
 
   }
 
+  update() {
+
+    this.element.update();
+
+  }
+
   /**
    * Unregisters the link, deletes the HTML object and unpins from start and end docks.
    */
   destroy() {
-
-    this.graph.unregister(this);
 
     this.element.remove()
 
@@ -151,16 +107,5 @@ class Link extends GraphObject {
     if (this.endDock) this.endDock.dropLink(this);
 
   }
-
-  /**
-   * Update all of registered links.
-   */
-  static update() {
-
-    Link.values.forEach(link => link.element.update());
-
-  }
-
-  serialize() {}
 
 }

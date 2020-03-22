@@ -1,22 +1,28 @@
 'use strict'
 
+/**
+ * connection layer for all docks
+ */
 class Dock extends GraphObject {
 
-  constructor({ id, label, isRight, location }) {
+
+  links = new Set();
+
+  constructor({ label, isRight, location }) {
 
     super();
 
-    Object.assign(this, {
-      id,
-      label,
-      isRight,
-      location,
-      links: [],
-      occupied: false,
-      label: label || id
-    });
+    Object.assign(this, { label, isRight });
 
-    this.element = new DockElement(this, location, {label});
+    const flowType = (this instanceof DataDock) ? 'data' : 'exe';
+    const side = isRight ? 'right' : 'left';
+    this.element = new DockElement(this.constructor.name, location, flowType, side, label);
+
+  }
+
+  isFull() {
+
+    return !(this instanceof OutDataDock) && this.links.size > 0;
 
   }
 
@@ -30,37 +36,13 @@ class Dock extends GraphObject {
 
     this.links.forEach(link => link.destroy());
 
-    //graph.register(this); <?! need graph here!
-
   }
-
-  /**
-   * Right-sided data docks are never occupied
-   */
-  allowsMultipleLinks() {
-
-    return this.isRight && this instanceof DataDock;
-
-  }
-
-  occupiedAndUnique() {
-
-    return this.occupied && !this.allowsMultipleLinks();
-
-  }
-
-  // dead code ?!
-  // getLink() {
-
-  //   return this.occupiedAndUnique() ? this.links.first.edit() : new Link(this);
-
-  // }
 
   isCompatible(dock) {
 
     const notEqual = (this.node != dock.node);
     const opposite = (this.isRight != dock.isRight);
-    const sameType = (this instanceof DataDock == dock instanceof DataDock) && (this.type == dock.type);
+    const sameType = (this instanceof DataDock == dock instanceof DataDock);
 
     return notEqual && opposite && sameType;
 
@@ -68,33 +50,32 @@ class Dock extends GraphObject {
 
   dropLink(link) {
 
-    this.links = link ? this.links.filter(({ id }) => id !== link.id) : [];
-    this.occupied = !!this.links.length;
+    this.links.delete(link);
 
   }
 
   addLink(link) {
 
-    this.links.push(link);
-    this.occupied = true;
+    this.links.add(link);
 
   }
 
   /**
    * Destroys the link if there is any that's occupying the dock
    */
-  popExistingLink() {
+  popExisting() {
 
-    if (this.occupiedAndUnique()) this.links.first.destroy();
-
-  }
-
-  toString() {
-
-    return `${this.constructor.name}#${this.id}`;
+    if (this.isFull()) this.destroy();
 
   }
 
-  serialize() { }
+  /**
+   * Must be called on something other than an OutDataDock
+   */
+  editLink() {
+
+    return [...this.links][0].unpin();
+
+  }
 
 }
