@@ -6,38 +6,26 @@ class GraphObjectStore {
   dock = {};
   link = {};
 
+  data = new WeakMap();
+
   /**
    *
-   * @param {String} graphObjectType
-   * @param {String} id
+   * @param {Object} key
+   * @param {GraphObject} object
    */
-  get(graphObjectType, id) {
+  bind(key, object) {
 
-    return this[graphObjectType] ? this[graphObjectType][id] || null : null;
+    this.data.set(key, object);
 
   }
 
   /**
    *
-   * @param {GraphObject} object
+   * @param {Object} key
    */
-  set(object) {
+  get(key) {
 
-    if (object instanceof Node) return this.node[object.id] = object;
-    if (object instanceof Link) return this.link[object.id] = object;
-    if (object instanceof Dock) return this.dock[object.id] = object;
-
-  }
-
-  /**
-   *
-   * @param {GraphObject} object
-   */
-  unset(object) {
-
-    if (object instanceof Node) delete this.node[object.id];
-    if (object instanceof Link) delete this.link[object.id];
-    if (object instanceof Dock) delete this.dock[object.id];
+    return this.data.get(key);
 
   }
 
