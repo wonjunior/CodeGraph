@@ -4,17 +4,10 @@
 // Node's view class (by default NodeElement) should meet implement the #update and #remove methods.
 class Node extends GraphObject {
 
-  static generateId(graph) {
-
-    return `${graph.id}-n${graph.generateNodeId()}`;
-
-  }
-
   constructor(process, router, graph, nodeAttributes) {
 
     super();
 
-    this.id = Node.generateId(graph);
     this.graph = graph;
     this.process = process;
     this.router = router || new NullRouter();
@@ -23,18 +16,20 @@ class Node extends GraphObject {
     this.bindDocks();
 
     const dockElements = [...this.docks].map(({element}) => element);
-    this.element = new NodeElement(this, dockElements, graph.canvas, nodeAttributes);
+    this.element = new NodeElement(dockElements, graph.canvas, nodeAttributes);
+    this.graph.store.bind(this.element.header, this);
 
   }
 
   bindDocks() {
 
     this.docks = new Set([...this.process.docks, ...this.router.docks]);
-    this.docks.forEach(dock => this.graph.register(dock));
+    // this.docks.forEach(dock => this.graph.register(dock));
+    this.docks.forEach(dock => this.graph.store.bind(dock.element.snap, dock));
+    this.docks.forEach(dock => dock.node = this);
 
     this.process.docks.forEach(dock => dock.process = this.process);
     this.router.docks.forEach(dock => dock.router = this.router);
-    this.docks.forEach(dock => dock.node = this);
 
   }
 
@@ -47,25 +42,14 @@ class Node extends GraphObject {
 
   }
 
-  /**
-   * This method safely removes the node: destroy docks -> unregister node -> remove node element
-   */
   destroy() {
 
     this.docks.forEach(dock => dock.destroy());
 
-    this.graph.unregister(this);
+    // this.graph.unregister(this);
 
     this.element.remove();
 
   }
-
-  toString() {
-
-    return `${this.constructor.name.substring(1,-1).toLocaleLowerCase()}-node#${this.id}`;
-
-  }
-
-  serialize() { }
 
 }

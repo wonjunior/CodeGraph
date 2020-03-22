@@ -4,7 +4,7 @@ class Component {
 
   /**
    *
-   * @param {} nodeKlass
+   * @param {} nodeKlass a Node class constructor
    * @param {*} properties
    */
   constructor(nodeKlass, properties) {

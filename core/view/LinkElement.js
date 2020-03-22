@@ -2,9 +2,9 @@
 
 class LinkElement extends Element {
 
-  static parameters = {
+  static properties = {
     data: { width: 3, stroke: '#4CAF50' },
-    exe: { width: 4, stroke: '#3F51B5' },
+    exe:  { width: 4, stroke: '#3F51B5' },
   }
 
   /**
@@ -52,7 +52,7 @@ class LinkElement extends Element {
 
   }
 
-  constructor(link, parent) {
+  constructor(link, parent, flowType) {
 
     super(link);
 
@@ -60,7 +60,7 @@ class LinkElement extends Element {
 
     this.link = link;
 
-    Object.assign(this, LinkElement.parameters[this.link.isData ? 'data' : 'exe']);
+    Object.assign(this, LinkElement.properties[flowType]);
 
   }
 

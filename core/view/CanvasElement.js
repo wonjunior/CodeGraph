@@ -38,9 +38,9 @@ class CanvasElement extends Element {
 
   }
 
-  constructor(parent, id) {
+  constructor(parent) {
 
-    super(id);
+    super();
 
     this.render(parent);
 
@@ -52,7 +52,7 @@ class CanvasElement extends Element {
 
   }
 
-  create(id) {
+  create() {
 
     const $ = Template.canvas();
 
@@ -64,7 +64,7 @@ class CanvasElement extends Element {
       linkArea: $('.links > svg'),
     });
 
-    this.positionWrapper.id = id;
+    // this.positionWrapper.id = id;
 
   }
 

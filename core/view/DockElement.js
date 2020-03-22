@@ -3,8 +3,8 @@
 class DockElement extends Element {
 
   static parameters = {
-    InExeDock: { offset: 10 }, OutExeDock: { offset: 10 },
-    InDataDock: { offset: 7 }, OutDataDock: { offset: 7 }
+    InExeDock:  { offset: 10  }, OutExeDock:  { offset: 10  },
+    InDataDock: { offset: 7   }, OutDataDock: { offset: 7   }
   }
 
   get position() {
@@ -28,27 +28,33 @@ class DockElement extends Element {
 
   }
 
-  constructor(dock, location, params) {
+  constructor(dockType, location, flowType, side, label) {
 
-    super(dock);
+    super({ flowType, side });
 
+    this.type = dockType;
     this.location = location;
-    this.dock = dock;
-    this.labelText = params.label;
+    this.side = side;
+    this.labelText = label;
 
   }
 
-  render(node, canvasZoom) {
+  /**
+   *
+   * @param {NodeElement} node
+   * @param {CanvaZoom} zoom
+   */
+  render(node, zoom) {
 
-    super.render(node[this.location]);
+    super.render(node.getBodyPart(this.location, this.side));
 
     this.node = node;
 
-    wait(() => this.initRelativePosition(canvasZoom));
+    wait(() => this.initRelativePosition(zoom));
 
   }
 
-  create(dock) {
+  create({ flowType, side }) {
 
     const $ = Template.dock();
 
@@ -60,25 +66,26 @@ class DockElement extends Element {
       label: $('.param-label'),
     });
 
-    this.container.classList.add(
-      dock instanceof DataDock ? 'data' : 'exe',
-      dock.isRight ? 'right' : 'left'
-    );
+    this.container.classList.add(side, flowType);
 
-    this.snap.ref = dock.id;
-    this.container.id = dock.id;
+    // this.snap.ref = dock.id;
+    // this.container.id = dock.id;
 
   }
 
-  initRelativePosition(canvasZoom) {
+  /**
+   *
+   * @param {CanvasZoom} zoom
+   */
+  initRelativePosition(zoom) {
 
     const nodePos = this.node.container.getBoundingClientRect();
     const dockPos = this.pin.getBoundingClientRect();
-    const offset = DockElement.parameters[this.dock.constructor.name].offset;
+    const offset = DockElement.parameters[this.type].offset;
 
     this.offset = [
-      (dockPos.x - nodePos.x) / canvasZoom.level + offset,
-      (dockPos.y - nodePos.y) / canvasZoom.level + offset
+      (dockPos.x - nodePos.x) / zoom.level + offset,
+      (dockPos.y - nodePos.y) / zoom.level + offset
     ];
 
   }
