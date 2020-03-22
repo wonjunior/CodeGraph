@@ -2,20 +2,11 @@
 
 class Graph {
 
-  static all = {};
-  static id = 1;
+  static all = new WeakMap();
 
-  nodeId = 1;
+  static get(key) {
 
-  static generateId() {
-
-    return `g${Graph.id++}`;
-
-  }
-
-  static get(id) {
-
-    return Graph.all[id];
+    return Graph.all.get(key);
 
   }
 
@@ -25,17 +16,10 @@ class Graph {
    */
   constructor(canvasParent) {
 
-    this.id = Graph.generateId();
-    this.canvas = new Canvas(canvasParent, this.id);
+    this.canvas = new Canvas(canvasParent);
     this.store = new GraphObjectStore();
 
-    Graph.all[this.id] = this;
-
-  }
-
-  generateNodeId() {
-
-    return this.nodeId++;
+    Graph.all.set(this.canvas.element.positionWrapper, this);
 
   }
 
@@ -45,7 +29,7 @@ class Graph {
    */
   add(component) {
 
-		this.register(component.instanciate(this));
+		/*this.register(*/component.instanciate(this)/*)*/;
 
   }
 

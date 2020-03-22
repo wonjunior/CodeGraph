@@ -22,7 +22,7 @@ new State({
 
     wheel: {
 
-      '.objects': ({ direction, target }, graph = Graph.get(target.id)) => {
+      '.objects': ({ direction, target }, graph = Graph.get(target)) => {
         graph.canvas.zoom.update(direction);
       }
 
@@ -30,7 +30,7 @@ new State({
 
     right: {
 
-      '.objects': ({ event, target }, graph = Graph.get(target.id)) => {
+      '.objects': ({ event, target }, graph = Graph.get(target)) => {
         new Draggable({
           event,  // <?! can we not remove this?
           type: 'drag',
@@ -41,11 +41,10 @@ new State({
       },
 
       // --debug
-      '.snap-dock': ({ target }, graph = Graph.get(target.closest('.objects').id)) => {
-        event.path.some(e => {
-          if (e.classList && e.classList.contains('dock-container'))
-            window.$DOCK = Dock.all[e.id];
-        });
+      '.snap-dock': ({ target },
+                     graph = Graph.get(target.closest('.objects')),
+                     dock = graph.store.get(target)) => {
+        window.$DOCK = dock;
       },
 
     },
@@ -57,8 +56,8 @@ new State({
       },
 
       '.header': ({ target },
-                  graph = Graph.get(target.closest('.objects').id),
-                  node = graph.store.get('node', target.parentElement.id)) => {
+                  graph = Graph.get(target.closest('.objects')),
+                  node = graph.store.get(target)) => {
         new Draggable({
           event,
           type: 'drag',
@@ -69,8 +68,8 @@ new State({
         });
       },
 
-      '.snap-dock': ({ target }, graph = Graph.get(target.closest('.objects').id)) => {
-        new Linkable(event, graph.store.get('dock', target.ref), graph);
+      '.snap-dock': ({ target }, graph = Graph.get(target.closest('.objects'))) => {
+        new Linkable(event, graph.store.get(target), graph);
       },
 
       // --debug = links need an exact mouse click on the element, we will need a ghost element
