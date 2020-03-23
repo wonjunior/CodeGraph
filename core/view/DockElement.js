@@ -54,6 +54,9 @@ class DockElement extends Element {
 
   }
 
+  /**
+   * @overrides Element#create
+   */
   create({ flowType, side }) {
 
     const $ = Template.dock();
@@ -67,9 +70,6 @@ class DockElement extends Element {
     });
 
     this.container.classList.add(side, flowType);
-
-    // this.snap.ref = dock.id;
-    // this.container.id = dock.id;
 
   }
 

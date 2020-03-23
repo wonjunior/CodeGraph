@@ -115,7 +115,6 @@ class NodeElement extends Element {
   }
 
   /**
-   * Creates the node's HTML element. All needed elements are saved inside the NodeElement instance.
    * @overrides Element#create
    */
   create() {
@@ -132,9 +131,6 @@ class NodeElement extends Element {
       bodyRight: $('.body > .right-block'),
       background: $('.body > .background')
     });
-
-    // this.header.ref = node.id;
-    // this.container.id = node.id;
 
   }
 

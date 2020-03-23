@@ -5,7 +5,6 @@
  */
 class Dock extends GraphObject {
 
-
   links = new Set();
 
   constructor({ label, isRight, location }) {
