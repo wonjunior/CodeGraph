@@ -2,16 +2,16 @@
 
 class DEBUG {
 
-  static Event = { active: false, color: 'navy' };
+  static Event      =   { active: false,  color: 'navy',    };
 
-  static Execution = { active: true, color: 'green' };
+  static Execution  =   { active: true,   color: 'green',   };
 
-  static State = { active: true, color: 'grey' };
+  static State      =   { active: true,   color: 'grey',    };
 
-  static Linkable = { active: false, color: 'magenta' };
+  static Linkable   =   { active: false,  color: 'magenta', };
 
-  static Draggable = { active: false, color: 'purple' };
+  static Draggable  =   { active: false,  color: 'purple',  };
 
-  static GraphEvent = { active: true, color: '#4285f4' };
+  static GraphEvent =   { active: true,   color: '#4285f4', };
 
 }

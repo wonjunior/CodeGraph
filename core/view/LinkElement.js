@@ -65,8 +65,7 @@ class LinkElement extends Element {
   }
 
   /**
-     * Creates the link's HTML element. All HTML elements that are needed
-   * are saved as HTML objects in the instance.
+   * @overrides Element#create
    */
   create() {
 
@@ -80,7 +79,7 @@ class LinkElement extends Element {
 
   /**
    * Updates the link's svg representation.
-   * @param {Array<Number>} position an array of two numbers
+   * @param {Number[2]} position
    */
   update(position) {
 
