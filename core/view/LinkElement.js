@@ -3,8 +3,8 @@
 class LinkElement extends Element {
 
   static properties = {
-    data: { width: 3, stroke: '#4CAF50' },
-    exe:  { width: 4, stroke: '#3F51B5' },
+    true: { width: 3, stroke: '#4CAF50' },
+    false:  { width: 4, stroke: '#3F51B5' },
   }
 
   /**
@@ -52,7 +52,13 @@ class LinkElement extends Element {
 
   }
 
-  constructor(link, parent, flowType) {
+  /**
+   *
+   * @param {Link} link
+   * @param {_Element} parent
+   * @param {Boolean} isData
+   */
+  constructor(link, parent, isData) {
 
     super(link);
 
@@ -60,7 +66,7 @@ class LinkElement extends Element {
 
     this.link = link;
 
-    Object.assign(this, LinkElement.properties[flowType]);
+    Object.assign(this, LinkElement.properties[isData]);
 
   }
 
@@ -81,21 +87,9 @@ class LinkElement extends Element {
    * Updates the link's svg representation.
    * @param {Number[2]} position
    */
-  update(position) {
+  update(a, b) {
 
-    if (!position) {
-
-      this.path = Curve.calculate(this.link.startDock.element.position, this.link.endDock.element.position);
-
-    } else if (this.link.startDock.isRight) {
-
-      this.path = Curve.calculate(this.link.startDock.element.position, position);
-
-    } else {
-
-      this.path = Curve.calculate(position, this.link.startDock.element.position);
-
-    }
+    this.path = Curve.calculate(a, b);
 
   }
 
