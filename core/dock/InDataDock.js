@@ -1,6 +1,6 @@
 'use strict'
 
-class InDataDock extends DataDock {
+class InDataDock extends UniqueSocket {
 
   get ancestor() {
 
