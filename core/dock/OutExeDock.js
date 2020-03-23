@@ -1,6 +1,6 @@
 'use strict'
 
-class OutExeDock extends Dock {
+class OutExeDock extends UniqueSocket {
 
   constructor(parameters) {
 

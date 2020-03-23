@@ -1,6 +1,6 @@
 'use strict'
 
-class OutDataDock extends DataDock {
+class OutDataDock extends MultipleSocket {
 
   result = null;
   stringified = '';

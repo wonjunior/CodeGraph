@@ -1,6 +1,6 @@
 'use strict'
 
-class InExeDock extends Dock {
+class InExeDock extends UniqueSocket {
 
   get ancestor() {
 
