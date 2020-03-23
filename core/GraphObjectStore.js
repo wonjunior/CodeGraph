@@ -1,10 +1,6 @@
 'use strict'
 
-class GraphObjectStore {
-
-  node = {};
-  dock = {};
-  link = {};
+class ObjectElementMap {
 
   data = new WeakMap();
 

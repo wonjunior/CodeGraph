@@ -24,7 +24,6 @@ class Node extends GraphObject {
   bindDocks() {
 
     this.docks = new Set([...this.process.docks, ...this.router.docks]);
-    // this.docks.forEach(dock => this.graph.register(dock));
     this.docks.forEach(dock => this.graph.store.bind(dock.element.snap, dock));
     this.docks.forEach(dock => dock.node = this);
 
@@ -46,7 +45,7 @@ class Node extends GraphObject {
 
     this.docks.forEach(dock => dock.destroy());
 
-    // this.graph.unregister(this);
+    this.graph.unregister(this);
 
     this.element.remove();
 

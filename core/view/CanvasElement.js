@@ -2,6 +2,16 @@
 
 class CanvasElement extends Element {
 
+  /**
+   *
+   * @param {_Element} element
+   */
+  static closestCanvas(element) {
+
+    return element.closest('.objects');
+
+  }
+
 	get parentSize() {
 
     return this.getBoundingClientRect(this.container, 'size');
@@ -52,6 +62,9 @@ class CanvasElement extends Element {
 
   }
 
+  /**
+   * @overrides Element#create
+   */
   create() {
 
     const $ = Template.canvas();
@@ -63,8 +76,6 @@ class CanvasElement extends Element {
       nodeArea: $('.nodes'),
       linkArea: $('.links > svg'),
     });
-
-    // this.positionWrapper.id = id;
 
   }
 

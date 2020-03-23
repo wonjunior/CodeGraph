@@ -6,9 +6,12 @@ class Graph {
 
   static get(key) {
 
-    return Graph.all.get(key);
+    return Graph.all.get(key) || Graph.all.get(CanvasElement.closestCanvas(key));
 
   }
+
+  nodes = new Set();
+  store = new ObjectElementMap();
 
   /**
    *
@@ -17,7 +20,6 @@ class Graph {
   constructor(canvasParent) {
 
     this.canvas = new Canvas(canvasParent);
-    this.store = new GraphObjectStore();
 
     Graph.all.set(this.canvas.element.positionWrapper, this);
 
@@ -29,19 +31,19 @@ class Graph {
    */
   add(component) {
 
-		/*this.register(*/component.instanciate(this)/*)*/;
+		return this.register(component.instanciate(this));
 
   }
 
-  register(graphObject) {
+  register(node) {
 
-    return this.store.set(graphObject);
+    return this.nodes.add(node) && node;
 
   }
 
-  unregister(graphObject) {
+  unregister(node) {
 
-    this.store.unset(graphObject);
+    this.nodes.delete(node);
 
   }
 
