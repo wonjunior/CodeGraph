@@ -7,9 +7,9 @@
 class Linkable {
 
   /**
-   * When creating an event the link is not snapped by default.
+   * {Dock} the dock on which the link is snapped
    */
-  snapped = false;
+  snapped = null;
 
   /**
    * Creates a new event handler for the linking behavior and initiates the mouse event listeners.
@@ -19,13 +19,11 @@ class Linkable {
    */
   constructor(event, startDock, graph) {
 
-    this.link = new Link(startDock, null, graph);
+    this.link = Link.get(startDock, graph);
     this.graph = graph;
 
-    $.Linkable.log(`┌── Dragging link <${this.link.startDock}> id=${this.link.id}`);
     this.mouseMove(event);
     document.addEventListener('mousemove', this.mouseMove);
-
     document.addEventListener('mouseup', this.mouseUp, { once: true });
 
   }
@@ -33,7 +31,7 @@ class Linkable {
   /**
    * {Event callback} Executed when mouse moves.
    */
-  mouseMove = (e) => {
+  mouseMove = e => {
 
     this.insideSnapArea(e) ? this.mouseIn(e) : this.mouseOut(e);
 
@@ -74,7 +72,7 @@ class Linkable {
    */
   mouseLeave(e) {
 
-    this.snapped = false;
+    this.snapped = null;
 
   }
 
@@ -86,21 +84,15 @@ class Linkable {
     this.snapped ? this.mouseUpIn() : this.mouseUpOut();
 
     document.removeEventListener('mousemove', this.mouseMove);
-    $.Linkable.log('└──/ link dragging ended');
 
   }
 
   /**
    * {Event callback} Executed when mouse is released and link is snapped.
    */
-  mouseUpIn() {
+  mouseUpIn(dock) {
 
-    $.Linkable.pipe();
-    $.Linkable.log(`└──> link pinned to <${this.link.endDock}>`);
-    $.Linkable.indent();
-    this.link.pin();
-    $.Linkable.unindent();
-    $.Linkable.unindent();
+    this.link.pin(this.snapped);
 
   }
 
@@ -109,7 +101,6 @@ class Linkable {
    */
   mouseUpOut() {
 
-    $.Linkable.log(`├── link dropped outside, exiting.`);
     this.link.destroy();
 
   }
@@ -130,17 +121,7 @@ class Linkable {
    */
   trackMouse(event) {
 
-    this.link.element.update(this.graph.canvas.mousePosition(event));
-
-  }
-
-  /**
-   * Updates the position of the link's end dock with `dock`'s position.
-   * @param {Dock} dock
-   */
-  trackDock(dock) {
-
-    this.link.element.update(dock.element.position);
+    this.link.update(this.graph.canvas.mousePosition(event));
 
   }
 
@@ -150,7 +131,7 @@ class Linkable {
    */
   canSnap(dock) {
 
-    return this.link.startDock.isCompatible(dock);
+    return this.link.isCompatible(dock);
 
   }
 
@@ -160,11 +141,9 @@ class Linkable {
    */
   snap(dock) {
 
-    this.snapped = true;
-    this.link.endDock = dock;
-    $.Linkable.log(`├── link snapped to <${this.link.endDock}>`);
+    this.snapped = dock;
 
-    this.trackDock(dock);
+    this.link.update(dock.element.position);
 
   }
 

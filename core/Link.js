@@ -6,63 +6,64 @@
  */
 class Link extends GraphObject {
 
+  static get(start, graph) {
+
+    return start.occupied ? start.editLink() : new Link(start, null, graph);
+
+  }
+
   /**
    * Adds a new link object to the Canvas or edit a link if already exists
-   * @param {Dock} startDock the dock from which the link has been pulled
-   * @param {Dock || null} endDock a dock instance if second dock is known
+   * @param {Dock} start the dock from which the link has been pulled
+   * @param {Dock || null} end a dock instance if second dock is known
    * @param {Graph} graph
    */
-  constructor(startDock, endDock, graph) {
+  constructor(start, end, graph) {
 
     super();
 
-    Object.assign(this, { startDock, endDock, graph });
+    Object.assign(this, { start, end, graph });
 
-    if (this.isEditing()) return this.startDock.editLink();
+    this.element = new LinkElement(this, graph.canvas.element.linkArea, start.isData);
 
-    const flowType = (startDock instanceof DataDock) ? 'data' : 'exe';
-    this.element = new LinkElement(this, graph.canvas.element.linkArea, flowType);
+    this.start.addLink(this);
 
-    this.startDock.addLink(this);
-
-    if (endDock) this.setEndDock(endDock);
+    if (end) this.setEndDock(end);
 
   }
 
-  isEditing() {
+  isCompatible(dock) {
 
-    return !this.endDock && this.startDock.isFull();
+    return this.start.isCompatible(dock);
 
   }
 
   /**
-   * Check if endDock is compatible with link then save the link on the dock.
-   * @param {Dock} endDock
+   * Check if end is compatible with link then save the link on the dock.
+   * @param {Dock} end
    */
-  setEndDock(endDock) {
+  setEndDock(end) {
 
-    if (!this.startDock.isCompatible(endDock)) this.destroy();
+    if (!this.isCompatible(end)) this.destroy();
 
-    this.endDock = endDock;
+    this.pin(end);
 
-    this.pin();
-
-    this.element.update();
+    this.update();
 
   }
 
   /**
    * Adds the link to the endDock's links, swapping docks if necessary
    */
-  pin() {
+  pin(end) {
 
-    this.endDock.popExisting();
+    this.end = end;
 
-    this.endDock.addLink(this);
+    this.end.popExisting().addLink(this);
 
-    if (this.endDock.isRight) this.swapDocks();
+    if (this.end.isRight) this.swapDocks();
 
-    // geh.handle(this);
+    // this.graph.eventHandler.handle(this);
 
   }
 
@@ -72,26 +73,28 @@ class Link extends GraphObject {
    */
   unpin() {
 
-    this.endDock.dropLink(this);
+    this.end.dropLink(this);
 
-    delete this.endDock;
+    delete this.end;
 
     return this;
 
   }
 
-  /**
-   * Swaps out startDock and endDock.
-   */
   swapDocks() {
 
-    [ this.startDock, this.endDock ] = [ this.endDock, this.startDock ];
+    [ this.start, this.end ] = [ this.end, this.start ];
 
   }
 
-  update() {
+  update(position) {
 
-    this.element.update();
+    if (!position) return this.element.update(this.start.element.position, this.end.element.position);
+
+    return this.start.isRight
+      ? this.element.update(this.start.element.position, position)
+      : this.element.update(position, this.start.element.position)
+    ;
 
   }
 
@@ -100,11 +103,11 @@ class Link extends GraphObject {
    */
   destroy() {
 
-    this.element.remove()
+    this.element.remove();
 
-    this.startDock.dropLink(this);
+    this.start.dropLink(this);
 
-    if (this.endDock) this.endDock.dropLink(this);
+    if (this.end) this.end.dropLink(this);
 
   }
 
