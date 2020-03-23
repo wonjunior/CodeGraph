@@ -42,7 +42,7 @@ new State({
 
       // --debug
       '.snap-dock': ({ target },
-                     graph = Graph.get(target.closest('.objects')),
+                     graph = Graph.get(target),
                      dock = graph.store.get(target)) => {
         window.$DOCK = dock;
       },
@@ -56,7 +56,7 @@ new State({
       },
 
       '.header': ({ target },
-                  graph = Graph.get(target.closest('.objects')),
+                  graph = Graph.get(target),
                   node = graph.store.get(target)) => {
         new Draggable({
           event,
@@ -68,7 +68,7 @@ new State({
         });
       },
 
-      '.snap-dock': ({ target }, graph = Graph.get(target.closest('.objects'))) => {
+      '.snap-dock': ({ target }, graph = Graph.get(target)) => {
         new Linkable(event, graph.store.get(target), graph);
       },
 
