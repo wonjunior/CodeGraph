@@ -85,105 +85,105 @@
 
 
 <javascript>
-  <script src="core/setup.js"></script>
+  <script src="src/setup.js"></script>
 
   <!-- Utils & debugging -->
-  <script src="core/utils.js"></script>
-  <script src="core/dev/DEBUG.js"></script>
-  <script src="core/dev/ConsoleWriter.js"></script>
+  <script src="src/utils.js"></script>
+  <script src="dev/DEBUG.js"></script>
+  <script src="dev/ConsoleWriter.js"></script>
 
 	<!-- View -->
-	<script src="core/view/Template.js"></script>
-	<script src="core/view/Element.js"></script>
-	<script src="core/view/NodeElement.js"></script>
-  <script src="core/view/LinkElement.js"></script>
-  <script src="core/view/DockElement.js"></script>
+	<script src="src/view/Template.js"></script>
+	<script src="src/view/Element.js"></script>
+	<script src="src/view/NodeElement.js"></script>
+  <script src="src/view/LinkElement.js"></script>
+  <script src="src/view/DockElement.js"></script>
 
-  <script src="core/view/CanvasElement.js"></script>
-  <script src="core/view/CanvasZoom.js"></script>
+  <script src="src/view/CanvasElement.js"></script>
+  <script src="src/view/CanvasZoom.js"></script>
 
 	<!-------- Components -------->
-  <script src="core/GraphObject.js"></script>
+  <script src="src/GraphObject.js"></script>
 
-  <script src="core/Component.js"></script>
+  <script src="src/Component.js"></script>
 
-  <script src="core/interpreter/GraphEventHandler.js"></script>
+  <script src="src/interpreter/GraphEventHandler.js"></script>
 
-  <script src="core/Canvas.js"></script>
-  <script src="core/GraphObjectStore.js"></script>
-	<script src="core/Graph.js"></script>
+  <script src="src/Canvas.js"></script>
+  <script src="src/GraphObjectStore.js"></script>
+	<script src="src/Graph.js"></script>
 
   <!-- Node -->
-  <script src="core/node/Node.js"></script>
-  <script src="core/node/FunctionNode.js"></script>
-  <script src="core/node/OperatorNode.js"></script>
-  <script src="core/node/GetterNode.js"></script>
-  <script src="core/node/SetterNode.js"></script>
-  <script src="core/node/ControlFlowNode.js"></script>
+  <script src="src/node/Node.js"></script>
+  <script src="src/node/FunctionNode.js"></script>
+  <script src="src/node/OperatorNode.js"></script>
+  <script src="src/node/GetterNode.js"></script>
+  <script src="src/node/SetterNode.js"></script>
+  <script src="src/node/ControlFlowNode.js"></script>
 
   <!-- Docks -->
-  <script src="core/dock/Dock.js"></script>
-  <script src="core/dock/UniqueSocket.js"></script>
-  <script src="core/dock/MultipleSocket.js"></script>
+  <script src="src/dock/Dock.js"></script>
+  <script src="src/dock/UniqueSocket.js"></script>
+  <script src="src/dock/MultipleSocket.js"></script>
 
-  <!-- <script src="core/dock/DataDock.js"></script> -->
-  <script src="core/dock/InDataDock.js"></script>
-  <script src="core/dock/OutDataDock.js"></script>
-  <!-- <script src="core/dock/ExeDock.js"></script> -->
-  <script src="core/dock/InExeDock.js"></script>
-  <script src="core/dock/OutExeDock.js"></script>
+  <!-- <script src="src/dock/DataDock.js"></script> -->
+  <script src="src/dock/InDataDock.js"></script>
+  <script src="src/dock/OutDataDock.js"></script>
+  <!-- <script src="src/dock/ExeDock.js"></script> -->
+  <script src="src/dock/InExeDock.js"></script>
+  <script src="src/dock/OutExeDock.js"></script>
 
-  <script src="core/dock/DockDefinition.js"></script>
+  <script src="src/dock/DockDefinition.js"></script>
 
-  <script src="core/dock/factories/DockFactory.js"></script>
-  <script src="core/dock/factories/InDataDockFactory.js"></script>
-  <script src="core/dock/factories/OutDataDockFactory.js"></script>
-  <script src="core/dock/factories/InExeDockFactory.js"></script>
-  <script src="core/dock/factories/OutExeDockFactory.js"></script>
+  <script src="src/dock/factories/DockFactory.js"></script>
+  <script src="src/dock/factories/InDataDockFactory.js"></script>
+  <script src="src/dock/factories/OutDataDockFactory.js"></script>
+  <script src="src/dock/factories/InExeDockFactory.js"></script>
+  <script src="src/dock/factories/OutExeDockFactory.js"></script>
 
   <!-- Interpreter -->
-  <script src="core/interpreter/Scope.js"></script>
-  <script src="core/interpreter/ExecutionTree.js"></script>
+  <script src="src/interpreter/Scope.js"></script>
+  <script src="src/interpreter/ExecutionTree.js"></script>
 
-  <script src="core/interpreter/process/Process.js"></script>
-  <script src="core/interpreter/process/CustomProcess.js"></script>
-  <script src="core/interpreter/process/GetterProcess.js"></script>
-  <script src="core/interpreter/process/SetterProcess.js"></script>
+  <script src="src/interpreter/process/Process.js"></script>
+  <script src="src/interpreter/process/CustomProcess.js"></script>
+  <script src="src/interpreter/process/GetterProcess.js"></script>
+  <script src="src/interpreter/process/SetterProcess.js"></script>
 
-  <script src="core/interpreter/process/ControlFlowProcess.js"></script>
+  <script src="src/interpreter/process/ControlFlowProcess.js"></script>
 
-  <script src="core/interpreter/router/Router.js"></script>
-  <script src="core/interpreter/router/NullRouter.js"></script>
-  <script src="core/interpreter/router/DefaultRouter.js"></script>
+  <script src="src/interpreter/router/Router.js"></script>
+  <script src="src/interpreter/router/NullRouter.js"></script>
+  <script src="src/interpreter/router/DefaultRouter.js"></script>
 
-  <script src="core/interpreter/router/ControlFlowRouter.js"></script>
+  <script src="src/interpreter/router/ControlFlowRouter.js"></script>
 
 
   <!-- Interactions UI behavior -->
-  <script src="core/Draggable.js"></script>
-  <script src="core/Linkable.js"></script>
-  <script src="core/Curve.js"></script>
-  <script src="core/Link.js"></script>
+  <script src="src/Draggable.js"></script>
+  <script src="src/Linkable.js"></script>
+  <script src="src/Curve.js"></script>
+  <script src="src/Link.js"></script>
 
   <!-- Event handling -->
-  <script src="core/controller/state/State.js"></script>
-  <script src="core/controller/MouseCode.js"></script>
-  <script src="core/controller/MouseEventHandler.js"></script>
-  <script src="core/controller/MouseWheelEventHandler.js"></script>
-  <script src="core/controller/KeyCode.js"></script>
-  <script src="core/controller/KeyEventHandler.js"></script>
-  <script src="core/controller/bindings.js"></script>
-  <script src="core/controller/eventlisteners.js"></script>
+  <script src="src/controller/state/State.js"></script>
+  <script src="src/controller/MouseCode.js"></script>
+  <script src="src/controller/MouseEventHandler.js"></script>
+  <script src="src/controller/MouseWheelEventHandler.js"></script>
+  <script src="src/controller/KeyCode.js"></script>
+  <script src="src/controller/KeyEventHandler.js"></script>
+  <script src="src/controller/bindings.js"></script>
+  <script src="src/controller/eventlisteners.js"></script>
 
-  <script src="core/library.js"></script>
+  <script src="src/library.js"></script>
 
-  <script src="core/Finder.js"></script>
-  <script src="core/Editor.js"></script>
+  <script src="src/Finder.js"></script>
+  <script src="src/Editor.js"></script>
 
-  <script src="core/controller/state/EditorState.js"></script>
-  <script src="core/controller/state/FinderState.js"></script>
+  <script src="src/controller/state/EditorState.js"></script>
+  <script src="src/controller/state/FinderState.js"></script>
 
-  <script src="core/dev/tester.js"></script>
+  <script src="dev/tester.js"></script>
 
 </javascript>
 </body>
