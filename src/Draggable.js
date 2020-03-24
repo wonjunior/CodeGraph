@@ -20,10 +20,9 @@ class Draggable {
     const parentProp = this.element.parentElement.getBoundingClientRect();
     this.offset = [ parentProp.x + 50, parentProp.y + 10 ];
 
-    const callback = e => this.dragging(e);
-    callback(e);
-    document.addEventListener('mousemove', callback);
-    document.addEventListener('mousedown', () => this.endDrag(callback), { once: true });
+    this.dragging(e);
+    document.addEventListener('mousemove', this.dragging);
+    document.addEventListener('mousedown', this.endDrag, { once: true });
 
   };
 
@@ -33,14 +32,12 @@ class Draggable {
     const parentPos = this.element.parentElement.getBoundingClientRect();
     this.offset = [ clientX - selfPos.x + parentPos.x, clientY - selfPos.y + parentPos.y ];
 
-
-    const eventHandler = e => this.dragging(e);
-    document.addEventListener('mousemove', eventHandler);
-    document.addEventListener('mouseup', () => this.endDrag(eventHandler), { once: true });
+    document.addEventListener('mousemove', this.dragging);
+    document.addEventListener('mouseup', this.endDrag, { once: true });
 
   };
 
-  dragging(e) {
+  dragging = e => {
 
     const [ offsetX, offsetY ] = this.offset;
 
@@ -58,10 +55,10 @@ class Draggable {
 
   };
 
-  endDrag(fct) {
+  endDrag = () => {
 
     $.Draggable.log('└──/ dragging ended');
-    document.removeEventListener('mousemove', fct);
+    document.removeEventListener('mousemove', this.dragging);
 
   };
 
