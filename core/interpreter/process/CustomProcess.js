@@ -6,10 +6,10 @@ class CustomProcess extends Process {
 
 		super();
 
-		const paramDefs = inputs.map(({label}, i) => new DockDefinition(label, 'body'));
+		const paramDefs = inputs.map(({ label }) => new DockDefinition(label, 'body'));
     this.inputs = new InDataDockFactory(paramDefs).docks;
 
-    const resultDefs = outputs.map(({label}, i) => new DockDefinition(label, 'body'));
+    const resultDefs = outputs.map(({ label }) => new DockDefinition(label, 'body'));
     this.outputs = new OutDataDockFactory(resultDefs).docks;
 
 		if (this.constructor === CustomProcess) Object.assign(this, { func, stringFunc });
