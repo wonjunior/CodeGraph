@@ -4,7 +4,7 @@ class DEBUG {
 
   static Event      =   { active: false,  color: 'navy',    };
 
-  static Execution  =   { active: true,   color: 'green',   };
+  static Execution  =   { active: false,   color: 'green',   };
 
   static State      =   { active: true,   color: 'grey',    };
 

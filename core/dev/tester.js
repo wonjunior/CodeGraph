@@ -141,7 +141,7 @@ wait(() => {
   n4.process.outputs[0].stringified = '2';
 
   // trigger n2's router
-  n2.router.trigger();
+  // n2.router.trigger();
 
 });
 // <? n1.router.execute(true); fails, cf. zip accessed array[0])
