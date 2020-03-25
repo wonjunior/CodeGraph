@@ -2,8 +2,7 @@
 
 class Process {
 
-  dependencies = new Set();
-  parents = new Set();
+  dependencies = { parents: new Set(), getters: new Set() };
   arguments = [];
   result = null;
 
@@ -13,25 +12,21 @@ class Process {
 
   }
 
-  readyToCalculate() {
-
-    return this.arguments.length == this.inputs.length;
-
-  }
-
   execute(allowPropagation = false) {
 
     $.Execution.log(`└──> [P] ${this.constructor.name}#execute(allowPropagation=${allowPropagation})`);
     $.Execution.indent();
 
-    this.mergeData();
-    $.Execution.log(`├── (1) merged data`, this.dependencies, this.parents, this.arguments);
+    this.mergeArguments();
+    $.Execution.log(`├── (1) merged arguments`, this.arguments);
 
     this.updateResult();
     $.Execution.log(`├── (2) updating the result`, this.result);
 
-    $.Execution.log(`└──> (3) routing & propagating data`);
     this.routeData();
+    $.Execution.log(`├── (3) routing data inside node`);
+
+    $.Execution.log(`└──> (4) propagating data`);
     $.Execution.indent();
     this.propagate(allowPropagation);
     $.Execution.log('└──/ data propagation ended');
@@ -41,43 +36,45 @@ class Process {
 
   }
 
-  updateResult() {
+  mergeDependencies() {
 
-    this.result = this.readyToCalculate() ? this.calculate(...zip(...this.arguments)) : null;
+    this.dependencies = { parents: new Set(), getters: new Set() };
 
-  }
+    this.inputs.forEach(input => {
 
-  clearData() {
+      const { parents, getters } = input.getDependencies();
 
-    this.dependencies.clear();
-    this.parents.clear();
-    this.arguments = [];
-    this.result = null;
+      parents.forEach(p => this.dependencies.parents.add(p));
+      getters.forEach(g => this.dependencies.getters.add(g));
 
-  }
-
-  mergeData() {
-
-    this.clearData();
-    this.inputs.forEach(input => this.insertData(input.getData()));
+    });
 
   }
 
-  insertData(data) {
+  mergeArguments() {
 
-    if (data == null) return;
-
-    const { dependencies, parents, value } = data;
-
-    dependencies.forEach(dep => this.dependencies.add(dep));
-    parents.forEach(par => this.parents.add(par));
-    this.arguments.push(value);
+    this.arguments = this.inputs.map(i => i.getValue());
 
   }
 
-  calculate(computedParams = [], stringParams = []) {
+  calculate() {
+
+    const params = zip(...this.arguments)
+    const [ computedParams, stringParams ] = params.length ? params : [[], []];
 
     return [ this.compute(...computedParams), this.string(...stringParams) ];
+
+  }
+
+  readyToCalculate() {
+
+    return !this.arguments.some(arg => arg == null);
+
+  }
+
+  updateResult() {
+
+    this.result = this.readyToCalculate() ? this.calculate() : null;
 
   }
 
@@ -89,7 +86,7 @@ class Process {
 
   propagate(updateET) {
 
-    this.outputs.forEach(output => output.propagate(updateET, this.parents));
+    this.outputs.forEach(output => output.propagate(updateET));
 
   }
 
