@@ -117,4 +117,10 @@ class Link extends GraphObject {
 
   }
 
+  getOrigin() {
+
+    return this.start;
+
+  }
+
 }

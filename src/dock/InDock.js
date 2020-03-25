@@ -2,9 +2,9 @@
 
 class InDock extends UniqueSocket {
 
-	getAncestor() {
+	get ancestor() {
 
-		return this.link ? this.link.start : null;
+		return this.link ? this.link.getOrigin() : EmptyAncestor;
 
 	}
 

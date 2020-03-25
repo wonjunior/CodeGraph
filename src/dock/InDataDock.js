@@ -8,10 +8,15 @@ class InDataDock extends InDock {
 
   }
 
-  getData() {
+  getDependencies() {
 
-    const ancestor = this.getAncestor();
-    return ancestor && ancestor.getData() || null;
+    return this.ancestor.getDependencies();
+
+  }
+
+  getValue() {
+
+    return this.ancestor.getValue();
 
   }
 
