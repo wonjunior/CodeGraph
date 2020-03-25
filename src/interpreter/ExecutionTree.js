@@ -5,13 +5,13 @@ class ExecutionTree {
   scope = new Map();
   accessBuffer = {};
 
-  static getExecutionTree(root, parents) {
+  static getExecutionTree(root) {
 
-    return root.executionTree || new ExecutionTree(root, parents);
+    return root.executionTree || new ExecutionTree(root);
 
   }
 
-  constructor(root, parents) {
+  constructor(root) {
 
     this.root = root;
     root.executionTree = this;
@@ -26,6 +26,9 @@ class ExecutionTree {
     this.current = this.root;
     $.Execution.pipe();
     this.execute();
+
+    _(this.current.process.parents);
+
     $.Execution.unindent();
     $.Execution.log('└──/ tree execution ended');
     $.Execution.unindent();

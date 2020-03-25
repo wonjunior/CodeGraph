@@ -12,6 +12,7 @@ class Graph {
 
   nodes = new Set();
   store = new ObjectElementMap();
+  eventHandler = new GraphEventHandler();
 
   /**
    *

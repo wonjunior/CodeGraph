@@ -18,7 +18,7 @@ class Router {
 
   }
 
-  trigger(updateET = true, parents) {
+  trigger(updateET = true) {
 
     $.Execution.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
     $.Execution.indent();
@@ -34,7 +34,7 @@ class Router {
     $.Execution.log(`├── (1) root ${this.root === this ? 'is' : 'is not'} self`);
     $.Execution.log(`├── (2) get the execution tree ${this.root === this ? 'from self' : 'from root'}`);
 
-    const executionTree = ExecutionTree.getExecutionTree(this.root, parents);
+    const executionTree = ExecutionTree.getExecutionTree(this.root);
     $.Execution.log(`└── (3) executing the execution tree ${this.root.executionTree}`);
     $.Execution.indent();
     executionTree.update();

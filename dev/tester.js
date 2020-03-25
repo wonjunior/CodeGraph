@@ -9,8 +9,8 @@ const c1 = new Component(
     background: 'f',
     position: [270,100],
     process:  {
-      func: function(a, b) { return a - b; },
-      stringFunc: function(a, b) { return `${a} - ${b}`; },
+      compute: function(a, b) { return a - b; },
+      string: function(a, b) { return `${a} - ${b}`; },
       params: [{label: 'a'}, {label: 'b'}],
       result: {label: 'f(a,b)'}
     }
@@ -25,8 +25,8 @@ const c2 = new Component(
   background: '+',
   position: [270,275],
   process:  {
-    func: function(a, b) { return a + b; },
-    stringFunc: function(a, b) { return `${a} + ${b}`; },
+    compute: function(a, b) { return a + b; },
+    string: function(a, b) { return `${a} + ${b}`; },
     params: [{label: 'a'}, {label: 'b'}],
     result: {label: 'result'}
   },
@@ -39,8 +39,8 @@ const c3 = new Component(
     header: 'cadetblue',
     position: [30,250],
     process:  {
-      func: function(a, b) { return 1; },
-      stringFunc: function(a, b) { return `1`; },
+      compute: function(a, b) { return 1; },
+      string: function(a, b) { return `1`; },
       params: [],
       result: {label: '1'}
     },
@@ -54,8 +54,8 @@ const c4 = new Component(
     header: 'cadetblue',
     position: [30,350],
     process:  {
-      func: function(a, b) { return 2; },
-      stringFunc: function(a, b) { return `2`; },
+      compute: function(a, b) { return 2; },
+      string: function(a, b) { return `2`; },
       params: [],
       result: {label: '2'}
     },
@@ -77,8 +77,8 @@ const c5 = new Component(
     background: 'i',
     position: [465,292],
     process:  {
-      func: function(a) { return a; },
-      stringFunc: function(a) { return `${a}`; },
+      compute: function(a) { return a; },
+      string: function(a) { return `${a}`; },
       params: [{label:''}],
       result: {label: ''}
     }
@@ -119,6 +119,19 @@ const n5=graph.add(c5); const n6=graph.add(c6); const n7=graph.add(c7);
 
 wait(() => {
 
+  // initialize n3 & n4
+  // n3.process.dependencies.add('a');
+  // n3.process.parents.add(n1);
+  // n3.process.outputs[0].result = 1;
+  // n3.process.outputs[0].stringified = '1';
+
+  // n4.process.dependencies.add('b');
+  // n4.process.parents.add(n2);
+  // n4.process.outputs[0].result = 2;
+  // n4.process.outputs[0].stringified = '2';
+
+  return;
+
   new Link(n1.router.out[0],      n7.router.in[0],      graph);
   new Link(n1.process.outputs[0], n7.process.inputs[0], graph);
   new Link(n2.process.outputs[0], n5.process.inputs[0], graph);
@@ -129,19 +142,7 @@ wait(() => {
   new Link(n5.process.outputs[0], n6.process.inputs[0], graph);
   new Link(n5.process.outputs[0], n7.process.inputs[1], graph);
 
-  // initialize n3 & n4
-  n3.process.dependencies.add('a');
-  n3.process.parents.add(n1);
-  n3.process.outputs[0].result = 1;
-  n3.process.outputs[0].stringified = '1';
-
-  n4.process.dependencies.add('b');
-  n4.process.parents.add(n2);
-  n4.process.outputs[0].result = 2;
-  n4.process.outputs[0].stringified = '2';
-
   // trigger n2's router
-  // n2.router.trigger();
+  n2.router.trigger();
 
 });
-// <? n1.router.execute(true); fails, cf. zip accessed array[0])

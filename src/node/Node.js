@@ -51,4 +51,6 @@ class Node extends GraphObject {
 
   }
 
+  toString() { return this.element.labelText; }
+
 }

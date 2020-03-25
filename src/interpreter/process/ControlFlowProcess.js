@@ -9,8 +9,8 @@ const ControlFlowProcess = (function() {
 
     }
 
-    stringFunc(condition) { return condition; }
-    func(condition) { return Boolean(condition); }
+    string(condition) { return condition; }
+    compute(condition) { return Boolean(condition); }
   }
 
   class ForLoop extends CustomProcess {
@@ -20,8 +20,8 @@ const ControlFlowProcess = (function() {
 
     }
 
-    stringFunc(a,b) {return a+b}
-    func(a,b) {return a+b}
+    string(a,b) {return a+b}
+    compute(a,b) {return a+b}
   }
 
   return { Conditional, ForLoop };

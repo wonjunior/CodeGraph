@@ -63,7 +63,7 @@ class Link extends GraphObject {
 
     if (this.end.isRight) this.swapDocks();
 
-    // this.graph.eventHandler.handle(this);
+    this.graph.eventHandler.handle(this);
 
   }
 
@@ -108,6 +108,12 @@ class Link extends GraphObject {
     this.start.dropLink(this);
 
     if (this.end) this.end.dropLink(this);
+
+  }
+
+  trigger(...params) {
+
+    this.end.trigger(...params);
 
   }
 

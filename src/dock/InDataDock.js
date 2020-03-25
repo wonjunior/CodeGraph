@@ -1,12 +1,6 @@
 'use strict'
 
-class InDataDock extends UniqueSocket {
-
-  get ancestor() {
-
-    return this.links.first ? this.links.first.startDock : null;
-
-  }
+class InDataDock extends InDock {
 
   constructor(parameters) {
 
@@ -14,27 +8,16 @@ class InDataDock extends UniqueSocket {
 
   }
 
-  getValue() {
+  getData() {
 
-    return this.ancestor.getValue();
-
-  }
-
-  getDependencies() {
-
-    return this.ancestor.getDependencies();
-
-  }
-
-  getParents() {
-
-    return this.ancestor.getParents();
+    const ancestor = this.getAncestor();
+    return ancestor && ancestor.getData() || null;
 
   }
 
   trigger(...params) {
 
-    $.Execution.log(`├──> data propagation to ${this.node.id}`); // (updateET=${updateET}) (router=${this.node.router.constructor.name})`)
+    $.Execution.log(`├──> data propagation to ${this.node}`);
 
     $.Execution.pipe();
     this.node.router.trigger(...params);

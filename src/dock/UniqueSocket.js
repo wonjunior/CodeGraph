@@ -53,7 +53,6 @@ class UniqueSocket extends Dock {
 
   destroy() {
 
-    _('destroying', this.link)
     this.link.destroy();
 
   }

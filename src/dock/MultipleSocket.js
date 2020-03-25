@@ -16,6 +16,15 @@ class MultipleSocket extends Dock {
 
   }
 
+  /**
+   * @overrides Dock#popExisting
+   */
+  popExisting() {
+
+    return this;
+
+  }
+
   addLink(link) {
 
     this.links.add(link);

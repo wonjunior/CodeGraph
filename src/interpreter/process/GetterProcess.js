@@ -10,13 +10,13 @@ class GetterProcess extends CustomProcess {
 
   };
 
-  func() {
+  compute() {
 
     return true; // this.process.scope.get(this.getter);
 
   }
 
-  stringFunc() {
+  string() {
 
     return this.getter;
 

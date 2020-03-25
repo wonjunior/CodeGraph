@@ -2,8 +2,8 @@
 
 class OutDataDock extends MultipleSocket {
 
-  result = null;
-  stringified = '';
+  computedValue;
+  stringValue;
 
   constructor(parameters) {
 
@@ -11,15 +11,23 @@ class OutDataDock extends MultipleSocket {
 
   }
 
-  getValue() {
+  getData() {
 
-    return [ this.result, this.stringified ];
+    return { dependencies: this.getDependencies(), parents: this.getParents(), value: this.getValue() };
 
   }
 
-  setValue([result, stringified]) {
+  getValue() {
 
-    Object.assign(this, { result, stringified });
+    return [ this.computedValue, this.stringValue ];
+
+  }
+
+  setValue(value) {
+
+    if (!value) return Object.assign(this, { computedValue: undefined, stringValue: undefined });
+
+    Object.assign(this, { computedValue: value[0], stringValue: value[1] });
 
   }
 
@@ -37,7 +45,7 @@ class OutDataDock extends MultipleSocket {
 
   propagate(...params) {
 
-    this.links.forEach(({endDock}) => endDock.trigger(...params));
+    this.links.forEach(link => link.trigger(...params));
 
   }
 

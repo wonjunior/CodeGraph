@@ -13,77 +13,75 @@ class Process {
 
   }
 
-  missingArguments() {
+  readyToCalculate() {
 
-    return this.inputs.some(({ancestor}) => !ancestor);
+    return this.arguments.length == this.inputs.length;
 
   }
 
   execute(allowPropagation = false) {
 
     $.Execution.log(`└──> [P] ${this.constructor.name}#execute(allowPropagation=${allowPropagation})`);
-    $.Execution.indent()
+    $.Execution.indent();
 
-    $.Execution.log(`${this.missingArguments() ? '└── (1) some arguments are missing, exiting.' : '├── (1) all arguments are available'}`);
-    if (this.missingArguments()) return;
+    this.mergeData();
+    $.Execution.log(`├── (1) merged data`, this.dependencies, this.parents, this.arguments);
 
-    this.mergeAttributes();
-    this.result = this.calculate(...this.arguments);
-    $.Execution.log(`├── (5) calculated result:`, this.result);
+    this.updateResult();
+    $.Execution.log(`├── (2) updating the result`, this.result);
 
-    $.Execution.log(`├── (6) routing data to output docks:`, this.outputs.map(({id}) => id));
-    this.route();
-
-    $.Execution.log(`└── (7) propagating to links:`, this.outputs.reduce((arr, {links}) => arr.concat(links.map(({id}) => id)), []));
-
+    $.Execution.log(`└──> (3) routing & propagating data`);
+    this.routeData();
     $.Execution.indent();
     this.propagate(allowPropagation);
-    $.Execution.log('└──/ data propagation ended')
+    $.Execution.log('└──/ data propagation ended');
     $.Execution.unindent();
+
     $.Execution.unindent();
 
-    return this.result;
+  }
+
+  updateResult() {
+
+    this.result = this.readyToCalculate() ? this.calculate(...zip(...this.arguments)) : null;
 
   }
 
-  mergeAttributes() {
+  clearData() {
 
-    this.dependencies = this.mergeDependencies();
-    $.Execution.log(`├── (2) merged dependencies:`, this.dependencies);
-
-    this.parents = this.mergeParents();
-    $.Execution.log(`├── (3) merged parents: {${[...this.parents].join(', ')}}`);
-
-    this.arguments = this.mergeArguments();
-    $.Execution.log(`├── (4) merged arguments:`, this.arguments);
+    this.dependencies.clear();
+    this.parents.clear();
+    this.arguments = [];
+    this.result = null;
 
   }
 
-  mergeDependencies() {
+  mergeData() {
 
-    return new Set(this.inputs.reduce((res, input) => res.concat(...input.getDependencies()), []));
-
-  }
-
-  mergeParents() {
-
-    return new Set(this.inputs.reduce((res, input) => res.concat(...input.getParents()), []));
+    this.clearData();
+    this.inputs.forEach(input => this.insertData(input.getData()));
 
   }
 
-  mergeArguments() {
+  insertData(data) {
 
-    return zip(...this.inputs.map(input => input.getValue()));
+    if (data == null) return;
+
+    const { dependencies, parents, value } = data;
+
+    dependencies.forEach(dep => this.dependencies.add(dep));
+    parents.forEach(par => this.parents.add(par));
+    this.arguments.push(value);
 
   }
 
-  calculate(params, stringParams) {
+  calculate(computedParams = [], stringParams = []) {
 
-    return [ this.func(...params), this.stringFunc(...stringParams) ];
+    return [ this.compute(...computedParams), this.string(...stringParams) ];
 
   }
 
-  route() {
+  routeData() {
 
     this.outputs.forEach(output => output.setValue(this.result));
 
@@ -95,16 +93,8 @@ class Process {
 
   }
 
-  func() {
+  compute() { throw `compute() not set on Process ${this}`; }
 
-    throw `func() not set on Process ${this}`;
-
-  }
-
-  stringFunc() {
-
-    throw `stringFunc() not set on Process ${this}`;
-
-  }
+  string() { throw `string() not set on Process ${this}`; }
 
 }

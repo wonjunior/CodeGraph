@@ -32,12 +32,4 @@ class Dock extends GraphObject {
 
   }
 
-
-
-  popExisting() {
-
-    return this;
-
-  }
-
 }

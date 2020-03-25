@@ -2,7 +2,7 @@
 
 class CustomProcess extends Process {
 
-	constructor(func, stringFunc, inputs, outputs) {
+	constructor(compute, string, inputs, outputs) {
 
 		super();
 
@@ -12,7 +12,7 @@ class CustomProcess extends Process {
     const resultDefs = outputs.map(({ label }) => new DockDefinition(label, 'body'));
     this.outputs = new OutDataDockFactory(resultDefs).docks;
 
-		if (this.constructor === CustomProcess) Object.assign(this, { func, stringFunc });
+		if (this.constructor === CustomProcess) Object.assign(this, { compute, string });
 
 	}
 

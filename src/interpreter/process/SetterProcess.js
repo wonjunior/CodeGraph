@@ -10,12 +10,8 @@ class SetterProcess extends CustomProcess {
 
   }
 
-  func() { return null; }
+  compute() { return null; }
 
-  stringFunc(value) {
-
-    return `${this.getter} = ${value}`;
-
-  }
+  string(value) { return `${this.getter} = ${value}`; }
 
 }
