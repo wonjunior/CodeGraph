@@ -2,8 +2,10 @@
 
 class OutDataDock extends MultipleSocket {
 
-  computedValue;
-  stringValue;
+  /**
+   * OutDataDock#value is null if the value is not available on that dock
+   */
+  value = { computed: null, string: null };
 
   constructor(parameters) {
 
@@ -11,23 +13,25 @@ class OutDataDock extends MultipleSocket {
 
   }
 
-  getData() {
+  getDependencies() {
 
-    return { dependencies: this.getDependencies(), parents: this.getParents(), value: this.getValue() };
+    return this.process.dependencies;
 
   }
 
   getValue() {
 
-    return [ this.computedValue, this.stringValue ];
+    return this.value;
 
   }
 
+  /**
+   *
+   * @param {DataValue || null} value // <?! add DataValue class
+   */
   setValue(value) {
 
-    if (!value) return Object.assign(this, { computedValue: undefined, stringValue: undefined });
-
-    Object.assign(this, { computedValue: value[0], stringValue: value[1] });
+    this.value = value ? { computed: value[0], string: value[1] } : null;
 
   }
 
