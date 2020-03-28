@@ -18,9 +18,9 @@ class Router {
 
   }
 
-  trigger(updateET = true) {
+  trigger({accessor, origin = this, updateET = true, forceETAccess = false } = {}) {
 
-    $.Execution.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
+    $.Execution.log(`└──> [R-${this.constructor.name}] #trigger`);
     $.Execution.indent();
 
     if (!updateET) {
@@ -34,21 +34,25 @@ class Router {
     $.Execution.log(`├── (1) root ${this.root === this ? 'is' : 'is not'} self`);
     $.Execution.log(`├── (2) get the execution tree ${this.root === this ? 'from self' : 'from root'}`);
 
-    const executionTree = ExecutionTree.getExecutionTree(this.root);
+    const executionTree = ExecutionTree.get(this.root);
+
+    this.process.mergeDependencies();
+
+
     $.Execution.log(`└── (3) executing the execution tree ${this.root.executionTree}`);
     $.Execution.indent();
-    executionTree.update();
+    executionTree.update(accessor, origin, forceETAccess);
     $.Execution.unindent();
 
     $.Execution.unindent();
 
   }
 
-  execute(updateET) {
+  execute(payload) {
 
-    $.Execution.log(`└──> [R] ${this.constructor.name}#execute(updateET=${updateET})`);
+    $.Execution.log(`└──> [R-${this.constructor.name}] #execute`);
     $.Execution.indent();
-    this.process.execute(updateET);
+    this.process.execute(payload);
     $.Execution.unindent();
 
   }

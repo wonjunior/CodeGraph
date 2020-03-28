@@ -5,18 +5,18 @@
  */
 class EmptyAncestor {
 
-	static dependencies = { parents: new Set(), getters: new Set() };
+  static dependencies = { parents: new Set(), getters: new Set() };
 
-	static getDependencies() {
+  static getDependencies() {
 
-		return EmptyAncestor.dependencies;
+    return EmptyAncestor.dependencies;
 
-	}
+  }
 
-	static getValue() {
+  static getValue() {
 
-		return null;
+    return null;
 
-	}
+  }
 
 }

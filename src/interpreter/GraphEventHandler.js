@@ -15,11 +15,9 @@ class GraphEventHandler {
 
 	handleLink(link) {
 
-		$.GraphEvent.log(`updating ${link.end}`);
-		link.start.node.router.trigger();
+		$.GraphEvent.log(`updating "${link.getOrigin().node}"`);
+		link.trigger();
 
 	}
 
 }
-
-const geh = new GraphEventHandler();

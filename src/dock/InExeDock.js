@@ -1,6 +1,12 @@
 'use strict'
 
-class InExeDock extends InDock {
+class InExeDock extends UniqueSocket {
+
+  get ancestor() {
+
+    return this.link ? this.link.getOrigin() : null;
+
+  }
 
   constructor(parameters) {
 

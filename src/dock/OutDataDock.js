@@ -15,13 +15,14 @@ class OutDataDock extends MultipleSocket {
 
   getDependencies() {
 
+    this.process.dependencies.parents.add(this.node);
     return this.process.dependencies;
 
   }
 
   getValue() {
 
-    return this.value;
+    return this.value ? [ this.value.computed, this.value.string ] : null;
 
   }
 
@@ -35,21 +36,9 @@ class OutDataDock extends MultipleSocket {
 
   }
 
-  getDependencies() {
+  propagate(payload) {
 
-    return this.process.dependencies;
-
-  }
-
-  getParents() {
-
-    return this.process.parents.add(this.node);
-
-  }
-
-  propagate(...params) {
-
-    this.links.forEach(link => link.trigger(...params));
+    this.links.forEach(link => link.trigger(payload));
 
   }
 

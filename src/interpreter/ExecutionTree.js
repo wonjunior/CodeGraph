@@ -3,9 +3,9 @@
 class ExecutionTree {
 
   scope = new Map();
-  accessBuffer = {};
+  accessBuffer = new Map();
 
-  static getExecutionTree(root) {
+  static get(root) {
 
     return root.executionTree || new ExecutionTree(root);
 
@@ -14,23 +14,58 @@ class ExecutionTree {
   constructor(root) {
 
     this.root = root;
-    root.executionTree = this;
+    root.executionTree = this; // <?! meh
 
   }
 
-  update() {
+  validateAccess(accessor) {
+
+    const dependencies = accessor.process.dependencies;
+
+    this.fillAccessBuffer(dependencies.parents, accessor);
+    $.Execution.log('---->', this.accessBuffer)
+
+  }
+
+  fillAccessBuffer(dependencies, accessor) {
+
+    dependencies.forEach(dep => {
+
+      this.accessBuffer.set(dep, (this.accessBuffer[dep] || new Set()).add(accessor));
+
+    });
+
+  }
+
+  /**
+   *
+   * @param {Router} accessor
+   * @param {Router} origin
+   * @param {Boolean} forceAccess
+   */
+  update(accessor, origin, forceAccess) {
 
     $.Execution.log(`└──> [ET] ${this.constructor.name}#update()`);
+
+    $.Execution.indent();
+    $.Execution.log(`├── (1) validating access on`, accessor);
+    this.validateAccess(accessor)
+
+
     $.Execution.indent();
     $.Execution.log(`├── (root) execute root router`);
     this.current = this.root;
     $.Execution.pipe();
-    this.execute();
 
-    _(this.current.process.parents);
+
+
+
+    this.execute(origin, forceAccess);
+
 
     $.Execution.unindent();
     $.Execution.log('└──/ tree execution ended');
+    $.Execution.unindent();
     $.Execution.unindent();
 
     /*while(this.next()) {
@@ -42,9 +77,9 @@ class ExecutionTree {
 
   }
 
-  execute() {
+  execute(origin, forceAccess) {
 
-    this.current.execute(false);
+    this.current.execute(origin, false, forceAccess);
 
   }
 

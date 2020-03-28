@@ -12,9 +12,9 @@ class Process {
 
   }
 
-  execute(allowPropagation = false) {
+  execute(origin, allowPropagation = false, forceAccess = false) {
 
-    $.Execution.log(`└──> [P] ${this.constructor.name}#execute(allowPropagation=${allowPropagation})`);
+    $.Execution.log(`└──> [P-${this.constructor.name}] #execute`);
     $.Execution.indent();
 
     this.mergeArguments();
@@ -28,7 +28,7 @@ class Process {
 
     $.Execution.log(`└──> (4) propagating data`);
     $.Execution.indent();
-    this.propagate(allowPropagation);
+    this.propagate(origin, allowPropagation, forceAccess);
     $.Execution.log('└──/ data propagation ended');
     $.Execution.unindent();
 
@@ -84,9 +84,9 @@ class Process {
 
   }
 
-  propagate(updateET) {
+  propagate(payload) {
 
-    this.outputs.forEach(output => output.propagate(updateET));
+    this.outputs.forEach(output => output.propagate(payload));
 
   }
 

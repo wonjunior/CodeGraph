@@ -2,17 +2,16 @@
 
 class NullRouter extends Router {
 
-	/**
-	 * @Overrides Router#trigger
-	 */
-	trigger(updateET = true) {
+  /**
+   * @Overrides Router#trigger
+   */
+  trigger({ origin = this, updateET = true, forceETAccess = false } = {}) {
 
-		$.Execution.log(`└──> [R] ${this.constructor.name}#trigger(updateET=${updateET})`);
+    $.Execution.log(`└──> [R-${this.constructor.name}] #trigger`);
     $.Execution.indent();
-		this.execute(updateET);
-		$.Execution.unindent();
-		return;
+    this.execute(origin, updateET, forceETAccess);
+    $.Execution.unindent();
 
-	}
+  }
 
 }

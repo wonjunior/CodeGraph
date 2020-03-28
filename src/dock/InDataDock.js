@@ -1,6 +1,12 @@
 'use strict'
 
-class InDataDock extends InDock {
+class InDataDock extends UniqueSocket {
+
+  get ancestor() {
+
+    return this.link ? this.link.getOrigin() : EmptyAncestor;
+
+  }
 
   constructor(parameters) {
 
@@ -20,12 +26,12 @@ class InDataDock extends InDock {
 
   }
 
-  trigger(...params) {
+  trigger(payload) {
 
     $.Execution.log(`├──> data propagation to ${this.node}`);
 
     $.Execution.pipe();
-    this.node.router.trigger(...params);
+    this.node.router.trigger({ accessor: this, ...payload });
     $.Execution.unindent();
 
   }

@@ -111,9 +111,9 @@ class Link extends GraphObject {
 
   }
 
-  trigger(...params) {
+  trigger(payload) {
 
-    this.end.trigger(...params);
+    this.end.trigger(payload);
 
   }
 
