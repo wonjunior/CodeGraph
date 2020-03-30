@@ -15,7 +15,7 @@ class OutDataDock extends MultipleSocket {
 
   getDependencies() {
 
-    this.process.dependencies.parents.add(this.node);
+    this.process.dependencies.parents.add(this.node.router);
     return this.process.dependencies;
 
   }

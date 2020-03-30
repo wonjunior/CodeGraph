@@ -36,7 +36,7 @@ class Router {
 
     const executionTree = ExecutionTree.get(this.root);
 
-    this.process.mergeDependencies();
+    this.process.mergeDependencies(this);
 
 
     $.Execution.log(`└── (3) executing the execution tree ${this.root.executionTree}`);
@@ -50,6 +50,7 @@ class Router {
 
   execute(payload) {
 
+    _('payload origin is', payload.origin)
     $.Execution.log(`└──> [R-${this.constructor.name}] #execute`);
     $.Execution.indent();
     this.process.execute(payload);

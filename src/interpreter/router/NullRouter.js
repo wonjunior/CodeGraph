@@ -9,7 +9,7 @@ class NullRouter extends Router {
 
     $.Execution.log(`└──> [R-${this.constructor.name}] #trigger`);
     $.Execution.indent();
-    this.execute(origin, updateET, forceETAccess);
+    this.execute({origin, updateET, forceETAccess});
     $.Execution.unindent();
 
   }

@@ -17,6 +17,8 @@ class Process {
     $.Execution.log(`└──> [P-${this.constructor.name}] #execute`);
     $.Execution.indent();
 
+    this.mergeDependencies();
+
     this.mergeArguments();
     $.Execution.log(`├── (1) merged arguments`, this.arguments);
 
@@ -29,14 +31,13 @@ class Process {
     $.Execution.log(`└──> (4) propagating data`);
     $.Execution.indent();
     this.propagate(origin, allowPropagation, forceAccess);
-    $.Execution.log('└──/ data propagation ended');
     $.Execution.unindent();
 
     $.Execution.unindent();
 
   }
 
-  mergeDependencies() {
+  mergeDependencies(self) {
 
     this.dependencies = { parents: new Set(), getters: new Set() };
 
@@ -48,6 +49,8 @@ class Process {
       getters.forEach(g => this.dependencies.getters.add(g));
 
     });
+
+    if (self) this.dependencies.parents.add(self);
 
   }
 

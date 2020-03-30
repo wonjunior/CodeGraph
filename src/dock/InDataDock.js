@@ -33,6 +33,8 @@ class InDataDock extends UniqueSocket {
     $.Execution.pipe();
     this.node.router.trigger({ accessor: this, ...payload });
     $.Execution.unindent();
+    $.Execution.log('└──/ data propagation ended');
+
 
   }
 
