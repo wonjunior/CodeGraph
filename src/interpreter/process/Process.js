@@ -12,7 +12,7 @@ class Process {
 
   }
 
-  execute(origin, allowPropagation = false, forceAccess = false) {
+  execute(origin, allowPropagation = false) {
 
     $.Execution.log(`└──> [P-${this.constructor.name}] #execute`);
     $.Execution.indent();
@@ -30,7 +30,7 @@ class Process {
 
     $.Execution.log(`└──> (4) propagating data`);
     $.Execution.indent();
-    this.propagate(origin, allowPropagation, forceAccess);
+    this.propagate(origin, allowPropagation);
     $.Execution.unindent();
 
     $.Execution.unindent();

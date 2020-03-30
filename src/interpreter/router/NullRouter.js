@@ -5,11 +5,11 @@ class NullRouter extends Router {
   /**
    * @Overrides Router#trigger
    */
-  trigger({ origin = this, updateET = true, forceETAccess = false } = {}) {
+  trigger({ origin = this, updateET = true } = {}) {
 
     $.Execution.log(`└──> [R-${this.constructor.name}] #trigger`);
     $.Execution.indent();
-    this.execute({origin, updateET, forceETAccess});
+    this.execute({ origin, updateET });
     $.Execution.unindent();
 
   }

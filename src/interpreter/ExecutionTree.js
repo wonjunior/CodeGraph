@@ -58,18 +58,17 @@ class ExecutionTree {
    *
    * @param {Router} accessor
    * @param {Router} origin
-   * @param {Boolean} forceAccess
    */
-  update(accessor, origin, forceAccess) {
+  update(accessor, origin) {
 
     $.Execution.log(`└──> [ET] ${this.constructor.name}#update()`);
     $.Execution.indent();
     $.Execution.log(`├── (1) validating access`);
 
-    const dependencies = accessor.process.dependencies;
+    const dependencies = accessor.getDependencies();
     this.fillAccessBuffer(dependencies.parents, accessor);
 
-    const validated = this.validateAccess(accessor, origin);
+    const validated = accessor.node.router == origin || this.validateAccess(accessor, origin);
 
     if (!validated) {
       $.Execution.log('└──/ access not validated, exiting.');
@@ -85,7 +84,7 @@ class ExecutionTree {
     $.Execution.indent();
     this.current = this.root;
 
-    this.execute(origin, forceAccess);
+    this.execute(origin);
 
 
     $.Execution.unindent();
@@ -102,9 +101,25 @@ class ExecutionTree {
 
   }
 
-  execute(origin, forceAccess) {
+  /**
+   *
+   * @param {ExecutionTree} other
+   */
+  merge(other) {
 
-    this.current.execute({origin, forceAccess, updateET: false});
+    if (other == null) return;
+
+    this.accessBuffer =  [...this.accessBuffer, ...other.accessBuffer].reduce((buffer, [ origin, accesses ]) => {
+
+      return buffer.set(origin, new Set([...buffer.get(origin) || [], ...accesses]));
+
+    }, new Map());
+
+  }
+
+  execute(origin) {
+
+    this.current.execute({ origin, updateET: false });
 
   }
 

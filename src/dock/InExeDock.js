@@ -14,10 +14,15 @@ class InExeDock extends UniqueSocket {
 
   }
 
-  trigger(updateET) {
+  trigger(payload) {
 
-    $.Execution.newline(); $.Execution.log(`-> exe-TRIGGERED ${this.node.router.constructor.name} id#${this.node.id} --updateET=${updateET}`)
     this.node.router.trigger();
+    /*$.Execution.log(`├──> exe propagation to ${this.node}`);
+
+    $.Execution.pipe();
+    this.node.router.trigger({accessor: this, ...payload });
+    $.Execution.unindent();
+    $.Execution.log('└──/ data propagation ended');*/
 
   }
 

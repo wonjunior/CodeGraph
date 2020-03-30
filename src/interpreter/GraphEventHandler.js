@@ -15,8 +15,17 @@ class GraphEventHandler {
 
 	handleLink(link) {
 
-		$.GraphEvent.log(`updating "${link.getOrigin().node}"`);
-		link.trigger();
+		if (link.flowType) { // linking two nodes with data-link
+
+			$.GraphEvent.log(`[data-L] triggers update on "${link.end.node}"`);
+			link.trigger();
+
+		} else { // linking two nodes with exe-link
+
+			$.GraphEvent.log(`[exe-L] triggers execution tree merge`);
+			ExecutionTree.get(link.start.router).merge(link.end.router.executionTree)
+
+		}
 
 	}
 

@@ -12,6 +12,12 @@ class Link extends GraphObject {
 
   }
 
+  get flowType() {
+
+    return this.start.isData;
+
+  }
+
   /**
    * Adds a new link object to the Canvas or edit a link if already exists
    * @param {Dock} start the dock from which the link has been pulled
