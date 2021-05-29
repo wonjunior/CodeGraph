@@ -1,0 +1,34 @@
+{
+  "name": "codegraph",
+  "version": "1.0.0",
+  "description": "Node based programming editor that allows you to create code with a visual interface.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WonJunior/CodeGraph.git"
+  },
+  "author": "Ivan Lopes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WonJunior/CodeGraph/issues"
+  },
+  "homepage": "https://github.com/WonJunior/CodeGraph#readme",
+  "devDependencies": {
+    "cloc": "^2.7.0",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-webpack-plugin": "^2.1.0",
+    "ts-loader": "^8.0.6",
+    "typescript": "^4.0.3",
+    "webpack": "^4.41.3",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}

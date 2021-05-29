@@ -1,13 +1,9 @@
-_docs
-_dump
-_test
-*.css
-*.ignore
-jsdoc.json
 node_modules
+*.ignore
 .vscode
 
-# for now: no npm (no jest or ts)
-package-lock.json
-package.json
-editor/tester.js
+jsdoc.json
+*.pdf
+*.css
+dist/*
+!dist/index.html

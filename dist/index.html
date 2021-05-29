@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Codegraph cg2022</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="media/knot.ico" />
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link rel="stylesheet" href="style/main.css">
+	<link rel="stylesheet" href="style/finder.css">
+	<link rel="stylesheet" href="style/node.css">
+</head>
+
+<body oncontextmenu="return false;">
+	<div class="window"></div>
+
+	<templates>
+
+		<template id="canvas">
+			<div class="canvas-wrapper">
+				<div class="canvas" style="transform: scale(1)">
+				<div class="objects" style="top:0;left:0;">
+					<div class="nodes"></div>
+					<div class="links"><svg height="10000" width="10000"></svg></div>
+				</div>
+				</div>
+				<div class="canvas-footer">
+				<div class="left">v0.22</div>
+				<div class="right"><span style="color:#4285f4">c</span>ode<span style="color:#ea4335">g</span>raph</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="node">
+			<div class="node-container">
+				<div class="header">
+				<div class="header-title"></div>
+				<div class="header-block">
+					<div class="left-block"></div><!--
+					--><div class="right-block"></div>
+				</div>
+				</div>
+				<div class="body">
+				<div class="background"></div>
+				<div class="left-block"></div><!--
+				--><div class="right-block"></div>
+				</div>
+			</div>
+		</template>
+
+		<template id="dock">
+		<div class="dock-container">
+			<div class="dock"></div>
+			<div class="snap-dock"></div>
+			<div class="param-container">
+			<div class="param-label"></div>
+			</div>
+		</div>
+		</template>
+
+		<template id="link">
+			<svg><path></path></svg>
+		</template>
+
+		<template id="finder">
+			<div class="finder" style="display:none">
+				<div class="search-container">
+					<input spellcheck="false" value="" type="text" class="search-input">
+					<div class="search-wrap hidden">
+						<table class="search-table"></table>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="finderResult">
+			<tr class="hidden"><td></td></tr>
+		</template>
+
+	</templates>
+	<script src="./bundle.js"></script>
+</html>
