@@ -5,7 +5,7 @@
   top: 50%;
   position: absolute;
   transform: translateY(-50%);
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
   box-sizing: border-box;
 }
@@ -29,7 +29,7 @@
 
 // ::Canvas
 .dock-container {
-  height: 35px;
+  height: 25px;
   line-height: 25px;
   margin: auto;
   position: relative;
@@ -51,9 +51,14 @@
   }
 }
 
+// optional
+// background-color: #515151;
+// border: 2px solid #14a914;
+// border-radius: 0;
+
 .exe {
   > .dock {
-    transform: rotate(45deg);
+    // transform: rotate(45deg);
     background-color: #2439a9;
     border-radius: 0px;
   }
@@ -61,14 +66,14 @@
 
 .dock {
     cursor: pointer;
-    top: ~"calc(50% - 6px)";
+    top: ~"calc(50% - 4px)";
 }
 
 .dock,
 .snap-dock {
   pointer-events: visible;
-  height: 14px;
-  width: 14px;
+  height: 12px;
+  width: 12px;
   border-radius: 8px;
   vertical-align: middle;
   position: absolute;
@@ -89,40 +94,29 @@
 
 .left {
   > .dock {
-    left: -7px;
+    left: -4px;
   }
   > .snap-dock {
-    left: -15px;
+    left: -13px;
   }
 }
 
 .right {
   > .dock {
-    right: -8px;
+    right: -5px;
   }
   > .snap-dock {
-    right: -16px;
+    right: -14px;
   }
 }
-
-// .exe {
-//   &.right {
-//     // & > .dock {
-//     // 	background-color: #2038bb;
-//     // 	border: 2px solid #FF9800;
-//     // 	border-left-width: 0;
-//     // 	border-bottom-width: 0;
-//     // }
-//   }
-// }
 
 .dock, .snap-dock {
   border: none;
 }
 
-.right > .dock {
-  right: -7px;
-}
+// .right > .dock {
+//   right: -7px;
+// }
 
 .left > .param-container > .param-label {
   margin-left: 12px;
@@ -133,11 +127,11 @@
   font-family: Consolas, 'Courier New', monospace;
   z-index: 1;
   position: absolute;
-  width: 150px;
+  width: 175px;
   box-sizing: border-box;
   transition: border 0.2s linear;
   border: 3px solid transparent;
-  border-radius: 12px 12px 8px 8px;
+  border-radius: 12px;
   border-color: transparent;
 
   &.selected {
@@ -167,16 +161,17 @@
   }
 
   > .body > .background {
-    position:  absolute;
+    position: absolute;
     font-size: 5em;
     left: 50%;
-    transform: translate(-50%);
-    bottom: 50%;
-    height: 55px;
-    width: 100%;
+    transform: translate(-50%, -50%);
+    top: 50%;
     color: #00000042;
-    text-align: center;
-    }
+    padding: 0;
+    // text-align: center;
+    vertical-align: middle;
+    float: left;
+  }
 }
 
 .body {
@@ -185,7 +180,7 @@
   pointer-events: none;
   min-height: 50px;
   padding: 8px 0px;
-  border-radius: 0px 0px 8px 8px;
+  border-radius: 0px 0px 12px 12px;
 }
 
 .right-block, .left-block {
@@ -195,7 +190,7 @@
 }
 
 .header {
-  border-radius: 8px 8px 0px 0px;
+  // border-radius: 8px 8px 0px 0px;
   border-radius: 12px 12px 0px 0px;
   background-color: rgb(56, 55, 56);
   position: relative;
@@ -204,19 +199,19 @@
   height: 100%;
   font-weight: bold;
   font-family: 'Saira Semi Condensed';
-  min-height: 40px;
-  line-height: 40px;
+  // min-height: 40px;
+  line-height: 30px;
 }
 
 .header-title {
   text-align: center;
   width: 100%;
   position: absolute;
-  margin: auto;
-  vertical-align: middle;
+  // margin: auto;
+  // vertical-align: middle;
   top: 50%;
   left: 50%;
   pointer-events:  none;
   transform: translate(-50%, -50%);
-  font-size: 17px;
+  font-size: 15px;
 }
