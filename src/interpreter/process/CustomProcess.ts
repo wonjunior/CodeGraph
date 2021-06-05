@@ -10,7 +10,6 @@ export default class CustomProcess extends Process {
 
 		this.inputs = this.createDocks(InDataDock, inputs)
 		this.outputs = this.createDocks(OutDataDock, outputs)
-
 		if (this.constructor === CustomProcess) Object.assign(this, { compute, string })
 	}
 

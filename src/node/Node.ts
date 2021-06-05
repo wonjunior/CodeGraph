@@ -18,13 +18,13 @@ export default class Node extends GraphObject {
     public element: NodeElement
     public docks: Set<Dock>
 
-    constructor(process: Process, router: Router = new NullRouter(), graph: Graph, params: NodeParams) { //? types
+    constructor(process: Process, router: Router | null, graph: Graph, params: NodeParams) { //? types
         //? can you pass the process to the router's constructor?
         super()
 
         this.graph = graph
         this.process = process
-        this.router = router
+        this.router = router || new NullRouter()
         this.router.process = this.process
 
         this.bindDocks()
@@ -47,11 +47,11 @@ export default class Node extends GraphObject {
      * This method updates all links connected to the node.
      */
     update() {
-        this.docks.forEach(dock => dock.update())
+        // this.docks.forEach(dock => dock.update())
     }
 
     destroy() {
-        this.docks.forEach(dock => dock.destroy())
+        // this.docks.forEach(dock => dock.destroy())
         this.graph.unregister(this)
         this.element.remove()
     }

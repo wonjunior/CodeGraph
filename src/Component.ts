@@ -1,9 +1,11 @@
 import Graph from '@/Graph'
 import Node from '@/node/Node'
-import { ComponentParams, NodeCstr } from '@/node/interfaces'
+import { ComponentParams } from '@/node/interfaces'
+
+type Klass = new (graph: Graph, args: ComponentParams) => Node
 
 export default class Component {
-	constructor(private cstr: NodeCstr, private args: ComponentParams) {}
+	constructor(private cstr: Klass, private args: ComponentParams) {}
 
 	instanciate(graph: Graph): Node {
 		return new this.cstr(graph, this.args)

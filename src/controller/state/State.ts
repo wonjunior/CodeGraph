@@ -1,11 +1,12 @@
 // import $ from '@/ConsoleWriter'
+import { assert } from '@/utils'
 import { MouseButton } from '../MouseCode'
 
 type StateData = {[k: string]: string} //? string val?
 type Events = {[k: string]: Function}
 
 export interface StateDef {
-    id: Symbol,
+    id: symbol,
     keybinds: Events,
     mousebinds: {
         all?: { on?: Events, off?: Events },
@@ -38,8 +39,8 @@ export class State {
      * @param symbol the identifier of the state
      * @param data the object that can be passed to the new state
      */
-    static change(symbol: Symbol, data: StateData = {}) {
-        if (!State.all.has(symbol)) throw new Error(`The provided id (${symbol}) doesn't exist`)
+    static change(symbol: symbol, data: StateData = {}) {
+        assert(State.all.has(symbol), `The provided id (${String(symbol)}) doesn't exist`)
 
         // $.State.log(`state changed to ${State.all.get(symbol).id.toString()}`)
         State.current = { ...(State.all.get(symbol) as StateDef), data }

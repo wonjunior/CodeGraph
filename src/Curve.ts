@@ -15,8 +15,8 @@ export default class Curve {
 
 	/**
 	 * Generates the svg path string expression representing a curve.
-	 * @param {*} param0
-	 * @param {*} param1
+	 * @param [x1, y1] start position
+	 * @param [x2, y2] end position
 	 */
 	static calculate([x1, y1]: Pair<number>, [x2, y2]: Pair<number>) {
 		const Xdiff = Math.abs(x2 - x1)

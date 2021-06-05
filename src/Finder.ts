@@ -1,6 +1,6 @@
 
 export default class Finder {
-	public static state: Symbol
+	public static state: symbol
 
 // 	get visible() {
 // 		return this.finderElement.style.display != 'none'

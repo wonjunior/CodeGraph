@@ -1,11 +1,14 @@
 import Graph from '@/Graph'
+import { SetterParams } from '@/interpreter/interfaces'
+import CustomProcess from '@/interpreter/process/CustomProcess'
 import SetterProcess from '@/interpreter/process/SetterProcess'
 import DefaultRouter from '@/interpreter/router/DefaultRouter'
-import { NodeParams } from '@/node/interfaces'
+import { ComponentParams } from '@/node/interfaces'
 import Node from './Node'
 
 export default class SetterNode extends Node {
-    constructor(graph: Graph, args: NodeParams) { //? ???
-        super(new SetterProcess('c'), new DefaultRouter(), graph, args) //? "c"
+    constructor(graph: Graph, { process, ...nargs }: ComponentParams) {
+        const { compute, string, params } = process as SetterParams
+        super(new CustomProcess(compute, string, params, []), null, graph, nargs)
     }
 }

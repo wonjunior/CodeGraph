@@ -9,7 +9,8 @@ export default class InExeDock extends UniqueSocket {
     // private router: Router
 
     get ancestor(): OutExeDock {
-        return (this.link ? this.link.origin : EmptyDock) as OutExeDock //? Link<ExeDock> would make is easier
+        return <OutExeDock>{}
+        // return (this.link ? this.link.origin : EmptyDock) as OutExeDock //? Link<ExeDock> would make is easier
     }
 
     constructor(label: string, location: string) {

@@ -8,11 +8,14 @@ export type Docks = Array<Dock>
 
 export enum FlowType { DATA = 'data', EXE = 'exe' }
 
+export enum DataType { INT, STR, LIST, DICT, TENSOR, MODULE }
 
 export enum DockSide { LEFT = 'left', RIGHT = 'right' }
 
 export interface DockDef {
     label: string,
+    optional?: boolean,
+
 }
 
 export interface DockParams {
