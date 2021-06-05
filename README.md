@@ -1,17 +1,9 @@
 
-# <span style="color:#4285f4">C</span>ode<span style="color:#ea4335">G</span>raph [![GitHub version](https://img.shields.io/static/v1?label=version&message=cg2020&color=green)](https://badge.fury.io/gh/WonJunior%2FCodeGraph)[](https://reposs.herokuapp.com/?path=WonJunior/CodeGraph&color=ff69b4) [![GitHub issues open](https://img.shields.io/github/issues/WonJunior/CodeGraph.svg?colorB=0576b7)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# <span style="color:#4285f4">C</span>ode<span style="color:#ea4335">G</span>raph [![GitHub version](https://img.shields.io/static/v1?label=version&message=cg2020&color=green)](https://badge.fury.io/gh/WonJunior%2FCodeGraph)[](https://reposs.herokuapp.com/?path=WonJunior/CodeGraph&color=ff69b4) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Node based programming editor** to create code with a visual interface.
 
-This is very much a work in progress!
-
-Good progress was made in the first quarter of 2020. However, for the time being the development of CodeGraph is discontinued until further notice. 
-
-Many things, that I wish were here have yet to be implemented... Most of all what I wish for in 2021 is to see this:
-
-![doit](https://i.stack.imgur.com/klxdE.png)
-
-*(updated on November 7, 2020)*
+This is very much a work in progress! Objective for 2021/2022 has shifted towards building a Pytorch binding through a Python kernel.
 
 Read **[specs.pdf](./specs.pdf)** for a full description of the project.
 
