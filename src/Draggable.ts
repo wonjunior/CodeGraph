@@ -13,16 +13,16 @@ interface DragOptions {
     callback: Function
 }
 
-interface MousePosition {
+export interface MousePosition {
     clientX: number,
     clientY: number
 }
 
-enum DragType {
+export enum DragType {
     DRAG, STICK
 }
 
-export default class Draggable {
+export class Draggable {
     public element: HTMLElement
     public object: Element
     public callback: Function
@@ -30,7 +30,8 @@ export default class Draggable {
     private offset: Pair<number>
 
     constructor({ type, position, element, object, zoom, callback }: DragOptions) {
-         // <? just setter position
+        console.log('Draggable', type, element, object, zoom)
+        // <? just setter position
 
          // $.Draggable.log(`┌── Starting dragging`, element)
         this.element = element

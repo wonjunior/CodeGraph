@@ -3,10 +3,21 @@
 // import Graph from '@/Graph'
 // import Linkable from '@/Linkable'
 // import Editor from '@/Editor'
+import { Draggable, DragType, MousePosition } from '@/Draggable'
+import Graph from '@/Graph'
+import GraphObject from '@/GraphObject'
+import Node from '@/node/Node'
 import { MouseButton } from '../MouseCode'
+import { State as Bindings } from './interfaces'
 // import { StateManager } from './StateManager'
 
-export const EditorDefaultState =  {
+export interface EditorEventPayload {
+    event: Event,
+    graph: Graph,
+    object: GraphObject,
+}
+
+export const EditorDefaultState: Bindings =  {
     keybinds: {
         KeyQ: () => { console.log('yeah') },
         Shift_KeyQ: () => { console.log('no!!') },
@@ -44,21 +55,18 @@ export const EditorDefaultState =  {
 
         [MouseButton.LEFT]: {
             on: {
+                '.header': (event: MousePosition, { graph, object }: { graph: Graph, object: Node }) => {
+                    new Draggable({
+                        position: event,
+                        type: DragType.DRAG,
+                        element: object.element.container,
+                        object: object.element,
+                        zoom: graph.canvas.zoom,
+                        callback: object.update.bind(object),
+                    })
+                },
                 // '.node-container': ({ target }) => {
                 //     target.classList.toggle('selected')
-                // },
-
-                // '.header': ({ target },
-                //             graph = Graph.get(target),
-                //             node = graph.get(target)) => {
-                //     new Draggable({
-                //         event,
-                //         type: 'drag',
-                //         element: node.element.container,
-                //         object: node.element,
-                //         canvasZoom: graph.canvas.zoom,
-                //         callback: node.update.bind(node),
-                //     })
                 // },
 
                 // '.snap-dock': ({ target }, graph = Graph.get(target)) => {
