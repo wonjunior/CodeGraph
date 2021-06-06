@@ -1,21 +1,21 @@
-import Finder from '@/Finder'
-import { State } from './State'
+// import Finder from '@/Finder'
+// import { StateManager } from './StateManager'
 
-Finder.state = Symbol('finder')
+// Finder.state = Symbol('finder')
 
-export default new State({
-    id: Finder.state,
+// export default new StateManager({
+//     id: Finder.state,
 
-    keybinds: {
-        // 'escape': () => nodeFinder.hide(),
-        // 'alphabet': event => nodeFinder.search(event.target.value),
-    },
+//     keybinds: {
+//         // 'escape': () => nodeFinder.hide(),
+//         // 'alphabet': event => nodeFinder.search(event.target.value),
+//     },
 
-    mousebinds: {
-        all: {
-            off: {
-                // '.search-container': () => nodeFinder.hide()
-            }
-        }
-    }
-})
+//     mousebinds: {
+//         all: {
+//             off: {
+//                 // '.search-container': () => nodeFinder.hide()
+//             }
+//         }
+//     }
+// })

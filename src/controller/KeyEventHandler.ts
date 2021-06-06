@@ -1,8 +1,8 @@
 import { KeyCode } from './KeyCode'
-import { StateDef } from './state/State'
+import { State } from './state/interfaces'
 
 export default class KeyEventHandler {
-    constructor(event: KeyboardEvent, public state: StateDef) {
+    constructor(event: KeyboardEvent, public state: State) {
         const keyName = KeyCode.get(event)
         if (!keyName) return
 

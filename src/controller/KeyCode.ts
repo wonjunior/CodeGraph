@@ -6,7 +6,7 @@ export class KeyCode {
     /**
      * Gives the key combination name corresponding to provided Event.
      */
-    static get({ key, ctrlKey, shiftKey, altKey }: KeyboardEvent) {
-        return `${ctrlKey ? 'ctrl_' : ''}${shiftKey ? 'shift_' : ''}${altKey ? 'alt_' : ''}${key}`
+    static get({ code, ctrlKey, shiftKey, altKey }: KeyboardEvent) {
+        return `${ctrlKey ? 'Ctrl_' : ''}${shiftKey ? 'Shift_' : ''}${altKey ? 'Alt_' : ''}${code}`
     }
 }

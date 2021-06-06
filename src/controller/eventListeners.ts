@@ -1,19 +1,19 @@
 import KeyEventHandler from './KeyEventHandler'
 import { MouseEventHandler } from './MouseEventHandler'
 import MouseWheelEventHandler from './MouseWheelEventHandler'
-import { State } from './state/State'
+import { StateManager } from './state/StateManager'
 
 // captures all keyboard input on the document
 document.addEventListener('keyup', event => {
-    new KeyEventHandler(event, State.current)
+    new KeyEventHandler(event, StateManager.current)
 })
 
 // captures all mouse button clicks on the document
 document.addEventListener('mousedown', event => {
-    new MouseEventHandler(event, State.current)
+    new MouseEventHandler(event, StateManager.current)
 })
 
 // captures all mouse wheel actions on the document
 document.addEventListener('wheel', event => {
-    new MouseWheelEventHandler(event, State.current)
+    new MouseWheelEventHandler(event, StateManager.current)
 })

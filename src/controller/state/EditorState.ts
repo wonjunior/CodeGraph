@@ -2,26 +2,17 @@
 // import Draggable from '@/Draggable'
 // import Graph from '@/Graph'
 // import Linkable from '@/Linkable'
-import Editor from '@/Editor'
-import { print } from '@/utils'
+// import Editor from '@/Editor'
 import { MouseButton } from '../MouseCode'
-import { State } from './State'
+// import { StateManager } from './StateManager'
 
-Editor.state = {
-  default: Symbol('editorDefaultState'),
-}
-
-export default new State({
-    id: Editor.state.default,
-
+export const EditorDefaultState =  {
     keybinds: {
+        KeyQ: () => { console.log('yeah') },
+        Shift_KeyQ: () => { console.log('no!!') },
         // spacebar: () => nodeFinder.show(),
 
-        ctrl_shift_spacebar: () => print('nope'),
-
-        tab: function(event: Event) {
-            event.preventDefault()
-        }
+        Ctrl_Shift_Space: () => console.log('nope'),
     },
 
     mousebinds: {
@@ -81,6 +72,4 @@ export default new State({
             },
         }
     }
-})
-
-State.change(Editor.state.default)
+}

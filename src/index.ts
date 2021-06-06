@@ -1,34 +1,37 @@
 import Component from '@/Component'
 import Graph from '@/Graph'
 import { assert } from '@/utils'
-
-import KeyEventHandler from '@/controller/KeyEventHandler'
-// import { MouseEventHandler } from '@/controller/MouseEventHandler'
-// import MouseWheelEventHandler from '@/controller/MouseWheelEventHandler'
-import { State } from '@/controller/state/State'
 import SetterNode from './node/SetterNode'
 
+// import KeyEventHandler from '@/controller/KeyEventHandler'
+// import { MouseEventHandler } from '@/controller/MouseEventHandler'
+// import MouseWheelEventHandler from '@/controller/MouseWheelEventHandler'
+// import { StateManager } from '@/controller/state/StateManager'
+// import Editor from './Editor'
+// import { EditorDefaultState } from './controller/state/EditorState'
+// import { MouseEventHandler } from './controller/MouseEventHandler'
+
 // captures all keyboard input on the document
-document.addEventListener('keyup', event => {
-	console.log(State.current)
-    new KeyEventHandler(event, State.current)
+document.addEventListener('keydown', event => {
+	if (event.code == 'Tab') event.preventDefault()
 })
 
-// // captures all mouse button clicks on the document
-// document.addEventListener('mousedown', event => {
-//     new MouseEventHandler(event, State.current)
-// })
+
 
 // // captures all mouse wheel actions on the document
 // document.addEventListener('wheel', event => {
 //     new MouseWheelEventHandler(event, State.current)
 // })
 
+// new Editor
+// new StateManager(Editor.state.default, EditorDefaultState)
+// StateManager.change(Editor.state.default)
+
 const element = document.querySelector('.window') as HTMLElement
 assert(element)
 
 const graph = new Graph(element)
-console.log(graph)
+
 
 // in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=True, padding_mode='zeros'
 
