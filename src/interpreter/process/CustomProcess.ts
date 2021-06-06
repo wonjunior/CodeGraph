@@ -4,8 +4,11 @@ import InDataDock from '@/dock/InDataDock'
 import OutDataDock from '@/dock/OutDataDock'
 import Process from './Process'
 
+type ComputeFn = ((...args: unknown[]) => void) | null
+type StringFn = ((...args: unknown[]) => string) | null
+
 export default class CustomProcess extends Process {
-	constructor(compute: Function|null, string: Function|null, inputs: DockDef[], outputs: DockDef[]) {
+	constructor(compute: ComputeFn, string: StringFn, inputs: DockDef[], outputs: DockDef[]) {
 		super()
 
 		this.inputs = this.createDocks(InDataDock, inputs)

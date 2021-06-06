@@ -19,7 +19,7 @@ export default class ExecutionTree {
         this.root = root
     }
 
-    update(accessor: InDataDock, origin: Router) {
+    update(accessor: InDataDock, origin: Router): void {
         // $.Execution.log(`└──> [ET] ${this.constructor.name}#update()`)
         // $.Execution.indent()
         // $.Execution.log(`├── (1) validating access`)
@@ -61,7 +61,7 @@ export default class ExecutionTree {
         })
     }
 
-    validateAccess(accessor: InDataDock, origin: Router) {
+    validateAccess(accessor: InDataDock, origin: Router): boolean {
         // print('this.accessBuffer', this.accessBuffer, 'origin', origin)
         // print('1st cond.:', !this.active.origin)
         if (!this.active.origin) {
@@ -76,16 +76,18 @@ export default class ExecutionTree {
             this.active.origin = this.active.accessors.size ? this.active.origin : null
             return !this.active.origin
         }
+
+        return false
     }
 
-    merge(other: ExecutionTree) {
+    merge(other: ExecutionTree): void {
         if (other == null) return;
         this.accessBuffer =  [...this.accessBuffer, ...other.accessBuffer].reduce((buffer, [ origin, accesses ]) => {
             return buffer.set(origin, new Set([...buffer.get(origin) || [], ...accesses]))
         }, new Map())
     }
 
-    execute(origin: Router) {
+    execute(origin: Router): void {
         // this.current.execute({ origin, updateET: false })
     }
 
@@ -93,7 +95,7 @@ export default class ExecutionTree {
         return this.current
     }
 
-    toString() {
+    toString(): string {
         return `ExecutionTree (scope=Map[${[...this.scope.keys()]}])`
     }
 }

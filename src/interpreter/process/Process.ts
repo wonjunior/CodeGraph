@@ -32,7 +32,7 @@ export default class Process { //? abstract?
 
         // $.Execution.log(`└──> (4) propagating data`)
         // $.Execution.indent()
-        this.propagate(origin, allowPropagation)
+        // this.propagate(origin, allowPropagation)
         // $.Execution.unindent()
 
         // $.Execution.unindent()
@@ -74,9 +74,9 @@ export default class Process { //? abstract?
         // this.outputs.forEach(output => output.setValue(this.result))
     }
 
-    propagate(payload: Object, allowPropagation: boolean) { //? not used!
+    // propagate(payload: Object, allowPropagation: boolean) { //? not used!
         // this.outputs.forEach(output => output.propagate(payload))
-    }
+    // }
 
     compute() {
         throw `compute() not set on Process ${this}`

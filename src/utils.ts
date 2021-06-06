@@ -52,7 +52,7 @@ export function zip<T extends any[]>(...arrays: T): Zip<T>[] {
 /**
  * Convert single values and two-value arrays into a tuple pair.
  */
-export function pair<T>(x: T, y?: T) {
+export function pair<T>(x: T, y?: T): Pair<T> {
     return (y === null ? [x, x] : [x, y]) as Pair<T>
 }
 
@@ -63,7 +63,7 @@ export function pair<T>(x: T, y?: T) {
 /**
  * Clamps input value inside given [`min`, `max`] range.
  */
-export function clamp(x: number, min: number, max: number) {
+export function clamp(x: number, min: number, max: number): number {
     return x > max ? max : (x < min ? min : x)
 }
 
@@ -87,6 +87,6 @@ export function toAlphabet(i: number): string {
  * @param shift
  * @param scale
  */
-export function normalize([x, shift, scale]: [number, number, number]) {
+export function normalize([x, shift, scale]: [number, number, number]): number {
     return (x - shift) / scale
 }

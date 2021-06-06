@@ -57,7 +57,7 @@ export default class Link extends GraphObject {
 		this.end = end
 		this.end.popExisting().addLink(this)
 		if (this.end.side == DockSide.RIGHT) this.swapDocks()
-		this.graph.eventHandler.handle(this)
+		// this.graph.eventHandler.handle(this)
 	}
 
 	/**
