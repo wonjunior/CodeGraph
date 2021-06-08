@@ -9,23 +9,20 @@ import Socket from './dock/Socket'
  * instance  is created and takes care of initiating and closing mouse events.
  */
 export default class Linkable {
-	public link: Link
 	/**
-	 * {Dock} the dock on which the link is snapped
+	 * The dock the link is snapped to, i.e. not the dock the link originates from.
 	 */
 	private snapped: Dock | null = null
+	private link: Link
 
 	/**
 	 * Creates a new event handler for the linking behavior and initiates the mouse event listeners.
-	 * @param event the event that triggered Linkable
-	 * @param start the dock from which the event is initiated
-	 * @param graph
 	 */
 	constructor(event: MouseEvent, start: Dock, public graph: Graph) {
 		this.link = Link.get(<Socket> start, graph)
 
 		this.mouseMove(event)
-		document.addEventListener('mousemove', this.mouseMove)
+		document.addEventListener('mousemove', this.mouseMove) //# use EventHandler
 		document.addEventListener('mouseup', this.mouseUp, { once: true })
 	}
 

@@ -25,9 +25,8 @@ export default class Graph {
 	private nodes = new Set<Node>()
 	public canvas: Canvas
 	public store = new GraphObjectStore()
-	// public graphEventHandler = new GraphEventHandler()
-
 	private eventHandler: EventHandler<UserInputPayload>
+	// public graphEventHandler = new GraphEventHandler()
 
 	// public static get(key: HTMLElement): Graph {
 	// 	const canvas = CanvasElement.closestCanvas(key)
@@ -36,28 +35,17 @@ export default class Graph {
 	// 	// return <Graph>Graph.all.get(key) || Graph.all.get(canvas) //? for now cast
 	// }
 
-	public resolver(target: EventTarget | null): UserInputPayload {
-		assert(target)
+	private resolver = (target?: EventTarget | null | undefined): UserInputPayload => {
 		return { graph: this, object: this.store.get(<HTMLElement>target) }
 	}
 
-	constructor(canvasParent: HTMLElement) {
-		this.canvas = new Canvas(canvasParent)
-		// Graph.all.set(this.canvas.element.positionWrapper, this)
+	private get eventReceiver(): HTMLElement {
+		return this.canvas.element.container
+	}
 
-		this.eventHandler = new EventHandler(EditorDefaultState, this.canvas.element.container, this.resolver.bind(this))
-
-		// this.keyEventHandler = new KeyEventHandler(EditorDefaultState.keybinds, Editor)
-		// this.mouseEventHandler = new MouseEventHandler(EditorDefaultState.mousebinds)
-
-		// this.canvas.element.container.addEventListener('keyup', event => {
-		// 	console.log(event)
-		// 	this.keyEventHandler.call(event)
-		// })
-
-		// document.addEventListener('mousedown', event => {
-		// 	new MouseEventHandler(event, StateManager.current)
-		// })
+	constructor(parent: HTMLElement) {
+		this.canvas = new Canvas(parent)
+		this.eventHandler = new EventHandler(EditorDefaultState, this.eventReceiver, this.resolver)
 	}
 
 	add(component: Component): Node {

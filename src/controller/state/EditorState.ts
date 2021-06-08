@@ -3,9 +3,11 @@
 // import Graph from '@/Graph'
 // import Linkable from '@/Linkable'
 // import Editor from '@/Editor'
+import Dock from '@/dock/Dock'
 import { Draggable, DragType, MousePosition } from '@/Draggable'
 import Graph from '@/Graph'
 import GraphObject from '@/GraphObject'
+import Linkable from '@/Linkable'
 import Node from '@/node/Node'
 import { MouseButton } from '../MouseCode'
 import { State as Bindings } from './interfaces'
@@ -17,6 +19,7 @@ export interface EditorEventPayload {
     object: GraphObject,
 }
 
+//# ultimately I don't want to see a single css selector here, yikers. enum mapping would be a quick fix...
 export const EditorDefaultState: Bindings =  {
     keybinds: {
         KeyQ: () => { console.log('yeah') },
@@ -65,13 +68,14 @@ export const EditorDefaultState: Bindings =  {
                         callback: object.update.bind(object),
                     })
                 },
+
                 // '.node-container': ({ target }) => {
                 //     target.classList.toggle('selected')
                 // },
 
-                // '.snap-dock': ({ target }, graph = Graph.get(target)) => {
-                //     new Linkable(event, graph.get(target), graph)
-                // },
+                '.snap-dock': (event: MouseEvent, { graph, object }: { graph: Graph, object: Dock }) => {
+                    new Linkable(event, object, graph)
+                },
 
                 // // --debug = links need an exact mouse click on the element, we will need a ghost element
                 // 'path': ({ target }) => {

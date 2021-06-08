@@ -2,37 +2,71 @@ import GraphObject from '@/GraphObject'
 import { assert } from '@/utils'
 import KeyEventHandler from './KeyEventHandler'
 import { MouseEventHandler } from './MouseEventHandler'
-import { State } from './state/interfaces'
+import { State as Bindings, SingleEvent, EventType } from './state/interfaces'
+
 
 export default class EventHandler<T> {
 	private keyEventHandler?: KeyEventHandler
 	private mouseEventHandler?: MouseEventHandler
+	private mousemoveEventHandler?: SingleEvent
+	private mouseupEventHandler?: SingleEvent
 
-	constructor(state: State, element: HTMLElement, resolver: (target: Element | null) => T) {
-		if ('keybinds' in state) {
-			this.keyEventHandler = new KeyEventHandler(state.keybinds)
-			element.addEventListener('keyup', event => {
-				this.keyEventHandler!.call(event)
-			})
+	public removeEventListener(type: EventType): void {
+		this.element.removeEventListener(type, this[type])
+	}
+
+	constructor(binds: Bindings, private element: HTMLElement,
+		private resolver: (target?: Element | null) => T) {
+
+		if (binds.keybinds) {
+			this.keyEventHandler = new KeyEventHandler(binds.keybinds)
+			element.addEventListener(EventType.KEYUP, this.keyup)
 		}
 
-		if ('mousebinds' in state) {
-			this.mouseEventHandler = new MouseEventHandler(state.mousebinds)
-			element.addEventListener('mousedown', event => {
-				// resolver should not be applied on event.target but on the match returned by the
-				// eventHanlder which can bubble up, which ultimately ends up with a  different target
-				const match = this.mouseEventHandler!.call(event)
-				if (match) match.callback(event, resolver(match.target))
-			})
+		if (binds.mousebinds) {
+			this.mouseEventHandler = new MouseEventHandler(binds.mousebinds)
+			element.addEventListener(EventType.MOUSEDOWN, this.mousedown)
 		}
 
-		//this.canvas.element.container.addEventListener('keyup', event => {
-			// 	console.log(event)
-			// 	this.keyEventHandler.call(event)
-			// })
+		if (binds.mousemove) {
+			this.mousemoveEventHandler = binds.mousemove
+			element.addEventListener(EventType.MOUSEMOVE, this.mousemove)
+		}
 
-			// document.addEventListener('mousedown', event => {
-			// 	new MouseEventHandler(event, StateManager.current)
-			// })
+		if (binds.mouseup) {
+			this.mouseupEventHandler = binds.mouseup
+			element.addEventListener(EventType.MOUSEUP, this.mouseup)
+		}
+	}
+
+
+	// All non-null assertions have been replaced with explicit assert() calls. In any case if a
+	// [EventType] method has been called, then the associated handler *has* been initialized in the
+	// constructor and is therefore accessible. Might disable the no-non-null-assertion rule though.
+
+	private [EventType.KEYUP] = (event: Event) => {
+		assert(this.keyEventHandler)
+		this.keyEventHandler.call(<KeyboardEvent> event)
+	}
+
+	private [EventType.MOUSEDOWN] = (event: Event) => {
+		assert(this.mouseEventHandler)
+		// Resolver should not be applied on event.target but on the match returned by the
+		// eventHandler. This is because events can bubble up, which ultimately, will end
+		// up getting caught on a different event target.
+		const match = this.mouseEventHandler.call(<MouseEvent> event)
+		if (match) match.callback(event, this.resolver(match.target))
+	}
+
+	private [EventType.MOUSEMOVE] = (event: Event) => {
+		assert(this.mousemoveEventHandler)
+		this.mousemoveEventHandler.callback(event, this.resolver())
+	}
+
+	private [EventType.MOUSEUP] = (event: Event) => {
+		assert(this.mouseupEventHandler)
+		const { callback, once } = this.mouseupEventHandler
+		callback(event, this.resolver())
+		if (once) this.element.removeEventListener('mouseup', this.mouseup)
 	}
 }
