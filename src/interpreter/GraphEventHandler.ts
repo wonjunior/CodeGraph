@@ -2,7 +2,7 @@ import { FlowType } from '@/dock/interfaces'
 import Link from '@/Link'
 import { assert } from '@/utils'
 
-export default class GraphEventHandler {
+export default class GraphEventHandler { //# rename
 	handle(object: unknown): void {
 		if (object instanceof Link) return this.handleLink(object)
 		assert(false)

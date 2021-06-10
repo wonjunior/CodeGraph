@@ -4,23 +4,20 @@
 // import Linkable from '@/Linkable'
 // import Editor from '@/Editor'
 import Dock from '@/dock/Dock'
+import Socket from '@/dock/Socket'
 import { Draggable, DragType, MousePosition } from '@/Draggable'
-import Graph from '@/Graph'
+import { GraphInputEvent } from '@/GraphEventHandler'
 import GraphObject from '@/GraphObject'
 import Linkable from '@/Linkable'
 import Node from '@/node/Node'
 import { MouseButton } from '../MouseCode'
-import { State as Bindings } from './interfaces'
+import { Bindings as Bindings } from './interfaces'
 // import { StateManager } from './StateManager'
 
-export interface EditorEventPayload {
-    event: Event,
-    graph: Graph,
-    object: GraphObject,
-}
 
 //# ultimately I don't want to see a single css selector here, yikers. enum mapping would be a quick fix...
-export const EditorDefaultState: Bindings =  {
+//# { on: { [GraphObjectType.NODE]: (event: MouseEvent, { object, graph }: {Node, graph})?
+export const EditorDefaultState: Bindings<GraphInputEvent> =  {
     keybinds: {
         KeyQ: () => { console.log('yeah') },
         Shift_KeyQ: () => { console.log('no!!') },
@@ -58,14 +55,15 @@ export const EditorDefaultState: Bindings =  {
 
         [MouseButton.LEFT]: {
             on: {
-                '.header': (event: MousePosition, { graph, object }: { graph: Graph, object: Node }) => {
+                '.header': (event: MouseEvent, { graph, object }: GraphInputEvent) => {
+                    const node = <Node> object
                     new Draggable({
                         position: event,
                         type: DragType.DRAG,
-                        element: object.element.container,
-                        object: object.element,
+                        element: node.element.container,
+                        object: node.element,
                         zoom: graph.canvas.zoom,
-                        callback: object.update.bind(object),
+                        callback: node.update.bind(object),
                     })
                 },
 
@@ -73,8 +71,8 @@ export const EditorDefaultState: Bindings =  {
                 //     target.classList.toggle('selected')
                 // },
 
-                '.snap-dock': (event: MouseEvent, { graph, object }: { graph: Graph, object: Dock }) => {
-                    new Linkable(event, object, graph)
+                '.snap-dock': (event: MouseEvent, { graph, object, eventHandler }: GraphInputEvent) => {
+                    new Linkable(event, <Socket> object, graph, eventHandler)
                 },
 
                 // // --debug = links need an exact mouse click on the element, we will need a ghost element

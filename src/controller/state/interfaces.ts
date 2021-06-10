@@ -1,34 +1,33 @@
 import { MouseButton } from '../MouseCode'
 
-export type StateData = {[k: string]: string} //? string val?
 
-type Events = {[k: string]: Function}
+export type MouseEventCallbacks<T> = { [k: string]: (event: MouseEvent, payload: T) => void }
+export type KeyEventCallbacks = { [k: string]: (event: KeyboardEvent) => void }
 
 export interface SingleEvent {
     callback: Function,
-    once: boolean,
+    once?: boolean,
 }
 
-export interface Mousebinds {
-    all?: { on?: Events, off?: Events },
-    [MouseButton.MIDDLE]?: Events, // might separate from Mousebinds
-    [MouseButton.RIGHT]?: { on?: Events, off?: Events },
-    [MouseButton.LEFT]?: { on?: Events, off?: Events },
+export interface Mousebinds<T> {
+    all?: { on?: MouseEventCallbacks<T>, off?: MouseEventCallbacks<T> },
+    [MouseButton.MIDDLE]?: MouseEventCallbacks<T>, // might separate from Mousebinds
+    [MouseButton.RIGHT]?: { on?: MouseEventCallbacks<T>, off?: MouseEventCallbacks<T> },
+    [MouseButton.LEFT]?: { on?: MouseEventCallbacks<T>, off?: MouseEventCallbacks<T> },
 }
 
-export type Keybinds = Events
+export type Keybinds = KeyEventCallbacks
 
-export interface State {
-    keybinds?: Events,
-    mousebinds?: Mousebinds,
+export interface Bindings<T> {
+    keybinds?: Keybinds,
+    mousebinds?: Mousebinds<T>,
     mousemove?: SingleEvent,
     mouseup?: SingleEvent,
-    data?: StateData,
 }
 
 export enum EventType {
     MOUSEMOVE = 'mousemove',
-    MOUSEUP = 'mouseup',
     MOUSEDOWN = 'mousedown',
+    MOUSEUP = 'mouseup',
     KEYUP = 'keyup',
 }

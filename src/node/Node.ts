@@ -31,13 +31,14 @@ export default class Node extends GraphObject {
 
         const dockElements = [...this.docks].map(({element}) => element)
         this.element = new NodeElement(dockElements, graph.canvas, params)
-        this.graph.store.bind(this.element.header, this)
+
+        // this.graph.store.bind(this.element.header, this) //# should be called by instanciater in Component
     }
 
     bindDocks() {
         this.docks = new Set([...this.process.docks, ...this.router.docks])
-        this.docks.forEach(dock => this.graph.store.bind(<HTMLElement>dock.element.snap, dock))
-        this.docks.forEach(dock => dock.node = this)
+        // this.docks.forEach(dock => this.graph.store.bind(<HTMLElement>dock.element.snap, dock))
+        // this.docks.forEach(dock => dock.node = this)
 
         // this.process.docks.forEach(dock => dock.process = this.process)
         // this.router.docks.forEach(dock => dock.router = this.router)

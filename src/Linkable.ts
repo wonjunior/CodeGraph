@@ -2,7 +2,10 @@ import Dock from '@/dock/Dock'
 import Graph from '@/Graph'
 import Link from '@/Link'
 import { assert } from '@/utils'
+import EventHandler from './controller/EventHandler'
+import { EventType } from './controller/state/interfaces'
 import Socket from './dock/Socket'
+import { GraphInputEvent, HandlerParams } from './GraphEventHandler'
 
 /**
  * Handles the dragging behavior of links in UI. When a user is interacting with a link a new
@@ -14,16 +17,19 @@ export default class Linkable {
 	 */
 	private snapped: Dock | null = null
 	private link: Link
+	private eventHandler: EventHandler<GraphInputEvent>
 
 	/**
 	 * Creates a new event handler for the linking behavior and initiates the mouse event listeners.
 	 */
-	constructor(event: MouseEvent, start: Dock, public graph: Graph) {
-		this.link = Link.get(<Socket> start, graph)
+	constructor(event: MouseEvent, start: Socket, public graph: Graph, { receiver, resolver }: HandlerParams) { //# rename eventHandler
+		this.link = Link.get(start, graph)
 
 		this.mouseMove(event)
-		document.addEventListener('mousemove', this.mouseMove) //# use EventHandler
-		document.addEventListener('mouseup', this.mouseUp, { once: true })
+		this.eventHandler = new EventHandler<GraphInputEvent>({
+			mousemove: { callback: this.mouseMove },
+			mouseup: { callback: this.mouseUp, once: true },
+		}, receiver, resolver)
 	}
 
 	/**
@@ -33,13 +39,12 @@ export default class Linkable {
 		this.insideSnapArea(event) ? this.mouseIn(event) : this.mouseOut(event)
 	}
 
-
 	/**
 	 * {Event callback} Executed when mouse button gets released.
 	 */
 	private mouseUp = (): void => {
 		this.snapped ? this.mouseUpIn() : this.mouseUpOut()
-		document.removeEventListener('mousemove', this.mouseMove)
+		this.eventHandler.removeEventListener(EventType.MOUSEMOVE)
 	}
 
 	/**

@@ -90,3 +90,8 @@ export function toAlphabet(i: number): string {
 export function normalize([x, shift, scale]: [number, number, number]): number {
     return (x - shift) / scale
 }
+
+/**
+ * As the name implies, it won't do much... I think
+ */
+export function identity(): void {}

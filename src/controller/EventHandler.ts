@@ -2,12 +2,12 @@ import GraphObject from '@/GraphObject'
 import { assert } from '@/utils'
 import KeyEventHandler from './KeyEventHandler'
 import { MouseEventHandler } from './MouseEventHandler'
-import { State as Bindings, SingleEvent, EventType } from './state/interfaces'
+import { Bindings as Bindings, SingleEvent, EventType } from './state/interfaces'
 
 
 export default class EventHandler<T> {
 	private keyEventHandler?: KeyEventHandler
-	private mouseEventHandler?: MouseEventHandler
+	private mouseEventHandler?: MouseEventHandler<T>
 	private mousemoveEventHandler?: SingleEvent
 	private mouseupEventHandler?: SingleEvent
 
@@ -15,7 +15,7 @@ export default class EventHandler<T> {
 		this.element.removeEventListener(type, this[type])
 	}
 
-	constructor(binds: Bindings, private element: HTMLElement,
+	constructor(binds: Bindings<T>, private element: HTMLElement,
 		private resolver: (target?: Element | null) => T) {
 
 		if (binds.keybinds) {
@@ -24,7 +24,7 @@ export default class EventHandler<T> {
 		}
 
 		if (binds.mousebinds) {
-			this.mouseEventHandler = new MouseEventHandler(binds.mousebinds)
+			this.mouseEventHandler = new MouseEventHandler<T>(binds.mousebinds)
 			element.addEventListener(EventType.MOUSEDOWN, this.mousedown)
 		}
 

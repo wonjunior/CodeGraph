@@ -1,6 +1,6 @@
 import GraphObject from '@/GraphObject'
 import { Pair } from '@/types'
-import { assert, normalize, pair, zip } from '@/utils'
+import { assert, identity, normalize, pair, zip } from '@/utils'
 import CanvasZoom from '@/view/CanvasZoom'
 import Element from '@/view/Element'
 
@@ -36,17 +36,13 @@ export class Draggable {
          // $.Draggable.log(`┌── Starting dragging`, element)
         this.element = element
         this.object = object
-        this.callback = callback || (() => {})
+        this.callback = callback || identity
         this.zoom = zoom
 
-        switch (type) {
-            case DragType.DRAG: this.startDrag(position); break
-            case DragType.STICK: this.startStick(position); break
-        }
-        assert(false, `DragType ${type} does not exist.`)
+        this[type](position)
     }
 
-    startStick(position: MousePosition) {
+    [DragType.STICK](position: MousePosition) {
         assert(this.element.parentElement)
         const parentProp = this.element.parentElement.getBoundingClientRect() //? use custom Element
         this.offset = [ parentProp.x + 50, parentProp.y + 10 ] as Pair<number>
@@ -56,11 +52,11 @@ export class Draggable {
         document.addEventListener('mousedown', this.endDrag, { once: true })
     }
 
-    startDrag({ clientX, clientY }: MousePosition) {
+    [DragType.DRAG]({ clientX, clientY }: MousePosition) {
         const selfPos = this.element.getBoundingClientRect()
         assert(this.element.parentElement)
         const parentPos = this.element.parentElement.getBoundingClientRect()
-        this.offset = [ clientX - selfPos.x + parentPos.x, clientY - selfPos.y + parentPos.y ]
+        this.offset = [ clientX - selfPos.x + parentPos.x, clientY - selfPos.y + parentPos.y ] //# zip map normalize
 
         document.addEventListener('mousemove', this.dragging)
         document.addEventListener('mouseup', this.endDrag, { once: true })

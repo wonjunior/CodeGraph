@@ -1,5 +1,5 @@
 import { MouseCode } from './MouseCode'
-import { Mousebinds, State } from './state/interfaces'
+import { Mousebinds, Bindings } from './state/interfaces'
 
 /**
  * Contains information regarding the event: the `event` object itself, the selector that caught
@@ -16,8 +16,8 @@ export interface EventPayload {
 /**
  * Any events of type `MouseEvent`, triggered on the document, are handled here.
  */
-export class MouseEventHandler {
-    constructor(protected binds: Mousebinds) {}
+export class MouseEventHandler<T> {
+    constructor(protected binds: Mousebinds<T>) {}
 
     // public call(event: MouseEvent) {
     //     // $.Event.log(`┌── new <MouseEventHandler> state = ${State.current.id.toString()}`)
