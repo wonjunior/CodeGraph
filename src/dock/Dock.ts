@@ -1,6 +1,5 @@
 import { GraphObject, GraphObjectBind } from '@/GraphObject'
-import Link from '@/Link'
-import Node from '@/node/Node'
+import Router from '@/interpreter/router/Router'
 import DockElement from '@/view/DockElement'
 import { DockSide, FlowType } from './interfaces'
 
@@ -11,17 +10,16 @@ export default abstract class Dock extends GraphObject {
     // public abstract getDependencies(): Object //?
     // public abstract getValue(): Object //?
 
-    //? Actual dock information
-    public node: Node
+    public node: string
     public element: DockElement
-    // public router: Router
+    public router: Router
 
     // isFull() {
     //     return !(this instanceof OutDataDock) && this.links.size > 0
     // }
 
     public get binds(): Array<GraphObjectBind> {
-        return [[<HTMLElement>this.element.snap, this]]
+        return [[<HTMLElement> this.element.snap, this]]
     }
 
     constructor(public type: FlowType, public side: DockSide, public label: string, location: string) {
@@ -30,6 +28,6 @@ export default abstract class Dock extends GraphObject {
     }
 
     isCompatible(other: Dock): boolean {
-        return this.node != other.node && this.side != other.side && this.type == other.type
+        return this.router !== other.router && this.side != other.side && this.type == other.type
     }
 }

@@ -27,7 +27,7 @@ export default class ExecutionTree {
         const dependencies = accessor.getDependencies()
         this.fillAccessBuffer(dependencies.parents, accessor)
 
-        const validated = accessor.node.router == origin || this.validateAccess(accessor, origin)
+        const validated = accessor.router == origin || this.validateAccess(accessor, origin)
 
         if (!validated) {
             // $.Execution.log('└──/ access not validated, exiting.')

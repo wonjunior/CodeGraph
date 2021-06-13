@@ -4,49 +4,60 @@ import { GraphObject, GraphObjectBind } from '@/GraphObject'
 import Process from '@/interpreter/process/Process'
 import NullRouter from '@/interpreter/router/NullRouter'
 import Router from '@/interpreter/router/Router'
+import { id } from '@/utils'
+import DockElement from '@/view/DockElement'
 import NodeElement from '@/view/NodeElement'
 import { NodeParams } from './interfaces'
+
+class Docks extends Set<Dock> {
+    constructor(...docks: Set<Dock>[]) {
+        super(docks.map(d => Array.from(d)).flat())
+    }
+
+    public get elements(): Array<DockElement> {
+        return [...this].map(({ element }) => element)
+    }
+
+    public get binds(): Array<GraphObjectBind> {
+        return [...this].map(d => d.binds[0])
+    }
+
+    public attachTo(router: Router): Docks {
+        this.forEach(d => d.router = router)
+        return this
+    }
+}
 
 /**
  * Node is the model of a graph node. It uses by default to represent itself visually.
  * Node's view class (by default NodeElement) should meet implement the #update and #remove methods.
  */
 export default class Node extends GraphObject {
+    private id: symbol
     public graph: Graph
-    public process: Process
     public router: Router
     public element: NodeElement
-    public docks: Set<Dock>
+    public docks: Docks
 
     public get binds(): Array<GraphObjectBind> {
-        const docks = [...this.docks].map(dock => dock.binds[0])
-        const self = [this.element.header, this] as GraphObjectBind
-        return [self, ...docks]
+        const binds = this.docks.binds
+        binds.push([this.element.header, this])
+        return binds
     }
-    constructor(process: Process, router: Router | null, graph: Graph, params: NodeParams) { //? types
+
+    constructor(process: Process, router: Router | null, graph: Graph, params: NodeParams) {
         //? can you pass the process to the router's constructor?
         super()
 
+        this.id = id()
         this.graph = graph
-        this.process = process
         this.router = router || new NullRouter()
-        this.router.process = this.process
+        this.router.process = process
 
-        this.bindDocks()
-
-        const dockElements = [...this.docks].map(({element}) => element)
-        this.element = new NodeElement(dockElements, graph.canvas, params)
+        this.docks = new Docks(process.docks, this.router.docks).attachTo(this.router)
+        this.element = new NodeElement(this.docks.elements, graph.canvas, params)
 
         // this.graph.store.bind(this.element.header, this) //# should be called by instanciater in Component
-    }
-
-    bindDocks() {
-        this.docks = new Set([...this.process.docks, ...this.router.docks])
-        // this.docks.forEach(dock => this.graph.store.bind(<HTMLElement>dock.element.snap, dock))
-        // this.docks.forEach(dock => dock.node = this)
-
-        // this.process.docks.forEach(dock => dock.process = this.process)
-        // this.router.docks.forEach(dock => dock.router = this.router)
     }
 
     /**

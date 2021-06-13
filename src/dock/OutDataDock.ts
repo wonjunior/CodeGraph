@@ -17,7 +17,7 @@ export default class OutDataDock extends MultipleSocket {
     }
 
     getDependencies(): Deps { //? is this a good idea?
-        this.process.dependencies.parents.add(this.node.router)
+        this.process.dependencies.parents.add(this.router)
         return this.process.dependencies
     }
 

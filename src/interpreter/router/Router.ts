@@ -15,7 +15,7 @@ export default class Router {
     }
 
     public getRoot(): Router {
-        return this.in[0].ancestor ? this.in[0].ancestor.node.router.getRoot() : this
+        return this.in[0].ancestor ? this.in[0].ancestor.router.getRoot() : this
     }
 
     trigger({ accessor, origin = this, updateET = true }: TriggerArgs) { //? type
