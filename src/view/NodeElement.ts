@@ -19,7 +19,7 @@ export default class NodeElement extends ElementWrapper {
 	/**
 	 * Getter/Setter for the node's header background color.
 	 */
-	get headerColor() {
+	get headerColor(): string {
 		return this.header.style.background
 	}
 
@@ -30,7 +30,7 @@ export default class NodeElement extends ElementWrapper {
 	/**
 	 * Getter for the width and length of the node's container returned as an array.
 	 */
-	get size() {
+	get size(): Pair<number> {
 		const properties = this.container.getBoundingClientRect()
 		return [ properties.width, properties.height ]
 	}
@@ -57,8 +57,8 @@ export default class NodeElement extends ElementWrapper {
 	/**
 	 * Getter/Setter for the text label on the node's header section.
 	 */
-	get labelText() {
-		return this.label.textContent
+	get labelText(): string {
+		return this.label.textContent || ''
 	}
 
 	set labelText(label) {
@@ -68,15 +68,15 @@ export default class NodeElement extends ElementWrapper {
 	/**
 	 * Getter/Setter for node's background text label.
 	 */
-	get backgroundText() {
-		return this.label.textContent
+	get backgroundText(): string {
+		return this.label.textContent || ''
 	}
 
 	set backgroundText(background) {
 		this.background.textContent = background
 	}
 
-	constructor(dockElements: Array<DockElement>, canvas: Canvas, params: NodeParams) { //? type
+	constructor(dockElements: Array<DockElement>, canvas: Canvas, params: NodeParams) {
 		super()
 
 		this.canvas = canvas
@@ -111,7 +111,7 @@ export default class NodeElement extends ElementWrapper {
 	/**
 	 * @overrides Element#create
 	 */
-	create() {
+	create(): void {
 		const $ = Template.import('node')
 
 		Object.assign(this, {
@@ -138,17 +138,17 @@ export default class NodeElement extends ElementWrapper {
 
 	/**
 	 * Hides the corresponding node portion
-	 * @param {string} part is either `header` or `body`
+	 * @param part is either `header` or `body`
 	 */
-	hide(part: string) {
+	hide(part: string): void {
 		this.container.classList.add(`hide-${part}`)
 	}
 
 	/**
 	 * Toggles the `selected` class name on the node's container element.
-	 * @returns {Boolean} - the state of the node, i.e. if it is selected or not
+	 * @returns the state of the node, i.e. if it is selected or not
 	 */
-	toggleHighlight() {
+	toggleHighlight(): boolean {
 		return this.container.classList.toggle('selected') //? is it this.container?
 	}
 }

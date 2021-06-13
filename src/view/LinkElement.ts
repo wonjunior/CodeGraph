@@ -12,28 +12,28 @@ export default class LinkElement extends ElementWrapper {
   	}
 
 	get position(): Pair<number> {
-		return pair(0) //?
+		return pair(0) //# should be ElementWrapper default implementation
 	}
 
 	/**
 	 * Getter/Setter for `LinkElement#stroke` the color of the link.
 	 */
-	get stroke() {
+	get stroke(): string {
 		return this.container.style.stroke
 	}
 
-	set stroke(newStroke) {
+	set stroke(newStroke: string) {
 		this.container.style.stroke = newStroke
 	}
 
 	/**
 	 * Getter/Setter for `LinkElement#width`, the stroke size.
 	 */
-	get width() {
+	get width(): string {
 		return this.container.style.strokeWidth
 	}
 
-	set width(newWidth) {
+	set width(newWidth: string) {
 		this.container.style.strokeWidth = newWidth
 	}
 
@@ -57,7 +57,7 @@ export default class LinkElement extends ElementWrapper {
 	/**
 	 * @overrides Element#create
 	 */
-	create() {
+	create(): void {
 		const $ = Template.import('link')
 		Object.assign(this, { container: $('path') })
 	}
@@ -65,7 +65,7 @@ export default class LinkElement extends ElementWrapper {
 	/**
 	 * Updates the link's svg representation.
 	 */
-	update([a, b]: [Pair<number>, Pair<number>]) {
+	update([a, b]: [Pair<number>, Pair<number>]): void {
 		this.path = Curve.calculate(a, b)
 	}
 }

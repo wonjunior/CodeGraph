@@ -3,12 +3,12 @@ import { Pair } from '@/types'
 /**
  * Utility class to generate SVG paths
  */
-export default class Curve {
+export default class Curve { //# rename class to be more general (straight lines links)
 
 	/**
 	 * Default properties for the path.
 	 */
-	static parameters = {
+	static parameters = { //# for now curve options are global
 		factor: 0.4,
 		warp: 0.05
 	}
@@ -18,7 +18,7 @@ export default class Curve {
 	 * @param [x1, y1] start position
 	 * @param [x2, y2] end position
 	 */
-	static calculate([x1, y1]: Pair<number>, [x2, y2]: Pair<number>) {
+	static calculate([x1, y1]: Pair<number>, [x2, y2]: Pair<number>): string {
 		const Xdiff = Math.abs(x2 - x1)
 		const L = Xdiff * Curve.warp + x1
 		const C0 = x1 + Xdiff * Curve.factor
@@ -30,7 +30,7 @@ export default class Curve {
 	/**
 	 * Gets the curve factor.
 	 */
-	static get factor() {
+	static get factor(): number {
 		return Curve.parameters.factor
 	}
 
@@ -39,21 +39,19 @@ export default class Curve {
 	 */
 	static set factor(factor: number) {
 		Curve.parameters.factor = factor
-		// Link.update() //? this should be handled by Canvas or something....
 	}
 
 	/**
 	 * Gets the curve's relative size.
 	 */
-	static get warp() {
+	static get warp(): number {
 		return Curve.parameters.warp
 	}
 
 	/**
 	 * Sets the curve's relative size.
 	 */
-	static set warp(warp) {
+	static set warp(warp: number) {
 		Curve.parameters.warp = warp
-		// Link.update() //? not static update
 	}
 }
