@@ -1,6 +1,6 @@
 import { MouseEventHandler, EventPayload } from './MouseEventHandler'
 
-export default class MouseWheelEventHandler extends MouseEventHandler {
+export default class MouseWheelEventHandler<T> extends MouseEventHandler<T> {
     /**
      * @overrides MouseEventHandler#trigger
      */

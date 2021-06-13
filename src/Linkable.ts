@@ -1,7 +1,6 @@
 import Dock from '@/dock/Dock'
 import Graph from '@/Graph'
 import Link from '@/Link'
-import { assert } from '@/utils'
 import EventHandler from './controller/EventHandler'
 import { EventType } from './controller/state/interfaces'
 import Socket from './dock/Socket'

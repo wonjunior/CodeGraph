@@ -81,7 +81,7 @@ export default class ExecutionTree {
     }
 
     merge(other: ExecutionTree): void {
-        if (other == null) return;
+        if (other == null) return void 0
         this.accessBuffer =  [...this.accessBuffer, ...other.accessBuffer].reduce((buffer, [ origin, accesses ]) => {
             return buffer.set(origin, new Set([...buffer.get(origin) || [], ...accesses]))
         }, new Map())

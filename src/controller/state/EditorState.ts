@@ -1,29 +1,22 @@
 
-// import Draggable from '@/Draggable'
-// import Graph from '@/Graph'
-// import Linkable from '@/Linkable'
-// import Editor from '@/Editor'
-import Dock from '@/dock/Dock'
 import Socket from '@/dock/Socket'
-import { Draggable, DragType, MousePosition } from '@/Draggable'
+import { Draggable, DragType } from '@/Draggable'
 import { GraphInputEvent } from '@/GraphEventHandler'
-import GraphObject from '@/GraphObject'
 import Linkable from '@/Linkable'
 import Node from '@/node/Node'
 import { MouseButton } from '../MouseCode'
 import { Bindings as Bindings } from './interfaces'
-// import { StateManager } from './StateManager'
 
 
 //# ultimately I don't want to see a single css selector here, yikers. enum mapping would be a quick fix...
 //# { on: { [GraphObjectType.NODE]: (event: MouseEvent, { object, graph }: {Node, graph})?
 export const EditorDefaultState: Bindings<GraphInputEvent> =  {
     keybinds: {
-        KeyQ: () => { console.log('yeah') },
-        Shift_KeyQ: () => { console.log('no!!') },
+        KeyQ: (): void => { console.log('yeah') },
+        Shift_KeyQ: (): void => { console.log('no!!') },
         // spacebar: () => nodeFinder.show(),
 
-        Ctrl_Shift_Space: () => console.log('nope'),
+        Ctrl_Shift_Space: (): void => console.log('nope'),
     },
 
     mousebinds: {
@@ -55,7 +48,7 @@ export const EditorDefaultState: Bindings<GraphInputEvent> =  {
 
         [MouseButton.LEFT]: {
             on: {
-                '.header': (event: MouseEvent, { graph, object }: GraphInputEvent) => {
+                '.header': (event: MouseEvent, { graph, object }: GraphInputEvent): void => {
                     const node = <Node> object
                     new Draggable({
                         position: event,
@@ -71,7 +64,7 @@ export const EditorDefaultState: Bindings<GraphInputEvent> =  {
                 //     target.classList.toggle('selected')
                 // },
 
-                '.snap-dock': (event: MouseEvent, { graph, object, eventHandler }: GraphInputEvent) => {
+                '.snap-dock': (event: MouseEvent, { graph, object, eventHandler }: GraphInputEvent): void => {
                     new Linkable(event, <Socket> object, graph, eventHandler)
                 },
 

@@ -6,19 +6,19 @@ export default abstract class Socket extends Dock {
 	public abstract get occupied(): boolean
 	protected links = new Set<Link>()
 
-    public addLink(link: Link) {
+    public addLink(link: Link): void {
         this.links.add(link)
     }
 
-    public dropLink(link: Link) {
+    public dropLink(link: Link): void {
         this.links.delete(link)
     }
 
-    public update() {
+    public update(): void {
         this.links.forEach(link => link.update())
     }
 
-    public destroy() {
+    public destroy(): void {
         this.links.forEach(link => link.destroy())
     }
 }
