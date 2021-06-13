@@ -21,10 +21,9 @@ export default class Linkable {
 	/**
 	 * Creates a new event handler for the linking behavior and initiates the mouse event listeners.
 	 */
-	constructor(event: MouseEvent, start: Socket, public graph: Graph, { receiver, resolver }: HandlerParams) { //# rename eventHandler
+	constructor(start: Socket, public graph: Graph, { receiver, resolver }: HandlerParams) { //# rename eventHandler
 		this.link = Link.get(start, graph)
 
-		this.mouseMove(event)
 		this.eventHandler = new EventHandler<GraphInputEvent>({
 			mousemove: { callback: this.mouseMove },
 			mouseup: { callback: this.mouseUp, once: true },
@@ -34,8 +33,9 @@ export default class Linkable {
 	/**
 	 * {Event callback} Executed when mouse moves.
 	 */
-	private mouseMove = (event: MouseEvent) => {
-		this.insideSnapArea(event) ? this.mouseIn(event) : this.mouseOut(event)
+	private mouseMove = (event: MouseEvent, { object }: GraphInputEvent) => {
+		const dock = <Dock> object
+		this.insideSnapArea(event) ? this.mouseIn(event, dock) : this.mouseOut(event)
 	}
 
 	/**
@@ -49,8 +49,8 @@ export default class Linkable {
 	/**
 	 * {Event callback} Executed when mouse is moving inside a snap area.
 	 */
-	private mouseIn(event: MouseEvent): void {
-		if (!this.snapped) this.mouseEnter(event)
+	private mouseIn(event: MouseEvent, dock?: Dock): void {
+		if (!this.snapped && dock) this.mouseEnter(event, dock)
 	}
 
 	/**
@@ -64,9 +64,8 @@ export default class Linkable {
 	/**
 	 * {Event callback} Executed when mouse is entering a snap area.
 	 */
-	private mouseEnter(event: MouseEvent): void {
-		// const dock = this.graph.get(event.target)
-		// this.canSnap(dock) ? this.snap(dock) : this.trackMouse(event)
+	private mouseEnter(event: MouseEvent, dock: Dock): void {
+		this.canSnap(dock) ? this.snap(dock) : this.trackMouse(event)
 	}
 
 	/**

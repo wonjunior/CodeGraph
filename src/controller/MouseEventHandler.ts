@@ -1,5 +1,5 @@
 import { MouseCode } from './MouseCode'
-import { Mousebinds, Bindings } from './state/interfaces'
+import { Mousebinds } from './state/interfaces'
 
 /**
  * Contains information regarding the event: the `event` object itself, the selector that caught

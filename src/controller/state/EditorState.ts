@@ -64,8 +64,8 @@ export const EditorDefaultState: Bindings<GraphInputEvent> =  {
                 //     target.classList.toggle('selected')
                 // },
 
-                '.snap-dock': (event: MouseEvent, { graph, object, eventHandler }: GraphInputEvent): void => {
-                    new Linkable(event, <Socket> object, graph, eventHandler)
+                '.snap-dock': (_: MouseEvent, { graph, object, eventHandler }: GraphInputEvent): void => {
+                    new Linkable(<Socket> object, graph, eventHandler)
                 },
 
                 // // --debug = links need an exact mouse click on the element, we will need a ghost element

@@ -1,6 +1,6 @@
 import { DockSide, FlowType } from '@/dock/interfaces'
 import { Pair } from '@/types'
-import { wait, zip } from '@/utils'
+import { normalize, pair, wait, zip } from '@/utils'
 import CanvasZoom from './CanvasZoom'
 import ElementWrapper from './Element'
 import NodeElement from './NodeElement'
@@ -8,7 +8,7 @@ import Template from './Template'
 
 export default class DockElement extends ElementWrapper {
 	static params = {
-		[FlowType.EXE]:  { offset: 10 },
+		[FlowType.EXE]:  { offset: 7 },
 		[FlowType.DATA]: {  offset: 7 },
 	}
 
@@ -16,12 +16,11 @@ export default class DockElement extends ElementWrapper {
 	public snap: Element
 	public param: Element
 	public label: Element
-	public node: NodeElement
+	private node: NodeElement
 	public offset: Pair<number>
 
 	get position(): Pair<number> {
-		return zip(this.node.position, this.offset)
-			.map(([nodePos, offset]) => nodePos + offset) as Pair<number>
+		return zip(this.node.position, [], [], this.offset).map(normalize) as Pair<number>
 	}
 
 	get labelText() {
@@ -39,15 +38,15 @@ export default class DockElement extends ElementWrapper {
 	}
 
 	render(node: NodeElement, zoom: CanvasZoom) {
-		node.getBodyPart(this.location, this.side).appendChild(this.container)
 		this.node = node
-		wait(() => this.initRelativePosition(zoom))
+		node.getBodyPart(this.location, this.side).appendChild(this.container)
+		wait(() => this.offset = this.computeOffset(zoom))
 	}
 
 	/**
 	 * @overrides Element#create
 	 */
-	create({ type, side }: { type: FlowType, side: DockSide }) { //? we already know this!!!!!!!!!!
+	create({ type, side }: { type: FlowType, side: DockSide }) { //# if that's the constructor then put it in the constructor
 		const $ = Template.import('dock')
 
 		Object.assign(this, {
@@ -61,14 +60,13 @@ export default class DockElement extends ElementWrapper {
 		this.container.classList.add(side, type)
 	}
 
-	initRelativePosition(zoom: CanvasZoom): void { //? can use Element#getBoundingClientRect directly
+	private computeOffset(zoom: CanvasZoom): Pair<number> { //? can use Element#getBoundingClientRect directly
+		//# use this.node.getBoundingClientRect('container') and use minimized interface to NodeElement
 		const nodePos = this.node.container.getBoundingClientRect()
 		const dockPos = this.pin.getBoundingClientRect()
 		const offset = DockElement.params[this.type].offset
 
-		this.offset = [
-			(dockPos.x - nodePos.x) / zoom.level + offset,
-			(dockPos.y - nodePos.y) / zoom.level + offset
-		]
+		return zip([dockPos.x, dockPos.y], [nodePos.x, nodePos.y], pair(zoom.level), pair(offset))
+			.map(normalize) as Pair<number>
 	}
 }
