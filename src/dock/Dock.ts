@@ -1,4 +1,4 @@
-import GraphObject from '@/GraphObject'
+import { GraphObject, GraphObjectBind } from '@/GraphObject'
 import Link from '@/Link'
 import Node from '@/node/Node'
 import DockElement from '@/view/DockElement'
@@ -19,6 +19,10 @@ export default abstract class Dock extends GraphObject {
     // isFull() {
     //     return !(this instanceof OutDataDock) && this.links.size > 0
     // }
+
+    public get binds(): Array<GraphObjectBind> {
+        return [[<HTMLElement>this.element.snap, this]]
+    }
 
     constructor(public type: FlowType, public side: DockSide, public label: string, location: string) {
         super()

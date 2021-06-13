@@ -1,6 +1,6 @@
 import Dock from '@/dock/Dock'
 import Graph from '@/Graph'
-import GraphObject from '@/GraphObject'
+import { GraphObject, GraphObjectBind } from '@/GraphObject'
 import Process from '@/interpreter/process/Process'
 import NullRouter from '@/interpreter/router/NullRouter'
 import Router from '@/interpreter/router/Router'
@@ -18,6 +18,11 @@ export default class Node extends GraphObject {
     public element: NodeElement
     public docks: Set<Dock>
 
+    public get binds(): Array<GraphObjectBind> {
+        const docks = [...this.docks].map(dock => dock.binds[0])
+        const self = [this.element.header, this] as GraphObjectBind
+        return [self, ...docks]
+    }
     constructor(process: Process, router: Router | null, graph: Graph, params: NodeParams) { //? types
         //? can you pass the process to the router's constructor?
         super()
@@ -47,7 +52,7 @@ export default class Node extends GraphObject {
     /**
      * This method updates all links connected to the node.
      */
-    update() {
+    update(): void {
         // this.docks.forEach(dock => dock.update())
     }
 

@@ -1,13 +1,13 @@
-import GraphObject from '@/GraphObject'
+import { GraphObject, GraphObjectBind } from '@/GraphObject'
 
 export default class GraphObjectStore {
-    data = new WeakMap<HTMLElement, GraphObject>()
+    private data = new WeakMap<HTMLElement, GraphObject>()
 
-    bind(key: HTMLElement, object: GraphObject) {
+    public bind = ([key, object]: GraphObjectBind): void => {
         this.data.set(key, object)
     }
 
-    get(key: HTMLElement): GraphObject | null {
+    public get = (key: HTMLElement): GraphObject | null => {
         return this.data.get(key) || null
     }
 }

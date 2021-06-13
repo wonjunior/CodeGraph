@@ -40,8 +40,12 @@ export default class Graph {
 		new GraphEventHandler(this, this.store)
 	}
 
-	add(component: Component): Node {
-		return this.register(component.instanciate(this))
+	add(component: Component): Node { //# more general?
+		const node = component.instanciate(this)
+		node.binds.forEach(this.store.bind)
+		this.register(node)
+		console.log(this.store)
+		return node
 	}
 
 	unregister(node: Node): boolean {
