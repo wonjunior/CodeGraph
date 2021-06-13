@@ -1,7 +1,7 @@
 import EventHandler from './controller/EventHandler'
 import { EditorDefaultState } from './controller/state/EditorState'
 import Graph from './Graph'
-import GraphObject from './GraphObject'
+import { GraphObject } from './GraphObject'
 import GraphObjectStore from './GraphObjectStore'
 
 export interface GraphInputEvent {

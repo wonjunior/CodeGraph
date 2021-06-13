@@ -52,8 +52,8 @@ export function zip<T extends any[]>(...arrays: T): Zip<T>[] {
 /**
  * Convert single values and two-value arrays into a tuple pair.
  */
-export function pair<T>(x: T, y?: T): Pair<T> {
-    return (y === null ? [x, x] : [x, y]) as Pair<T>
+export function pair<T>(x: T, y = x): Pair<T> {
+    return [x, y] as Pair<T>
 }
 
 // export function pair<T, U>(a: Pair<T>, b: Pair<T>, f: (x: T, y: T) => U): Pair<U> {
@@ -87,8 +87,8 @@ export function toAlphabet(i: number): string {
  * @param shift
  * @param scale
  */
-export function normalize([x, shift, scale]: [number, number, number]): number {
-    return (x - shift) / scale
+export function normalize([x, shift, scale = 1, adjust = 0]: [number, number, number, number]): number {
+    return (x - shift) / scale + adjust
 }
 
 /**

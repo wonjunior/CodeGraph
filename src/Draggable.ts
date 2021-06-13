@@ -1,4 +1,3 @@
-import GraphObject from '@/GraphObject'
 import { Pair } from '@/types'
 import { assert, identity, normalize, pair, zip } from '@/utils'
 import CanvasZoom from '@/view/CanvasZoom'
@@ -10,7 +9,7 @@ interface DragOptions {
     element: HTMLElement,
     object: Element,
     zoom: CanvasZoom,
-    callback: Function
+    callback: () => void
 }
 
 export interface MousePosition {
@@ -25,9 +24,9 @@ export enum DragType {
 export class Draggable {
     public element: HTMLElement
     public object: Element
-    public callback: Function
     public zoom: CanvasZoom
     private offset: Pair<number>
+    public callback: () => void
 
     constructor({ type, position, element, object, zoom, callback }: DragOptions) {
         console.log('Draggable', type, element, object, zoom)
@@ -42,7 +41,7 @@ export class Draggable {
         this[type](position)
     }
 
-    [DragType.STICK](position: MousePosition) {
+    [DragType.STICK](position: MousePosition): void {
         assert(this.element.parentElement)
         const parentProp = this.element.parentElement.getBoundingClientRect() //? use custom Element
         this.offset = [ parentProp.x + 50, parentProp.y + 10 ] as Pair<number>
@@ -52,19 +51,22 @@ export class Draggable {
         document.addEventListener('mousedown', this.endDrag, { once: true })
     }
 
-    [DragType.DRAG]({ clientX, clientY }: MousePosition) {
+    [DragType.DRAG]({ clientX, clientY }: MousePosition): void {
+        console.log(clientX, clientY)
         const selfPos = this.element.getBoundingClientRect()
         assert(this.element.parentElement)
         const parentPos = this.element.parentElement.getBoundingClientRect()
         this.offset = [ clientX - selfPos.x + parentPos.x, clientY - selfPos.y + parentPos.y ] //# zip map normalize
 
+        // const offset = zip([clientX, clientY], [selfPos.x, selfPos.y], [], [parentPos.x, parentPos.y]).map(normalize)
+
         document.addEventListener('mousemove', this.dragging)
         document.addEventListener('mouseup', this.endDrag, { once: true })
     }
 
-    dragging = ({ clientX, clientY }: MousePosition) => {
+    dragging = ({ clientX, clientY }: MousePosition): void => {
         // $.Draggable.log(`├──> client=[${e.clientX}, ${e.clientY}], offset=${this.offset}`)
-        const pos = zip([clientX, clientY], this.offset, pair(this.zoom.level)).map(normalize)
+        const pos = zip([clientX, clientY], this.offset, pair(this.zoom.level), []).map(normalize)
 
         // $.Draggable.pipe()
         // $.Draggable.log(`└──> new position = [${targetPosition}]`)
@@ -73,10 +75,10 @@ export class Draggable {
         // $.Draggable.unindent()
         // $.Draggable.unindent()
 
-        this.callback()
+        // this.callback()
     }
 
-    endDrag = () => {
+    endDrag = (): void => {
         // $.Draggable.log('└──/ dragging ended')
         document.removeEventListener('mousemove', this.dragging)
     }

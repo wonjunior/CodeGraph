@@ -1,4 +1,3 @@
-import GraphObject from '@/GraphObject'
 import { assert } from '@/utils'
 import KeyEventHandler from './KeyEventHandler'
 import { MouseEventHandler } from './MouseEventHandler'
