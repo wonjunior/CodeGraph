@@ -1,4 +1,4 @@
-import Curve from '@/Curve'
+import Path from '@/Path'
 import { FlowType } from '@/dock/interfaces'
 import { Pair } from '@/types'
 import { pair } from '@/utils'
@@ -66,6 +66,6 @@ export default class LinkElement extends ElementWrapper {
 	 * Updates the link's svg representation.
 	 */
 	update([a, b]: [Pair<number>, Pair<number>]): void {
-		this.path = Curve.calculate(a, b)
+		this.path = Path.calculate(a, b)
 	}
 }
