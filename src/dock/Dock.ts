@@ -19,7 +19,7 @@ export default abstract class Dock extends GraphObject {
     // }
 
     public get binds(): Array<GraphObjectBind> {
-        return [[<HTMLElement> this.element.snap, this]]
+        return [[<HTMLElement> this.element.snap, this]] //# make snap HTMLElement rather?
     }
 
     constructor(public type: FlowType, public side: DockSide, public label: string, location: string) {

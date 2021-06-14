@@ -56,8 +56,6 @@ export default class Node extends GraphObject {
 
         this.docks = new Docks(process.docks, this.router.docks).attachTo(this.router)
         this.element = new NodeElement(this.docks.elements, graph.canvas, params)
-
-        // this.graph.store.bind(this.element.header, this) //# should be called by instanciater in Component
     }
 
     /**

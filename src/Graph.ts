@@ -37,6 +37,7 @@ export default class Graph {
 
 	constructor(parent: HTMLElement) {
 		this.canvas = new Canvas(parent)
+		this.store.bind(this.canvas.binds[0])
 		new GraphEventHandler(this, this.store)
 	}
 
@@ -44,7 +45,6 @@ export default class Graph {
 		const node = component.instanciate(this)
 		node.binds.forEach(this.store.bind)
 		this.register(node)
-		console.log(this.store)
 		return node
 	}
 

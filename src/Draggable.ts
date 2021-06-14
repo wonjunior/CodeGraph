@@ -1,15 +1,19 @@
 import { Pair } from '@/types'
-import { assert, identity, normalize, pair, zip } from '@/utils'
+import { assert, normalize, pair, zip } from '@/utils'
 import CanvasZoom from '@/view/CanvasZoom'
 import Element from '@/view/Element'
+
+interface Placeable {
+    position: Pair<number>
+}
 
 interface DragOptions {
     type: DragType,
     position: MousePosition,
     element: HTMLElement,
-    object: Element,
+    object: Placeable,
     zoom: CanvasZoom,
-    callback: () => void
+    callback?: () => void
 }
 
 export interface MousePosition {
@@ -23,19 +27,19 @@ export enum DragType {
 
 export class Draggable {
     public element: HTMLElement
-    public object: Element
+    public object: Placeable
     public zoom: CanvasZoom
     private offset: Pair<number>
     public callback: () => void
 
     constructor({ type, position, element, object, zoom, callback }: DragOptions) {
-        console.log('Draggable', type, element, object, zoom)
+        // console.log('Draggable', type, element, object, zoom)
         // <? just setter position
 
          // $.Draggable.log(`┌── Starting dragging`, element)
         this.element = element
         this.object = object
-        this.callback = callback || identity
+        this.callback = callback || (() => void 0)
         this.zoom = zoom
 
         this[type](position)
@@ -52,7 +56,6 @@ export class Draggable {
     }
 
     [DragType.DRAG]({ clientX, clientY }: MousePosition): void {
-        console.log(clientX, clientY)
         const selfPos = this.element.getBoundingClientRect()
         assert(this.element.parentElement)
         const parentPos = this.element.parentElement.getBoundingClientRect()
@@ -75,7 +78,7 @@ export class Draggable {
         // $.Draggable.unindent()
         // $.Draggable.unindent()
 
-        // this.callback()
+        this.callback()
     }
 
     endDrag = (): void => {

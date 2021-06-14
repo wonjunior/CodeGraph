@@ -50,7 +50,7 @@ export default class NodeElement extends ElementWrapper {
 	}
 
   	set position(position: Pair<number>) {
-		const [ x, y ] = this.boundaryClamp(position)
+		const [ x, y ] = this.boundaryClamp(position) //# this should be in Node and pass Node object as Placeable instead of Node#element...
     	Object.assign(this.container.style, { left: `${x}px`, top: `${y}px` })
   	}
 
@@ -133,7 +133,7 @@ export default class NodeElement extends ElementWrapper {
 		return position.map((value, i) => {
 			const max = (this.canvas.element.size[i] - this.size[i]) / this.canvas.zoom.level
 			return value <= 0 ? 0 : (value >= max ? max : value)
-		}) as Pair<number>
+		}) as Pair<number> //# refactor this boi
 	}
 
 	/**

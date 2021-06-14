@@ -1,17 +1,23 @@
 import { Pair } from '@/types'
-import { clamp, zip } from '@/utils'
+import { assert, clamp, zip } from '@/utils'
 import CanvasElement from '@/view/CanvasElement'
 import CanvasZoom from '@/view/CanvasZoom'
+import { GraphObject, GraphObjectBind } from './GraphObject'
 
-export default class Canvas {
+export default class Canvas extends GraphObject {
 	public element: CanvasElement
 	public zoom: CanvasZoom
+
+	public get binds(): Array<GraphObjectBind> {
+		return [[this.element.positionWrapper, this]]
+	}
 
 	set position(position: Pair<number>) {
 		this.element.position = this.boundaryClamp(position)
 	}
 
 	constructor(parent: HTMLElement) {
+		super()
 		this.element = new CanvasElement(parent)
     	this.zoom = new CanvasZoom(this, this.element.zoomWrapper)
 	}

@@ -28,15 +28,15 @@ export const EditorDefaultState: Bindings<GraphInputEvent> =  {
 
         [MouseButton.RIGHT]: {
             on: {
-                // '.objects': ({ event, target }, graph = Graph.get(target)) => {
-                //     new Draggable({
-                //         event,  // <?! can we not remove this?
-                //         type: 'drag',
-                //         element: target,
-                //         object: graph.canvas,
-                //         canvasZoom: graph.canvas.zoom,
-                //     })
-                // },
+                '.objects': (event: MouseEvent, { graph }: GraphInputEvent): void => {
+                    new Draggable({
+                        position: event,
+                        type: DragType.DRAG,
+                        element: graph.canvas.element.positionWrapper,
+                        object: graph.canvas,
+                        zoom: graph.canvas.zoom,
+                    })
+                },
                 // --debug
                 // '.snap-dock': ({ target },
                 //             graph = Graph.get(target),
