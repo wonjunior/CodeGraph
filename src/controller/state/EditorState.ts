@@ -21,9 +21,9 @@ export const EditorDefaultState: Bindings<GraphInputEvent> =  {
 
     mousebinds: {
         [MouseButton.MIDDLE]: {
-            // '.objects': ({ direction, target }, graph = Graph.get(target)) => {
-            //     graph.canvas.zoom.update(direction)
-            // }
+            '.objects': (_: MouseEvent, direction: number, { graph }: GraphInputEvent): void => {
+                graph.canvas.zoom.update(direction)
+            }
         },
 
         [MouseButton.RIGHT]: {

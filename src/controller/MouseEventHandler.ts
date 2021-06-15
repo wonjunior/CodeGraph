@@ -5,7 +5,7 @@ import { Mousebinds } from './state/interfaces'
  * Contains information regarding the event: the `event` object itself, the selector that caught
  * the event and the target element as well as the actual function that needs to be called: `callback`.
  */
-export interface EventPayload {
+export interface EventPayload { //# replace Function
     callback: Function,
     event: Event,
     selector: string
@@ -34,9 +34,9 @@ export class MouseEventHandler<T> {
      * Depending on the key that was pressed, check for "on-element" and "off-element" triggers.
      */
     public call(event: MouseEvent): EventPayload | undefined {
-        const name = MouseCode.get(event)
+        const code = MouseCode.get(event)
 
-        const { off, on } = { ...this.binds.all, ...this.binds[name] }
+        const { off, on } = { ...this.binds.all, ...this.binds[code] }
 
         // $.Event.log(`(2) candidates for "${buttonName} mouse button":`)
 
@@ -56,7 +56,7 @@ export class MouseEventHandler<T> {
      * @param event
      * @param candidates contains the selectors as keys and callbacks as values
      */
-    private checkSelectorsOn(event: Event, candidates: [string, Function][]): EventPayload | undefined {
+    protected checkSelectorsOn(event: Event, candidates: [string, Function][]): EventPayload | undefined {
         const matches = candidates.map(([selector, callback]) => {
             const targets = event.composedPath() as Element[]
             const i = targets.findIndex(t => t.matches && t.matches(selector))
@@ -107,14 +107,4 @@ export class MouseEventHandler<T> {
 
         // $.Event.unindent()
     }
-
-    /**
-     * Executes the given callback binded to the state's data object.
-     */
-    // private trigger({ callback, event, selector, target = null }: EventPayload) {
-    //     console.log('yes')
-    //     callback(event)
-    //     //? ( { callback, ...arguments }), then callback.bind(this.state.data)(arguments)
-    //     // callback.bind(this.state.data)({ event, selector, target })
-    // }
 }

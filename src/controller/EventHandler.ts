@@ -1,12 +1,15 @@
 import { assert } from '@/utils'
 import KeyEventHandler from './KeyEventHandler'
+import { MouseButton } from './MouseCode'
 import { MouseEventHandler } from './MouseEventHandler'
+import MouseWheelEventHandler from './MouseWheelEventHandler'
 import { Bindings as Bindings, SingleEvent, EventType } from './state/interfaces'
 
 
 export default class EventHandler<T> {
 	private keyEventHandler?: KeyEventHandler
 	private mouseEventHandler?: MouseEventHandler<T>
+	private mouseWheelEventHandler?: MouseWheelEventHandler<T>
 	private mousemoveEventHandler?: SingleEvent
 	private mouseupEventHandler?: SingleEvent
 
@@ -25,6 +28,11 @@ export default class EventHandler<T> {
 		if (binds.mousebinds) {
 			this.mouseEventHandler = new MouseEventHandler<T>(binds.mousebinds)
 			element.addEventListener(EventType.MOUSEDOWN, this.mousedown)
+
+			if (binds.mousebinds[MouseButton.MIDDLE]) {
+				this.mouseWheelEventHandler = new MouseWheelEventHandler<T>(binds.mousebinds)
+				element.addEventListener(EventType.MOUSEWHEEL, this.wheel)
+			}
 		}
 
 		if (binds.mousemove) {
@@ -55,6 +63,13 @@ export default class EventHandler<T> {
 		// up getting caught on a different event target.
 		const match = this.mouseEventHandler.call(<MouseEvent> event)
 		if (match) match.callback(event, this.resolver(match.target))
+	}
+
+	private [EventType.MOUSEWHEEL] = (event: Event) => {
+		assert(this.mouseWheelEventHandler)
+		const match = this.mouseWheelEventHandler.call(<WheelEvent> event)
+		const direction = this.mouseWheelEventHandler.direction(<WheelEvent> event)
+		if (match) match.callback(event, direction, this.resolver(match.target))
 	}
 
 	private [EventType.MOUSEMOVE] = (event: Event) => {
