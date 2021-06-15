@@ -41,7 +41,7 @@ export default class Node extends GraphObject {
 
     public get binds(): Array<GraphObjectBind> {
         const binds = this.docks.binds
-        binds.push([this.element.header, this])
+        binds.push([this.element.header, this], [this.element.container, this])
         return binds
     }
 
@@ -73,5 +73,9 @@ export default class Node extends GraphObject {
 
     toString() {
         return this.element.labelText
+    }
+
+    select() {
+        return this.element.container.classList.toggle('selected')
     }
 }

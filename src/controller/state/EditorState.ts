@@ -60,9 +60,9 @@ export const EditorDefaultState: Bindings<GraphInputEvent> =  {
                     })
                 },
 
-                // '.node-container': ({ target }) => {
-                //     target.classList.toggle('selected')
-                // },
+                '.node-container': (event: MouseEvent, { object }: GraphInputEvent): void => {
+                    (<Node> object).select()
+                },
 
                 '.snap-dock': (_: MouseEvent, { graph, object, eventHandler }: GraphInputEvent): void => {
                     new Linkable(<Socket> object, graph, eventHandler)
