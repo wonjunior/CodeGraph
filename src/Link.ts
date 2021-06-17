@@ -1,5 +1,5 @@
 import Graph from '@/Graph'
-import { GraphObject, GraphObjectBind } from '@/GraphObject'
+import { GraphObject, GraphObjectItem } from '@/GraphObject'
 import { DockSide, InDock, FlowType } from '@/dock/interfaces'
 import UniqueSocket from '@/dock/UniqueSocket'
 import Dock from '@/dock/Dock'
@@ -16,11 +16,11 @@ import Socket from './dock/Socket'
 export default class Link extends GraphObject {
 	private element: LinkElement
 
-	public get binds(): Array<GraphObjectBind> {
-		return []
+	public get binds(): Array<GraphObjectItem> {
+		return [[this.element.container, this]]
 	}
 
-	static get(origin: Socket, graph: Graph): Link {
+	public static get(origin: Socket, graph: Graph): Link {
 		if (origin instanceof UniqueSocket && origin.occupied) return origin.editLink()
 		return new Link(origin, null, graph)
 	}
@@ -88,6 +88,7 @@ export default class Link extends GraphObject {
 		this.element.remove()
 		this.start.dropLink(this)
 		if (this.end) this.end.dropLink(this)
+		this.graph.removeLink(this)
 	}
 
 	public trigger(payload?: TriggerArgs): void {

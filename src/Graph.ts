@@ -3,6 +3,8 @@ import Component from '@/Component'
 import GraphObjectStore from '@/GraphObjectStore'
 import Node from '@/node/Node'
 import { GraphEventHandler, GraphInputEvent } from './GraphEventHandler'
+import { GraphObject } from './GraphObject'
+import Link from './Link'
 
 
 export default class Graph {
@@ -41,11 +43,18 @@ export default class Graph {
 		new GraphEventHandler(this, this.store)
 	}
 
-	add(component: Component): Node { //# more general?
+	add(component: Component): Node {
 		const node = component.instanciate(this)
 		node.binds.forEach(this.store.bind)
-		this.register(node)
-		return node
+		return this.register(node)
+	}
+
+	addLink(link: Link): void {
+		this.store.bind(link.binds[0])
+	}
+
+	removeLink(link: Link): void {
+		link.binds.forEach(([key, _]) => this.store.unbind(key))
 	}
 
 	unregister(node: Node): boolean {

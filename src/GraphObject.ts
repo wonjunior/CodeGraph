@@ -1,6 +1,6 @@
 
 export abstract class GraphObject {
-	public abstract get binds(): Array<GraphObjectBind>
+	public abstract get binds(): Array<GraphObjectItem>
 }
 
-export type GraphObjectBind = [HTMLElement, GraphObject]
+export type GraphObjectItem = [HTMLElement, GraphObject]
