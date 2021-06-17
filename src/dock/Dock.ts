@@ -1,4 +1,4 @@
-import { GraphObject, GraphObjectBind } from '@/GraphObject'
+import { GraphObject, GraphObjectItem } from '@/GraphObject'
 import Router from '@/interpreter/router/Router'
 import DockElement from '@/view/DockElement'
 import { DockSide, FlowType } from './interfaces'
@@ -18,7 +18,9 @@ export default abstract class Dock extends GraphObject {
     //     return !(this instanceof OutDataDock) && this.links.size > 0
     // }
 
-    public get binds(): Array<GraphObjectBind> {
+    public abstract update(): void
+
+    public get binds(): Array<GraphObjectItem> {
         return [[<HTMLElement> this.element.snap, this]] //# make snap HTMLElement rather?
     }
 

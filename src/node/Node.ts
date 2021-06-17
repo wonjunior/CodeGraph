@@ -1,6 +1,6 @@
 import Dock from '@/dock/Dock'
 import Graph from '@/Graph'
-import { GraphObject, GraphObjectBind } from '@/GraphObject'
+import { GraphObject, GraphObjectItem } from '@/GraphObject'
 import Process from '@/interpreter/process/Process'
 import NullRouter from '@/interpreter/router/NullRouter'
 import Router from '@/interpreter/router/Router'
@@ -9,22 +9,26 @@ import DockElement from '@/view/DockElement'
 import NodeElement from '@/view/NodeElement'
 import { NodeParams } from './interfaces'
 
-class Docks extends Set<Dock> {
+class Docks extends Array<Dock> {
     constructor(...docks: Set<Dock>[]) {
-        super(docks.map(d => Array.from(d)).flat())
+        super(...docks.map(d => Array.from(d)).flat())
     }
 
     public get elements(): Array<DockElement> {
-        return [...this].map(({ element }) => element)
+        return this.map(({ element }) => element)
     }
 
-    public get binds(): Array<GraphObjectBind> {
-        return [...this].map(d => d.binds[0])
+    public get binds(): Array<GraphObjectItem> {
+        return this.map(d => d.binds[0])
     }
 
     public attachTo(router: Router): Docks {
         this.forEach(d => d.router = router)
         return this
+    }
+
+    public update(): void {
+        this.forEach(d => d.update())
     }
 }
 
@@ -39,7 +43,7 @@ export default class Node extends GraphObject {
     public element: NodeElement
     public docks: Docks
 
-    public get binds(): Array<GraphObjectBind> {
+    public get binds(): Array<GraphObjectItem> {
         const binds = this.docks.binds
         binds.push([this.element.header, this], [this.element.container, this])
         return binds
@@ -62,7 +66,7 @@ export default class Node extends GraphObject {
      * This method updates all links connected to the node.
      */
     update(): void {
-        // this.docks.forEach(dock => dock.update())
+        this.docks.update()
     }
 
     destroy() {
