@@ -69,12 +69,13 @@ export default class EventHandler<T> {
 		assert(this.mouseWheelEventHandler)
 		const match = this.mouseWheelEventHandler.call(<WheelEvent> event)
 		const direction = this.mouseWheelEventHandler.direction(<WheelEvent> event)
-		if (match) match.callback(event, direction, this.resolver(match.target))
+		if (match) match.callback(event, direction, this.resolver(<Element> match.target))
 	}
 
 	private [EventType.MOUSEMOVE] = (event: Event) => {
+		//# for unique events use event.target since no bubbling mechanism... target must be visible blah blah blah
 		assert(this.mousemoveEventHandler)
-		this.mousemoveEventHandler.callback(event, this.resolver())
+		this.mousemoveEventHandler.callback(event, this.resolver(<Element> event.target))
 	}
 
 	private [EventType.MOUSEUP] = (event: Event) => {
