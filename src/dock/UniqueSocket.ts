@@ -7,17 +7,17 @@ export default abstract class UniqueSocket extends Socket {
         return this.links.values().next().value
     }
 
-    public get occupied() {
-        return this.links.size > 1
+    public get occupied(): boolean {
+        return this.links.size > 0
     }
 
-    public popExisting() {
-        if (!this.occupied) this.destroy()
+    public popExisting(): UniqueSocket {
+        if (this.occupied) this.destroy()
         return this
     }
 
-    public editLink() {
-        if (!this.occupied) assert(false, `link does not exist on socket ${this}`)
+    public editLink(): Link {
+        assert(this.occupied, `link does not exist on socket ${this}`)
         return this.link.unpin()
     }
 }
