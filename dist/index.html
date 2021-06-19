@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="style/main.css">
 	<link rel="stylesheet" href="style/finder.css">
 	<link rel="stylesheet" href="style/node.css">
+	<link rel="stylesheet" href="style/input.css">
 </head>
 
 <body oncontextmenu="return false;">
@@ -25,10 +26,10 @@
 		<template id="canvas">
 			<div class="canvas-wrapper" tabindex="0">
 				<div class="canvas" style="transform: scale(1)">
-				<div class="objects" style="top:0;left:0;">
-					<div class="nodes"></div>
-					<div class="links"><svg height="10000" width="10000"></svg></div>
-				</div>
+					<div class="objects" style="top:0;left:0;">
+						<div class="nodes"></div>
+						<div class="links"><svg height="10000" width="10000"></svg></div>
+					</div>
 				</div>
 
 			</div>
@@ -44,21 +45,32 @@
 				</div>
 				</div>
 				<div class="body">
-				<div class="background"></div>
-				<div class="left-block"></div><!--
-				--><div class="right-block"></div>
+					<div class="background"></div>
+					<div class="left-block"></div><!--
+					--><div class="right-block"></div>
 				</div>
 			</div>
 		</template>
 
 		<template id="dock">
-		<div class="dock-container">
-			<div class="dock"></div>
-			<div class="snap-dock"></div>
-			<div class="param-container">
-			<div class="param-label"></div>
+			<div class="dock-container">
+				<div class="dock"></div>
+				<div class="snap-dock"></div>
+				<div class="param-container">
+					<div class="param-label"></div>
+				</div>
 			</div>
-		</div>
+		</template>
+
+		<template id="dock-str">
+			<div class="dock-container">
+				<div class="dock"></div>
+				<div class="snap-dock"></div>
+				<div class="param-container">
+					<input type="text" spellcheck="false"></input>
+					<!-- <div class="param-input"></div> -->
+				</div>
+			</div>
 		</template>
 
 		<template id="link">

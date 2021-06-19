@@ -13,14 +13,16 @@ export enum DataType { INT, STR, LIST, DICT, TENSOR, MODULE }
 export enum DockSide { LEFT = 'left', RIGHT = 'right' }
 
 export interface DockDef {
-    label: string,
-    optional?: boolean,
+    label: string
+    optional?: boolean
+    type?: InputType
 
 }
 
 export interface DockParams {
-    label: string,
+    label: string
     location: string
+    type?: InputType
 }
 
 // export type DataDock = InDataDock | OutDataDock
@@ -30,7 +32,16 @@ export type InDock = InDataDock | InExeDock
 export type OutDock = OutDataDock | OutExeDock
 
 export function create<D extends Dock>(cstr: DockCstr<D>, defs: DockParams[]): Array<D> {
-    return defs.map(({ label, location }) => new cstr(label, location))
+    return defs.map(d => new cstr(d))
 }
 
-export type DockCstr<D> = new (label: string, location: string) => D
+export type DockCstr<D> = new (d: DockParams) => D
+
+export enum InputType {
+    INT = 'int',
+    STR = 'str',
+    LIST = 'list',
+    DICT = 'dict',
+    TENSOR = 'tensor',
+    MODULE = 'module',
+}

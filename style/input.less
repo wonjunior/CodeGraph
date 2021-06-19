@@ -44,67 +44,44 @@ input.var-input::placeholder {
   font-style: italic;
 }
 
-.left > .param-container > input {
-  margin-left: 8px;
-  width: 50%;
-  box-sizing: border-box;
-  border: none;
-  margin: 0;
-  background-color: rgb(73, 70, 70);
-  // background-color: rgb(81, 81, 81);
-  pointer-events: visible;
+.param-container > input {
+  text-align: left;
+  line-height: 25px;
+  font-size: 14px;
+  font-family: Calibri;
+  font-weight: 500;
+  background-color: rgba(111, 111, 111, 0.02);
+  outline: none;
+  border: 1px solid #403e3e;
+  border-radius: 5px;
+
+  &:focus {
+    border: 1px solid rgb(34, 33, 33);
+  }
 }
+
+.left > .param-container > input {
+  pointer-events: visible;
+  margin-left: 12px;
+  width: calc(100% - 12px);
+  color: #1b1b1b;
+  box-sizing: border-box;
+  background-color: rgb(73, 70, 70);
+  padding: 0 5px;
+}
+
 .right > .param-container > input {
   margin-right: 8px;
   width: calc(100% - 8px);
   box-sizing: border-box;
   text-align: left;
 }
-.param-container > input {
-  text-align: center;
-  line-height: 25px;
-  font-size: 14px;
-  font-family: Calibri;
-  font-weight: 500;
-  border-radius: 0px;
-  background-color: rgba(111, 111, 111, 0.02);
-}
-.param-container > input {
-  outline: 2px auto rgba(30, 29, 29, 0.52);
-}
-.param-container > input:hover {
-  outline: #4f70a7 auto 5px;
-}
-.param-container > input:focus {
-  outline: #3d5e96 auto 5px;
-}
-.param-container > input::selection {
-  background-color: darkgrey;
-}
-// .param-container > input:valid {
-//   border: 2px solid rgba(30, 29, 29, 0.52);
+// .param-container > input {
+//   outline: 2px auto rgba(30, 29, 29, 0.52);
 // }
-
-
-/* debug styles */
-
-// .data > .snap-dock {
-//   background: #2e00ff57;
+// .param-container > input:hover {
+//   outline: #4f70a7 auto 5px;
 // }
-
-// .exe > .snap-dock {
-//   background: #ff00005c;
-// }
-
-// .data, .exe {
-//   border: 1px solid grey;
-// }
-// .canvas {
-//   background: #537e4370;
-// }
-// .objects {
-//   background: #0000ff57;
-// }
-// .left > .param-container > .param-label, .left > .param-container > input {
-//   border: 1px solid red;
+// .param-container > input::selection {
+//   background-color: darkgrey;
 // }

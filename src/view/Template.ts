@@ -8,10 +8,11 @@ export default class Template {
 	 * @param name template's name
 	 * @return a `querySelector` bound to the cloned template element
 	 */
-	public static import(name: string): (selectors: string) => HTMLElement | null {
-		const template = document.querySelector(`template#${name}`) as HTMLTemplateElement
-		if (template == null) throw new Error(`cound not find template with name ${name}`)
-		
+	public static import(name: string, variant = ''): (selectors: string) => HTMLElement | null {
+		const id = `template#${name}${variant ? '-' : ''}${variant}`
+		const template = document.querySelector(id) as HTMLTemplateElement
+		if (template == null) throw new Error(`could not find template with id ${id}`)
+
 		const element = document.importNode(template.content, true)
 		return element.querySelector.bind(element)
 	}
