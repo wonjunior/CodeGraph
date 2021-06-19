@@ -1,4 +1,4 @@
-import { DockSide, FlowType } from '@/dock/interfaces'
+import { DockSide, FlowType, InputType } from '@/dock/interfaces'
 import { Pair } from '@/types'
 import { normalize, pair, wait, zip } from '@/utils'
 import CanvasZoom from './CanvasZoom'
@@ -31,10 +31,11 @@ export default class DockElement extends ElementWrapper {
 		this.label.textContent = label
  	}
 
-	constructor(public type: FlowType, public side: DockSide, label: string, public location: string) {
-		super({ type, side })
+	constructor(public type: FlowType, public side: DockSide, label: string, public location: string, private datatype?: InputType) {
+		super()
+		this.create()
 
-		this.labelText = label
+		if (this.label) this.labelText = label
 	}
 
 	render(node: NodeElement, zoom: CanvasZoom) {
@@ -46,8 +47,8 @@ export default class DockElement extends ElementWrapper {
 	/**
 	 * @overrides Element#create
 	 */
-	create({ type, side }: { type: FlowType, side: DockSide }) { //# if that's the constructor then put it in the constructor
-		const $ = Template.import('dock')
+	create() { //# if that's the constructor then put it in the constructor
+		const $ = Template.import('dock', this.datatype)
 
 		Object.assign(this, {
 			container: $('.dock-container'),
@@ -57,7 +58,7 @@ export default class DockElement extends ElementWrapper {
 			label: $('.param-label'),
 		})
 
-		this.container.classList.add(side, type)
+		this.container.classList.add(this.side, this.type)
 	}
 
 	private computeOffset(zoom: CanvasZoom): Pair<number> { //? can use Element#getBoundingClientRect directly

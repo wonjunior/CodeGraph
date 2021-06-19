@@ -1,7 +1,7 @@
 import { Deps, TriggerArgs, Data } from '@/interpreter/interfaces'
 import Process from '@/interpreter/process/Process'
 // import DockElement from '@/view/DockElement'
-import { DockSide, FlowType } from './interfaces'
+import { DockParams, DockSide, FlowType } from './interfaces'
 import MultipleSocket from './MultipleSocket'
 
 export default class OutDataDock extends MultipleSocket {
@@ -12,8 +12,8 @@ export default class OutDataDock extends MultipleSocket {
      */
     public value = {} as Data<number> | null
 
-    constructor(label: string, location: string) {
-        super(FlowType.DATA, DockSide.RIGHT, label, location)
+    constructor(params: DockParams) {
+        super(FlowType.DATA, DockSide.RIGHT, params)
     }
 
     getDependencies(): Deps { //? is this a good idea?

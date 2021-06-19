@@ -1,7 +1,7 @@
 import { GraphObject, GraphObjectItem } from '@/GraphObject'
 import Router from '@/interpreter/router/Router'
 import DockElement from '@/view/DockElement'
-import { DockSide, FlowType } from './interfaces'
+import { DockParams, DockSide, FlowType } from './interfaces'
 
 /**
  * This class is part of the connection-layer for docks
@@ -13,6 +13,7 @@ export default abstract class Dock extends GraphObject {
     public node: string
     public element: DockElement
     public router: Router
+    public label: string
 
     // isFull() {
     //     return !(this instanceof OutDataDock) && this.links.size > 0
@@ -24,9 +25,10 @@ export default abstract class Dock extends GraphObject {
         return [[<HTMLElement> this.element.snap, this]] //# make snap HTMLElement rather?
     }
 
-    constructor(public type: FlowType, public side: DockSide, public label: string, location: string) {
+    constructor(public type: FlowType, public side: DockSide, params: DockParams) {
         super()
-        this.element = new DockElement(type, side, label, location)
+        this.label = params.label
+        this.element = new DockElement(type, side, params.label, params.location, params.type)
     }
 
     isCompatible(other: Dock): boolean {

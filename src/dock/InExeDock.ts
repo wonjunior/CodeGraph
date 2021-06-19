@@ -1,7 +1,7 @@
 import { TriggerArgs } from '@/interpreter/interfaces'
 // import Router from '@/interpreter/router/Router'
 import EmptyDock from './EmptyDock'
-import { DockSide, FlowType } from './interfaces'
+import { DockParams, DockSide, FlowType } from './interfaces'
 import OutExeDock from './OutExeDock'
 import UniqueSocket from './UniqueSocket'
 
@@ -13,8 +13,8 @@ export default class InExeDock extends UniqueSocket {
         // return (this.link ? this.link.origin : EmptyDock) as OutExeDock //? Link<ExeDock> would make is easier
     }
 
-    constructor(label: string, location: string) {
-        super(FlowType.EXE, DockSide.LEFT, label, location)
+    constructor(params: DockParams) {
+        super(FlowType.EXE, DockSide.LEFT, params)
     }
 
     trigger(payload: TriggerArgs | void) {

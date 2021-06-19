@@ -40,6 +40,7 @@ export default class CanvasElement extends ElementWrapper {
 
 	constructor(parent: Element) {
 		super()
+		this.create()
 		parent.appendChild(this.container)
     	// this.render(parent) //? can this be called from super?
   	}

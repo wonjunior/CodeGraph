@@ -1,11 +1,11 @@
-import { DockSide, FlowType } from './interfaces'
+import { DockParams, DockSide, FlowType } from './interfaces'
 import UniqueSocket from './UniqueSocket'
 
 export default class OutExeDock extends UniqueSocket {
     // private router: Router
 
-    constructor(label: string, location: string) {
-        super(FlowType.EXE, DockSide.RIGHT, label, location)
+    constructor(params: DockParams) {
+        super(FlowType.EXE, DockSide.RIGHT, params)
     }
 
     propagate(updateET: boolean) {

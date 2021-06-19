@@ -50,6 +50,7 @@ export default class LinkElement extends ElementWrapper {
 
   	constructor(parent: Element, type: FlowType) {
     	super()
+		this.create()
     	parent.appendChild(this.container)
 		Object.assign(this, LinkElement.props[type])
 	}

@@ -79,6 +79,7 @@ export default class NodeElement extends ElementWrapper {
 	constructor(dockElements: Array<DockElement>, canvas: Canvas, params: NodeParams) {
 		super()
 
+		this.create()
 		this.canvas = canvas
 		this.render(dockElements)
 

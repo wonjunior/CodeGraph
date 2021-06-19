@@ -17,7 +17,7 @@ export default class CustomProcess extends Process {
 	}
 
 	private createDocks<D extends Dock>(cstr: DockCstr<D>, params: DockDef[]): D[] {
-		const defs = params.map(({ label }: DockDef) => ({ label, location: 'body' }))
+		const defs = params.map(d => Object.assign(d, { location: 'body' }))
 		return create(cstr, defs)
 	}
 }

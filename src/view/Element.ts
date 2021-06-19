@@ -8,10 +8,6 @@ export default abstract class ElementWrapper {
 	abstract get position(): Pair<number>
 	abstract set position(position: Pair<number>)
 
-	constructor(args?: {[k: string]: string}) {
-		this.create(args) //# this is very useless indeed, yes?
- 	}
-
 	// render(parent: Element) { //? do we really need this?
 	// 	parent.appendChild(this.container)
 	// }

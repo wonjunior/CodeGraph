@@ -1,7 +1,7 @@
 import { Data, Deps, TriggerArgs } from '@/interpreter/interfaces'
 import Process from '@/interpreter/process/Process'
 // import EmptyDock from './EmptyDock'
-import { DockSide, FlowType } from './interfaces'
+import { DockParams, DockSide, FlowType } from './interfaces'
 import OutDataDock from './OutDataDock'
 import UniqueSocket from './UniqueSocket'
 
@@ -11,8 +11,8 @@ export default class InDataDock extends UniqueSocket {
         // return this.link ? this.link.origin : EmptyDock.singleton
     }
 
-    constructor(label: string, location: string) {
-        super(FlowType.DATA, DockSide.LEFT, label, location)
+    constructor(params: DockParams) {
+        super(FlowType.DATA, DockSide.LEFT, params)
     }
 
 
