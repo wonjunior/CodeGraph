@@ -9,8 +9,8 @@ export default class DefaultRouter extends Router {
 
     constructor() {
         super()
-        this.in = create(InExeDock, [{ label: 'in', location: 'head' }])
-        this.out = create(OutExeDock, [{ label: 'out', location: 'head' }])
+        this.in = create(InExeDock, [{ label: '', location: 'head' }])
+        this.out = create(OutExeDock, [{ label: '', location: 'head' }])
     }
 
     func() {

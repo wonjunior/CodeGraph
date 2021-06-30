@@ -61,7 +61,7 @@ export const EditorDefaultState: Bindings<GraphInputEvent> =  {
                 },
 
                 '.node-container': (event: MouseEvent, { object }: GraphInputEvent): void => {
-                    (<Node> object).select()
+                    // (<Node> object).select()
                 },
 
                 '.snap-dock': (_: MouseEvent, { graph, object, eventHandler }: GraphInputEvent): void => {

@@ -2,13 +2,13 @@ import { Pair } from '@/types'
 import { assert, clamp, zip } from '@/utils'
 import CanvasElement from '@/view/CanvasElement'
 import CanvasZoom from '@/view/CanvasZoom'
-import { GraphObject, GraphObjectBind } from './GraphObject'
+import { GraphObject, GraphObjectItem } from './GraphObject'
 
 export default class Canvas extends GraphObject {
 	public element: CanvasElement
 	public zoom: CanvasZoom
 
-	public get binds(): Array<GraphObjectBind> {
+	public get binds(): Array<GraphObjectItem> {
 		return [[this.element.positionWrapper, this]]
 	}
 
@@ -19,20 +19,20 @@ export default class Canvas extends GraphObject {
 	constructor(parent: HTMLElement) {
 		super()
 		this.element = new CanvasElement(parent)
-    	this.zoom = new CanvasZoom(this, this.element.zoomWrapper)
+		this.zoom = new CanvasZoom(this, this.element.zoomWrapper)
 	}
 
 	recalculatePosition(): void { //? update position
 		this.position = this.element.position
 	}
 
-  	mousePosition(event: MouseEvent): Pair<number> {
+	mousePosition(event: MouseEvent): Pair<number> {
 		const [ x, y ] = [ event.clientX, event.clientY ]
 		const [ offsetX, offsetY ] = this.element.offset
 		return [ (x - offsetX) / this.zoom.level, (y - offsetY) / this.zoom.level ]
-  	}
+	}
 
-  	getLimitValues(): Pair<Pair<number>> {
+	getLimitValues(): Pair<Pair<number>> {
 		return this.element.getProperties().map(([pos, offset, parentOffset, size, parentSize]) => {
 			const maxValue = (parentOffset - offset) / this.zoom.level + pos
 			const minValue = maxValue + (parentSize - size) / this.zoom.level
