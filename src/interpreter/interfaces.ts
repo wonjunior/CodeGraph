@@ -22,16 +22,16 @@ export interface ProcessParams {
 	compute(...args: unknown[]): void,
 	string(...args: unknown[]): string,
 	params?: DockDef[],
-	result?: DockDef
+	result?: DockDef[]
 }
 
 export interface FunctionParams extends ProcessParams {
 	params: DockDef[],
-	result: DockDef
+	result: DockDef[]
 }
 
 export interface GetterParams extends ProcessParams {
-	result: DockDef
+	result: DockDef[]
 }
 
 export interface SetterParams extends ProcessParams {
