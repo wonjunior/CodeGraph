@@ -1,7 +1,7 @@
 import { Pair, Zip } from '@/types'
 
 /**
- * One liner utility functions, hope you like them. It's basically my little TS toolbox. Enjoy.
+ * One liner utility functions. It's basically a handy little TS toolbox. Do enjoy of course.
  */
 
 
@@ -49,11 +49,19 @@ export function zip<T extends any[]>(...arrays: T): Zip<T>[] {
 
 /**
  * Very nice for duping single values into tuple pairs.
+ * Called with either a single number `pair(0)` -> `[0, 0]: Pair<number>`
+ * or with multiple number pair(posX, posY)` -> `[posX, posY]: Pair<number>`.
  */
-export function pair<T>(x: T, y = x): Pair<T> {
-    return [x, y] as Pair<T>
+export function pair<T>(...x: T[]): Pair<T> {
+    return (x.length > 1 ? x : [x[0], x[0]]) as Pair<T>
 }
+// export function pair<T>(x: T, y = x): Pair<T> {
+//     return [x, y] as Pair<T>
+// }
 
+// /**
+//  * This function was nearly born.
+//  */
 // export function pair<T, U>(a: Pair<T>, b: Pair<T>, f: (x: T, y: T) => U): Pair<U> {
 //     return [a, b].map(([x, y]) => f(x, y)) as Pair<U>
 // }
@@ -80,17 +88,14 @@ export function toAlphabet(i: number): string {
 }
 
 /**
- * Shift scale operator, i.e. normalize operator value.
- * @param x
- * @param shift
- * @param scale
+ * Advanced normalizer utility function, does extremely complex computation behind the scenes.
  */
 export function normalize([x, shift = 0, scale = 1, adjust = 0]: [number, number, number, number]): number {
     return (x - shift) / scale + adjust
 }
 
 /**
- * As the name implies. It won't do much... well I think.
+ * As the name implies. It won't do much... well I hope so.
  */
 export function identity<T>(...any: T[]): T[] {
     return any

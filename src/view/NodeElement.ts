@@ -86,8 +86,11 @@ export default class NodeElement extends ElementWrapper {
 		this.labelText = params.label
 		this.backgroundText = params.background
 		this.headerColor = params.header
-		this.position = params.position || pair(0)
+		this.position = pair(...params.position || 0)
 
+		console.log(this.position)
+		console.log(pair(0))
+		console.log(pair(10))
 		// if (this.hideBody) this.hide('body') //? what is that
 		// if (this.hideHeader) this.hide('header')
 	}
