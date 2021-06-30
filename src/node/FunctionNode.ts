@@ -8,6 +8,6 @@ import Node from './Node'
 export default class FunctionNode extends Node {
     constructor(graph: Graph, { process, ...nargs }: ComponentParams) {
         const { compute, string, params, result } = process as FunctionParams
-        super(new CustomProcess(compute, string, params, [result]), new DefaultRouter(), graph, nargs)
+        super(new CustomProcess(compute, string, params, result), new DefaultRouter(), graph, nargs)
     }
 }

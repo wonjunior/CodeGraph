@@ -8,6 +8,6 @@ import Node from './Node'
 export default class SetterNode extends Node {
     constructor(graph: Graph, { process, ...nargs }: ComponentParams) {
         const { compute, string, params } = process as SetterParams
-        super(new CustomProcess(compute, string, params, []), new DefaultRouter(), graph, nargs)
+        super(new CustomProcess(compute, string, params, []), new DefaultRouter(true, false), graph, nargs)
     }
 }

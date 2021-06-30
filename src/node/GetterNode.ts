@@ -8,6 +8,6 @@ import { ComponentParams } from './interfaces'
 export default class GetterNode extends Node {
     constructor(graph: Graph, { process, ...nargs }: ComponentParams) {
         const { compute, string, result } = process as GetterParams
-        super(new CustomProcess(compute, string, [], result), new DefaultRouter(), graph, nargs)
+        super(new CustomProcess(compute, string, [], result), new DefaultRouter(false, true), graph, nargs)
     }
 }

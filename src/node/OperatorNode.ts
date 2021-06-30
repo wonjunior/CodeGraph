@@ -7,6 +7,6 @@ import Node from '@/node/Node'
 export default class OperatorNode extends Node {
     constructor(graph: Graph, { process, ...nargs }: ComponentParams) {
         const { compute, string, params, result } = process as FunctionParams
-        super(new CustomProcess(compute, string, params, [result]), null, graph, nargs)
+        super(new CustomProcess(compute, string, params, result), null, graph, nargs)
     }
 }

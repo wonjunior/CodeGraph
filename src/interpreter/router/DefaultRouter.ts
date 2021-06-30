@@ -7,10 +7,10 @@ export default class DefaultRouter extends Router {
     public in: Array<InExeDock>
     public out: Array<OutExeDock>
 
-    constructor() {
+    constructor(in_ = true, out_ = true) { //? don't think this is necessary
         super()
-        this.in = create(InExeDock, [{ label: '', location: 'head' }])
-        this.out = create(OutExeDock, [{ label: '', location: 'head' }])
+        this.in = create(InExeDock, in_ ? [{ label: '', location: 'head' }] : [])
+        this.out = create(OutExeDock, out_ ? [{ label: '', location: 'head' }] : [])
     }
 
     func() {
