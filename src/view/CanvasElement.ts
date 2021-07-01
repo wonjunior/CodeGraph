@@ -8,6 +8,7 @@ export default class CanvasElement extends ElementWrapper {
 	public positionWrapper: HTMLElement
 	public nodeArea: HTMLElement
 	public linkArea: HTMLElement
+	public infobox: HTMLElement
 
 	static closestCanvas(element: Element): HTMLElement | null {
 		return element.closest('.objects')
@@ -45,8 +46,12 @@ export default class CanvasElement extends ElementWrapper {
     	// this.render(parent) //? can this be called from super?
   	}
 
-  	getProperties(): Array<[number, number, number, number, number]> {
+  	getProperties(): [number, number, number, number, number][] {
 		return zip(this.position, this.offset, this.parentOffset, this.size, this.parentSize)
+	}
+
+	updateInfo(pos: Pair<number>): void {
+		this.infobox.textContent = pos.map(x => `${Math.round(x)}px`).join(', ')
 	}
 
 	/**
@@ -61,6 +66,7 @@ export default class CanvasElement extends ElementWrapper {
 			positionWrapper: $('.objects'),
 			nodeArea: $('.nodes'),
 			linkArea: $('.links > svg'),
+			infobox: $('.canvas-infobox'),
 		})
   	}
 }
