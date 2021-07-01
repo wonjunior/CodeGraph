@@ -31,8 +31,9 @@
   line-height: 25px;
   margin: auto;
   position: relative;
-  box-sizing:  border-box;
-  vertical-align:  middle;
+  box-sizing: border-box;
+  vertical-align: middle;
+  z-index: 10;
 }
 
 .nodes {
@@ -77,11 +78,11 @@
   position: absolute;
   border: 0.05em solid rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-  z-index: 1;
+  // z-index: 1;
 }
 
 .snap-dock {
-  z-index: 3;
+  // z-index: 3;
   width: 30px;  //# make smaller
   height: 30px;
   background-color: rgba(111, 111, 111, 0);
@@ -122,7 +123,7 @@
 // ::Node
 .node-container {
   font-family: Consolas, 'Courier New', monospace;
-  z-index: 1;
+  // z-index: 1;
   position: absolute;
   width: 200px;
   box-sizing: border-box;
@@ -192,7 +193,7 @@
   background-color: rgb(56, 55, 56);
   position: relative;
   cursor: move;
-  z-index: 1;
+  // z-index: 1;
   height: 100%;
   font-weight: bold;
   font-family: 'Saira Semi Condensed';
